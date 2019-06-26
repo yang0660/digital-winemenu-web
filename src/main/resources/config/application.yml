@@ -1,0 +1,32 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /digital-winemenu-web
+  compression:
+    enabled: true
+    min-response-size: 102400
+    mime-types: application/json
+
+spring:
+  application:
+    name: digital-winemenu-web
+  aop:
+    proxy-target-class: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    com.myicellar.digitalmenu: DEBUG
+  file: "D:/digital-winemenu-web.log"
+#  config: classpath:logback-spring.xml
+
+mybatis:
+  type-aliases-package: com.myicellar.digitalmenu.dao.entity
+  mapper-locations: classpath*:com/myicellar/digitalmenu/dao/mapping/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+snowflake:
+  dataCenterId: 0
+  workerId: 0

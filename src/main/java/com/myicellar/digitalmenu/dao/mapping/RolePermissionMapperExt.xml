@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.RolePermissionMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.RolePermission"
+    extends="com.myicellar.digitalmenu.dao.mapper.RolePermissionMapper.BaseResultMap">
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <include refid="com.myicellar.digitalmenu.dao.mapper.RolePermissionMapper.Base_Column_List" />
+  </sql>
+
+  <resultMap id="GrantBaseResultMap" type="com.myicellar.digitalmenu.vo.response.GrantPermissionRespVO">
+    <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="granted_flag" jdbcType="TINYINT" property="grantedFlag" />
+  </resultMap>
+
+  <select id="selectPermListByRoleId" parameterType="long"  resultType="long">
+    select DISTINCT permission_id as permissionId
+    from t_role_permission
+    WHERE role_id = #{roleId}
+  </select>
+
+  <select id="deleteByRolePermId" resultType="integer">
+    delete
+    from t_role_permission
+    WHERE role_id = #{roleId}
+      AND permission_id = #{permissionId}
+  </select>
+
+  <select id="selectPermListByMenuRoleId" resultMap="GrantBaseResultMap">
+    select a.permission_id,
+		 a.permission_name,
+        (case when b.id is null then 0 else 1 end) as granted_flag
+    from t_permission a
+    left join t_role_permission b
+      on a.permission_id = b.permission_id and b.role_id = #{roleId}
+    where a.menu_id = #{menuId}
+  </select>
+
+</mapper>

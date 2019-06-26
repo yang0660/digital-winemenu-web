@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.UserMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.User" extends="com.myicellar.digitalmenu.dao.mapper.UserMapper.BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List">
+    <include refid="com.myicellar.digitalmenu.dao.mapper.UserMapper.Base_Column_List" />
+  </sql>
+  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.UserReqVO" resultType="java.lang.Integer">
+    select 
+     count(1)
+    from t_user
+    <where>
+      <include refid="where" />
+    </where>
+  </select>
+  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.UserReqVO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    <where>
+      <include refid="where" />
+    </where>
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <sql id="where">
+  <if test="user_id != null">
+    and user_id = #{userId,jdbcType=BIGINT}
+  </if>
+  </sql>
+
+  <select id="queryCountByDeptId" parameterType="long" resultType="integer">
+    select count(0)
+    from t_user
+    where department_id = #{departmentId}
+  </select>
+
+  <resultMap id="PageListResultMap" type="com.myicellar.digitalmenu.vo.response.UserListRespVO">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="department_id" jdbcType="BIGINT" property="departmentId" />
+    <result column="department_code" jdbcType="VARCHAR" property="departmentCode" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="user_type" jdbcType="TINYINT" property="userType" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="selectCountByCondition" parameterType="com.myicellar.digitalmenu.vo.request.UserPageReqVO" resultType="long">
+    select
+    count(DISTINCT a.user_id)
+    from t_user a
+    INNER JOIN t_user_account b ON a.user_id = b.user_id and a.delete_status = 0
+    INNER JOIN t_department c ON a.department_id = c.department_id
+    LEFT JOIN t_user_role d ON a.user_id = d.user_id
+    <where>
+      <include refid="conditionWhere" />
+    </where>
+  </select>
+
+  <select id="selectListByCondition" parameterType="com.myicellar.digitalmenu.vo.request.UserPageReqVO"
+          resultMap="PageListResultMap">
+    select DISTINCT
+        a.user_id,
+        b.user_name,
+        b.real_name,
+        a.telephone,
+        b.mobile,
+        b.gender,
+        a.department_id,
+        c.department_code,
+        c.department_name,
+        a.user_code,
+        a.position,
+        a.email,
+        a.remark,
+        b.status,
+        b.user_type,
+        a.create_user,
+        a.create_time,
+        a.update_user,
+        b.update_time
+    from t_user a
+    INNER JOIN t_user_account b ON a.user_id = b.user_id and a.delete_status = 0
+    INNER JOIN t_department c ON a.department_id = c.department_id
+    LEFT JOIN t_user_role d ON a.user_id = d.user_id
+    <where>
+    <include refid="conditionWhere" />
+  </where>
+    order by b.update_time desc
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <sql id="conditionWhere">
+    <if test="userId != null">
+      and a.user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    <if test="userName!=null and userName!=''">
+      and b.user_name like concat('%',#{userName},'%')
+    </if>
+    <if test="realName!=null and realName!=''">
+      and b.real_name like concat('%',#{realName},'%')
+    </if>
+    <if test="telephone!=null and telephone!=''">
+      and a.telephone like concat('%',#{telephone},'%')
+    </if>
+    <if test="mobile!=null and mobile!=''">
+      and b.mobile like concat('%',#{mobile},'%')
+    </if>
+    <if test="position!=null and position!=''">
+      and a.position like concat('%',#{position},'%')
+    </if>
+    <if test="departmentId!=null">
+      and a.department_id = #{departmentId}
+    </if>
+    <if test="departmentName!=null and departmentName!=''">
+      and c.department_name like concat('%',#{departmentName},'%')
+    </if>
+    <if test="status!=null">
+      and a.status = #{status}
+    </if>
+    <if test="remark!=null and remark!=''">
+      and a.remark like concat('%',#{remark},'%')
+    </if>
+    <if test="userType!=null">
+      and b.user_type = #{userType}
+    </if>
+    <if test="roleId!=null">
+      and d.role_id = #{roleId}
+    </if>
+  </sql>
+
+  <select id="selectByUserCode" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_user
+    where user_code = #{userCode}
+    and delete_status = 0
+    limit 1
+  </select>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    select
+     u.*
+    from t_user u
+    inner join t_user_role r on r.user_id = u.user_id
+    where r.role_id = #{roleId,jdbcType=BIGINT}
+    and u.delete_status = 0
+    order by u.update_time desc
+  </select>
+  <select id="selectForDepatmentByUserId" resultType="java.lang.String">
+    select d.department_name
+    from t_user u
+    left join t_department d on u.department_id = d.department_id
+    where u.user_id = #{userId}
+    limit 1
+  </select>
+</mapper>

@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://119.23.189.143:3306/myicellar?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+file-upload:
+  root-location: "D:"
+  server-host: http://172.21.1.86:8088/digital-winemenu-web
+
+aliyun-sms:
+  accessKeyId: "LTAIIZ3Uyl789799"
+  accessKeySecret: "LssywISvmGSc5i9XtP789785565"
+  templateCode: "SMS_1555798454"
+
+aliyun-push:
+  accessKeyId: "LTAIIZ3Uylfawarewew"
+  accessKeySecret: "LssywISvmGSc5i9Xtjtyrtrtertetwewetwe"
+  androidAppKey: "26019785"
+  iosAppKey: "260098465"
