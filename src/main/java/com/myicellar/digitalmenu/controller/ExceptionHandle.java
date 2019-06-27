@@ -50,23 +50,15 @@ public class ExceptionHandle {
 
     private String getColumnDesc(String column) {
         switch (column) {
-            case "department_id": return "部门ID";
-            case "copy_user_ids": return "抄送人";
-            case "contract_id": return "合同ID";
-            case "category_id": return "合同类型";
-            case "company_number": return "单位编号";
-            case "fax": return "传真号码";
-            case "phone": return "固定电话";
-            case "user_type": return "用户类型";
+            case "user_id": return "用户ID";
+            case "user_name": return "用户名";
         }
         return column;
     }
 
     private String getUniqDesc(String uniqIdx) {
         switch (uniqIdx) {
-            case "uniq_idx_contract_number": return "合同编号";
-            case "uniq_idx_company_number": return "企业编号";
-            case "uniq_idx_mobile": return "手机号码";
+            case "uniq_idx_user_id": return "用户ID";
             default: return "数据";
         }
     }
