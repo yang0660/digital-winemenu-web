@@ -39,7 +39,7 @@ public class ManageRealm extends AuthorizingRealm implements ApplicationListener
 
     @Override
     protected Object getAuthenticationCacheKey(AuthenticationToken token) {
-        AppUserNamePasswordToken tk = (AppUserNamePasswordToken) token;
+        ManageUserNamePasswordToken tk = (ManageUserNamePasswordToken) token;
         return tk.getUsername();
     }
 

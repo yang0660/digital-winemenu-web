@@ -2,7 +2,6 @@ package com.myicellar.digitalmenu.utils;
 
 import com.google.common.base.Preconditions;
 import com.myicellar.digitalmenu.dao.entity.UserAccount;
-import com.myicellar.digitalmenu.enums.UserStatusEnum;
 import com.myicellar.digitalmenu.shiro.UserAuthPrincipal;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import org.apache.shiro.SecurityUtils;
@@ -51,9 +50,6 @@ public class PrincipalContext {
         if(userAccount==null){
             return ResultVO.validError("该用户不存在!");
         }
-        if(UserStatusEnum.CLOSED.value.equals(userAccount.getStatus())){
-            return ResultVO.validError("该用户已被停用!");
-        }
 
         return result;
     }
@@ -62,9 +58,6 @@ public class PrincipalContext {
         ResultVO result = null;
         if(userAccount==null){
             return ResultVO.validError("该用户不存在!");
-        }
-        if(UserStatusEnum.CLOSED.value.equals(userAccount.getStatus())){
-            return ResultVO.validError("该用户已被停用!");
         }
         if(StringUtils.isEmpty(userAccount.getPassword())){
             result = ResultVO.validError("用户未注册!");
@@ -81,9 +74,6 @@ public class PrincipalContext {
             result = ResultVO.validError("请先绑定帐号!");
             result.setRespCode(ResultVO.UNBIND_ERROR_CODE); //未绑定APP帐号
             return result;
-        }
-        if(UserStatusEnum.CLOSED.value.equals(userAccount.getStatus())){
-            return ResultVO.validError("该用户已被停用!");
         }
         if(StringUtils.isEmpty(userAccount.getPassword())){
             return ResultVO.validError("用户未注册!");

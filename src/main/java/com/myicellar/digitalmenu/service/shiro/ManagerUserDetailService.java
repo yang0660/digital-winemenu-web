@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.service.shiro;
 import com.alibaba.fastjson.JSON;
 import com.myicellar.digitalmenu.dao.entity.UserAccount;
 import com.myicellar.digitalmenu.dao.mapper.UserAccountMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.UserRoleMapperExt;
 import com.myicellar.digitalmenu.enums.UserTypeEnum;
 import com.myicellar.digitalmenu.shiro.UserAuthPrincipal;
 import com.myicellar.digitalmenu.shiro.UserDetailService;
@@ -25,9 +24,6 @@ public class ManagerUserDetailService implements UserDetailService {
 
     @Autowired
     private UserAccountMapperExt userAccountMapperExt;
-
-    @Autowired
-    private UserRoleMapperExt userRoleMapperExt;
 
     /**
      * 认证时调用，查询用户信息
@@ -51,8 +47,6 @@ public class ManagerUserDetailService implements UserDetailService {
                 userAuthPrincipal.setUserType(UserTypeEnum.enumOf(user.getUserType()));
                 userAuthPrincipal.setMobile(user.getMobile());
                 userAuthPrincipal.setReserve("");          //业务保留域，传递手机号
-                Set<String> roleNames = queryRolesByUserId(userId);
-                userAuthPrincipal.setRoleNames(roleNames);
             }
         }else{
             //用户不存在
@@ -75,7 +69,7 @@ public class ManagerUserDetailService implements UserDetailService {
      */
     @Override
     public Set<String> queryRolesByUserId(Long userId) {
-        return userRoleMapperExt.selectRoleNamesByUserId(userId);
+        return null;
     }
 
 
@@ -86,10 +80,7 @@ public class ManagerUserDetailService implements UserDetailService {
      */
     @Override
     public Set<String> queryPermissionsByUserId(Long userId) {
-        log.info("queryPermissions（userId）=====>" + userId);
-        Set<String> permissions = userAccountMapperExt.selectPermissionsByUserId(userId);
-        log.info("queryPermissions（权限列表）=====>" + permissions);
-        return permissions;
+        return null;
     }
 
 }

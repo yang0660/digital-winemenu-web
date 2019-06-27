@@ -16,7 +16,6 @@ import com.myicellar.digitalmenu.advisor.RequestBodyAdvisor;
 import com.myicellar.digitalmenu.advisor.ResponseBodyAdvisor;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.helper.BeanFactoryHelper;
-import com.myicellar.digitalmenu.interceptor.AccessRecordInterceptor;
 import com.myicellar.digitalmenu.interceptor.PermissionInterceptorAdapter;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,14 +90,6 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
         configurers.add(webMvcConfigurer(fileUploadProperties));
         super.setConfigurers(configurers);
     }
-    @Autowired
-    AccessRecordInterceptor accessRecordInterceptor;
-    @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        super.addInterceptors(registry);
-        registry.addInterceptor(accessRecordInterceptor);
-    }
-
 
     @Bean
     public PermissionInterceptorAdapter getSecurityInterceptor() {

@@ -6,7 +6,7 @@
     <sql id="Base_Column_List">
         <include refid="com.myicellar.digitalmenu.dao.mapper.UserAccountMapper.Base_Column_List" />
     </sql>
-    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.UserAccountReqVO" resultType="java.lang.Long">
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.ManageLoginReqVO" resultType="java.lang.Long">
         select
         count(1)
         from t_user_account
@@ -14,7 +14,7 @@
             <include refid="where" />
         </where>
     </select>
-    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.UserAccountReqVO" resultMap="BaseResultMap">
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.ManageLoginReqVO" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_user_account
@@ -63,176 +63,6 @@
         WHERE user_name = #{userName}
         AND delete_status = 0
         limit 1
-    </select>
-
-    <select id="selectByMobile" parameterType="string" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM t_user_account
-        WHERE mobile = #{mobile}
-        AND delete_status = 0
-        limit 1
-    </select>
-    <select id="selectByRealName" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM t_user_account
-        WHERE real_name = #{realName}
-        AND delete_status = 0
-    </select>
-
-    <select id="selectByWxOpenId" parameterType="string" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM t_user_account
-        WHERE wx_open_id = #{wxOpenId}
-        AND delete_status = 0
-        limit 1
-    </select>
-
-    <select id="selectPermissionsByUserId" parameterType="long"  resultType="string">
-        select DISTINCT p.permission_value as permissionValue
-        from t_user_account ua
-            INNER JOIN t_user_role ur on ua.user_id = ur.user_id
-            INNER JOIN t_role_permission rp  ON rp.role_id = ur.role_id
-        INNER JOIN t_permission p ON rp.permission_id = p.permission_id
-        WHERE ua.user_id = #{userId}
-    </select>
-
-    <select id="selectByRoleId" resultMap="BaseResultMap">
-        select
-        u.*
-        from t_user_account u
-        inner join t_user_role r on r.user_id = u.user_id
-        where r.role_id = #{roleId,jdbcType=BIGINT}
-        and u.delete_status = 0
-        order by CONVERT(u.real_name using gbk) asc,u.update_time desc
-    </select>
-    <select id="selectByRoleIdAndDepartmentId" resultMap="BaseResultMap">
-        select
-        u.*
-        from t_user_account u
-        inner join t_user_role r on r.user_id = u.user_id
-        inner join t_user us on us.user_id = u.user_id
-        where r.role_id = #{roleId,jdbcType=BIGINT}
-        and u.delete_status = 0
-        and us.department_id = #{departmentId,jdbcType=BIGINT}
-        order by CONVERT(u.real_name using gbk) asc,u.update_time desc
-    </select>
-
-    <resultMap id="UserInfoResultMap" type="com.myicellar.digitalmenu.vo.response.UserListRespVO">
-        <id column="user_id" jdbcType="BIGINT" property="userId" />
-        <result column="user_name" jdbcType="VARCHAR" property="userName" />
-        <result column="real_name" jdbcType="VARCHAR" property="realName" />
-        <result column="user_type" jdbcType="TINYINT" property="userType" />
-        <result column="telephone" jdbcType="VARCHAR" property="telephone" />
-        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-        <result column="gender" jdbcType="TINYINT" property="gender" />
-        <result column="department_id" jdbcType="BIGINT" property="departmentId" />
-        <result column="department_name" jdbcType="BIGINT" property="departmentName" />
-        <result column="user_code" jdbcType="VARCHAR" property="userCode" />
-        <result column="position" jdbcType="VARCHAR" property="position" />
-        <result column="email" jdbcType="VARCHAR" property="email" />
-        <result column="remark" jdbcType="VARCHAR" property="remark" />
-        <result column="status" jdbcType="TINYINT" property="status" />
-        <result column="create_user" jdbcType="BIGINT" property="createUser" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="update_user" jdbcType="BIGINT" property="updateUser" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    </resultMap>
-
-
-    <select id="selectUserInfoById" parameterType="long" resultMap="UserInfoResultMap">
-        select
-        a.user_id,
-        a.user_name,
-        a.real_name,
-        ifnull(b.telephone,a.phone) as telephone,
-        a.mobile,
-        a.gender,
-        ifnull(b.department_id,a.department_id) as department_id,
-        b.user_code,
-        b.position,
-        ifnull(b.email,a.email) as email
-        from t_user_account a
-        LEFT JOIN t_user b ON a.user_id = b.user_id and a.delete_status = 0
-        where a.user_id = #{userId}
-    </select>
-
-    <select id="selectUserInfo" parameterType="com.myicellar.digitalmenu.vo.request.UserAccountReqVO" resultMap="UserInfoResultMap">
-        SELECT
-        a.user_id,
-        a.user_type,
-        a.user_name,
-        a.real_name,
-        a.mobile,
-        ifnull(d.department_id,e.department_id) as department_id,
-        ifnull(d.department_name,e.department_name) as department_name
-        FROM
-        t_user_account a
-        LEFT JOIN t_user b ON a.user_id = b.user_id
-        LEFT JOIN t_department d 	on b.department_id=d.department_id
-        LEFT JOIN t_company c ON a.user_id = c.user_id
-        LEFT JOIN t_department e on a.department_id=e.department_id
-        WHERE a.delete_status = 0
-        <if test="mobile != null">
-            and a.mobile like concat('%',#{mobile},'%')
-        </if>
-        <if test="realName != null and realName !=''">
-            and a.real_name like concat('%',#{realName},'%')
-        </if>
-        <if test="userType != null">
-            and a.user_type = #{userType,jdbcType=TINYINT}
-        </if>
-        <if test="departmentName != null and departmentName !=''">
-            and (d.department_name LIKE concat('%',#{departmentName},'%') or e.department_name LIKE concat('%',#{departmentName},'%'))
-        </if>
-        order by CONVERT(a.real_name using gbk) asc,a.create_time desc
-        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-    </select>
-
-    <select id="countUserInfo" parameterType="com.myicellar.digitalmenu.vo.request.UserAccountReqVO" resultType="java.lang.Integer">
-        SELECT
-        COUNT(*)
-        FROM
-        t_user_account a
-        LEFT JOIN t_user b ON a.user_id = b.user_id
-        LEFT JOIN t_department d 	on b.department_id=d.department_id
-        LEFT JOIN t_company c ON a.user_id = c.user_id
-        LEFT JOIN t_department e on a.department_id=e.department_id
-        WHERE a.delete_status = 0
-        <if test="mobile != null and mobile !=''">
-            and a.mobile like concat('%',#{mobile},'%')
-        </if>
-        <if test="realName != null and realName !=''">
-            and a.real_name like concat('%',#{realName},'%')
-        </if>
-        <if test="userType != null">
-            and a.user_type = #{userType,jdbcType=TINYINT}
-        </if>
-        <if test="departmentName != null and departmentName !=''">
-            and (d.department_name LIKE concat('%',#{departmentName},'%') or e.department_name LIKE concat('%',#{departmentName},'%'))
-        </if>
-    </select>
-
-    <select id="selectUserMapByIds" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM t_user_account
-        WHERE 1 =1
-        <if test="userIds!=null">
-            and user_id in
-            <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
-                #{userId,jdbcType=BIGINT}
-            </foreach>
-        </if>
-    </select>
-
-    <select id="selectUserIdsByRoleId" parameterType="java.lang.Long"  resultType="java.lang.Long">
-        SELECT a.user_id
-        FROM t_user_account a, t_user_role b
-        WHERE a.user_id = b.user_id
-         AND b.role_id = #{roleId,jdbcType=BIGINT}
     </select>
 
 </mapper>

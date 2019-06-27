@@ -17,35 +17,11 @@ public class UserAccount {
 
     private Byte userType;
 
-    private Byte materialStatus;
-
     private Byte gender;
-
-    private String wxOpenId;
 
     private String deviceId;
 
     private String deviceType;
-
-    private String idCard;
-
-    private Long departmentId;
-
-    private String address;
-
-    private String area;
-
-    private String phone;
-
-    private String fax;
-
-    private String email;
-
-    private String idCardUrls;
-
-    private String handIdCardUrls;
-
-    private String businessLicenseUrls;
 
     private Byte status;
 
@@ -115,28 +91,12 @@ public class UserAccount {
         this.userType = userType;
     }
 
-    public Byte getMaterialStatus() {
-        return materialStatus;
-    }
-
-    public void setMaterialStatus(Byte materialStatus) {
-        this.materialStatus = materialStatus;
-    }
-
     public Byte getGender() {
         return gender;
     }
 
     public void setGender(Byte gender) {
         this.gender = gender;
-    }
-
-    public String getWxOpenId() {
-        return wxOpenId;
-    }
-
-    public void setWxOpenId(String wxOpenId) {
-        this.wxOpenId = wxOpenId;
     }
 
     public String getDeviceId() {
@@ -153,86 +113,6 @@ public class UserAccount {
 
     public void setDeviceType(String deviceType) {
         this.deviceType = deviceType;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getIdCardUrls() {
-        return idCardUrls;
-    }
-
-    public void setIdCardUrls(String idCardUrls) {
-        this.idCardUrls = idCardUrls;
-    }
-
-    public String getHandIdCardUrls() {
-        return handIdCardUrls;
-    }
-
-    public void setHandIdCardUrls(String handIdCardUrls) {
-        this.handIdCardUrls = handIdCardUrls;
-    }
-
-    public String getBusinessLicenseUrls() {
-        return businessLicenseUrls;
-    }
-
-    public void setBusinessLicenseUrls(String businessLicenseUrls) {
-        this.businessLicenseUrls = businessLicenseUrls;
     }
 
     public Byte getStatus() {

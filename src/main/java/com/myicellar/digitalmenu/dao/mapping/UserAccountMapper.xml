@@ -9,21 +9,9 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="user_type" jdbcType="TINYINT" property="userType" />
-    <result column="material_status" jdbcType="TINYINT" property="materialStatus" />
     <result column="gender" jdbcType="TINYINT" property="gender" />
-    <result column="wx_open_id" jdbcType="VARCHAR" property="wxOpenId" />
     <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
     <result column="device_type" jdbcType="VARCHAR" property="deviceType" />
-    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
-    <result column="department_id" jdbcType="BIGINT" property="departmentId" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="fax" jdbcType="VARCHAR" property="fax" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="id_card_urls" jdbcType="VARCHAR" property="idCardUrls" />
-    <result column="hand_id_card_urls" jdbcType="VARCHAR" property="handIdCardUrls" />
-    <result column="business_license_urls" jdbcType="VARCHAR" property="businessLicenseUrls" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="delete_status" jdbcType="TINYINT" property="deleteStatus" />
     <result column="create_user" jdbcType="BIGINT" property="createUser" />
@@ -32,10 +20,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, user_name, real_name, mobile, `password`, salt, user_type, material_status, 
-    gender, wx_open_id, device_id, device_type, id_card, department_id, address, area, 
-    phone, fax, email, id_card_urls, hand_id_card_urls, business_license_urls, `status`, 
-    delete_status, create_user, create_time, update_user, update_time
+    user_id, user_name, real_name, mobile, `password`, salt, user_type, gender, device_id, 
+    device_type, `status`, delete_status, create_user, create_time, update_user, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -50,24 +36,16 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.UserAccount">
     insert into t_user_account (user_id, user_name, real_name, 
       mobile, `password`, salt, 
-      user_type, material_status, gender, 
-      wx_open_id, device_id, device_type, 
-      id_card, department_id, address, 
-      area, phone, fax, email, 
-      id_card_urls, hand_id_card_urls, business_license_urls, 
-      `status`, delete_status, create_user, 
-      create_time, update_user, update_time
-      )
+      user_type, gender, device_id, 
+      device_type, `status`, delete_status, 
+      create_user, create_time, update_user, 
+      update_time)
     values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
-      #{userType,jdbcType=TINYINT}, #{materialStatus,jdbcType=TINYINT}, #{gender,jdbcType=TINYINT}, 
-      #{wxOpenId,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{idCardUrls,jdbcType=VARCHAR}, #{handIdCardUrls,jdbcType=VARCHAR}, #{businessLicenseUrls,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{deleteStatus,jdbcType=TINYINT}, #{createUser,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{userType,jdbcType=TINYINT}, #{gender,jdbcType=TINYINT}, #{deviceId,jdbcType=VARCHAR}, 
+      #{deviceType,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{deleteStatus,jdbcType=TINYINT}, 
+      #{createUser,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.UserAccount">
     insert into t_user_account
@@ -93,50 +71,14 @@
       <if test="userType != null">
         user_type,
       </if>
-      <if test="materialStatus != null">
-        material_status,
-      </if>
       <if test="gender != null">
         gender,
-      </if>
-      <if test="wxOpenId != null">
-        wx_open_id,
       </if>
       <if test="deviceId != null">
         device_id,
       </if>
       <if test="deviceType != null">
         device_type,
-      </if>
-      <if test="idCard != null">
-        id_card,
-      </if>
-      <if test="departmentId != null">
-        department_id,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="area != null">
-        area,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="fax != null">
-        fax,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="idCardUrls != null">
-        id_card_urls,
-      </if>
-      <if test="handIdCardUrls != null">
-        hand_id_card_urls,
-      </if>
-      <if test="businessLicenseUrls != null">
-        business_license_urls,
       </if>
       <if test="status != null">
         `status`,
@@ -179,50 +121,14 @@
       <if test="userType != null">
         #{userType,jdbcType=TINYINT},
       </if>
-      <if test="materialStatus != null">
-        #{materialStatus,jdbcType=TINYINT},
-      </if>
       <if test="gender != null">
         #{gender,jdbcType=TINYINT},
-      </if>
-      <if test="wxOpenId != null">
-        #{wxOpenId,jdbcType=VARCHAR},
       </if>
       <if test="deviceId != null">
         #{deviceId,jdbcType=VARCHAR},
       </if>
       <if test="deviceType != null">
         #{deviceType,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null">
-        #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=BIGINT},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="fax != null">
-        #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="idCardUrls != null">
-        #{idCardUrls,jdbcType=VARCHAR},
-      </if>
-      <if test="handIdCardUrls != null">
-        #{handIdCardUrls,jdbcType=VARCHAR},
-      </if>
-      <if test="businessLicenseUrls != null">
-        #{businessLicenseUrls,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -265,50 +171,14 @@
       <if test="userType != null">
         user_type = #{userType,jdbcType=TINYINT},
       </if>
-      <if test="materialStatus != null">
-        material_status = #{materialStatus,jdbcType=TINYINT},
-      </if>
       <if test="gender != null">
         gender = #{gender,jdbcType=TINYINT},
-      </if>
-      <if test="wxOpenId != null">
-        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
       </if>
       <if test="deviceId != null">
         device_id = #{deviceId,jdbcType=VARCHAR},
       </if>
       <if test="deviceType != null">
         device_type = #{deviceType,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null">
-        id_card = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=BIGINT},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        area = #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="fax != null">
-        fax = #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="idCardUrls != null">
-        id_card_urls = #{idCardUrls,jdbcType=VARCHAR},
-      </if>
-      <if test="handIdCardUrls != null">
-        hand_id_card_urls = #{handIdCardUrls,jdbcType=VARCHAR},
-      </if>
-      <if test="businessLicenseUrls != null">
-        business_license_urls = #{businessLicenseUrls,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
@@ -339,21 +209,9 @@
       `password` = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=TINYINT},
-      material_status = #{materialStatus,jdbcType=TINYINT},
       gender = #{gender,jdbcType=TINYINT},
-      wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
       device_id = #{deviceId,jdbcType=VARCHAR},
       device_type = #{deviceType,jdbcType=VARCHAR},
-      id_card = #{idCard,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=BIGINT},
-      address = #{address,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      fax = #{fax,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      id_card_urls = #{idCardUrls,jdbcType=VARCHAR},
-      hand_id_card_urls = #{handIdCardUrls,jdbcType=VARCHAR},
-      business_license_urls = #{businessLicenseUrls,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=TINYINT},
       delete_status = #{deleteStatus,jdbcType=TINYINT},
       create_user = #{createUser,jdbcType=BIGINT},

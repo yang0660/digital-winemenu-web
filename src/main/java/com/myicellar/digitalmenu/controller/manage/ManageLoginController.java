@@ -12,13 +12,10 @@ import com.myicellar.digitalmenu.shiro.ManageUserNamePasswordToken;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.PrincipalContext;
 import com.myicellar.digitalmenu.utils.RequestUtil;
-import com.myicellar.digitalmenu.vo.request.SendSmsCodeReqVO;
-import com.myicellar.digitalmenu.vo.request.UpdatePasswordForgetReqVO;
-import com.myicellar.digitalmenu.vo.request.UserAccountReqVO;
+import com.myicellar.digitalmenu.vo.request.ManageLoginReqVO;
 import com.myicellar.digitalmenu.vo.response.LoginRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -58,7 +55,7 @@ public class ManageLoginController {
      */
     @PostMapping(value = "/login")
     @AuthIgnore
-    public ResultVO<LoginRespVO> login(@RequestBody UserAccountReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
+    public ResultVO<LoginRespVO> login(@RequestBody ManageLoginReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
         String requestIp = RequestUtil.getUserRealIP(request); //请求的真实IP
         // 参数校验
         UserAccount user = userAccountService.queryByUserName(reqVO.getUserName(), UserTypeEnum.EMPLOYEE);
@@ -95,37 +92,6 @@ public class ManageLoginController {
             loginRecordService.saveLoginRecord(user,requestIp,result.getMessage());
         }
 
-        return result;
-    }
-
-    /**
-     * 忘记密码-重置密码
-     *
-     * @param reqVO
-     * @return
-     * @throws
-     * @author daizhiyue
-     * @date 2019-01-06
-     * @since
-     */
-    @PostMapping(value = "/updatePasswordForget")
-    @AuthIgnore
-    @ApiOperation(value = "忘记密码-重置密码")
-    public ResultVO<LoginRespVO> updatePasswordForget(@RequestBody UpdatePasswordForgetReqVO reqVO, HttpServletRequest request, HttpServletResponse response) {
-        ResultVO result = userAccountService.updateManagePasswordForget(reqVO);
-        return result;
-    }
-
-    /**
-     * 发送验证码短信
-     * @param reqVO
-     * @return
-     */
-    @PostMapping("sendCode")
-    @ApiOperation(value = "发送验证码短信")
-    @AuthIgnore
-    public ResultVO sendCode(@RequestBody SendSmsCodeReqVO reqVO) {
-        ResultVO result = userAccountService.sendCodeSms(reqVO);
         return result;
     }
 

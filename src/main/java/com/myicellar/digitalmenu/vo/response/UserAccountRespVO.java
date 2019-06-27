@@ -30,20 +30,8 @@ public class UserAccountRespVO implements Serializable {
     @ApiModelProperty("密码加密因子")
     private String salt;
     
-    @ApiModelProperty("用户类型：1、公司员工 2、供应商用户，3 经销商用户")
+    @ApiModelProperty("用户类型：1、员工")
     private Byte userType;
-    
-    @ApiModelProperty("个人资料审核状态：0 初始状态， 1 待审核，2 审核通过，3 审核不通过")
-    private Byte materialStatus;
-    
-    @ApiModelProperty("微信openid(APP专用)")
-    private String wxOpenId;
-    
-    @ApiModelProperty("微信昵称(APP专用)")
-    private String wxName;
-    
-    @ApiModelProperty("微信头像(APP专用)")
-    private String wxHeadImage;
     
     @ApiModelProperty("创建人")
     private Long createUser;

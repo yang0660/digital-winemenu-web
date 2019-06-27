@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.service;
 import com.myicellar.digitalmenu.dao.entity.LoginRecord;
 import com.myicellar.digitalmenu.dao.entity.UserAccount;
 import com.myicellar.digitalmenu.dao.mapper.LoginRecordMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.UserRoleMapperExt;
 import com.myicellar.digitalmenu.enums.LoginTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +12,6 @@ import java.util.Set;
 
 @Service
 public class LoginRecordService extends BaseService<Long, LoginRecord, LoginRecordMapperExt> {
-
-    @Autowired
-    private UserRoleMapperExt userRoleMapperExt;
 
     /**
      * 保存登录日志
@@ -33,16 +29,8 @@ public class LoginRecordService extends BaseService<Long, LoginRecord, LoginReco
         lr.setType(LoginTypeEnum.LOGIN.value);
 
         //获取登录时的角色名称列表
-        Set<String> roleNames = userRoleMapperExt.selectRoleNamesByUserId(userAccount.getUserId());
         int count = 0;
         StringBuffer roleNameStr = new StringBuffer("");
-        for(String roleName : roleNames){
-            if(count!=0){
-                roleNameStr.append(",");
-            }
-            roleNameStr.append(roleName);
-            count++;
-        }
         lr.setRoleName(roleNameStr.toString());
         mapper.insertSelective(lr);
 
@@ -65,16 +53,7 @@ public class LoginRecordService extends BaseService<Long, LoginRecord, LoginReco
         lr.setType(LoginTypeEnum.LOGIN.value);
 
         //获取登录时的角色名称列表
-        Set<String> roleNames = userRoleMapperExt.selectRoleNamesByUserId(userId);
-        int count = 0;
         StringBuffer roleNameStr = new StringBuffer("");
-        for(String roleName : roleNames){
-            if(count!=0){
-                roleNameStr.append(",");
-            }
-            roleNameStr.append(roleName);
-            count++;
-        }
         lr.setRoleName(roleNameStr.toString());
         mapper.insertSelective(lr);
     }

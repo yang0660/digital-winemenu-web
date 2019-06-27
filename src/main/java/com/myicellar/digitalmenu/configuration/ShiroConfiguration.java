@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.configuration;
 
 import com.google.common.collect.Lists;
-import com.myicellar.digitalmenu.shiro.AppRealm;
 import com.myicellar.digitalmenu.shiro.CustomMobileAuthenticationFilter;
 import com.myicellar.digitalmenu.shiro.CustomWebSessionManager;
 import com.myicellar.digitalmenu.shiro.ManageRealm;
@@ -111,13 +110,6 @@ public class ShiroConfiguration implements ApplicationContextAware {
         credentialsMatcher.setHashAlgorithmName(HASH_ALGORITH_NAME);
         credentialsMatcher.setHashIterations(HASH_ITERATIONS);
         return credentialsMatcher;
-    }
-
-    @Bean
-    public AuthorizingRealm appAuthorizingRealm() {
-        AppRealm realm = new AppRealm();
-        realm.setCredentialsMatcher(hashedCredentialsMatcher());
-        return realm;
     }
 
     @Bean

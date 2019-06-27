@@ -14,14 +14,3 @@ management:
 file-upload:
   root-location: "D:"
   server-host: http://172.21.1.86:8088/digital-winemenu-web
-
-aliyun-sms:
-  accessKeyId: "LTAIIZ3Uyl789799"
-  accessKeySecret: "LssywISvmGSc5i9XtP789785565"
-  templateCode: "SMS_1555798454"
-
-aliyun-push:
-  accessKeyId: "LTAIIZ3Uylfawarewew"
-  accessKeySecret: "LssywISvmGSc5i9Xtjtyrtrtertetwewetwe"
-  androidAppKey: "26019785"
-  iosAppKey: "260098465"
