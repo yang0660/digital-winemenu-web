@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.RestaurantMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Restaurant">
+    <id column="restaurant_id" jdbcType="BIGINT" property="restaurantId" />
+    <result column="restaurant_name_chs" jdbcType="VARCHAR" property="restaurantNameChs" />
+    <result column="restaurant_name_cht" jdbcType="VARCHAR" property="restaurantNameCht" />
+    <result column="restaurant_name_eng" jdbcType="VARCHAR" property="restaurantNameEng" />
+    <result column="logo_url" jdbcType="VARCHAR" property="logoUrl" />
+    <result column="slogan" jdbcType="VARCHAR" property="slogan" />
+    <result column="poster_url" jdbcType="VARCHAR" property="posterUrl" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    restaurant_id, restaurant_name_chs, restaurant_name_cht, restaurant_name_eng, logo_url, 
+    slogan, poster_url, `status`, create_user, create_time, update_user, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_restaurant
+    where restaurant_id = #{restaurantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_restaurant
+    where restaurant_id = #{restaurantId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Restaurant">
+    insert into t_restaurant (restaurant_id, restaurant_name_chs, restaurant_name_cht, 
+      restaurant_name_eng, logo_url, slogan, 
+      poster_url, `status`, create_user, 
+      create_time, update_user, update_time
+      )
+    values (#{restaurantId,jdbcType=BIGINT}, #{restaurantNameChs,jdbcType=VARCHAR}, #{restaurantNameCht,jdbcType=VARCHAR}, 
+      #{restaurantNameEng,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{slogan,jdbcType=VARCHAR}, 
+      #{posterUrl,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createUser,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Restaurant">
+    insert into t_restaurant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="restaurantId != null">
+        restaurant_id,
+      </if>
+      <if test="restaurantNameChs != null">
+        restaurant_name_chs,
+      </if>
+      <if test="restaurantNameCht != null">
+        restaurant_name_cht,
+      </if>
+      <if test="restaurantNameEng != null">
+        restaurant_name_eng,
+      </if>
+      <if test="logoUrl != null">
+        logo_url,
+      </if>
+      <if test="slogan != null">
+        slogan,
+      </if>
+      <if test="posterUrl != null">
+        poster_url,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="restaurantId != null">
+        #{restaurantId,jdbcType=BIGINT},
+      </if>
+      <if test="restaurantNameChs != null">
+        #{restaurantNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="restaurantNameCht != null">
+        #{restaurantNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="restaurantNameEng != null">
+        #{restaurantNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null">
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null">
+        #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="posterUrl != null">
+        #{posterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Restaurant">
+    update t_restaurant
+    <set>
+      <if test="restaurantNameChs != null">
+        restaurant_name_chs = #{restaurantNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="restaurantNameCht != null">
+        restaurant_name_cht = #{restaurantNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="restaurantNameEng != null">
+        restaurant_name_eng = #{restaurantNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null">
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null">
+        slogan = #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="posterUrl != null">
+        poster_url = #{posterUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where restaurant_id = #{restaurantId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Restaurant">
+    update t_restaurant
+    set restaurant_name_chs = #{restaurantNameChs,jdbcType=VARCHAR},
+      restaurant_name_cht = #{restaurantNameCht,jdbcType=VARCHAR},
+      restaurant_name_eng = #{restaurantNameEng,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      slogan = #{slogan,jdbcType=VARCHAR},
+      poster_url = #{posterUrl,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_user = #{createUser,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where restaurant_id = #{restaurantId,jdbcType=BIGINT}
+  </update>
+</mapper>
