@@ -47,9 +47,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by zhangwanli on 2017/6/27.
- */
 @Configuration
 @EnableConfigurationProperties({JacksonProperties.class, FileUploadProperties.class})
 
@@ -131,7 +128,6 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
                 registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
 
                 // 文件上传路径
-                registry.addResourceHandler(FileUploadProperties.CONTEXT_PATH + "/**").addResourceLocations("file:" + fileUploadProperties.getRootLocation() + FileUploadProperties.CONTEXT_PATH + "/");
             }
 
             @Override

@@ -7,6 +7,16 @@ public class Img {
 
     private Long imgTypeId;
 
+    private String imgNameEng;
+
+    private String imgNameChs;
+
+    private String imgNameCht;
+
+    private String imgUrl;
+
+    private String smallImgUrl;
+
     private Long createdUser;
 
     private Date createdTime;
@@ -14,10 +24,6 @@ public class Img {
     private Long updatedUser;
 
     private Date updatedTime;
-
-    private String imgUrl;
-
-    private String smallImgUrl;
 
     public Long getImgId() {
         return imgId;
@@ -33,6 +39,46 @@ public class Img {
 
     public void setImgTypeId(Long imgTypeId) {
         this.imgTypeId = imgTypeId;
+    }
+
+    public String getImgNameEng() {
+        return imgNameEng;
+    }
+
+    public void setImgNameEng(String imgNameEng) {
+        this.imgNameEng = imgNameEng;
+    }
+
+    public String getImgNameChs() {
+        return imgNameChs;
+    }
+
+    public void setImgNameChs(String imgNameChs) {
+        this.imgNameChs = imgNameChs;
+    }
+
+    public String getImgNameCht() {
+        return imgNameCht;
+    }
+
+    public void setImgNameCht(String imgNameCht) {
+        this.imgNameCht = imgNameCht;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getSmallImgUrl() {
+        return smallImgUrl;
+    }
+
+    public void setSmallImgUrl(String smallImgUrl) {
+        this.smallImgUrl = smallImgUrl;
     }
 
     public Long getCreatedUser() {
@@ -65,21 +111,5 @@ public class Img {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getSmallImgUrl() {
-        return smallImgUrl;
-    }
-
-    public void setSmallImgUrl(String smallImgUrl) {
-        this.smallImgUrl = smallImgUrl;
     }
 }

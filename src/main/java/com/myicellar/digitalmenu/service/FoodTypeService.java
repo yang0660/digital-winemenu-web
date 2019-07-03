@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperExt> {
 
     /**
-     * 查询用户列表(分页，支持模糊匹配)
+     * 列表查询-分页
      * @return
      */
     public PageResponseVO<FoodType> queryPageList(FoodTypePageReqVO reqVO){

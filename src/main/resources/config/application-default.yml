@@ -12,5 +12,16 @@ management:
       show-details: always
 
 file-upload:
-  root-location: "D:"
-  server-host: http://172.21.1.86:8088/digital-winemenu-web
+  application-name: ${spring.application.name}
+  base-url: http://image.myicellar.com
+  base-path: /app/imagedata/
+  image:
+    ext-names: jpg,png,gif,tif,bmp
+    max-height: 3000
+    max-width: 3000
+    max-size: 5242880
+    small-height: 100
+    small-width: 0
+  attachment:
+    ext-names: jpg,png,jpeg,doc,docx,xlsx,xls,pdf,zip,rar
+    max-size: 10485760
