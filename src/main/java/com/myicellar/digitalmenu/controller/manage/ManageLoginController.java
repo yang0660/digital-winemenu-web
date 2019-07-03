@@ -48,9 +48,6 @@ public class ManageLoginController {
      *
      * @param reqVO
      * @return
-     * @throws
-     * @author daizhiyue
-     * @date 2019-01-06
      * @since
      */
     @PostMapping(value = "/login")

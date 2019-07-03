@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.ImgType;
 
-public interface ImgTypeMapper {
+public interface ImgTypeMapper extends Mapper<ImgType> {
     int deleteByPrimaryKey(Long imgTypeId);
 
     int insert(ImgType record);

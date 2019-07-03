@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.service;
 import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.dao.mapper.FoodTypeMapperExt;
 import com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO;
-import com.myicellar.digitalmenu.vo.response.FoodTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

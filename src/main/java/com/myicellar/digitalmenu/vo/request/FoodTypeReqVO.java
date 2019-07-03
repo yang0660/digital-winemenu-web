@@ -11,33 +11,18 @@ import lombok.Data;
 @ApiModel(value = "美食分类信息")
 public class FoodTypeReqVO {
 
-    /**
-    * 供应商ID
-    */
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 
-    /**
-     * 供应商ID
-     */
-    @ApiModelProperty(value = "美食分类ID")
+    @ApiModelProperty(value = "美食分类ID(新增时，不需要传)")
     private Long foodTypeId;
 
-    /**
-     * 供应商ID
-     */
     @ApiModelProperty(value = "美食分类名称-英文")
     private String foodTypeNameEng;
 
-    /**
-     * 供应商ID
-     */
     @ApiModelProperty(value = "美食分类名称-简体中文")
     private String foodTypeNameChs;
 
-    /**
-     * 供应商ID
-     */
     @ApiModelProperty(value = "美食分类名称-繁体中文")
     private String foodTypeNameCht;
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.ImgTypeMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.ImgType"
+    extends="com.myicellar.digitalmenu.dao.mapper.ImgTypeMapper.BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List">
+    <include refid="com.myicellar.digitalmenu.dao.mapper.ImgTypeMapper.Base_Column_List" />
+  </sql>
+
+  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO" resultType="long">
+    select count(0)
+    from t_img_type
+    <where>
+      <include refid="conditionWhere" />
+    </where>
+  </select>
+
+  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_img_type
+    <where>
+      <include refid="conditionWhere" />
+    </where>
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <sql id="conditionWhere">
+    <if test="imgTypeNameEng!=null and imgTypeNameEng!=''">
+      img_type_name_eng = #{imgTypeNameEng}
+    </if>
+  </sql>
+
+</mapper>

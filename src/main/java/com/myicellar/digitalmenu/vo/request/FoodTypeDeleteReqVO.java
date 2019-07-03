@@ -11,9 +11,6 @@ import lombok.Data;
 @ApiModel(value = "美食分类信息")
 public class FoodTypeDeleteReqVO {
 
-    /**
-     * 美食分类ID
-     */
     @ApiModelProperty(value = "美食分类ID")
     private Long foodTypeId;
 }

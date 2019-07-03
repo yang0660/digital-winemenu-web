@@ -11,9 +11,6 @@ import lombok.Data;
 @ApiModel(value = "供应商相关信息查询参数")
 public class FoodTypePageReqVO extends PageRequestVO{
 
-    /**
-    * 供应商ID
-    */
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 }
