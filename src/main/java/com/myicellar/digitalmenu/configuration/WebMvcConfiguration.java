@@ -126,6 +126,9 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
                 registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
                 registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
                 registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
+                // 文件上传路径
+                registry.addResourceHandler(fileUploadProperties.getFileFolder() + "/**")
+                        .addResourceLocations("file:" + fileUploadProperties.getBasePath() + "/"+ fileUploadProperties.getFileFolder()+ "/");
 
                 // 文件上传路径
             }

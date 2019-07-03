@@ -152,9 +152,9 @@ public class FileUploadHandler {
     private String getLocalSubDir(String localParentPath, String classifySubDir) {
         assert StringUtils.isNotBlank(localParentPath);
         StringBuilder filePath = new StringBuilder();
-        String applicationName = fileUploadProperties.getApplicationName();
+        String fileFolder = fileUploadProperties.getFileFolder();
         filePath.append(localParentPath.endsWith(File.separator) ? "" : File.separator);
-        filePath.append(StringUtils.isNotBlank(applicationName) ? applicationName + File.separator : "");
+        filePath.append(StringUtils.isNotBlank(fileFolder) ? fileFolder + File.separator : "");
         filePath.append(StringUtils.isNotBlank(classifySubDir) ? classifySubDir + File.separator : "");
         filePath.append(dateFormat.format(new Date()));
         File dir = new File(localParentPath + filePath.toString());

@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @ConfigurationProperties("file-upload")
 public class FileUploadProperties {
-    private String applicationName;//应用名
+    private String fileFolder = "file-upload";
     private String baseUrl; // 文件服务器映射地址
     private String basePath; // 上传文件的服务器的目录
     @NestedConfigurationProperty

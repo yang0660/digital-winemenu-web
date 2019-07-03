@@ -65,7 +65,7 @@ public class ImgTypeController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO add(@RequestBody ImgTypeReqVO reqVO) {
+    public ResultVO<ImgTypeRespVO> add(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
         ImgType imgType = ConvertUtils.convert(reqVO,ImgType.class);
@@ -80,7 +80,9 @@ public class ImgTypeController {
             return ResultVO.validError("save is failed!");
         }
 
-        return ResultVO.success("save is success!");
+        ImgTypeRespVO respVO = ConvertUtils.convert(imgType,ImgTypeRespVO.class);
+        ResultVO resultVO = ResultVO.success("save is success!");
+        return resultVO.setData(respVO);
     }
 
     /**
@@ -92,7 +94,7 @@ public class ImgTypeController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody ImgTypeReqVO reqVO) {
+    public ResultVO<ImgTypeRespVO> update(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         ImgType imgType = ConvertUtils.convert(reqVO,ImgType.class);
@@ -104,7 +106,9 @@ public class ImgTypeController {
             return ResultVO.validError("update is failed!");
         }
 
-        return ResultVO.success("update is success!");
+        ImgTypeRespVO respVO = ConvertUtils.convert(imgType,ImgTypeRespVO.class);
+        ResultVO resultVO = ResultVO.success("update is success!");
+        return resultVO.setData(respVO);
     }
 
     /**

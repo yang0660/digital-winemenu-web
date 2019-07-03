@@ -12,8 +12,7 @@ management:
       show-details: always
 
 file-upload:
-  application-name: ${spring.application.name}
-  base-url: http://localhost:8088
+  base-url: http://localhost:8088/digital-winemenu-web
   base-path: E:/app/imagedata/
   image:
     ext-names: jpg,png,gif,tif,bmp

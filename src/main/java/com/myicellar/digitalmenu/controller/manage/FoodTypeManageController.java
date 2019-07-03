@@ -65,7 +65,7 @@ public class FoodTypeManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO add(@RequestBody FoodTypeReqVO reqVO) {
+    public ResultVO<FoodTypeRespVO> add(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
@@ -80,7 +80,9 @@ public class FoodTypeManageController {
             return ResultVO.validError("save is failed!");
         }
 
-        return ResultVO.success("save is success!");
+        FoodTypeRespVO respVO = ConvertUtils.convert(foodType,FoodTypeRespVO.class);
+        ResultVO resultVO = ResultVO.success("save is success!");
+        return resultVO.setData(respVO);
     }
 
     /**
@@ -104,7 +106,9 @@ public class FoodTypeManageController {
             return ResultVO.validError("update is failed!");
         }
 
-        return ResultVO.success("update is success!");
+        FoodTypeRespVO respVO = ConvertUtils.convert(foodType,FoodTypeRespVO.class);
+        ResultVO resultVO = ResultVO.success("update is success!");
+        return resultVO.setData(respVO);
     }
 
     /**

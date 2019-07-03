@@ -69,7 +69,7 @@ public class ImgController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO add(@RequestBody ImgReqVO reqVO) {
+    public ResultVO<ImgRespVO> add(@RequestBody ImgReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
 
@@ -92,7 +92,9 @@ public class ImgController {
             return ResultVO.validError("save is failed!");
         }
 
-        return ResultVO.success("save is success!");
+        ImgRespVO respVO = ConvertUtils.convert(img,ImgRespVO.class);
+        ResultVO resultVO = ResultVO.success("save is success!");
+        return resultVO.setData(respVO);
     }
 
     /**
@@ -104,7 +106,7 @@ public class ImgController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody ImgReqVO reqVO) {
+    public ResultVO<ImgRespVO> update(@RequestBody ImgReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
@@ -123,7 +125,9 @@ public class ImgController {
             return ResultVO.validError("update is failed!");
         }
 
-        return ResultVO.success("update is success!");
+        ImgRespVO respVO = ConvertUtils.convert(img,ImgRespVO.class);
+        ResultVO resultVO = ResultVO.success("update is success!");
+        return resultVO.setData(respVO);
     }
 
     /**
@@ -189,7 +193,7 @@ public class ImgController {
                 base64Str = base64Str.substring(indexOf);
             }
             if (!StringUtils.isEmpty(reqVO.getBase64Str())) {
-                fileUploadResult = fileUploadHandler.upload(reqVO.getBase64Str(), true, "jpg");
+                fileUploadResult = fileUploadHandler.upload(base64Str, true, "jpg");
             }
         }catch (Exception e){
             log.error("图片上传失败.",e);
