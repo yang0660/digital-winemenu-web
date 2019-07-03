@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineTypeMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineType">
+    <id column="wine_type_id" jdbcType="BIGINT" property="wineTypeId" />
+    <result column="wine_type_seo_name" jdbcType="VARCHAR" property="wineTypeSeoName" />
+    <result column="wine_type_name_eng" jdbcType="VARCHAR" property="wineTypeNameEng" />
+    <result column="wine_type_name_chs" jdbcType="VARCHAR" property="wineTypeNameChs" />
+    <result column="wine_type_name_cht" jdbcType="VARCHAR" property="wineTypeNameCht" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wine_type_id, wine_type_seo_name, wine_type_name_eng, wine_type_name_chs, wine_type_name_cht, 
+    mic_rank, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_wine_type
+    where wine_type_id = #{wineTypeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_wine_type
+    where wine_type_id = #{wineTypeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineType">
+    insert into t_wine_type (wine_type_id, wine_type_seo_name, wine_type_name_eng, 
+      wine_type_name_chs, wine_type_name_cht, mic_rank, 
+      updated_at)
+    values (#{wineTypeId,jdbcType=BIGINT}, #{wineTypeSeoName,jdbcType=VARCHAR}, #{wineTypeNameEng,jdbcType=VARCHAR}, 
+      #{wineTypeNameChs,jdbcType=VARCHAR}, #{wineTypeNameCht,jdbcType=VARCHAR}, #{micRank,jdbcType=SMALLINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineType">
+    insert into t_wine_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wineTypeId != null">
+        wine_type_id,
+      </if>
+      <if test="wineTypeSeoName != null">
+        wine_type_seo_name,
+      </if>
+      <if test="wineTypeNameEng != null">
+        wine_type_name_eng,
+      </if>
+      <if test="wineTypeNameChs != null">
+        wine_type_name_chs,
+      </if>
+      <if test="wineTypeNameCht != null">
+        wine_type_name_cht,
+      </if>
+      <if test="micRank != null">
+        mic_rank,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wineTypeId != null">
+        #{wineTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="wineTypeSeoName != null">
+        #{wineTypeSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameEng != null">
+        #{wineTypeNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameChs != null">
+        #{wineTypeNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameCht != null">
+        #{wineTypeNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="micRank != null">
+        #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineType">
+    update t_wine_type
+    <set>
+      <if test="wineTypeSeoName != null">
+        wine_type_seo_name = #{wineTypeSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameEng != null">
+        wine_type_name_eng = #{wineTypeNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameChs != null">
+        wine_type_name_chs = #{wineTypeNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="wineTypeNameCht != null">
+        wine_type_name_cht = #{wineTypeNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="micRank != null">
+        mic_rank = #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where wine_type_id = #{wineTypeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineType">
+    update t_wine_type
+    set wine_type_seo_name = #{wineTypeSeoName,jdbcType=VARCHAR},
+      wine_type_name_eng = #{wineTypeNameEng,jdbcType=VARCHAR},
+      wine_type_name_chs = #{wineTypeNameChs,jdbcType=VARCHAR},
+      wine_type_name_cht = #{wineTypeNameCht,jdbcType=VARCHAR},
+      mic_rank = #{micRank,jdbcType=SMALLINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where wine_type_id = #{wineTypeId,jdbcType=BIGINT}
+  </update>
+</mapper>

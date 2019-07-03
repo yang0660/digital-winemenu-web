@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.OriginMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Origin">
+    <id column="wine_origin_id" jdbcType="BIGINT" property="wineOriginId" />
+    <result column="region_seo_name" jdbcType="VARCHAR" property="regionSeoName" />
+    <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng" />
+    <result column="region_name_chs" jdbcType="VARCHAR" property="regionNameChs" />
+    <result column="region_name_cht" jdbcType="VARCHAR" property="regionNameCht" />
+    <result column="parent_origin_id" jdbcType="BIGINT" property="parentOriginId" />
+    <result column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wine_origin_id, region_seo_name, region_name_eng, region_name_chs, region_name_cht, 
+    parent_origin_id, country_id, mic_rank, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_origin
+    where wine_origin_id = #{wineOriginId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_origin
+    where wine_origin_id = #{wineOriginId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Origin">
+    insert into t_origin (wine_origin_id, region_seo_name, region_name_eng, 
+      region_name_chs, region_name_cht, parent_origin_id, 
+      country_id, mic_rank, updated_at
+      )
+    values (#{wineOriginId,jdbcType=BIGINT}, #{regionSeoName,jdbcType=VARCHAR}, #{regionNameEng,jdbcType=VARCHAR}, 
+      #{regionNameChs,jdbcType=VARCHAR}, #{regionNameCht,jdbcType=VARCHAR}, #{parentOriginId,jdbcType=BIGINT}, 
+      #{countryId,jdbcType=BIGINT}, #{micRank,jdbcType=SMALLINT}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Origin">
+    insert into t_origin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wineOriginId != null">
+        wine_origin_id,
+      </if>
+      <if test="regionSeoName != null">
+        region_seo_name,
+      </if>
+      <if test="regionNameEng != null">
+        region_name_eng,
+      </if>
+      <if test="regionNameChs != null">
+        region_name_chs,
+      </if>
+      <if test="regionNameCht != null">
+        region_name_cht,
+      </if>
+      <if test="parentOriginId != null">
+        parent_origin_id,
+      </if>
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="micRank != null">
+        mic_rank,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wineOriginId != null">
+        #{wineOriginId,jdbcType=BIGINT},
+      </if>
+      <if test="regionSeoName != null">
+        #{regionSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameEng != null">
+        #{regionNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameChs != null">
+        #{regionNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameCht != null">
+        #{regionNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOriginId != null">
+        #{parentOriginId,jdbcType=BIGINT},
+      </if>
+      <if test="countryId != null">
+        #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="micRank != null">
+        #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Origin">
+    update t_origin
+    <set>
+      <if test="regionSeoName != null">
+        region_seo_name = #{regionSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameEng != null">
+        region_name_eng = #{regionNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameChs != null">
+        region_name_chs = #{regionNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNameCht != null">
+        region_name_cht = #{regionNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOriginId != null">
+        parent_origin_id = #{parentOriginId,jdbcType=BIGINT},
+      </if>
+      <if test="countryId != null">
+        country_id = #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="micRank != null">
+        mic_rank = #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where wine_origin_id = #{wineOriginId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Origin">
+    update t_origin
+    set region_seo_name = #{regionSeoName,jdbcType=VARCHAR},
+      region_name_eng = #{regionNameEng,jdbcType=VARCHAR},
+      region_name_chs = #{regionNameChs,jdbcType=VARCHAR},
+      region_name_cht = #{regionNameCht,jdbcType=VARCHAR},
+      parent_origin_id = #{parentOriginId,jdbcType=BIGINT},
+      country_id = #{countryId,jdbcType=BIGINT},
+      mic_rank = #{micRank,jdbcType=SMALLINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where wine_origin_id = #{wineOriginId,jdbcType=BIGINT}
+  </update>
+</mapper>

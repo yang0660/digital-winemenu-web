@@ -5,7 +5,7 @@ import java.util.Date;
 public class FoodType {
     private Long foodTypeId;
 
-    private Long restaurantId;
+    private Long supplierId;
 
     private String foodTypeNameChs;
 
@@ -29,12 +29,12 @@ public class FoodType {
         this.foodTypeId = foodTypeId;
     }
 
-    public Long getRestaurantId() {
-        return restaurantId;
+    public Long getSupplierId() {
+        return supplierId;
     }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
     }
 
     public String getFoodTypeNameChs() {

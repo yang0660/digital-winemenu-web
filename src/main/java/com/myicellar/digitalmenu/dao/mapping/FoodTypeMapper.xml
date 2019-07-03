@@ -3,7 +3,7 @@
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodTypeMapper">
   <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodType">
     <id column="food_type_id" jdbcType="BIGINT" property="foodTypeId" />
-    <result column="restaurant_id" jdbcType="BIGINT" property="restaurantId" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
     <result column="food_type_name_chs" jdbcType="VARCHAR" property="foodTypeNameChs" />
     <result column="food_type_name_cht" jdbcType="VARCHAR" property="foodTypeNameCht" />
     <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng" />
@@ -13,7 +13,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    food_type_id, restaurant_id, food_type_name_chs, food_type_name_cht, food_type_name_eng, 
+    food_type_id, supplier_id, food_type_name_chs, food_type_name_cht, food_type_name_eng, 
     create_user, create_time, update_user, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -27,11 +27,11 @@
     where food_type_id = #{foodTypeId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
-    insert into t_food_type (food_type_id, restaurant_id, food_type_name_chs, 
+    insert into t_food_type (food_type_id, supplier_id, food_type_name_chs, 
       food_type_name_cht, food_type_name_eng, create_user, 
       create_time, update_user, update_time
       )
-    values (#{foodTypeId,jdbcType=BIGINT}, #{restaurantId,jdbcType=BIGINT}, #{foodTypeNameChs,jdbcType=VARCHAR}, 
+    values (#{foodTypeId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{foodTypeNameChs,jdbcType=VARCHAR}, 
       #{foodTypeNameCht,jdbcType=VARCHAR}, #{foodTypeNameEng,jdbcType=VARCHAR}, #{createUser,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}
       )
@@ -42,8 +42,8 @@
       <if test="foodTypeId != null">
         food_type_id,
       </if>
-      <if test="restaurantId != null">
-        restaurant_id,
+      <if test="supplierId != null">
+        supplier_id,
       </if>
       <if test="foodTypeNameChs != null">
         food_type_name_chs,
@@ -71,8 +71,8 @@
       <if test="foodTypeId != null">
         #{foodTypeId,jdbcType=BIGINT},
       </if>
-      <if test="restaurantId != null">
-        #{restaurantId,jdbcType=BIGINT},
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
       </if>
       <if test="foodTypeNameChs != null">
         #{foodTypeNameChs,jdbcType=VARCHAR},
@@ -100,8 +100,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
     update t_food_type
     <set>
-      <if test="restaurantId != null">
-        restaurant_id = #{restaurantId,jdbcType=BIGINT},
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=BIGINT},
       </if>
       <if test="foodTypeNameChs != null">
         food_type_name_chs = #{foodTypeNameChs,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
     update t_food_type
-    set restaurant_id = #{restaurantId,jdbcType=BIGINT},
+    set supplier_id = #{supplierId,jdbcType=BIGINT},
       food_type_name_chs = #{foodTypeNameChs,jdbcType=VARCHAR},
       food_type_name_cht = #{foodTypeNameCht,jdbcType=VARCHAR},
       food_type_name_eng = #{foodTypeNameEng,jdbcType=VARCHAR},

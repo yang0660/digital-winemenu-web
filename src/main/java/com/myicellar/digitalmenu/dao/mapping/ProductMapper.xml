@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Product">
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="wine_id" jdbcType="BIGINT" property="wineId" />
+    <result column="vintage_tag" jdbcType="VARCHAR" property="vintageTag" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="regular_price" jdbcType="DECIMAL" property="regularPrice" />
+    <result column="volume_type_id" jdbcType="BIGINT" property="volumeTypeId" />
+    <result column="glass_price" jdbcType="DECIMAL" property="glassPrice" />
+    <result column="glass_volume_type_id" jdbcType="BIGINT" property="glassVolumeTypeId" />
+    <result column="is_recommend" jdbcType="TINYINT" property="isRecommend" />
+    <result column="is_enabled" jdbcType="TINYINT" property="isEnabled" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+  </resultMap>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
+    insert into t_product (product_id, wine_id, vintage_tag, 
+      supplier_id, regular_price, volume_type_id, 
+      glass_price, glass_volume_type_id, is_recommend, 
+      is_enabled, created_at, created_by, 
+      updated_at, updated_by)
+    values (#{productId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=BIGINT}, #{regularPrice,jdbcType=DECIMAL}, #{volumeTypeId,jdbcType=BIGINT}, 
+      #{glassPrice,jdbcType=DECIMAL}, #{glassVolumeTypeId,jdbcType=BIGINT}, #{isRecommend,jdbcType=TINYINT}, 
+      #{isEnabled,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="wineId != null">
+        wine_id,
+      </if>
+      <if test="vintageTag != null">
+        vintage_tag,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="regularPrice != null">
+        regular_price,
+      </if>
+      <if test="volumeTypeId != null">
+        volume_type_id,
+      </if>
+      <if test="glassPrice != null">
+        glass_price,
+      </if>
+      <if test="glassVolumeTypeId != null">
+        glass_volume_type_id,
+      </if>
+      <if test="isRecommend != null">
+        is_recommend,
+      </if>
+      <if test="isEnabled != null">
+        is_enabled,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="wineId != null">
+        #{wineId,jdbcType=BIGINT},
+      </if>
+      <if test="vintageTag != null">
+        #{vintageTag,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="regularPrice != null">
+        #{regularPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="volumeTypeId != null">
+        #{volumeTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="glassPrice != null">
+        #{glassPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="glassVolumeTypeId != null">
+        #{glassVolumeTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="isRecommend != null">
+        #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

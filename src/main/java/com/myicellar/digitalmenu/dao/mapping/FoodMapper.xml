@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Food">
+    <id column="food_id" jdbcType="BIGINT" property="foodId" />
+    <result column="food_type_id" jdbcType="BIGINT" property="foodTypeId" />
+    <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng" />
+    <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs" />
+    <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht" />
+    <result column="food_img_id" jdbcType="BIGINT" property="foodImgId" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="is_recommend" jdbcType="TINYINT" property="isRecommend" />
+    <result column="is_enabled" jdbcType="TINYINT" property="isEnabled" />
+    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.Food">
+    <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng" />
+    <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs" />
+    <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    food_id, food_type_id, food_name_eng, food_name_chs, food_name_cht, food_img_id, 
+    price, is_recommend, is_enabled, created_user, created_time, updated_user, updated_time
+  </sql>
+  <sql id="Blob_Column_List">
+    note_plain_eng, note_plain_chs, note_plain_cht
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_food
+    where food_id = #{foodId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_food
+    where food_id = #{foodId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
+    insert into t_food (food_id, food_type_id, food_name_eng, 
+      food_name_chs, food_name_cht, food_img_id, 
+      price, is_recommend, is_enabled, 
+      created_user, created_time, updated_user, 
+      updated_time, note_plain_eng, note_plain_chs, 
+      note_plain_cht)
+    values (#{foodId,jdbcType=BIGINT}, #{foodTypeId,jdbcType=BIGINT}, #{foodNameEng,jdbcType=VARCHAR}, 
+      #{foodNameChs,jdbcType=VARCHAR}, #{foodNameCht,jdbcType=VARCHAR}, #{foodImgId,jdbcType=BIGINT}, 
+      #{price,jdbcType=DECIMAL}, #{isRecommend,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, 
+      #{createdUser,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=BIGINT}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{notePlainEng,jdbcType=LONGVARCHAR}, #{notePlainChs,jdbcType=LONGVARCHAR}, 
+      #{notePlainCht,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
+    insert into t_food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="foodTypeId != null">
+        food_type_id,
+      </if>
+      <if test="foodNameEng != null">
+        food_name_eng,
+      </if>
+      <if test="foodNameChs != null">
+        food_name_chs,
+      </if>
+      <if test="foodNameCht != null">
+        food_name_cht,
+      </if>
+      <if test="foodImgId != null">
+        food_img_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="isRecommend != null">
+        is_recommend,
+      </if>
+      <if test="isEnabled != null">
+        is_enabled,
+      </if>
+      <if test="createdUser != null">
+        created_user,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedUser != null">
+        updated_user,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="notePlainEng != null">
+        note_plain_eng,
+      </if>
+      <if test="notePlainChs != null">
+        note_plain_chs,
+      </if>
+      <if test="notePlainCht != null">
+        note_plain_cht,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        #{foodId,jdbcType=BIGINT},
+      </if>
+      <if test="foodTypeId != null">
+        #{foodTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="foodNameEng != null">
+        #{foodNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNameChs != null">
+        #{foodNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNameCht != null">
+        #{foodNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="foodImgId != null">
+        #{foodImgId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isRecommend != null">
+        #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="createdUser != null">
+        #{createdUser,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        #{updatedUser,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notePlainEng != null">
+        #{notePlainEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notePlainChs != null">
+        #{notePlainChs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notePlainCht != null">
+        #{notePlainCht,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
+    update t_food
+    <set>
+      <if test="foodTypeId != null">
+        food_type_id = #{foodTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="foodNameEng != null">
+        food_name_eng = #{foodNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNameChs != null">
+        food_name_chs = #{foodNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNameCht != null">
+        food_name_cht = #{foodNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="foodImgId != null">
+        food_img_id = #{foodImgId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="isRecommend != null">
+        is_recommend = #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        is_enabled = #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="createdUser != null">
+        created_user = #{createdUser,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        updated_user = #{updatedUser,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notePlainEng != null">
+        note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notePlainChs != null">
+        note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="notePlainCht != null">
+        note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where food_id = #{foodId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
+    update t_food
+    set food_type_id = #{foodTypeId,jdbcType=BIGINT},
+      food_name_eng = #{foodNameEng,jdbcType=VARCHAR},
+      food_name_chs = #{foodNameChs,jdbcType=VARCHAR},
+      food_name_cht = #{foodNameCht,jdbcType=VARCHAR},
+      food_img_id = #{foodImgId,jdbcType=BIGINT},
+      price = #{price,jdbcType=DECIMAL},
+      is_recommend = #{isRecommend,jdbcType=TINYINT},
+      is_enabled = #{isEnabled,jdbcType=TINYINT},
+      created_user = #{createdUser,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
+      note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
+      note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR}
+    where food_id = #{foodId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
+    update t_food
+    set food_type_id = #{foodTypeId,jdbcType=BIGINT},
+      food_name_eng = #{foodNameEng,jdbcType=VARCHAR},
+      food_name_chs = #{foodNameChs,jdbcType=VARCHAR},
+      food_name_cht = #{foodNameCht,jdbcType=VARCHAR},
+      food_img_id = #{foodImgId,jdbcType=BIGINT},
+      price = #{price,jdbcType=DECIMAL},
+      is_recommend = #{isRecommend,jdbcType=TINYINT},
+      is_enabled = #{isEnabled,jdbcType=TINYINT},
+      created_user = #{createdUser,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where food_id = #{foodId,jdbcType=BIGINT}
+  </update>
+</mapper>

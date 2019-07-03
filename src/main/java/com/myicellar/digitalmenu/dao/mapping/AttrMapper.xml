@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.AttrMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Attr">
+    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
+    <result column="attr_catg_id" jdbcType="BIGINT" property="attrCatgId" />
+    <result column="attr_catg_name" jdbcType="VARCHAR" property="attrCatgName" />
+    <result column="attr_seo_name" jdbcType="VARCHAR" property="attrSeoName" />
+    <result column="attr_name_eng" jdbcType="VARCHAR" property="attrNameEng" />
+    <result column="attr_name_chs" jdbcType="VARCHAR" property="attrNameChs" />
+    <result column="attr_name_cht" jdbcType="VARCHAR" property="attrNameCht" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    attr_id, attr_catg_id, attr_catg_name, attr_seo_name, attr_name_eng, attr_name_chs, 
+    attr_name_cht, mic_rank, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_attr
+    where attr_id = #{attrId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_attr
+    where attr_id = #{attrId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Attr">
+    insert into t_attr (attr_id, attr_catg_id, attr_catg_name, 
+      attr_seo_name, attr_name_eng, attr_name_chs, 
+      attr_name_cht, mic_rank, updated_at
+      )
+    values (#{attrId,jdbcType=BIGINT}, #{attrCatgId,jdbcType=BIGINT}, #{attrCatgName,jdbcType=VARCHAR}, 
+      #{attrSeoName,jdbcType=VARCHAR}, #{attrNameEng,jdbcType=VARCHAR}, #{attrNameChs,jdbcType=VARCHAR}, 
+      #{attrNameCht,jdbcType=VARCHAR}, #{micRank,jdbcType=SMALLINT}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Attr">
+    insert into t_attr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="attrId != null">
+        attr_id,
+      </if>
+      <if test="attrCatgId != null">
+        attr_catg_id,
+      </if>
+      <if test="attrCatgName != null">
+        attr_catg_name,
+      </if>
+      <if test="attrSeoName != null">
+        attr_seo_name,
+      </if>
+      <if test="attrNameEng != null">
+        attr_name_eng,
+      </if>
+      <if test="attrNameChs != null">
+        attr_name_chs,
+      </if>
+      <if test="attrNameCht != null">
+        attr_name_cht,
+      </if>
+      <if test="micRank != null">
+        mic_rank,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="attrId != null">
+        #{attrId,jdbcType=BIGINT},
+      </if>
+      <if test="attrCatgId != null">
+        #{attrCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="attrCatgName != null">
+        #{attrCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrSeoName != null">
+        #{attrSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameEng != null">
+        #{attrNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameChs != null">
+        #{attrNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameCht != null">
+        #{attrNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="micRank != null">
+        #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Attr">
+    update t_attr
+    <set>
+      <if test="attrCatgId != null">
+        attr_catg_id = #{attrCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="attrCatgName != null">
+        attr_catg_name = #{attrCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrSeoName != null">
+        attr_seo_name = #{attrSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameEng != null">
+        attr_name_eng = #{attrNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameChs != null">
+        attr_name_chs = #{attrNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNameCht != null">
+        attr_name_cht = #{attrNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="micRank != null">
+        mic_rank = #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where attr_id = #{attrId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Attr">
+    update t_attr
+    set attr_catg_id = #{attrCatgId,jdbcType=BIGINT},
+      attr_catg_name = #{attrCatgName,jdbcType=VARCHAR},
+      attr_seo_name = #{attrSeoName,jdbcType=VARCHAR},
+      attr_name_eng = #{attrNameEng,jdbcType=VARCHAR},
+      attr_name_chs = #{attrNameChs,jdbcType=VARCHAR},
+      attr_name_cht = #{attrNameCht,jdbcType=VARCHAR},
+      mic_rank = #{micRank,jdbcType=SMALLINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where attr_id = #{attrId,jdbcType=BIGINT}
+  </update>
+</mapper>

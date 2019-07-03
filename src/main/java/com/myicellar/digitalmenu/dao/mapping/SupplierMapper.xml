@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.SupplierMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Supplier">
+    <id column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="supplier_seo_name" jdbcType="VARCHAR" property="supplierSeoName" />
+    <result column="supplier_name_eng" jdbcType="VARCHAR" property="supplierNameEng" />
+    <result column="supplier_name_cht" jdbcType="VARCHAR" property="supplierNameCht" />
+    <result column="supplier_name_chs" jdbcType="VARCHAR" property="supplierNameChs" />
+    <result column="suppiler_type" jdbcType="TINYINT" property="suppilerType" />
+    <result column="logo_img_id" jdbcType="BIGINT" property="logoImgId" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    supplier_id, supplier_seo_name, supplier_name_eng, supplier_name_cht, supplier_name_chs, 
+    suppiler_type, logo_img_id, updated_at, updated_user, created_at, created_user
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_supplier
+    where supplier_id = #{supplierId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_supplier
+    where supplier_id = #{supplierId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
+    insert into t_supplier (supplier_id, supplier_seo_name, supplier_name_eng, 
+      supplier_name_cht, supplier_name_chs, suppiler_type, 
+      logo_img_id, updated_at, updated_user, 
+      created_at, created_user)
+    values (#{supplierId,jdbcType=BIGINT}, #{supplierSeoName,jdbcType=VARCHAR}, #{supplierNameEng,jdbcType=VARCHAR}, 
+      #{supplierNameCht,jdbcType=VARCHAR}, #{supplierNameChs,jdbcType=VARCHAR}, #{suppilerType,jdbcType=TINYINT}, 
+      #{logoImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
+    insert into t_supplier
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="supplierSeoName != null">
+        supplier_seo_name,
+      </if>
+      <if test="supplierNameEng != null">
+        supplier_name_eng,
+      </if>
+      <if test="supplierNameCht != null">
+        supplier_name_cht,
+      </if>
+      <if test="supplierNameChs != null">
+        supplier_name_chs,
+      </if>
+      <if test="suppilerType != null">
+        suppiler_type,
+      </if>
+      <if test="logoImgId != null">
+        logo_img_id,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="updatedUser != null">
+        updated_user,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="createdUser != null">
+        created_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierSeoName != null">
+        #{supplierSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameEng != null">
+        #{supplierNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameCht != null">
+        #{supplierNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameChs != null">
+        #{supplierNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="suppilerType != null">
+        #{suppilerType,jdbcType=TINYINT},
+      </if>
+      <if test="logoImgId != null">
+        #{logoImgId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        #{updatedUser,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUser != null">
+        #{createdUser,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
+    update t_supplier
+    <set>
+      <if test="supplierSeoName != null">
+        supplier_seo_name = #{supplierSeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameEng != null">
+        supplier_name_eng = #{supplierNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameCht != null">
+        supplier_name_cht = #{supplierNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierNameChs != null">
+        supplier_name_chs = #{supplierNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="suppilerType != null">
+        suppiler_type = #{suppilerType,jdbcType=TINYINT},
+      </if>
+      <if test="logoImgId != null">
+        logo_img_id = #{logoImgId,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null">
+        updated_user = #{updatedUser,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUser != null">
+        created_user = #{createdUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where supplier_id = #{supplierId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
+    update t_supplier
+    set supplier_seo_name = #{supplierSeoName,jdbcType=VARCHAR},
+      supplier_name_eng = #{supplierNameEng,jdbcType=VARCHAR},
+      supplier_name_cht = #{supplierNameCht,jdbcType=VARCHAR},
+      supplier_name_chs = #{supplierNameChs,jdbcType=VARCHAR},
+      suppiler_type = #{suppilerType,jdbcType=TINYINT},
+      logo_img_id = #{logoImgId,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_user = #{updatedUser,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_user = #{createdUser,jdbcType=BIGINT}
+    where supplier_id = #{supplierId,jdbcType=BIGINT}
+  </update>
+</mapper>

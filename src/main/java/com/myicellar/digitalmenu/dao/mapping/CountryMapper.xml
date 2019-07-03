@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.CountryMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Country">
+    <id column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="country_seo_name" jdbcType="VARCHAR" property="countrySeoName" />
+    <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng" />
+    <result column="country_name_chs" jdbcType="VARCHAR" property="countryNameChs" />
+    <result column="country_name_cht" jdbcType="VARCHAR" property="countryNameCht" />
+    <result column="img_id" jdbcType="BIGINT" property="imgId" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    country_id, country_code, country_seo_name, country_name_eng, country_name_chs, country_name_cht, 
+    img_id, mic_rank, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_country
+    where country_id = #{countryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_country
+    where country_id = #{countryId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Country">
+    insert into t_country (country_id, country_code, country_seo_name, 
+      country_name_eng, country_name_chs, country_name_cht, 
+      img_id, mic_rank, updated_at
+      )
+    values (#{countryId,jdbcType=BIGINT}, #{countryCode,jdbcType=VARCHAR}, #{countrySeoName,jdbcType=VARCHAR}, 
+      #{countryNameEng,jdbcType=VARCHAR}, #{countryNameChs,jdbcType=VARCHAR}, #{countryNameCht,jdbcType=VARCHAR}, 
+      #{imgId,jdbcType=BIGINT}, #{micRank,jdbcType=SMALLINT}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Country">
+    insert into t_country
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="countrySeoName != null">
+        country_seo_name,
+      </if>
+      <if test="countryNameEng != null">
+        country_name_eng,
+      </if>
+      <if test="countryNameChs != null">
+        country_name_chs,
+      </if>
+      <if test="countryNameCht != null">
+        country_name_cht,
+      </if>
+      <if test="imgId != null">
+        img_id,
+      </if>
+      <if test="micRank != null">
+        mic_rank,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="countryId != null">
+        #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countrySeoName != null">
+        #{countrySeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameEng != null">
+        #{countryNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameChs != null">
+        #{countryNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameCht != null">
+        #{countryNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        #{imgId,jdbcType=BIGINT},
+      </if>
+      <if test="micRank != null">
+        #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Country">
+    update t_country
+    <set>
+      <if test="countryCode != null">
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countrySeoName != null">
+        country_seo_name = #{countrySeoName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameEng != null">
+        country_name_eng = #{countryNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameChs != null">
+        country_name_chs = #{countryNameChs,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameCht != null">
+        country_name_cht = #{countryNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        img_id = #{imgId,jdbcType=BIGINT},
+      </if>
+      <if test="micRank != null">
+        mic_rank = #{micRank,jdbcType=SMALLINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where country_id = #{countryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Country">
+    update t_country
+    set country_code = #{countryCode,jdbcType=VARCHAR},
+      country_seo_name = #{countrySeoName,jdbcType=VARCHAR},
+      country_name_eng = #{countryNameEng,jdbcType=VARCHAR},
+      country_name_chs = #{countryNameChs,jdbcType=VARCHAR},
+      country_name_cht = #{countryNameCht,jdbcType=VARCHAR},
+      img_id = #{imgId,jdbcType=BIGINT},
+      mic_rank = #{micRank,jdbcType=SMALLINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where country_id = #{countryId,jdbcType=BIGINT}
+  </update>
+</mapper>
