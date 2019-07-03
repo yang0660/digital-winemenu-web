@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandle;
-import com.myicellar.digitalmenu.vo.FileVO;
+import com.myicellar.digitalmenu.vo.response.FileVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

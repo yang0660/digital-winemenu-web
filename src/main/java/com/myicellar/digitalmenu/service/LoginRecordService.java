@@ -4,11 +4,9 @@ import com.myicellar.digitalmenu.dao.entity.LoginRecord;
 import com.myicellar.digitalmenu.dao.entity.UserAccount;
 import com.myicellar.digitalmenu.dao.mapper.LoginRecordMapperExt;
 import com.myicellar.digitalmenu.enums.LoginTypeEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Set;
 
 @Service
 public class LoginRecordService extends BaseService<Long, LoginRecord, LoginRecordMapperExt> {

@@ -1,4 +1,4 @@
-package com.myicellar.digitalmenu.vo;
+package com.myicellar.digitalmenu.vo.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
