@@ -3,23 +3,21 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.Img;
-import com.myicellar.digitalmenu.dao.entity.ImgType;
 import com.myicellar.digitalmenu.service.ImgService;
-import com.myicellar.digitalmenu.service.ImgTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
-import com.myicellar.digitalmenu.vo.request.*;
+import com.myicellar.digitalmenu.vo.request.ImgDeleteReqVO;
+import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
+import com.myicellar.digitalmenu.vo.request.ImgReqVO;
 import com.myicellar.digitalmenu.vo.response.ImgRespVO;
-import com.myicellar.digitalmenu.vo.response.ImgTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +30,7 @@ import java.util.Date;
 @RestController
 @Slf4j
 @RequestMapping("/manage/img")
-@Api(tags = "图片", description = "/manage/img")
+@Api(tags = "图片管理", description = "/manage/img")
 public class ImgController {
 
     @Autowired
@@ -81,7 +79,7 @@ public class ImgController {
         }
 
         Img img = ConvertUtils.convert(reqVO,Img.class);
-        img.setImgTypeId(snowflakeIdWorker.nextId());
+        img.setImgId(snowflakeIdWorker.nextId());
         img.setImgUrl(fileUploadResult.getImageUrl());
         img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
         img.setCreatedUser(0L);

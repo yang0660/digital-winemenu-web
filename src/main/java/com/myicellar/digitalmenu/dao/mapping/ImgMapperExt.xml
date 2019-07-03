@@ -29,7 +29,7 @@
 
   <sql id="conditionWhere">
     <if test="imgTypeId!=null">
-      and img_type_id = #{imgTypeNameEng}
+      and img_type_id = #{imgTypeId}
     </if>
     <if test="imgNameEng!=null and imgNameEng!=''">
       and img_name_eng = #{imgNameEng}
