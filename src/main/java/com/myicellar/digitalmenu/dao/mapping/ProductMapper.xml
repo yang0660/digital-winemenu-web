@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.ProductMapper">
   <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Product">
-    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <id column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
     <result column="vintage_tag" jdbcType="VARCHAR" property="vintageTag" />
     <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
@@ -17,6 +17,21 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
   </resultMap>
+  <sql id="Base_Column_List">
+    product_id, wine_id, vintage_tag, supplier_id, regular_price, volume_type_id, glass_price, 
+    glass_volume_type_id, is_recommend, is_enabled, created_at, created_by, updated_at, 
+    updated_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where product_id = #{productId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_product
+    where product_id = #{productId,jdbcType=BIGINT}
+  </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
     insert into t_product (product_id, wine_id, vintage_tag, 
       supplier_id, regular_price, volume_type_id, 
@@ -120,4 +135,66 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
+    update t_product
+    <set>
+      <if test="wineId != null">
+        wine_id = #{wineId,jdbcType=BIGINT},
+      </if>
+      <if test="vintageTag != null">
+        vintage_tag = #{vintageTag,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="regularPrice != null">
+        regular_price = #{regularPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="volumeTypeId != null">
+        volume_type_id = #{volumeTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="glassPrice != null">
+        glass_price = #{glassPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="glassVolumeTypeId != null">
+        glass_volume_type_id = #{glassVolumeTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="isRecommend != null">
+        is_recommend = #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        is_enabled = #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
+    update t_product
+    set wine_id = #{wineId,jdbcType=BIGINT},
+      vintage_tag = #{vintageTag,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=BIGINT},
+      regular_price = #{regularPrice,jdbcType=DECIMAL},
+      volume_type_id = #{volumeTypeId,jdbcType=BIGINT},
+      glass_price = #{glassPrice,jdbcType=DECIMAL},
+      glass_volume_type_id = #{glassVolumeTypeId,jdbcType=BIGINT},
+      is_recommend = #{isRecommend,jdbcType=TINYINT},
+      is_enabled = #{isEnabled,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT}
+    where product_id = #{productId,jdbcType=BIGINT}
+  </update>
 </mapper>
