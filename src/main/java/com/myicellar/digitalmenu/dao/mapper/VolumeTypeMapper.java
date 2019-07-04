@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.VolumeType;
 
-public interface VolumeTypeMapper {
+public interface VolumeTypeMapper extends Mapper<VolumeType> {
     int deleteByPrimaryKey(Integer volumeTypeId);
 
     int insert(VolumeType record);
