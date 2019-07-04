@@ -70,11 +70,11 @@ public class FoodTypeManageController {
         checkNewParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
         foodType.setFoodTypeId(snowflakeIdWorker.nextId());
-        foodType.setCreateUser(0L);
-        foodType.setUpdateUser(0L);
+        foodType.setCreatedBy(0L);
+        foodType.setUpdatedBy(0L);
         Date now = new Date();
-        foodType.setCreateTime(now);
-        foodType.setUpdateTime(now);
+        foodType.setCreatedAt(now);
+        foodType.setUpdatedAt(now);
         int i = foodTypeService.insertSelective(foodType);
         if(i==0){
             return ResultVO.validError("save is failed!");
@@ -98,9 +98,9 @@ public class FoodTypeManageController {
         //参数校验
         checkUpdateParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
-        foodType.setUpdateUser(0L);
+        foodType.setUpdatedBy(0L);
         Date now = new Date();
-        foodType.setUpdateTime(now);
+        foodType.setUpdatedAt(now);
         int i = foodTypeService.updateByPrimaryKeySelective(foodType);
         if(i==0){
             return ResultVO.validError("update is failed!");
@@ -138,10 +138,10 @@ public class FoodTypeManageController {
      */
     public void checkNewParam(FoodTypeReqVO reqVO){
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            throw new BizException("supplier cannot is empty!");
+            throw new BizException("supplier cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
-            throw new BizException("foodTypeNameEng cannot is empty!");
+            throw new BizException("foodTypeNameEng cannot be empty!");
         }
     }
 
@@ -151,13 +151,13 @@ public class FoodTypeManageController {
      */
     public void checkUpdateParam(FoodTypeReqVO reqVO){
         if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
-            throw new BizException("foodTypeId cannot is empty!");
+            throw new BizException("foodTypeId cannot be empty!");
         }
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            throw new BizException("supplier cannot is empty!");
+            throw new BizException("supplier cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
-            throw new BizException("foodTypeNameEng cannot is empty!");
+            throw new BizException("foodTypeNameEng cannot be empty!");
         }
     }
 

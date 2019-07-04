@@ -82,11 +82,11 @@ public class ImgController {
         img.setImgId(snowflakeIdWorker.nextId());
         img.setImgUrl(fileUploadResult.getImageUrl());
         img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
-        img.setCreatedUser(0L);
-        img.setUpdatedUser(0L);
+        img.setCreatedBy(0L);
+        img.setUpdatedBy(0L);
         Date now = new Date();
-        img.setCreatedTime(now);
-        img.setUpdatedTime(now);
+        img.setCreatedAt(now);
+        img.setUpdatedAt(now);
         int i = imgService.insertSelective(img);
         if(i==0){
             return ResultVO.validError("save is failed!");
@@ -117,9 +117,9 @@ public class ImgController {
         Img img = ConvertUtils.convert(reqVO,Img.class);
         img.setImgUrl(fileUploadResult.getImageUrl());
         img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
-        img.setUpdatedUser(0L);
+        img.setUpdatedBy(0L);
         Date now = new Date();
-        img.setUpdatedTime(now);
+        img.setUpdatedAt(now);
         int i = imgService.updateByPrimaryKeySelective(img);
         if(i==0){
             return ResultVO.validError("update is failed!");
@@ -158,10 +158,10 @@ public class ImgController {
      */
     public void checkNewParam(ImgReqVO reqVO){
         if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
-            throw new BizException("imgTypeId cannot is empty!");
+            throw new BizException("imgTypeId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getImgNameEng())){
-            throw new BizException("imgNameEng cannot is empty!");
+            throw new BizException("imgNameEng cannot be empty!");
         }
     }
 
@@ -171,10 +171,10 @@ public class ImgController {
      */
     public void checkUpdateParam(ImgReqVO reqVO){
         if(reqVO.getImgId()==null || reqVO.getImgId()==0L){
-            throw new BizException("imgId cannot is empty!");
+            throw new BizException("imgId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getImgNameEng())){
-            throw new BizException("imgNameEng cannot is empty!");
+            throw new BizException("imgNameEng cannot be empty!");
         }
     }
 

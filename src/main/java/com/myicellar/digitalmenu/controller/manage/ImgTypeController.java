@@ -73,8 +73,8 @@ public class ImgTypeController {
         imgType.setCreatedUser(0L);
         imgType.setUpdatedUser(0L);
         Date now = new Date();
-        imgType.setCreatedTime(now);
-        imgType.setUpdatedTime(now);
+        imgType.setCreatedAt(now);
+        imgType.setUpdatedAt(now);
         int i = imgTypeService.insertSelective(imgType);
         if(i==0){
             return ResultVO.validError("save is failed!");
@@ -100,7 +100,7 @@ public class ImgTypeController {
         ImgType imgType = ConvertUtils.convert(reqVO,ImgType.class);
         imgType.setUpdatedUser(0L);
         Date now = new Date();
-        imgType.setUpdatedTime(now);
+        imgType.setUpdatedAt(now);
         int i = imgTypeService.updateByPrimaryKeySelective(imgType);
         if(i==0){
             return ResultVO.validError("update is failed!");
@@ -139,7 +139,7 @@ public class ImgTypeController {
      */
     public void checkNewParam(ImgTypeReqVO reqVO){
         if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
-            throw new BizException("imgTypeNameEng cannot is empty!");
+            throw new BizException("imgTypeNameEng cannot be empty!");
         }
     }
 
@@ -149,10 +149,10 @@ public class ImgTypeController {
      */
     public void checkUpdateParam(ImgTypeReqVO reqVO){
         if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
-            throw new BizException("imgTypeId cannot is empty!");
+            throw new BizException("imgTypeId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
-            throw new BizException("imgTypeNameEng cannot is empty!");
+            throw new BizException("imgTypeNameEng cannot be empty!");
         }
     }
 

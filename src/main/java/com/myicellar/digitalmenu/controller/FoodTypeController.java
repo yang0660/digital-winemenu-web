@@ -40,7 +40,7 @@ public class FoodTypeController {
     @ApiOperation("美食分类列表查询")
     public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody FoodTypePageReqVO reqVO) {
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            return ResultVO.validError("supplier cannot is empty！");
+            return ResultVO.validError("supplier cannot be empty！");
         }
 
         reqVO.setPageNumber(0);
