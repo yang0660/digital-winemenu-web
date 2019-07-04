@@ -1,0 +1,16 @@
+package com.myicellar.digitalmenu.vo.request;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+/**
+* 酒庄相关信息查询参数
+*/
+@Data
+@ApiModel(value = "酒庄相关信息查询参数")
+public class WineryPageReqVO extends PageRequestVO{
+
+    @ApiModelProperty(value = "酒庄ID")
+    private Long wineryId;
+}

@@ -1,10 +1,12 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Winery;
+import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 
 import java.util.List;
 
 public interface WineryMapperExt extends WineryMapper {
-    List<Winery> selectList();
+    long selectCount(WineryPageReqVO reqVO);
 
+    List<Winery> selectList(WineryPageReqVO reqVO);
 }

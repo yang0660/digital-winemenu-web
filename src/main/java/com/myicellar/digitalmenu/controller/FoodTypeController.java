@@ -43,12 +43,12 @@ public class FoodTypeController {
             return ResultVO.validError("supplier cannot be empty！");
         }
 
-        reqVO.setPageNumber(0);
+        reqVO.setPageNumber(1);
         reqVO.setPageSize(1000);
         List<FoodType> list = foodTypeService.selectList(reqVO);
 
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
-        if(CollectionUtils.isEmpty(list)){
+        if(!CollectionUtils.isEmpty(list)){
             resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);
         }
 
