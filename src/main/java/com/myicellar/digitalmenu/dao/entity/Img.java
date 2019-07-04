@@ -17,13 +17,13 @@ public class Img {
 
     private String smallImgUrl;
 
-    private Long createdUser;
+    private Long createdBy;
 
-    private Date createdTime;
+    private Date createdAt;
 
-    private Long updatedUser;
+    private Long updatedBy;
 
-    private Date updatedTime;
+    private Date updatedAt;
 
     public Long getImgId() {
         return imgId;
@@ -81,35 +81,35 @@ public class Img {
         this.smallImgUrl = smallImgUrl;
     }
 
-    public Long getCreatedUser() {
-        return createdUser;
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreatedUser(Long createdUser) {
-        this.createdUser = createdUser;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Long getUpdatedUser() {
-        return updatedUser;
+    public Long getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdatedUser(Long updatedUser) {
-        this.updatedUser = updatedUser;
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

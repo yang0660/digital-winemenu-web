@@ -11,10 +11,10 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="is_recommend" jdbcType="TINYINT" property="isRecommend" />
     <result column="is_enabled" jdbcType="TINYINT" property="isEnabled" />
-    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
-    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.Food">
     <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng" />
@@ -23,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     food_id, food_type_id, food_name_eng, food_name_chs, food_name_cht, food_img_id, 
-    price, is_recommend, is_enabled, created_user, created_time, updated_user, updated_time
+    price, is_recommend, is_enabled, created_by, created_at, updated_by, updated_at
   </sql>
   <sql id="Blob_Column_List">
     note_plain_eng, note_plain_chs, note_plain_cht
@@ -44,14 +44,14 @@
     insert into t_food (food_id, food_type_id, food_name_eng, 
       food_name_chs, food_name_cht, food_img_id, 
       price, is_recommend, is_enabled, 
-      created_user, created_time, updated_user, 
-      updated_time, note_plain_eng, note_plain_chs, 
+      created_by, created_at, updated_by, 
+      updated_at, note_plain_eng, note_plain_chs, 
       note_plain_cht)
     values (#{foodId,jdbcType=BIGINT}, #{foodTypeId,jdbcType=BIGINT}, #{foodNameEng,jdbcType=VARCHAR}, 
       #{foodNameChs,jdbcType=VARCHAR}, #{foodNameCht,jdbcType=VARCHAR}, #{foodImgId,jdbcType=BIGINT}, 
       #{price,jdbcType=DECIMAL}, #{isRecommend,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, 
-      #{createdUser,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=BIGINT}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{notePlainEng,jdbcType=LONGVARCHAR}, #{notePlainChs,jdbcType=LONGVARCHAR}, 
+      #{createdBy,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{notePlainEng,jdbcType=LONGVARCHAR}, #{notePlainChs,jdbcType=LONGVARCHAR}, 
       #{notePlainCht,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Food">
@@ -84,17 +84,17 @@
       <if test="isEnabled != null">
         is_enabled,
       </if>
-      <if test="createdUser != null">
-        created_user,
+      <if test="createdBy != null">
+        created_by,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createdAt != null">
+        created_at,
       </if>
-      <if test="updatedUser != null">
-        updated_user,
+      <if test="updatedBy != null">
+        updated_by,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updatedAt != null">
+        updated_at,
       </if>
       <if test="notePlainEng != null">
         note_plain_eng,
@@ -134,17 +134,17 @@
       <if test="isEnabled != null">
         #{isEnabled,jdbcType=TINYINT},
       </if>
-      <if test="createdUser != null">
-        #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="notePlainEng != null">
         #{notePlainEng,jdbcType=LONGVARCHAR},
@@ -184,17 +184,17 @@
       <if test="isEnabled != null">
         is_enabled = #{isEnabled,jdbcType=TINYINT},
       </if>
-      <if test="createdUser != null">
-        created_user = #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        updated_user = #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="notePlainEng != null">
         note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
@@ -218,10 +218,10 @@
       price = #{price,jdbcType=DECIMAL},
       is_recommend = #{isRecommend,jdbcType=TINYINT},
       is_enabled = #{isEnabled,jdbcType=TINYINT},
-      created_user = #{createdUser,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_user = #{updatedUser,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
       note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
       note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR}
@@ -237,10 +237,10 @@
       price = #{price,jdbcType=DECIMAL},
       is_recommend = #{isRecommend,jdbcType=TINYINT},
       is_enabled = #{isEnabled,jdbcType=TINYINT},
-      created_user = #{createdUser,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_user = #{updatedUser,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where food_id = #{foodId,jdbcType=BIGINT}
   </update>
 </mapper>

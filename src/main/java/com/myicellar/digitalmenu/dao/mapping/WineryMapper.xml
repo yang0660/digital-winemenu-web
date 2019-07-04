@@ -10,9 +10,9 @@
     <result column="logo_img_id" jdbcType="BIGINT" property="logoImgId" />
     <result column="banner_img_id" jdbcType="BIGINT" property="bannerImgId" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
-    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.Winery">
     <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng" />
@@ -27,14 +27,14 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Winery">
     insert into t_winery (winery_id, winery_seo_name, winery_name_eng, 
       winery_name_chs, winery_name_cht, logo_img_id, 
-      banner_img_id, updated_at, updated_user, 
-      created_at, created_user, note_plain_eng, 
+      banner_img_id, updated_at, updated_by, 
+      created_at, created_by, note_plain_eng, 
       note_plain_chs, note_plain_cht, about_url, 
       winery_img_ids)
     values (#{wineryId,jdbcType=BIGINT}, #{winerySeoName,jdbcType=VARCHAR}, #{wineryNameEng,jdbcType=VARCHAR}, 
       #{wineryNameChs,jdbcType=VARCHAR}, #{wineryNameCht,jdbcType=VARCHAR}, #{logoImgId,jdbcType=BIGINT}, 
-      #{bannerImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=BIGINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=BIGINT}, #{notePlainEng,jdbcType=LONGVARCHAR}, 
+      #{bannerImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, #{notePlainEng,jdbcType=LONGVARCHAR}, 
       #{notePlainChs,jdbcType=LONGVARCHAR}, #{notePlainCht,jdbcType=LONGVARCHAR}, #{aboutUrl,jdbcType=LONGVARCHAR}, 
       #{wineryImgIds,jdbcType=LONGVARCHAR})
   </insert>
@@ -65,14 +65,14 @@
       <if test="updatedAt != null">
         updated_at,
       </if>
-      <if test="updatedUser != null">
-        updated_user,
+      <if test="updatedBy != null">
+        updated_by,
       </if>
       <if test="createdAt != null">
         created_at,
       </if>
-      <if test="createdUser != null">
-        created_user,
+      <if test="createdBy != null">
+        created_by,
       </if>
       <if test="notePlainEng != null">
         note_plain_eng,
@@ -115,14 +115,14 @@
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
       </if>
       <if test="createdAt != null">
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdUser != null">
-        #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
       </if>
       <if test="notePlainEng != null">
         #{notePlainEng,jdbcType=LONGVARCHAR},

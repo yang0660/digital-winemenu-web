@@ -9,14 +9,14 @@
     <result column="img_name_cht" jdbcType="VARCHAR" property="imgNameCht" />
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
     <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl" />
-    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
-    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Base_Column_List">
     img_id, img_type_id, img_name_eng, img_name_chs, img_name_cht, img_url, small_img_url, 
-    created_user, created_time, updated_user, updated_time
+    created_by, created_at, updated_by, updated_at
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,12 +31,12 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
     insert into t_img (img_id, img_type_id, img_name_eng, 
       img_name_chs, img_name_cht, img_url, 
-      small_img_url, created_user, created_time, 
-      updated_user, updated_time)
+      small_img_url, created_by, created_at, 
+      updated_by, updated_at)
     values (#{imgId,jdbcType=BIGINT}, #{imgTypeId,jdbcType=BIGINT}, #{imgNameEng,jdbcType=VARCHAR}, 
       #{imgNameChs,jdbcType=VARCHAR}, #{imgNameCht,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
-      #{smallImgUrl,jdbcType=VARCHAR}, #{createdUser,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedUser,jdbcType=BIGINT}, #{updatedTime,jdbcType=TIMESTAMP})
+      #{smallImgUrl,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
     insert into t_img
@@ -62,17 +62,17 @@
       <if test="smallImgUrl != null">
         small_img_url,
       </if>
-      <if test="createdUser != null">
-        created_user,
+      <if test="createdBy != null">
+        created_by,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createdAt != null">
+        created_at,
       </if>
-      <if test="updatedUser != null">
-        updated_user,
+      <if test="updatedBy != null">
+        updated_by,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updatedAt != null">
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -97,17 +97,17 @@
       <if test="smallImgUrl != null">
         #{smallImgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createdUser != null">
-        #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -132,17 +132,17 @@
       <if test="smallImgUrl != null">
         small_img_url = #{smallImgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="createdUser != null">
-        created_user = #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        updated_user = #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where img_id = #{imgId,jdbcType=BIGINT}
@@ -155,10 +155,10 @@
       img_name_cht = #{imgNameCht,jdbcType=VARCHAR},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       small_img_url = #{smallImgUrl,jdbcType=VARCHAR},
-      created_user = #{createdUser,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_user = #{updatedUser,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where img_id = #{imgId,jdbcType=BIGINT}
   </update>
 </mapper>

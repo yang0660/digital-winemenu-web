@@ -7,13 +7,13 @@
     <result column="img_type_name_chs" jdbcType="VARCHAR" property="imgTypeNameChs" />
     <result column="img_type_name_cht" jdbcType="VARCHAR" property="imgTypeNameCht" />
     <result column="created_user" jdbcType="BIGINT" property="createdUser" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
-    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Base_Column_List">
     img_type_id, img_type_name_eng, img_type_name_chs, img_type_name_cht, created_user, 
-    created_time, updated_user, updated_time
+    created_at, updated_user, updated_at
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -27,11 +27,11 @@
   </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.ImgType">
     insert into t_img_type (img_type_id, img_type_name_eng, img_type_name_chs, 
-      img_type_name_cht, created_user, created_time, 
-      updated_user, updated_time)
+      img_type_name_cht, created_user, created_at, 
+      updated_user, updated_at)
     values (#{imgTypeId,jdbcType=BIGINT}, #{imgTypeNameEng,jdbcType=VARCHAR}, #{imgTypeNameChs,jdbcType=VARCHAR}, 
-      #{imgTypeNameCht,jdbcType=VARCHAR}, #{createdUser,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedUser,jdbcType=BIGINT}, #{updatedTime,jdbcType=TIMESTAMP})
+      #{imgTypeNameCht,jdbcType=VARCHAR}, #{createdUser,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedUser,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.ImgType">
     insert into t_img_type
@@ -51,14 +51,14 @@
       <if test="createdUser != null">
         created_user,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createdAt != null">
+        created_at,
       </if>
       <if test="updatedUser != null">
         updated_user,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updatedAt != null">
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -77,14 +77,14 @@
       <if test="createdUser != null">
         #{createdUser,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedUser != null">
         #{updatedUser,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -103,14 +103,14 @@
       <if test="createdUser != null">
         created_user = #{createdUser,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedUser != null">
         updated_user = #{updatedUser,jdbcType=BIGINT},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where img_type_id = #{imgTypeId,jdbcType=BIGINT}
@@ -121,9 +121,9 @@
       img_type_name_chs = #{imgTypeNameChs,jdbcType=VARCHAR},
       img_type_name_cht = #{imgTypeNameCht,jdbcType=VARCHAR},
       created_user = #{createdUser,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_user = #{updatedUser,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where img_type_id = #{imgTypeId,jdbcType=BIGINT}
   </update>
 </mapper>

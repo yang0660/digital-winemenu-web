@@ -13,13 +13,13 @@ public class FoodType {
 
     private String foodTypeNameEng;
 
-    private Long createUser;
+    private Long createdBy;
 
-    private Date createTime;
+    private Date createdAt;
 
-    private Long updateUser;
+    private Long updatedBy;
 
-    private Date updateTime;
+    private Date updatedAt;
 
     public Long getFoodTypeId() {
         return foodTypeId;
@@ -61,35 +61,35 @@ public class FoodType {
         this.foodTypeNameEng = foodTypeNameEng;
     }
 
-    public Long getCreateUser() {
-        return createUser;
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateUser(Long createUser) {
-        this.createUser = createUser;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Long getUpdateUser() {
-        return updateUser;
+    public Long getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateUser(Long updateUser) {
-        this.updateUser = updateUser;
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

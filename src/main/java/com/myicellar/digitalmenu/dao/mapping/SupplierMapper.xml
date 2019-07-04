@@ -10,13 +10,13 @@
     <result column="suppiler_type" jdbcType="TINYINT" property="suppilerType" />
     <result column="logo_img_id" jdbcType="BIGINT" property="logoImgId" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-    <result column="updated_user" jdbcType="BIGINT" property="updatedUser" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
-    <result column="created_user" jdbcType="BIGINT" property="createdUser" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
   </resultMap>
   <sql id="Base_Column_List">
     supplier_id, supplier_seo_name, supplier_name_eng, supplier_name_cht, supplier_name_chs, 
-    suppiler_type, logo_img_id, updated_at, updated_user, created_at, created_user
+    suppiler_type, logo_img_id, updated_at, updated_by, created_at, created_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,12 +31,12 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
     insert into t_supplier (supplier_id, supplier_seo_name, supplier_name_eng, 
       supplier_name_cht, supplier_name_chs, suppiler_type, 
-      logo_img_id, updated_at, updated_user, 
-      created_at, created_user)
+      logo_img_id, updated_at, updated_by, 
+      created_at, created_by)
     values (#{supplierId,jdbcType=BIGINT}, #{supplierSeoName,jdbcType=VARCHAR}, #{supplierNameEng,jdbcType=VARCHAR}, 
       #{supplierNameCht,jdbcType=VARCHAR}, #{supplierNameChs,jdbcType=VARCHAR}, #{suppilerType,jdbcType=TINYINT}, 
-      #{logoImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=BIGINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{createdUser,jdbcType=BIGINT})
+      #{logoImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
     insert into t_supplier
@@ -65,14 +65,14 @@
       <if test="updatedAt != null">
         updated_at,
       </if>
-      <if test="updatedUser != null">
-        updated_user,
+      <if test="updatedBy != null">
+        updated_by,
       </if>
       <if test="createdAt != null">
         created_at,
       </if>
-      <if test="createdUser != null">
-        created_user,
+      <if test="createdBy != null">
+        created_by,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -100,14 +100,14 @@
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
       </if>
       <if test="createdAt != null">
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdUser != null">
-        #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -135,14 +135,14 @@
       <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedUser != null">
-        updated_user = #{updatedUser,jdbcType=BIGINT},
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
       </if>
       <if test="createdAt != null">
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdUser != null">
-        created_user = #{createdUser,jdbcType=BIGINT},
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
       </if>
     </set>
     where supplier_id = #{supplierId,jdbcType=BIGINT}
@@ -156,9 +156,9 @@
       suppiler_type = #{suppilerType,jdbcType=TINYINT},
       logo_img_id = #{logoImgId,jdbcType=BIGINT},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      updated_user = #{updatedUser,jdbcType=BIGINT},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      created_user = #{createdUser,jdbcType=BIGINT}
+      created_by = #{createdBy,jdbcType=BIGINT}
     where supplier_id = #{supplierId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -13,11 +13,11 @@ public class ImgType {
 
     private Long createdUser;
 
-    private Date createdTime;
+    private Date createdAt;
 
     private Long updatedUser;
 
-    private Date updatedTime;
+    private Date updatedAt;
 
     public Long getImgTypeId() {
         return imgTypeId;
@@ -59,12 +59,12 @@ public class ImgType {
         this.createdUser = createdUser;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getUpdatedUser() {
@@ -75,11 +75,11 @@ public class ImgType {
         this.updatedUser = updatedUser;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

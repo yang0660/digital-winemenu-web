@@ -19,11 +19,11 @@ public class Winery {
 
     private Date updatedAt;
 
-    private Long updatedUser;
+    private Long updatedBy;
 
     private Date createdAt;
 
-    private Long createdUser;
+    private Long createdBy;
 
     private String notePlainEng;
 
@@ -99,12 +99,12 @@ public class Winery {
         this.updatedAt = updatedAt;
     }
 
-    public Long getUpdatedUser() {
-        return updatedUser;
+    public Long getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdatedUser(Long updatedUser) {
-        this.updatedUser = updatedUser;
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Date getCreatedAt() {
@@ -115,12 +115,12 @@ public class Winery {
         this.createdAt = createdAt;
     }
 
-    public Long getCreatedUser() {
-        return createdUser;
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreatedUser(Long createdUser) {
-        this.createdUser = createdUser;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getNotePlainEng() {

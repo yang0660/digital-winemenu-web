@@ -19,11 +19,11 @@ public class Supplier {
 
     private Date updatedAt;
 
-    private Long updatedUser;
+    private Long updatedBy;
 
     private Date createdAt;
 
-    private Long createdUser;
+    private Long createdBy;
 
     public Long getSupplierId() {
         return supplierId;
@@ -89,12 +89,12 @@ public class Supplier {
         this.updatedAt = updatedAt;
     }
 
-    public Long getUpdatedUser() {
-        return updatedUser;
+    public Long getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdatedUser(Long updatedUser) {
-        this.updatedUser = updatedUser;
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Date getCreatedAt() {
@@ -105,11 +105,11 @@ public class Supplier {
         this.createdAt = createdAt;
     }
 
-    public Long getCreatedUser() {
-        return createdUser;
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreatedUser(Long createdUser) {
-        this.createdUser = createdUser;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 }
