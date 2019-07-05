@@ -65,8 +65,8 @@ public class FoodManageController {
     @AuthIgnore
     @ApiOperation("详情查询")
     public ResultVO<Food> queryByPrimaryKey(@RequestBody FoodDetailReqVO reqVO) {
+        //通过传入foodId查询food详情
         Food food = foodService.selectByPrimaryKey(reqVO.getFoodId());
-
         if (food!=null){
             return ResultVO.success(food);
         }

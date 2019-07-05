@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodProductMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodProduct"
+  extends="com.myicellar.digitalmenu.dao.mapper.FoodProductMapper.BaseResultMap">
+  </resultMap>
+  <resultMap id="ProductResultMap" type="com.myicellar.digitalmenu.dao.entity.Product"
+             extends="com.myicellar.digitalmenu.dao.mapper.ProductMapper.BaseResultMap">
+  </resultMap>
+  <resultMap id="FoodResultMap" type="com.myicellar.digitalmenu.dao.entity.Food"
+             extends="com.myicellar.digitalmenu.dao.mapper.FoodMapper.BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List">
+    food_id, product_id, created_by, created_at, updated_by, updated_at
+  </sql>
+  <sql id="Product_Column_List">
+    product_id, wine_id, vintage_tag, supplier_id, regular_price, volume_type_id, glass_price, glass_volume_type_id, is_recommend, is_enabled, created_at, created_by, updated_at, updated_by
+  </sql>
+  <sql id="Food_Column_List">
+    food_id, food_type_id, food_name_eng, food_name_chs, food_name_cht, food_img_id, price, is_recommend, is_enabled, created_by, created_at, updated_by, updated_at, note_plain_eng, note_plain_chs, note_plain_cht
+  </sql>
+
+  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO" resultType="long">
+    select count(0)
+    from t_food_product
+    where 1=1
+    <if test="foodId != null and foodId != 0">
+      and food_id = #{foodId}
+    </if>
+    <if test="productId != null and productId != 0">
+      and product_id = #{productId}
+    </if>
+  </select>
+
+  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_food_product
+    where 1=1
+    <if test="foodId != null and foodId != 0">
+      and food_id = #{foodId}
+    </if>
+    <if test="productId != null and productId != 0">
+      and product_id = #{productId}
+    </if>
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+<!--_____________________________________________________________-->
+
+  <select id="selectProductCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO" resultType="long">
+    select
+    count(0)
+    from t_product
+    where product_id in (
+    select product_id from t_food_product where food_id=#{foodId}
+    )
+  </select>
+
+  <select id="selectProductList" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO"
+          resultMap="ProductResultMap">
+    select
+    <include refid="Product_Column_List"/>
+    from t_product
+    where product_id in (
+    select product_id from t_food_product where food_id=#{foodId}
+    )
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!--_____________________________________________________________-->
+
+  <select id="selectFoodCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO" resultType="long">
+    select
+    count(0)
+    from t_food
+    where food_id in (
+    select food_id from t_food_product where product_id=#{productId}
+    )
+  </select>
+
+  <select id="selectFoodList" parameterType="com.myicellar.digitalmenu.vo.request.FoodProductpageReqVO"
+          resultMap="FoodResultMap">
+    select
+    <include refid="Food_Column_List"/>
+    from t_food
+    where food_id in (
+    select food_id from t_food_product where product_id=#{productId}
+    )
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+</mapper>
