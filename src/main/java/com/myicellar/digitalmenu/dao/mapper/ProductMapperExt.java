@@ -9,4 +9,6 @@ public interface ProductMapperExt extends ProductMapper{
     List<Product> selectList();
 
     List<ProductInfoRespVO> selectRecomendProductList(Long suppilerId);
+
+    List<ProductInfoRespVO> selectProductListByFoodId(Long foodId);
 }

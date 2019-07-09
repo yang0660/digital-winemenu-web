@@ -1,14 +1,12 @@
 package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.service.FoodService;
+import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.vo.request.FoodDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodDisplayReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
-import com.myicellar.digitalmenu.vo.response.FoodDetailRespVO;
-import com.myicellar.digitalmenu.vo.response.FoodDisplayRespVO;
-import com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO;
-import com.myicellar.digitalmenu.vo.response.ResultVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +28,9 @@ public class FoodController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private ProductService productService;
 
     /**
      * 推荐美食列表
@@ -93,6 +94,9 @@ public class FoodController {
         FoodDetailRespVO respVO = foodService.queryDetailById(reqVO.getFoodId());
         if (respVO==null) {
             respVO = new FoodDetailRespVO();
+        }else{
+            List<ProductInfoRespVO> productList = productService.queryProductListByFoodId(reqVO.getFoodId());
+            respVO.setProductList(productList);
         }
 
         return ResultVO.success(respVO);

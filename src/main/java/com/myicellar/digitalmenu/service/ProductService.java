@@ -37,8 +37,31 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
         return list;
     }
 
+    /**
+     * 查询供应商的推荐酒品列表
+     * @param suppilerId
+     * @return
+     */
     public List<ProductInfoRespVO> queryRecomendProductList(Long suppilerId){
         List<ProductInfoRespVO>  list = mapper.selectRecomendProductList(suppilerId);
+        fillProductInfoRespVO(list);
+
+        return list;
+    }
+
+    /**
+     * 查询美食的酒品列表
+     * @param foodId
+     * @return
+     */
+    public List<ProductInfoRespVO> queryProductListByFoodId(Long foodId){
+        List<ProductInfoRespVO>  list = mapper.selectProductListByFoodId(foodId);
+        fillProductInfoRespVO(list);
+
+        return list;
+    }
+
+    public void fillProductInfoRespVO(List<ProductInfoRespVO>  list){
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();
             List<Long> wineIds = new ArrayList<Long>();
@@ -83,8 +106,6 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                 });
             }
         }
-
-        return list;
     }
 
     public String listToEngStr(List<WineAttrInfoRespVO> list){

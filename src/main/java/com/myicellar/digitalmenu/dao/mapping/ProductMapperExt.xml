@@ -67,4 +67,34 @@
      AND e.supplier_id = #{supplierId}
   </select>
 
+    <select id="selectProductListByFoodId" parameterType="long" resultMap="ProductInfoResultMap">
+        SELECT  e.product_id,
+        e.supplier_id,
+        a.wine_id,
+        a.wine_name_eng,
+        a.wine_name_chs,
+        a.wine_name_cht,
+        a.winery_id,
+        d.winery_name_eng,
+        d.logo_img_id as winery_logo_id,
+        b.region_name_eng,
+        b.region_name_chs,
+        b.region_name_cht,
+        c.country_name_eng,
+        c.country_name_chs,
+        c.country_name_cht,
+        e.vintage_tag,
+        f.vintage_name,
+        e.regular_price,
+        a.wine_img_id
+        FROM t_wine a
+        INNER JOIN t_origin b ON a.wine_origin_id = b.wine_origin_id
+        INNER JOIN t_country c ON b.country_id = c.country_id
+        INNER JOIN t_winery d ON a.winery_id = d.winery_id
+        INNER JOIN t_product e ON a.wine_id = e.wine_id
+        INNER JOIN t_wine_vintage f ON e.wine_id = f.wine_id and e.vintage_tag = f.vintage_tag
+        INNER JOIN t_food_product g ON e.product_id = g.product_id
+        WHERE g.food_id = #{foodId}
+    </select>
+
 </mapper>
