@@ -11,4 +11,5 @@ public interface FoodTypeMapperExt extends FoodTypeMapper{
 
     List<FoodType> selectList(FoodTypePageReqVO reqVO);
 
+    List<FoodType> selectListBySupplierId(Long supplierId);
 }

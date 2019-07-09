@@ -9,7 +9,7 @@ import lombok.Data;
 */
 @Data
 @ApiModel(value = "供应商相关信息查询参数")
-public class SupplierIndexReqVO extends PageRequestVO{
+public class SupplierIdReqVO {
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;

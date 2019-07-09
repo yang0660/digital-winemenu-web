@@ -23,4 +23,11 @@
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
 
+  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_food_type
+    where supplier_id = #{supplierId}
+  </select>
+
 </mapper>

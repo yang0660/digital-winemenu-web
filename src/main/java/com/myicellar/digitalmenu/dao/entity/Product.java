@@ -8,7 +8,7 @@ public class Product {
 
     private Long wineId;
 
-    private String vintageTag;
+    private Long vintageTag;
 
     private Long supplierId;
 
@@ -48,11 +48,11 @@ public class Product {
         this.wineId = wineId;
     }
 
-    public String getVintageTag() {
+    public Long getVintageTag() {
         return vintageTag;
     }
 
-    public void setVintageTag(String vintageTag) {
+    public void setVintageTag(Long vintageTag) {
         this.vintageTag = vintageTag;
     }
 

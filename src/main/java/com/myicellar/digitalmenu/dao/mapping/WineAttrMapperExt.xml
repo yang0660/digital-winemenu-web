@@ -24,4 +24,39 @@
     where wine_id = #{wineId}
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
+
+  <resultMap id="WineAttrInfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO">
+      <result column="wineId" jdbcType="BIGINT" property="wineId" />
+      <result column="attrCatgId" jdbcType="BIGINT" property="attrCatgId" />
+    <collection property="list" column="{wineId=wineId,attrCatgId=attrCatgId}" javaType="ArrayList" select="selectAttrListByWineId" />
+  </resultMap>
+
+  <resultMap id="WineAttrResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO">
+    <result column="attr_name_eng" jdbcType="VARCHAR" property="attrNameEng" />
+    <result column="attr_name_chs" jdbcType="VARCHAR" property="attrNameChs" />
+    <result column="attr_name_cht" jdbcType="VARCHAR" property="attrNameCht" />
+  </resultMap>
+
+  <select id="selectAttrMapByWineIds" resultMap="WineAttrInfoResultMap">
+    SELECT distinct
+           a.wine_id as wineId,
+           b.attr_catg_id as attrCatgId
+    FROM t_wine_attr a
+    INNER JOIN t_attr b ON a.attr_id = b.attr_id
+    AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}
+    WHERE a.wine_id IN
+    <foreach collection="wineIds" item="wineId" open="(" close=")" separator=",">
+      #{wineId,jdbcType=BIGINT}
+    </foreach>
+  </select>
+
+  <select id="selectAttrListByWineId" parameterType="java.util.Map" resultMap="WineAttrResultMap">
+    SELECT b.attr_name_eng,
+    b.attr_name_chs,
+    b.attr_name_cht
+    FROM t_wine_attr a
+    INNER JOIN t_attr b ON a.attr_id = b.attr_id
+    AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}
+    WHERE a.wine_id = #{wineId,jdbcType=BIGINT}
+  </select>
 </mapper>

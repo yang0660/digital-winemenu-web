@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Product">
     <id column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="vintage_tag" jdbcType="VARCHAR" property="vintageTag" />
+    <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
     <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
     <result column="regular_price" jdbcType="DECIMAL" property="regularPrice" />
     <result column="volume_type_id" jdbcType="BIGINT" property="volumeTypeId" />
@@ -17,7 +17,6 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
   </resultMap>
-
   <sql id="Base_Column_List">
     product_id, wine_id, vintage_tag, supplier_id, regular_price, volume_type_id, glass_price, 
     glass_volume_type_id, is_recommend, is_enabled, created_at, created_by, updated_at, 
@@ -39,7 +38,7 @@
       glass_price, glass_volume_type_id, is_recommend, 
       is_enabled, created_at, created_by, 
       updated_at, updated_by)
-    values (#{productId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=VARCHAR}, 
+    values (#{productId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, 
       #{supplierId,jdbcType=BIGINT}, #{regularPrice,jdbcType=DECIMAL}, #{volumeTypeId,jdbcType=BIGINT}, 
       #{glassPrice,jdbcType=DECIMAL}, #{glassVolumeTypeId,jdbcType=BIGINT}, #{isRecommend,jdbcType=TINYINT}, 
       #{isEnabled,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, 
@@ -99,7 +98,7 @@
         #{wineId,jdbcType=BIGINT},
       </if>
       <if test="vintageTag != null">
-        #{vintageTag,jdbcType=VARCHAR},
+        #{vintageTag,jdbcType=BIGINT},
       </if>
       <if test="supplierId != null">
         #{supplierId,jdbcType=BIGINT},
@@ -143,7 +142,7 @@
         wine_id = #{wineId,jdbcType=BIGINT},
       </if>
       <if test="vintageTag != null">
-        vintage_tag = #{vintageTag,jdbcType=VARCHAR},
+        vintage_tag = #{vintageTag,jdbcType=BIGINT},
       </if>
       <if test="supplierId != null">
         supplier_id = #{supplierId,jdbcType=BIGINT},
@@ -184,7 +183,7 @@
   <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
     update t_product
     set wine_id = #{wineId,jdbcType=BIGINT},
-      vintage_tag = #{vintageTag,jdbcType=VARCHAR},
+      vintage_tag = #{vintageTag,jdbcType=BIGINT},
       supplier_id = #{supplierId,jdbcType=BIGINT},
       regular_price = #{regularPrice,jdbcType=DECIMAL},
       volume_type_id = #{volumeTypeId,jdbcType=BIGINT},

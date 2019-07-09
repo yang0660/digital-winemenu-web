@@ -14,8 +14,20 @@ public class FoodRecommendRespVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
-    @ApiModelProperty(value = "图片")
-    private String ImgUrl;
+    @ApiModelProperty(value = "美食名称-英")
+    private String foodNameEng;
+
+    @ApiModelProperty(value = "美食名称-简")
+    private String foodNameChs;
+
+    @ApiModelProperty(value = "美食名称-繁")
+    private String foodNameCht;
+
+    @ApiModelProperty(value = "图片-原图")
+    private String imgUrl;
+
+    @ApiModelProperty(value = "图片-缩略图")
+    private String smallImgUrl;
 
 
 }

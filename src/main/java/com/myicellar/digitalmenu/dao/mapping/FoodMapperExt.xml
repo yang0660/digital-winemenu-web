@@ -9,10 +9,10 @@
     </sql>
 
     <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO" resultType="long">
-    select count(0)
-    from t_food
-    where food_type_id = #{foodTypeId}
-  </select>
+        select count(0)
+        from t_food
+        where food_type_id = #{foodTypeId}
+    </select>
 
     <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO"
             resultMap="BaseResultMap">
@@ -23,51 +23,57 @@
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
+    <resultMap id="FoodDisplayResultMap" type="com.myicellar.digitalmenu.vo.response.FoodDisplayRespVO">
+        <id column="food_id" jdbcType="BIGINT" property="foodId"/>
+        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>
+        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
+        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
+    </resultMap>
 
-<!--    <resultMap id="FoodDisplayResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodDisplayRespVO">-->
-<!--        <id column="food_id" jdbcType="BIGINT" property="foodId"/>-->
-<!--        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>-->
-<!--        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>-->
-<!--        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>-->
-<!--        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>-->
-<!--        <result column="price" jdbcType="DECIMAL" property="price"/>-->
-<!--    </resultMap>-->
+    <select id="selectListByFoodTypeId" parameterType="long"  resultMap="FoodDisplayResultMap">
+        SELECT  a.food_id,
+                a.food_name_eng,
+                a.food_name_chs,
+                a.food_name_cht,
+                a.price,
+                b.img_url,
+                b.small_img_url
+        FROM t_food a
+        LEFT JOIN t_img b ON a.food_img_id = b.img_id
+        WHERE a.food_type_id = #{foodTypeId}
+    </select>
 
-<!--    <select id="selectListByFoodTypeId" parameterType="com.myicellar.digitalmenu.vo.request.FoodReqVO"-->
-<!--            resultMap="FoodDisplayResultMap">-->
-<!--        select-->
-<!--        food_id,food_name_eng,food_name_chs,food_name_cht,small_img_url,price-->
-<!--        from t_food a,-->
-<!--        t_img b,-->
-<!--        where-->
-<!--        a.food_type_id = #{foodTypeId}-->
-<!--        and-->
-<!--        a.img_id=b.img_id-->
-<!--    </select>-->
+    <resultMap id="FoodDetailResultMap" type="com.myicellar.digitalmenu.vo.response.FoodDetailRespVO">
+        <id column="food_id" jdbcType="BIGINT" property="foodId"/>
+        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>
+        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
+        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng"/>
+        <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs"/>
+        <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht"/>
+    </resultMap>
 
-<!--    <resultMap id="FoodDetailResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodDetailRespVO">-->
-<!--        <id column="food_id" jdbcType="BIGINT" property="foodId"/>-->
-<!--        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>-->
-<!--        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>-->
-<!--        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>-->
-<!--        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>-->
-<!--        <result column="price" jdbcType="DECIMAL" property="price"/>-->
-<!--        <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng"/>-->
-<!--        <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs"/>-->
-<!--        <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht"/>-->
-<!--    </resultMap>-->
-
-<!--    <select id="selectListByFoodId" parameterType="com.myicellar.digitalmenu.vo.request.FoodDetailReqVO"-->
-<!--            resultMap="FoodDetailResultMap">-->
-<!--&#45;&#45;         select-->
-<!--&#45;&#45;         food_id,food_name_eng,food_name_chs,food_name_cht,img_url,price,note_plain_eng,note_plain_chs,note_plain_cht-->
-<!--&#45;&#45;         from t_food a,-->
-<!--&#45;&#45;         t_img b-->
-<!--&#45;&#45;         where-->
-<!--&#45;&#45;         a.food_id = #{foodId}-->
-<!--&#45;&#45;         and-->
-<!--&#45;&#45;         a.img_id=b.img_id-->
-<!--    </select>-->
+    <select id="selectDetailById" parameterType="long" resultMap="FoodDetailResultMap">
+        SELECT  a.food_id,
+                a.food_name_eng,
+                a.food_name_chs,
+                a.food_name_cht,
+                a.price,
+                a.note_plain_eng,
+                a.note_plain_chs,
+                a.note_plain_cht,
+                b.img_url,
+                b.small_img_url
+        FROM t_food a
+        LEFT JOIN t_img b ON a.food_img_id = b.img_id
+        WHERE a.food_id = #{foodId}
+    </select>
 
 <!--    <resultMap id="ProductListResultMap" type="com.myicellar.digitalmenu.vo.response.ProductRmdRespVORespVO">-->
 
@@ -107,6 +113,31 @@
 <!--        and-->
 <!--        a.img_id=b.img_id-->
 <!--    </select>-->
+
+
+    <resultMap id="FoodRecommendResultMap" type="com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO">
+        <id column="food_id" jdbcType="BIGINT" property="foodId"/>
+        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng" />
+        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs" />
+        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht" />
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl" />
+    </resultMap>
+
+    <select id="selectRecomendFoodList" parameterType="com.myicellar.digitalmenu.vo.request.SupplierIdReqVO"
+            resultMap="FoodRecommendResultMap">
+        SELECT  a.food_id,
+                a.food_name_eng,
+                a.food_name_chs,
+                a.food_name_cht,
+                c.img_url,
+                c.small_img_url
+        FROM t_food a
+        INNER JOIN t_food_type b ON a.food_type_id = b.food_type_id
+        LEFT JOIN t_img c ON a.food_img_id = c.img_id
+        WHERE a.is_recommend = 1
+        AND b.supplier_id = #{supplierId}
+    </select>
 
 
 </mapper>

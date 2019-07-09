@@ -4,7 +4,7 @@ import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.response.FoodTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/foodtype")
-@Api(tags = "美食分类", description = "/app/foodtype")
+@Api(tags = "用户页面-美食分类", description = "/app/foodtype")
 public class FoodTypeController {
 
     @Autowired
@@ -38,15 +38,12 @@ public class FoodTypeController {
     @PostMapping(value = "/queryList")
     @AuthIgnore
     @ApiOperation("美食分类列表查询")
-    public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody FoodTypePageReqVO reqVO) {
+    public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            return ResultVO.validError("supplier cannot be empty！");
+            return ResultVO.validError("supplierId cannot be empty！");
         }
 
-        reqVO.setPageNumber(1);
-        reqVO.setPageSize(1000);
-        List<FoodType> list = foodTypeService.selectList(reqVO);
-
+        List<FoodType> list = foodTypeService.queryListBySuppilerId(reqVO.getSupplierId());
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
         if(!CollectionUtils.isEmpty(list)){
             resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);

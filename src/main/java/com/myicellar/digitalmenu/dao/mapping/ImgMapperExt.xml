@@ -35,4 +35,14 @@
       and img_name_eng = #{imgNameEng}
     </if>
   </sql>
+
+  <select id="selectImgMapByIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_img
+    where img_id in
+    <foreach collection="imgIds" item="imgId" open="(" close=")" separator=",">
+      #{imgId,jdbcType=BIGINT}
+    </foreach>
+  </select>
 </mapper>
