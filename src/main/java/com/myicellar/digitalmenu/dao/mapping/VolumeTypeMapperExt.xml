@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.VolumeTypeMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.VolumeType" extends="com.myicellar.digitalmenu.dao.mapper.VolumeTypeMapper.BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List">
+    <include refid="com.myicellar.digitalmenu.dao.mapper.VolumeTypeMapper.Base_Column_List" />
+  </sql>
+  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.VolumeTypePageReqVO" resultType="long">
+    select count(0)
+    from t_volume_type
+    where volume_type_id = #{volumeTypeId}
+  </select>
+
+  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.VolumeTypePageReqVO"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_volume_type
+    where volume_type_id = #{volumeTypeId}
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

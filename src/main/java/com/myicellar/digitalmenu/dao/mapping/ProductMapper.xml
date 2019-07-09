@@ -17,6 +17,7 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
   </resultMap>
+
   <sql id="Base_Column_List">
     product_id, wine_id, vintage_tag, supplier_id, regular_price, volume_type_id, glass_price, 
     glass_volume_type_id, is_recommend, is_enabled, created_at, created_by, updated_at, 

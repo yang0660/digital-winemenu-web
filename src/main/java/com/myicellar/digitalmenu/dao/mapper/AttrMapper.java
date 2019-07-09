@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Attr;
 
-public interface AttrMapper {
+public interface AttrMapper extends Mapper<Attr>{
     int deleteByPrimaryKey(Long attrId);
 
     int insert(Attr record);

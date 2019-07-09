@@ -2,10 +2,14 @@ package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
+import com.myicellar.digitalmenu.vo.request.SupplierIndexReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
+import com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -20,5 +24,16 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         PageResponseVO<Supplier> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         return page;
+    }
+
+    /**
+     * 首页推荐美食查询
+     *
+     * @return
+     */
+    public List<FoodRecommendRespVO> queryListByRecommend(SupplierIndexReqVO reqVO) {
+        List<FoodRecommendRespVO> list=mapper.queryListByRecommend(reqVO);
+
+        return list;
     }
 }

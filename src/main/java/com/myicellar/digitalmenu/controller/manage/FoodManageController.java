@@ -3,12 +3,14 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Food;
 import com.myicellar.digitalmenu.service.FoodService;
-import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.*;
+import com.myicellar.digitalmenu.vo.request.FoodDeleteReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodUpdateReqVO;
 import com.myicellar.digitalmenu.vo.response.FoodRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -36,14 +38,14 @@ public class FoodManageController {
     private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
-     * 列表查询
+     * 列表查询-分页
      *
      * @param reqVO
      * @return
      */
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("列表查询-分页")
     public ResultVO<PageResponseVO<FoodRespVO>> queryListPage(@RequestBody FoodPageReqVO reqVO) {
         PageResponseVO<Food> page = foodService.queryPageList(reqVO);
 
@@ -55,24 +57,7 @@ public class FoodManageController {
         return ResultVO.success(resultPage);
     }
 
-    /**
-     * 详情查询
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/queryByPrimaryKey")
-    @AuthIgnore
-    @ApiOperation("详情查询")
-    public ResultVO<Food> queryByPrimaryKey(@RequestBody FoodDetailReqVO reqVO) {
-        //通过传入foodId查询food详情
-        Food food = foodService.selectByPrimaryKey(reqVO.getFoodId());
-        if (food!=null){
-            return ResultVO.success(food);
-        }
 
-        return ResultVO.validError("查询失败!");
-    }
 
     /**
      * 新增

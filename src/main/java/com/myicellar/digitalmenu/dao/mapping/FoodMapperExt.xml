@@ -1,26 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Food"
-             extends="com.myicellar.digitalmenu.dao.mapper.FoodMapper.BaseResultMap">
-  </resultMap>
-  <sql id="Base_Column_List">
-    <include refid="com.myicellar.digitalmenu.dao.mapper.FoodMapper.Base_Column_List" />
-  </sql>
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Food"
+               extends="com.myicellar.digitalmenu.dao.mapper.FoodMapper.BaseResultMap">
+    </resultMap>
+    <sql id="Base_Column_List">
+        <include refid="com.myicellar.digitalmenu.dao.mapper.FoodMapper.Base_Column_List"/>
+    </sql>
 
-  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO" resultType="long">
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO" resultType="long">
     select count(0)
     from t_food
     where food_type_id = #{foodTypeId}
   </select>
 
-  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_food
-    where food_type_id = #{foodTypeId}
-    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-  </select>
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_food
+        where food_type_id = #{foodTypeId}
+        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+
+<!--    <resultMap id="FoodDisplayResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodDisplayRespVO">-->
+<!--        <id column="food_id" jdbcType="BIGINT" property="foodId"/>-->
+<!--        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>-->
+<!--        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>-->
+<!--        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>-->
+<!--        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>-->
+<!--        <result column="price" jdbcType="DECIMAL" property="price"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="selectListByFoodTypeId" parameterType="com.myicellar.digitalmenu.vo.request.FoodReqVO"-->
+<!--            resultMap="FoodDisplayResultMap">-->
+<!--        select-->
+<!--        food_id,food_name_eng,food_name_chs,food_name_cht,small_img_url,price-->
+<!--        from t_food a,-->
+<!--        t_img b,-->
+<!--        where-->
+<!--        a.food_type_id = #{foodTypeId}-->
+<!--        and-->
+<!--        a.img_id=b.img_id-->
+<!--    </select>-->
+
+<!--    <resultMap id="FoodDetailResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodDetailRespVO">-->
+<!--        <id column="food_id" jdbcType="BIGINT" property="foodId"/>-->
+<!--        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>-->
+<!--        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>-->
+<!--        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>-->
+<!--        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>-->
+<!--        <result column="price" jdbcType="DECIMAL" property="price"/>-->
+<!--        <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng"/>-->
+<!--        <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs"/>-->
+<!--        <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="selectListByFoodId" parameterType="com.myicellar.digitalmenu.vo.request.FoodDetailReqVO"-->
+<!--            resultMap="FoodDetailResultMap">-->
+<!--&#45;&#45;         select-->
+<!--&#45;&#45;         food_id,food_name_eng,food_name_chs,food_name_cht,img_url,price,note_plain_eng,note_plain_chs,note_plain_cht-->
+<!--&#45;&#45;         from t_food a,-->
+<!--&#45;&#45;         t_img b-->
+<!--&#45;&#45;         where-->
+<!--&#45;&#45;         a.food_id = #{foodId}-->
+<!--&#45;&#45;         and-->
+<!--&#45;&#45;         a.img_id=b.img_id-->
+<!--    </select>-->
+
+<!--    <resultMap id="ProductListResultMap" type="com.myicellar.digitalmenu.vo.response.ProductRmdRespVORespVO">-->
+
+<!--        <id column="product_id" jdbcType="BIGINT" property="productId"/>-->
+<!--        <result column="food_id" jdbcType="BIGINT" property="foodId"/>-->
+<!--        <result column="wine_id" jdbcType="BIGINT" property="wineId"/>-->
+<!--        <result column="wine_name_eng" jdbcType="Varchar" property="wineNameEng"/>-->
+<!--        <result column="wine_img" jdbcType="Varchar" property="wineImg"/>-->
+<!--        <result column="vintage_name" jdbcType="Varchar" property="vintageName"/>-->
+<!--        <result column="regular_price" jdbcType="DECIMAL" property="regularPrice"/>-->
+<!--        <result column="winery_name_eng" jdbcType="Varchar" property="wineryNameEng"/>-->
+<!--        <result column="rigion_name_eng" jdbcType="Varchar" property="rigionNameEng"/>-->
+<!--        <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameNng"/>-->
+<!--        <result column="variety" jdbcType="VARCHAR" property="variety"/>-->
+
+
+<!--    </resultMap>-->
+
+<!--    <select id="selectListByFoodId" parameterType="com.myicellar.digitalmenu.vo.request.FoodDetailReqVO"-->
+<!--            resultMap="ProductListResultMap">-->
+<!--        select-->
+<!--        <include refid="ProductListResultMap"/>-->
+<!--        from t_wine a,-->
+<!--        t_food_product b,-->
+<!--        t_product c,-->
+<!--        t_img d,-->
+<!--        t_wine_vintage e,-->
+<!--        t_wine_attr f,-->
+<!--        t_attr g,-->
+<!--        t_winery h,-->
+<!--        t_origin i,-->
+<!--        t_country j,-->
+
+
+<!--        where-->
+<!--        a.food_id = #{foodId}-->
+<!--        and-->
+<!--        a.img_id=b.img_id-->
+<!--    </select>-->
+
 
 </mapper>

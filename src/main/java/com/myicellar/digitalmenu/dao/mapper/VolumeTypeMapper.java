@@ -1,15 +1,16 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
+
 import com.myicellar.digitalmenu.dao.entity.VolumeType;
 
-public interface VolumeTypeMapper extends Mapper<VolumeType> {
-    int deleteByPrimaryKey(Integer volumeTypeId);
+public interface VolumeTypeMapper extends Mapper<VolumeType>{
+    int deleteByPrimaryKey(Long volumeTypeId);
 
     int insert(VolumeType record);
 
     int insertSelective(VolumeType record);
 
-    VolumeType selectByPrimaryKey(Integer volumeTypeId);
+    VolumeType selectByPrimaryKey(Long volumeTypeId);
 
     int updateByPrimaryKeySelective(VolumeType record);
 

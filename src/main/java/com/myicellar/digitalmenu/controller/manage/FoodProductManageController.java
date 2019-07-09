@@ -1,20 +1,20 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.myicellar.digitalmenu.dao.entity.Food;
 import com.myicellar.digitalmenu.dao.entity.FoodProduct;
-import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.service.FoodProductService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.*;
-import com.myicellar.digitalmenu.vo.response.*;
+import com.myicellar.digitalmenu.vo.request.FoodProductDeleteReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodProductReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodProductUpdateReqVO;
+import com.myicellar.digitalmenu.vo.response.FoodProductRespVO;
+import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,17 +40,7 @@ public class FoodProductManageController {
      * @param reqVO
      * @return
      */
-    @PostMapping(value = "/queryListPage")
-    @AuthIgnore
-    @ApiOperation("美食-产品关联信息查询")
-    public ResultVO<PageResponseVO<FoodProductRespVO>> queryListPage(@RequestBody FoodProductpageReqVO reqVO) {
-        PageResponseVO<FoodProduct> page = foodProductService.queryPageList(reqVO);
-        PageResponseVO<FoodProductRespVO> resultPage = new PageResponseVO<FoodProductRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,FoodProductRespVO.class);
-        }
-        return ResultVO.success(resultPage);
-    }
+
 
     /**
      * 根据foodId查询product列表
@@ -58,17 +48,7 @@ public class FoodProductManageController {
      * @param reqVO
      * @return
      */
-    @PostMapping(value = "/queryProductPage")
-    @AuthIgnore
-    @ApiOperation("根据foodId查询product列表")
-    public ResultVO<PageResponseVO<ProductRespVO>> queryProductPage(@RequestBody FoodProductpageReqVO reqVO) {
-        PageResponseVO<Product> page = foodProductService.queryProductPage(reqVO);
-        PageResponseVO<ProductRespVO> resultPage = new PageResponseVO<ProductRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,ProductRespVO.class);
-        }
-        return ResultVO.success(resultPage);
-    }
+
 
     /**
      * 根据productId查询food列表
@@ -76,17 +56,6 @@ public class FoodProductManageController {
      * @param reqVO
      * @return
      */
-    @PostMapping(value = "/queryFoodPage")
-    @AuthIgnore
-    @ApiOperation("根据productId查询food列表")
-    public ResultVO<PageResponseVO<FoodRespVO>> queryFoodPage(@RequestBody FoodProductpageReqVO reqVO) {
-        PageResponseVO<Food> page = foodProductService.queryFoodPage(reqVO);
-        PageResponseVO<FoodRespVO> resultPage = new PageResponseVO<FoodRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,FoodRespVO.class);
-        }
-        return ResultVO.success(resultPage);
-    }
 
     /**
      * 新增

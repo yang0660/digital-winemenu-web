@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.WineVintageScore;
 
-public interface WineVintageScoreMapper {
+public interface WineVintageScoreMapper extends Mapper<WineVintageScore>{
     int deleteByPrimaryKey(Long vintageScoreId);
 
     int insert(WineVintageScore record);

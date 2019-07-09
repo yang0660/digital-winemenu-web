@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineAttr">
+    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
+    <id column="wine_id" jdbcType="BIGINT" property="wineId" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    attr_id, wine_id, mic_rank, updated_at
+  </sql>
+  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineAttrPageReqVO" resultType="long">
+    select count(0)
+    from t_wine
+    where wine_id = #{wineId}
+  </select>
+
+  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineAttrPageReqVO"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_wine
+    where wine_id = #{wineId}
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

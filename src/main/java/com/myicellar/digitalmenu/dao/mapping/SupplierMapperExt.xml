@@ -17,15 +17,38 @@
     </select>
 
 
-    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.SupplierPageReqVO" resultMap="BaseResultMap">
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.SupplierPageReqVO"
+            resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="BaseResultMap"/>
         from
         t_supplier
         where
         supplier_id = #{supplierId}
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
+
+
+    <!--<resultMap id="FoodRecommendResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodRecommendRespVO">
+        <id column="food_id" jdbcType="BIGINT" property="foodId"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+
+    </resultMap>-->
+    <!--<select id="selectListByRecommend" parameterType="com.myicellar.digitalmenu.vo.request.SupplierIndexReqVO"
+            resultMap="FoodRecommendResultMap">
+        select
+        <include refid="FoodRecommendResultMap"/>
+        from
+        t_food a,
+        t_img b,
+        where
+        a.supplier_id = #{supplierId}
+        and
+        a.is_recommend = true
+        and
+        a,food_img_id = b,img_id
+
+    </select>-->
 
 
 </mapper>

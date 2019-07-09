@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.AttrMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Attr">
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    attr_id, attr_catg_id, attr_catg_name, attr_seo_name, attr_name_eng, attr_name_chs, 
+    attr_name_cht, mic_rank, updated_at
+  </sql>
+
+  <select id="selectList"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_attr
+
+  </select></mapper>

@@ -1,16 +1,15 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
-import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
-import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.service.SupplierService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.*;
-import com.myicellar.digitalmenu.vo.response.FoodTypeRespVO;
+import com.myicellar.digitalmenu.vo.request.SupplierDeleteReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.SupplierRespVO;

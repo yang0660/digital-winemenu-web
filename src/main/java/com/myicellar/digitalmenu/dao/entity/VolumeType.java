@@ -3,7 +3,7 @@ package com.myicellar.digitalmenu.dao.entity;
 import java.util.Date;
 
 public class VolumeType {
-    private Integer volumeTypeId;
+    private Long volumeTypeId;
 
     private Long volInMl;
 
@@ -15,11 +15,11 @@ public class VolumeType {
 
     private String typeNameEng;
 
-    public Integer getVolumeTypeId() {
+    public Long getVolumeTypeId() {
         return volumeTypeId;
     }
 
-    public void setVolumeTypeId(Integer volumeTypeId) {
+    public void setVolumeTypeId(Long volumeTypeId) {
         this.volumeTypeId = volumeTypeId;
     }
 
