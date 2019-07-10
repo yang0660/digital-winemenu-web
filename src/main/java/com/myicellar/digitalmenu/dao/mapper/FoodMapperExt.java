@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Food;
-import com.myicellar.digitalmenu.vo.request.FoodDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.response.FoodDetailRespVO;

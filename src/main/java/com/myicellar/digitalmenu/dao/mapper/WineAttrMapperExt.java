@@ -2,7 +2,6 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.WineAttr;
 import com.myicellar.digitalmenu.vo.request.WineAttrPageReqVO;
-import com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;

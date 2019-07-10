@@ -8,10 +8,52 @@
   <sql id="Base_Column_List">
     <include refid="com.myicellar.digitalmenu.dao.mapper.OriginMapper.Base_Column_List"/>
   </sql>
+
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_product
+   order by mic_rank
+  </select>
 
+  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    a.wine_origin_id,
+    a.region_seo_name,
+    a.region_name_eng,
+    a.region_name_chs,
+    a.region_name_cht,
+    parent_origin_id,
+    country_id
+    FROM
+    t_origin a
+    INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
+    INNER JOIN t_wine_vintage c ON b.wine_id = c.wine_id
+    INNER JOIN t_product d ON c.wine_id = d.wine_id
+    AND c.vintage_tag = d.vintage_tag
+    WHERE
+    d.supplier_id = #{supplierId}
+    order by mic_rank
+  </select>
+
+  <select id="selectListBySupplierIdAndCountryId"  resultMap="BaseResultMap">
+    SELECT DISTINCT
+    a.wine_origin_id,
+    a.region_seo_name,
+    a.region_name_eng,
+    a.region_name_chs,
+    a.region_name_cht,
+    a.parent_origin_id,
+    a.country_id
+    FROM
+    t_origin a
+    INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
+    INNER JOIN t_wine_vintage c ON b.wine_id = c.wine_id
+    INNER JOIN t_product d ON c.wine_id = d.wine_id
+    AND c.vintage_tag = d.vintage_tag
+    WHERE
+    d.supplier_id = #{supplierId}
+    and a.country_id = #{countryId}
+    order by mic_rank
   </select>
 </mapper>

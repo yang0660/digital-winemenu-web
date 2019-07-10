@@ -13,11 +13,11 @@ public class AttrService extends BaseService<Long, Attr, AttrMapperExt> {
 
 
     /**
-     * 列表查询
+     * 查询原料列表（根据供应商ID）
      * @return
      */
-    public List<Attr> queryList(){
-        List<Attr> list=mapper.selectList();
+    public List<Attr> queryListBySupplierId(Long supplierId){
+        List<Attr> list=mapper.queryListBySupplierId(supplierId);
         return list;
     }
 }

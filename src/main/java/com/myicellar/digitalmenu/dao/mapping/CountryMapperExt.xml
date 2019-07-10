@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.CountryMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Country">
-    <id column="country_id" jdbcType="BIGINT" property="countryId" />
-    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
-    <result column="country_seo_name" jdbcType="VARCHAR" property="countrySeoName" />
-    <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng" />
-    <result column="country_name_chs" jdbcType="VARCHAR" property="countryNameChs" />
-    <result column="country_name_cht" jdbcType="VARCHAR" property="countryNameCht" />
-    <result column="img_id" jdbcType="BIGINT" property="imgId" />
-    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Country"
+    extends="com.myicellar.digitalmenu.dao.mapper.CountryMapper.BaseResultMap">
   </resultMap>
   <sql id="Base_Column_List">
-    country_id, country_code, country_seo_name, country_name_eng, country_name_chs, country_name_cht, 
-    img_id, mic_rank, updated_at
+    <include refid="com.myicellar.digitalmenu.dao.mapper.CountryMapper.Base_Column_List" />
   </sql>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_country
-
+    order by mic_rank
   </select>
+
+  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    a.country_id,
+    a.country_code,
+    a.country_seo_name,
+    a.country_name_eng,
+    a.country_name_chs,
+    a.country_name_cht,
+    a.img_id
+    FROM
+    t_country a
+    INNER JOIN t_origin b ON a.country_id = b.country_id
+    INNER JOIN t_wine c ON b.wine_origin_id = c.wine_origin_id
+    INNER JOIN t_wine_vintage d ON c.wine_id = d.wine_id
+    INNER JOIN t_product e ON d.wine_id = e.wine_id
+    AND d.vintage_tag = e.vintage_tag
+    WHERE
+    e.supplier_id = #{supplierId}
+    order by a.mic_rank
+  </select>
+
 </mapper>

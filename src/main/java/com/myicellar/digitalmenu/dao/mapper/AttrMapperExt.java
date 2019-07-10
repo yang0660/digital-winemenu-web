@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AttrMapperExt extends AttrMapper{
 
-
-
     List<Attr> selectList();
+
+    List<Attr> queryListBySupplierId(Long supplierId);
 }

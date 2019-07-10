@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.AttrMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Attr">
-
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Attr"
+    extends="com.myicellar.digitalmenu.dao.mapper.AttrMapper.BaseResultMap">
   </resultMap>
   <sql id="Base_Column_List">
-    attr_id, attr_catg_id, attr_catg_name, attr_seo_name, attr_name_eng, attr_name_chs, 
-    attr_name_cht, mic_rank, updated_at
+    <include refid="com.myicellar.digitalmenu.dao.mapper.AttrMapper.Base_Column_List" />
   </sql>
 
-  <select id="selectList"
-          resultMap="BaseResultMap">
+  <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_attr
+    order by mic_rank
+  </select>
 
-  </select></mapper>
+  <select id="queryListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+    SELECT DISTINCT
+    a.attr_id,
+    a.attr_catg_id,
+    a.attr_name_eng,
+    a.attr_name_chs,
+    a.attr_name_cht
+    FROM t_attr a
+    INNER JOIN t_wine_attr b on a.attr_id = b.attr_id
+    INNER JOIN t_wine_vintage c on b.wine_id = c.wine_id
+    INNER JOIN t_product d on c.wine_id = d.wine_id and c.vintage_tag = d.vintage_tag
+    WHERE a.attr_catg_id = 101
+    AND d.supplier_id = #{supplierId}
+    order by a.mic_rank
+  </select>
+
+</mapper>

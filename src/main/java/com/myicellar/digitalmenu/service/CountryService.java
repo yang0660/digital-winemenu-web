@@ -21,4 +21,13 @@ public class CountryService extends BaseService<Long, Country, CountryMapperExt>
         return list;
     }
 
+    /**
+     * 查询国家列表（根据供应商ID）
+     * @return
+     */
+    public List<Country> queryListBySupplierId(Long supplierId){
+        List<Country> list=mapper.selectListBySupplierId(supplierId);
+        return list;
+    }
+
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface CountryMapperExt extends CountryMapper{
 
     List<Country> selectList();
+
+    List<Country> selectListBySupplierId(Long supplierId);
 }

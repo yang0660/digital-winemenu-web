@@ -21,4 +21,24 @@ public class OriginService extends BaseService<Long, Origin, OriginMapperExt> {
         return list;
     }
 
+
+    /**
+     * 查询产地列表（根据供应商ID）
+     * @return
+     */
+    public List<Origin> queryListBySupplierId(Long supplierId){
+        List<Origin> list = mapper.selectListBySupplierId(supplierId);
+        return list;
+    }
+
+    /**
+     * 查询产地列表（根据供应商及国家ID）
+     * @return
+     */
+    public List<Origin> queryListBySupplierIdAndCountryId(Long supplierId,Long countryId){
+        List<Origin> list = mapper.selectListBySupplierIdAndCountryId(supplierId,countryId);
+        return list;
+    }
+
+
 }

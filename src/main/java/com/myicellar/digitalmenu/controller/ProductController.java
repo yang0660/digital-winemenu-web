@@ -1,15 +1,10 @@
 package com.myicellar.digitalmenu.controller;
 
-import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
-import com.myicellar.digitalmenu.utils.BizException;
-import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.*;
-import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
+import com.myicellar.digitalmenu.vo.request.WishListReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.ProductRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
