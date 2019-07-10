@@ -8,18 +8,4 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapper.Base_Column_List" />
   </sql>
 
-  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineVintageScorePageReqVO" resultType="long">
-    select count(0)
-    from t_wine_vintage_score
-    where vintage_score_id = #{vintageScoreId}
-  </select>
-
-  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineVintageScorePageReqVO"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_wine_vintage_score
-    where vintage_score_id = #{vintageScoreId}
-    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-  </select>
 </mapper>

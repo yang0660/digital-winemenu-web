@@ -10,20 +10,6 @@
   <sql id="Base_Column_List">
     attr_id, wine_id, mic_rank, updated_at
   </sql>
-  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineAttrPageReqVO" resultType="long">
-    select count(0)
-    from t_wine
-    where wine_id = #{wineId}
-  </select>
-
-  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineAttrPageReqVO"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_wine
-    where wine_id = #{wineId}
-    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-  </select>
 
   <resultMap id="WineAttrInfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO">
       <result column="wineId" jdbcType="BIGINT" property="wineId" />

@@ -16,24 +16,4 @@ public class AttrManageController {
     @Autowired
     private AttrService attrService;
 
-    /**
-     * 列表查询
-     *
-     * @param reqVO
-     * @return
-     */
-/*    @PostMapping(value = "/queryListPage")
-    @AuthIgnore
-    @ApiOperation("列表查询")
-    public ResultVO<PageResponseVO<AttrRespVO>> queryListPage(@RequestBody AttrPageReqVO reqVO) {
-        PageResponseVO<Attr> page = attrService.queryPageList(reqVO);
-
-        PageResponseVO<AttrRespVO> resultPage = new PageResponseVO<AttrRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,AttrRespVO.class);
-        }
-
-        return ResultVO.success(resultPage);
-    }*/
-
 }

@@ -4,13 +4,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * 产地信息
+ * 产地筛选
  */
 @Data
-@ApiModel(value = "产地信息")
+@ApiModel(value = "产地筛选")
 public class OriginListReqVO {
 
     @ApiModelProperty(value = "供应商ID")
