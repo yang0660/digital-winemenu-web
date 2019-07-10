@@ -1,6 +1,5 @@
 package com.myicellar.digitalmenu.dao.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product {
@@ -11,14 +10,6 @@ public class Product {
     private Long vintageTag;
 
     private Long supplierId;
-
-    private BigDecimal regularPrice;
-
-    private Long volumeTypeId;
-
-    private BigDecimal glassPrice;
-
-    private Long glassVolumeTypeId;
 
     private Byte isRecommend;
 
@@ -62,38 +53,6 @@ public class Product {
 
     public void setSupplierId(Long supplierId) {
         this.supplierId = supplierId;
-    }
-
-    public BigDecimal getRegularPrice() {
-        return regularPrice;
-    }
-
-    public void setRegularPrice(BigDecimal regularPrice) {
-        this.regularPrice = regularPrice;
-    }
-
-    public Long getVolumeTypeId() {
-        return volumeTypeId;
-    }
-
-    public void setVolumeTypeId(Long volumeTypeId) {
-        this.volumeTypeId = volumeTypeId;
-    }
-
-    public BigDecimal getGlassPrice() {
-        return glassPrice;
-    }
-
-    public void setGlassPrice(BigDecimal glassPrice) {
-        this.glassPrice = glassPrice;
-    }
-
-    public Long getGlassVolumeTypeId() {
-        return glassVolumeTypeId;
-    }
-
-    public void setGlassVolumeTypeId(Long glassVolumeTypeId) {
-        this.glassVolumeTypeId = glassVolumeTypeId;
     }
 
     public Byte getIsRecommend() {

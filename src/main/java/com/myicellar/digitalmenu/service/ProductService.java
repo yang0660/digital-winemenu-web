@@ -72,8 +72,8 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      * @param productIds
      * @return
      */
-    public List<ProductInfoRespVO> queryProductListByIds(List<Long> productIds){
-        List<ProductInfoRespVO>  list = mapper.selectProductListByIds(productIds);
+    public List<ProductInfoRespVO> queryProductListByIds(List<Long> packageIds){
+        List<ProductInfoRespVO>  list = mapper.selectProductListByIds(packageIds);
         fillProductInfoRespVO(list);
 
         return list;

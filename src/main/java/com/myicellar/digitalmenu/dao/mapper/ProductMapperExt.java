@@ -16,5 +16,5 @@ public interface ProductMapperExt extends ProductMapper{
 
     List<ProductInfoRespVO> selectProductListByFoodId(Long foodId);
 
-    List<ProductInfoRespVO> selectProductListByIds(@Param("productIds") List<Long> productIds);
+    List<ProductInfoRespVO> selectProductListByIds(@Param("packageIds") List<Long> packageIds);
 }

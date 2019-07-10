@@ -59,8 +59,8 @@ public class ProductController {
     @ApiOperation("WISHLIST酒品列表")
     public ResultVO<List<ProductInfoRespVO>> queryProductListByIds(@RequestBody WishListReqVO reqVO) {
         List<ProductInfoRespVO> list = new ArrayList<ProductInfoRespVO>();
-        if(!CollectionUtils.isEmpty(reqVO.getProductIds())) {
-            list = productService.queryProductListByIds(reqVO.getProductIds());
+        if(!CollectionUtils.isEmpty(reqVO.getPackageIds())) {
+            list = productService.queryProductListByIds(reqVO.getPackageIds());
         }
 
         return ResultVO.success(list);
@@ -84,6 +84,24 @@ public class ProductController {
         }
 
         return ResultVO.success(respVO);
+    }
+
+    /**
+     * 酒品详情
+     *
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/queryDetailById")
+    @AuthIgnore
+    @ApiOperation("酒品详情")
+    public ResultVO<List<ProductInfoRespVO>> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
+        List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
+        if(CollectionUtils.isEmpty(list)){
+            list = new ArrayList<ProductInfoRespVO>();
+        }
+
+        return ResultVO.success(list);
     }
 
 }

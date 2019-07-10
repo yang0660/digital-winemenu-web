@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 @ApiModel(value = "产品信息")
 public class ProductInfoRespVO {
 
-    @ApiModelProperty(value = "产品ID")
-    private Long productId;
+    @ApiModelProperty(value = "商品ID")
+    private Long packageId;
 
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;
