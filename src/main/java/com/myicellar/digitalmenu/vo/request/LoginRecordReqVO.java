@@ -7,10 +7,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
-* 登录记录表
+* 登录日志
 */
 @Data
-@ApiModel(value = "登录记录说明")
+@ApiModel(value = "登录日志")
 public class LoginRecordReqVO extends PageRequestVO {
 
     /**

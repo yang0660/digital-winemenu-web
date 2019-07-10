@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 用户帐号表
+* 登录参数
 */
 @Data
-@ApiModel(value = "用户帐户说明")
+@ApiModel(value = "登录参数")
 public class ManageLoginReqVO {
 
     @ApiModelProperty("用户ID")

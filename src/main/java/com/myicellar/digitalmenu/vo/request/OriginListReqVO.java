@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 产地筛选
+ * 产地筛选参数
  */
 @Data
-@ApiModel(value = "产地筛选")
+@ApiModel(value = "产地筛选参数")
 public class OriginListReqVO {
 
     @ApiModelProperty(value = "供应商ID")

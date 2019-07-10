@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 图库分类信息
+* 图库分类删除参数
 */
 @Data
-@ApiModel(value = "图库分类信息")
+@ApiModel(value = "图库分类删除参数")
 public class ImgTypeDeleteReqVO {
 
     @ApiModelProperty(value = "图库分类ID")

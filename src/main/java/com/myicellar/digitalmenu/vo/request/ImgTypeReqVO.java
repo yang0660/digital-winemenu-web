@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 图库分类信息
+* 图库分类新增/修改参数
 */
 @Data
-@ApiModel(value = "图库分类信息")
+@ApiModel(value = "图库分类新增/修改参数")
 public class ImgTypeReqVO {
 
     @ApiModelProperty(value = "图库分类ID(新增时，不需要传)")

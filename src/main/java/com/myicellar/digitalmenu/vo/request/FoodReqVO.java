@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 美食信息
+ * 美食新增/修改参数
  */
 @Data
-@ApiModel(value = "美食信息")
+@ApiModel(value = "美食新增/修改参数")
 public class FoodReqVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;

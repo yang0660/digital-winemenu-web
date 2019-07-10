@@ -7,10 +7,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 供应商信息
+ * 供应商新增/修改参数
  */
 @Data
-@ApiModel(value = "供应商信息")
+@ApiModel(value = "供应商新增/修改参数")
 public class SupplierReqVO {
 
     @ApiModelProperty(value = "供应商ID")

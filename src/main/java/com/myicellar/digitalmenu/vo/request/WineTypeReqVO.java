@@ -8,10 +8,10 @@ import java.util.Date;
 
 
 /**
- * 酒品类型
+ * 酒品类型参数
  */
 @Data
-@ApiModel(value = "酒品类型")
+@ApiModel(value = "酒品类型参数")
 public class WineTypeReqVO {
     @ApiModelProperty(value = "酒品类型ID")
     private Long wineTypeId;

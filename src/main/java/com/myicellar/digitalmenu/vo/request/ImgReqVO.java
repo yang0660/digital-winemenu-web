@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 图片信息
+* 图片新增/修改参数
 */
 @Data
-@ApiModel(value = "图片信息")
+@ApiModel(value = "图片新增/修改参数")
 public class ImgReqVO {
 
     @ApiModelProperty(value = "图片ID(新增时，不需要传)")

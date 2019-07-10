@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 美食分类信息
+* 美食分类新增/修改参数
 */
 @Data
-@ApiModel(value = "美食分类信息")
+@ApiModel(value = "美食分类新增/修改参数")
 public class FoodTypeReqVO {
 
     @ApiModelProperty(value = "供应商ID")

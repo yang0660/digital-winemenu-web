@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 美食列表相关信息查询参数
+* 美食列表参数-分页
 */
 @Data
-@ApiModel(value = "美食列表相关信息查询参数")
+@ApiModel(value = "美食列表参数-分页")
 public class FoodPageReqVO extends PageRequestVO{
 
     @ApiModelProperty(value = "美食ID")

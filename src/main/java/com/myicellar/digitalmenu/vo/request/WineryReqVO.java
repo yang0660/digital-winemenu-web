@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 /**
- * 酒庄信息
+ * 酒庄新增/修改参数
  */
 @Data
 @ApiModel(value = "酒庄信息")
