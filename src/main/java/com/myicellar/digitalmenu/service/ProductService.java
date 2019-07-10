@@ -61,6 +61,18 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
         return list;
     }
 
+    /**
+     * 查询wishlist酒品列表
+     * @param productIds
+     * @return
+     */
+    public List<ProductInfoRespVO> queryProductListByIds(List<Long> productIds){
+        List<ProductInfoRespVO>  list = mapper.selectProductListByIds(productIds);
+        fillProductInfoRespVO(list);
+
+        return list;
+    }
+
     public void fillProductInfoRespVO(List<ProductInfoRespVO>  list){
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();

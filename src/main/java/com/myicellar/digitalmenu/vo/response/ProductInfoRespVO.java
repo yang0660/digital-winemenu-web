@@ -19,6 +19,9 @@ public class ProductInfoRespVO {
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;
 
+    @ApiModelProperty(value = "酒品类型名称-英文")
+    private String wineTypeNameEng;
+
     @ApiModelProperty(value = "酒品名称-英文")
     private String wineNameEng;
 
@@ -61,8 +64,11 @@ public class ProductInfoRespVO {
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 
-    @ApiModelProperty(value = "价格")
+    @ApiModelProperty(value = "价格/一瓶")
     private BigDecimal regularPrice;
+
+    @ApiModelProperty(value = "价格/一杯")
+    private BigDecimal glassPrice;
 
     @ApiModelProperty(value = "酒庄LOGO图片ID")
     private Long wineryLogoId;

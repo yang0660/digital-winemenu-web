@@ -6,10 +6,7 @@ import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.ProductDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.ProductReqVO;
-import com.myicellar.digitalmenu.vo.request.ProductUpdateReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
+import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductRespVO;
@@ -46,10 +43,28 @@ public class ProductController {
     @PostMapping(value = "/queryRecomendProductList")
     @AuthIgnore
     @ApiOperation("推荐酒品列表")
-    public ResultVO<List<ProductInfoRespVO>> queryRecomendProductList(SupplierIdReqVO reqVO) {
+    public ResultVO<List<ProductInfoRespVO>> queryRecomendProductList(@RequestBody SupplierIdReqVO reqVO) {
         List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){
             list = new ArrayList<ProductInfoRespVO>();
+        }
+
+        return ResultVO.success(list);
+    }
+
+    /**
+     * WISHLIST酒品列表
+     *
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/queryProductListByIds")
+    @AuthIgnore
+    @ApiOperation("WISHLIST酒品列表")
+    public ResultVO<List<ProductInfoRespVO>> queryProductListByIds(@RequestBody WishListReqVO reqVO) {
+        List<ProductInfoRespVO> list = new ArrayList<ProductInfoRespVO>();
+        if(!CollectionUtils.isEmpty(reqVO.getProductIds())) {
+            list = productService.queryProductListByIds(reqVO.getProductIds());
         }
 
         return ResultVO.success(list);
