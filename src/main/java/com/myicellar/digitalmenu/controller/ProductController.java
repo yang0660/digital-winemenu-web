@@ -5,6 +5,7 @@ import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,24 @@ public class ProductController {
         }
 
         return ResultVO.success(list);
+    }
+
+    /**
+     * 查询酒品价格区间（根据供应商ID）
+     *
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/queryPriceRange")
+    @AuthIgnore
+    @ApiOperation("查询酒品价格区间（根据供应商ID）")
+    public ResultVO<ProductPriceRangeRespVO> queryPriceRange(@RequestBody SupplierIdReqVO reqVO) {
+        ProductPriceRangeRespVO respVO = productService.queryPriceRange(reqVO.getSupplierId());
+        if(respVO==null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))){
+            respVO = new ProductPriceRangeRespVO();
+        }
+
+        return ResultVO.success(respVO);
     }
 
 }

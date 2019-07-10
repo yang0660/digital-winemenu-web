@@ -146,4 +146,14 @@
         </foreach>
     </select>
 
+    <select id="selectPriceRange" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO">
+        SELECT
+        max( regular_price ) AS minProductPrice,
+        max( regular_price ) AS maxProductPrice
+        FROM
+        t_product
+        WHERE
+        supplier_id = #{supplierId}
+    </select>
+
 </mapper>

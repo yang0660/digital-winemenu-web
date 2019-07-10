@@ -43,7 +43,7 @@ public class FoodTypeController {
             return ResultVO.validError("supplierId cannot be empty！");
         }
 
-        List<FoodType> list = foodTypeService.queryListBySuppilerId(reqVO.getSupplierId());
+        List<FoodType> list = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
         if(!CollectionUtils.isEmpty(list)){
             resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);

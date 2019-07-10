@@ -7,6 +7,7 @@ import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,13 +39,17 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
         return list;
     }
 
+    public ProductPriceRangeRespVO queryPriceRange(Long supplierId){
+        return mapper.selectPriceRange(supplierId);
+    }
+
     /**
      * 查询供应商的推荐酒品列表
-     * @param suppilerId
+     * @param supplierId
      * @return
      */
-    public List<ProductInfoRespVO> queryRecomendProductList(Long suppilerId){
-        List<ProductInfoRespVO>  list = mapper.selectRecomendProductList(suppilerId);
+    public List<ProductInfoRespVO> queryRecomendProductList(Long supplierId){
+        List<ProductInfoRespVO>  list = mapper.selectRecomendProductList(supplierId);
         fillProductInfoRespVO(list);
 
         return list;

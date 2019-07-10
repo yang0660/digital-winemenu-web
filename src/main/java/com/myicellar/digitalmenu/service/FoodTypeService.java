@@ -27,7 +27,7 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
      * 列表查询-分页
      * @return
      */
-    public List<FoodType> queryListBySuppilerId(Long supplierId){
+    public List<FoodType> queryListBysupplierId(Long supplierId){
         return mapper.selectListBySupplierId(supplierId);
     }
 }
