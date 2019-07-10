@@ -7,4 +7,5 @@ import java.util.List;
 public interface WineTypeMapperExt extends WineTypeMapper {
     List<WineType> selectList();
 
+    List<WineType> selectListBySupplierId(Long supplierId);
 }

@@ -17,8 +17,15 @@ public class WineTypeService extends BaseService<Long, WineType, WineTypeMapperE
      * @return
      */
     public List<WineType> queryList(){
-        List<WineType> list=mapper.selectList();
-        return list;
+        return mapper.selectList();
+    }
+
+    /**
+     * 查询酒品分类列表（根据供应商ID）
+     * @return
+     */
+    public List<WineType> queryListBySupplierId(Long supplierId){
+        return mapper.selectListBySupplierId(supplierId);
     }
 
 }
