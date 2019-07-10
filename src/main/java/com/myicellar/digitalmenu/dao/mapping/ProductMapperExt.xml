@@ -159,4 +159,72 @@
         b.supplier_id = #{supplierId}
     </select>
 
+    <select id="selectResultCount" parameterType="com.myicellar.digitalmenu.vo.request.ProductFilterReqVO"
+            resultType="long">
+        select
+        count(distinct pkg.package_id)
+        from
+        t_wine wine
+        inner join t_product prod on wine.wine_id =prod.wine_id
+        inner join t_wine_type wty on wine.wine_type_id=wty.wine_type_id
+        inner join t_wine_vintage vtg on prod.vintage_tag=vtg.vintage_tag
+        inner join t_package pkg on prod.product_id=pkg.product_id
+        inner join t_origin ori on wine.wine_origin_id=ori.wine_origin_id
+        inner join t_country cty on ori.country_id=cty.country_id
+        where pkg.regular_price &gt; #{priceMin}
+        and pkg.regular_price &lt; #{priceMax}
+        <if test="supplierId!=null and supplierId!=0">
+            and prod.supplier_id=#{supplierId}
+        </if>
+        <if test="wineTypeId!=null and wineTypeId!=0">
+            and wine.wine_type_id=#{wineTypeId}
+        </if>
+        <if test="countryId!=null and countryId!=0">
+            and ori.country_id=#{countryId}
+        </if>
+        <if test="wineOriginId!=null and wineOriginId!=0">
+            and wine.wine_origin_id=#{wineOriginId}
+        </if>
+    </select>
+
+    <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.ProductFilterReqVO"
+            resultMap="ProductInfoResultMap">
+        select
+        DISTINCT
+        pkg.package_id,
+        wine.wine_id,
+        wine.wine_name_eng,
+        wty.wine_type_name_eng,
+        ori.region_name_eng,
+        cty.country_name_eng,
+        vtg.vintage_name,
+        pkg.regular_price,
+        pkg.glass_price,
+        wine.wine_img_id
+        from
+        t_wine wine
+        inner join t_product prod on wine.wine_id =prod.wine_id
+        inner join t_wine_type wty on wine.wine_type_id=wty.wine_type_id
+        inner join t_wine_vintage vtg on prod.vintage_tag=vtg.vintage_tag
+        inner join t_package pkg on prod.product_id=pkg.product_id
+        inner join t_origin ori on wine.wine_origin_id=ori.wine_origin_id
+        inner join t_country cty on ori.country_id=cty.country_id
+        where pkg.regular_price &gt; #{priceMin}
+        and pkg.regular_price &lt; #{priceMax}
+        <if test="supplierId!=null and supplierId!=0">
+            and prod.supplier_id=#{supplierId}
+        </if>
+        <if test="wineTypeId!=null and wineTypeId!=0">
+            and wine.wine_type_id=#{wineTypeId}
+        </if>
+        <if test="countryId!=null and countryId!=0">
+            and ori.country_id=#{countryId}
+        </if>
+        <if test="wineOriginId!=null and wineOriginId!=0">
+            and wine.wine_origin_id=#{wineOriginId}
+        </if>
+        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+
 </mapper>

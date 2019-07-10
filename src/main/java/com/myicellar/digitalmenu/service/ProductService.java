@@ -6,10 +6,8 @@ import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt;
-import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
-import com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -177,4 +175,17 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
         return subStr.toString();
     }
 
+    /**
+     * 筛选结果-分页
+     * @return
+     */
+    public PageResponseVO<ProductInfoRespVO> queryResultPage(ProductFilterReqVO reqVO){
+        PageResponseVO<ProductInfoRespVO> page = selectPage(reqVO, mapper::selectResultCount, mapper::selectResult);
+
+        List<ProductInfoRespVO> list = page.getItems();
+        fillProductInfoRespVO(list);
+        page.setItems(list);
+
+        return page;
+    }
 }

@@ -2,8 +2,10 @@ package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
+import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -102,6 +104,21 @@ public class ProductController {
         }
 
         return ResultVO.success(list);
+    }
+
+    /**
+     * 筛选结果页列表
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryResultPage")
+    @AuthIgnore
+    @ApiOperation("筛选结果页列表")
+    public ResultVO<PageResponseVO<ProductInfoRespVO>> queryResultPage(@RequestBody ProductFilterReqVO reqVO) {
+        PageResponseVO<ProductInfoRespVO> page = productService.queryResultPage(reqVO);
+
+        return ResultVO.success(page);
     }
 
 }

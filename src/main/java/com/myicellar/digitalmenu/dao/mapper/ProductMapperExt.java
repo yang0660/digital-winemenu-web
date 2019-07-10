@@ -1,13 +1,14 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ProductMapperExt extends ProductMapper{
+public interface ProductMapperExt extends ProductMapper {
     List<Product> selectList();
 
     ProductPriceRangeRespVO selectPriceRange(Long supplierId);
@@ -17,4 +18,8 @@ public interface ProductMapperExt extends ProductMapper{
     List<ProductInfoRespVO> selectProductListByFoodId(Long foodId);
 
     List<ProductInfoRespVO> selectProductListByIds(@Param("packageIds") List<Long> packageIds);
+
+    long selectResultCount(ProductFilterReqVO reqVO);
+
+    List<ProductInfoRespVO> selectResult(ProductFilterReqVO reqVO);
 }
