@@ -79,6 +79,8 @@ public class ProductController {
         ProductPriceRangeRespVO respVO = productService.queryPriceRange(reqVO.getSupplierId());
         if(respVO==null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))){
             respVO = new ProductPriceRangeRespVO();
+        }else if(respVO.getMaxProductPrice().equals(respVO.getMinProductPrice())){
+            respVO.setMinProductPrice(new BigDecimal(0.00));
         }
 
         return ResultVO.success(respVO);
