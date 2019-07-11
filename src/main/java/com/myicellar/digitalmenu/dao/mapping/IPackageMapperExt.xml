@@ -173,8 +173,12 @@
     AND attr_catg_id = 101
     WHERE
     prd.supplier_id = #{supplierId}
-    AND pkg.pkg.regular_price &gt;#{priceMin}
-    AND pkg.regular_price &lt;#{priceMax}
+    <if test="priceMin!=null and priceMin!=0">
+      AND pkg.regular_price &gt;#{priceMin}
+    </if>
+    <if test="priceMax!=null and priceMax!=0">
+      AND pkg.regular_price &lt;#{priceMax}
+    </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
       AND wine.wine_type_id IN
       <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
@@ -209,7 +213,7 @@
 
   <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.PackageFilterReqVO"
           resultMap="PackageInfoResultMap">
-    SELECT
+    SELECT DISTINCT
     pkg.package_id,
     pkg.regular_price,
     pkg.glass_price,
@@ -246,8 +250,12 @@
     AND attr_catg_id = 101
     WHERE
     prd.supplier_id = #{supplierId}
-    AND pkg.pkg.regular_price &gt;#{priceMin}
-    AND pkg.regular_price &lt;#{priceMax}
+    <if test="priceMin!=null and priceMin!=0">
+      AND pkg.regular_price &gt;#{priceMin}
+    </if>
+    <if test="priceMax!=null and priceMax!=0">
+      AND pkg.regular_price &lt;#{priceMax}
+    </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
       AND wine.wine_type_id IN
       <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">

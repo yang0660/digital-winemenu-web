@@ -166,6 +166,14 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     }
 
     /**
+     * 筛选结果总量统计
+     * @return
+     */
+    public Long queryResultCount(PackageFilterReqVO reqVO){
+        return mapper.selectResultCount(reqVO);
+    }
+
+    /**
      * 筛选结果-分页
      * @return
      */
