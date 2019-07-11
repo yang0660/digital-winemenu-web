@@ -324,7 +324,7 @@
     <select id="selectDetailById" parameterType="long" resultMap="PackageDetailResultMap">
       SELECT DISTINCT
       pkg.package_id,
-      prod.supplier_id,
+      prd.supplier_id,
       wine.wine_id,
       wine.wine_img_id,
       wty.wine_type_name_eng,
@@ -344,10 +344,10 @@
       wny.winery_img_ids
       FROM
       t_package pkg
-      INNER JOIN t_product prod ON prod.product_id = pkg.product_id
+      INNER JOIN t_product prd ON prd.product_id = pkg.product_id
       INNER JOIN t_wine_vintage vtg ON prd.wine_id = vtg.wine_id
-      AND.vintage_tag = vtg.vintage_tag
-      INNER JOIN t_wine wine ON prod.wine_id = wine.wine_id
+      AND prd.vintage_tag = vtg.vintage_tag
+      INNER JOIN t_wine wine ON prd.wine_id = wine.wine_id
       LEFT JOIN t_wine_type wty ON wine.wine_type_id = wty.wine_type_id
       LEFT JOIN t_origin ori ON wine.wine_origin_id = ori.wine_origin_id
       LEFT JOIN t_country cty ON ori.country_id = cty.country_id
