@@ -7,16 +7,16 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 美食-产品关联信息
+ * 美食-酒品关联信息
  */
 @Data
-@ApiModel(value = "美食-产品关联信息")
-public class FoodProductUpdateReqVO extends PageRequestVO{
+@ApiModel(value = "美食-酒品关联信息")
+public class FoodPackageUpdateReqVO extends PageRequestVO{
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
-    @ApiModelProperty(value = "产品ID")
-    private Long productId;
+    @ApiModelProperty(value = "商品ID")
+    private Long packageId;
 
     @ApiModelProperty(value = "创建者")
     private Long createdBy;

@@ -1,26 +1,25 @@
 package com.myicellar.digitalmenu.service;
 
 import com.aliyuncs.utils.StringUtils;
+import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Img;
-import com.myicellar.digitalmenu.dao.entity.Product;
+import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt;
-import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @Slf4j
-public class ProductService extends BaseService<Long, Product, ProductMapperExt> {
+public class PackageService extends BaseService<Long, IPackage, IPackageMapperExt> {
 
     @Autowired
     private ImgMapperExt imgMapperExt;
@@ -28,16 +27,7 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
     @Autowired
     private WineAttrMapperExt wineAttrMapperExt;
 
-    /**
-     * 列表查询
-     * @return
-     */
-    public List<Product> queryList(){
-        List<Product> list=mapper.selectList();
-        return list;
-    }
-
-    public ProductPriceRangeRespVO queryPriceRange(Long supplierId){
+    public PackagePriceRangeRespVO queryPriceRange(Long supplierId){
         return mapper.selectPriceRange(supplierId);
     }
 
@@ -46,9 +36,9 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      * @param supplierId
      * @return
      */
-    public List<ProductInfoRespVO> queryRecomendProductList(Long supplierId){
-        List<ProductInfoRespVO>  list = mapper.selectRecomendProductList(supplierId);
-        fillProductInfoRespVO(list);
+    public List<PackageInfoRespVO> queryRecomendPackageList(Long supplierId){
+        List<PackageInfoRespVO>  list = mapper.selectRecomendPackageList(supplierId);
+        fillPackageInfoRespVO(list);
 
         return list;
     }
@@ -58,30 +48,30 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      * @param foodId
      * @return
      */
-    public List<ProductInfoRespVO> queryProductListByFoodId(Long foodId){
-        List<ProductInfoRespVO>  list = mapper.selectProductListByFoodId(foodId);
-        fillProductInfoRespVO(list);
+    public List<PackageInfoRespVO> queryPackageListByFoodId(Long foodId){
+        List<PackageInfoRespVO>  list = mapper.selectPackageListByFoodId(foodId);
+        fillPackageInfoRespVO(list);
 
         return list;
     }
 
     /**
      * 查询wishlist酒品列表
-     * @param productIds
+     * @param packageIds
      * @return
      */
-    public List<ProductInfoRespVO> queryProductListByIds(List<Long> packageIds){
-        List<ProductInfoRespVO>  list = mapper.selectProductListByIds(packageIds);
-        fillProductInfoRespVO(list);
+    public List<PackageInfoRespVO> queryPackageListByIds(List<Long> packageIds){
+        List<PackageInfoRespVO>  list = mapper.selectPackageListByIds(packageIds);
+        fillPackageInfoRespVO(list);
 
         return list;
     }
 
-    public void fillProductInfoRespVO(List<ProductInfoRespVO>  list){
+    public void fillPackageInfoRespVO(List<PackageInfoRespVO>  list){
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();
             List<Long> wineIds = new ArrayList<Long>();
-            for(ProductInfoRespVO respVO : list){
+            for(PackageInfoRespVO respVO : list){
                 wineIds.add(respVO.getWineId());
                 if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                     imgIds.add(respVO.getWineImgId());
@@ -179,11 +169,11 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      * 筛选结果-分页
      * @return
      */
-    public PageResponseVO<ProductInfoRespVO> queryResultPage(ProductFilterReqVO reqVO){
-        PageResponseVO<ProductInfoRespVO> page = selectPage(reqVO, mapper::selectResultCount, mapper::selectResult);
+    public PageResponseVO<PackageInfoRespVO> queryResultPage(PackageFilterReqVO reqVO){
+        PageResponseVO<PackageInfoRespVO> page = selectPage(reqVO, mapper::selectResultCount, mapper::selectResult);
 
-        List<ProductInfoRespVO> list = page.getItems();
-        fillProductInfoRespVO(list);
+        List<PackageInfoRespVO> list = page.getItems();
+        fillPackageInfoRespVO(list);
         page.setItems(list);
 
         return page;

@@ -7,11 +7,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * 产品信息
+ * 商品详细信息
  */
 @Data
-@ApiModel(value = "产品信息")
-public class ProductInfoRespVO {
+@ApiModel(value = "商品详细信息")
+public class PackageInfoRespVO {
 
     @ApiModelProperty(value = "商品ID")
     private Long packageId;

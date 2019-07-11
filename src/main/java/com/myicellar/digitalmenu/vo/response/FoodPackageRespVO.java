@@ -1,4 +1,4 @@
-package com.myicellar.digitalmenu.vo.request;
+package com.myicellar.digitalmenu.vo.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,12 +11,12 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "美食-产品关联信息")
-public class FoodProductReqVO extends PageRequestVO{
+public class FoodPackageRespVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
-    @ApiModelProperty(value = "产品ID")
-    private Long productId;
+    @ApiModelProperty(value = "商品ID")
+    private Long packageId;
 
     @ApiModelProperty(value = "创建者")
     private Long createdBy;

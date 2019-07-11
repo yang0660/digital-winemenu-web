@@ -5,14 +5,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 筛选结果请求信息
  */
 @Data
 @ApiModel(value = "筛选结果请求信息")
-public class ProductFilterReqVO extends PageRequestVO {
+public class PackageFilterReqVO extends PageRequestVO {
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;

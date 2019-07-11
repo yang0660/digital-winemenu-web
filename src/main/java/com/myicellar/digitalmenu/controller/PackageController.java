@@ -1,13 +1,13 @@
 package com.myicellar.digitalmenu.controller;
 
-import com.myicellar.digitalmenu.service.ProductService;
+import com.myicellar.digitalmenu.service.PackageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
-import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
+import com.myicellar.digitalmenu.vo.response.PackageInfoRespVO;
+import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
-import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,12 +25,12 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/app/product")
-@Api(tags = "用户页面-酒品", description = "/app/product")
-public class ProductController {
+@RequestMapping("/app/package")
+@Api(tags = "用户页面-商品", description = "/app/package")
+public class PackageController {
 
     @Autowired
-    private ProductService productService;
+    private PackageService packageService;
 
     /**
      * 推荐酒品列表
@@ -38,13 +38,13 @@ public class ProductController {
      * @param
      * @return
      */
-    @PostMapping(value = "/queryRecomendProductList")
+    @PostMapping(value = "/queryRecomendPackageList")
     @AuthIgnore
     @ApiOperation("推荐酒品列表")
-    public ResultVO<List<ProductInfoRespVO>> queryRecomendProductList(@RequestBody SupplierIdReqVO reqVO) {
-        List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
+    public ResultVO<List<PackageInfoRespVO>> queryRecomendPackageList(@RequestBody SupplierIdReqVO reqVO) {
+        List<PackageInfoRespVO> list = packageService.queryRecomendPackageList(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){
-            list = new ArrayList<ProductInfoRespVO>();
+            list = new ArrayList<PackageInfoRespVO>();
         }
 
         return ResultVO.success(list);
@@ -56,13 +56,13 @@ public class ProductController {
      * @param
      * @return
      */
-    @PostMapping(value = "/queryProductListByIds")
+    @PostMapping(value = "/queryPackageListByIds")
     @AuthIgnore
     @ApiOperation("WISHLIST酒品列表")
-    public ResultVO<List<ProductInfoRespVO>> queryProductListByIds(@RequestBody WishListReqVO reqVO) {
-        List<ProductInfoRespVO> list = new ArrayList<ProductInfoRespVO>();
+    public ResultVO<List<PackageInfoRespVO>> queryPackageListByIds(@RequestBody WishListReqVO reqVO) {
+        List<PackageInfoRespVO> list = new ArrayList<PackageInfoRespVO>();
         if(!CollectionUtils.isEmpty(reqVO.getPackageIds())) {
-            list = productService.queryProductListByIds(reqVO.getPackageIds());
+            list = packageService.queryPackageListByIds(reqVO.getPackageIds());
         }
 
         return ResultVO.success(list);
@@ -77,12 +77,12 @@ public class ProductController {
     @PostMapping(value = "/queryPriceRange")
     @AuthIgnore
     @ApiOperation("查询酒品价格区间（根据供应商ID）")
-    public ResultVO<ProductPriceRangeRespVO> queryPriceRange(@RequestBody SupplierIdReqVO reqVO) {
-        ProductPriceRangeRespVO respVO = productService.queryPriceRange(reqVO.getSupplierId());
-        if(respVO==null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))){
-            respVO = new ProductPriceRangeRespVO();
-        }else if(respVO.getMaxProductPrice().equals(respVO.getMinProductPrice())){
-            respVO.setMinProductPrice(new BigDecimal(0.00));
+    public ResultVO<PackagePriceRangeRespVO> queryPriceRange(@RequestBody SupplierIdReqVO reqVO) {
+        PackagePriceRangeRespVO respVO = packageService.queryPriceRange(reqVO.getSupplierId());
+        if(respVO==null || respVO.getMaxPackagePrice().equals(new BigDecimal(0.00))){
+            respVO = new PackagePriceRangeRespVO();
+        }else if(respVO.getMaxPackagePrice().equals(respVO.getMinPackagePrice())){
+            respVO.setMinPackagePrice(new BigDecimal(0.00));
         }
 
         return ResultVO.success(respVO);
@@ -97,10 +97,10 @@ public class ProductController {
     @PostMapping(value = "/queryDetailById")
     @AuthIgnore
     @ApiOperation("酒品详情")
-    public ResultVO<List<ProductInfoRespVO>> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
-        List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
+    public ResultVO<List<PackageInfoRespVO>> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
+        List<PackageInfoRespVO> list = packageService.queryRecomendPackageList(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){
-            list = new ArrayList<ProductInfoRespVO>();
+            list = new ArrayList<PackageInfoRespVO>();
         }
 
         return ResultVO.success(list);
@@ -115,8 +115,8 @@ public class ProductController {
     @PostMapping(value = "/queryResultPage")
     @AuthIgnore
     @ApiOperation("筛选结果页列表")
-    public ResultVO<PageResponseVO<ProductInfoRespVO>> queryResultPage(@RequestBody ProductFilterReqVO reqVO) {
-        PageResponseVO<ProductInfoRespVO> page = productService.queryResultPage(reqVO);
+    public ResultVO<PageResponseVO<PackageInfoRespVO>> queryResultPage(@RequestBody PackageFilterReqVO reqVO) {
+        PageResponseVO<PackageInfoRespVO> page = packageService.queryResultPage(reqVO);
 
         return ResultVO.success(page);
     }

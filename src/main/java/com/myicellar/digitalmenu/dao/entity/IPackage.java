@@ -3,7 +3,7 @@ package com.myicellar.digitalmenu.dao.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Package {
+public class IPackage {
     private Long packageId;
 
     private Long productId;
