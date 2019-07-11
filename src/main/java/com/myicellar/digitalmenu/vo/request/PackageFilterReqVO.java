@@ -18,7 +18,7 @@ public class PackageFilterReqVO extends PageRequestVO {
     private Long supplierId;
 
     @ApiModelProperty(value = "酒品类型ID集合")
-    private Long wineTypeIds;
+    private List<Long> wineTypeIds;
 
     @ApiModelProperty(value = "国家ID集合")
     private List<Long> countryIds;

@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/package")
-@Api(tags = "用户页面-商品", description = "/app/package")
+@Api(tags = "用户页面-酒品", description = "/app/package")
 public class PackageController {
 
     @Autowired
@@ -100,6 +100,21 @@ public class PackageController {
     public ResultVO<PackageInfoRespVO> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
 
         return ResultVO.success(null);
+    }
+
+    /**
+     * 筛选结果总量统计
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryResultCount")
+    @AuthIgnore
+    @ApiOperation("筛选结果总量统计")
+    public ResultVO<Long> queryResultCount(@RequestBody PackageFilterReqVO reqVO) {
+        Long count = packageService.queryResultCount(reqVO);
+
+        return ResultVO.success(count);
     }
 
     /**
