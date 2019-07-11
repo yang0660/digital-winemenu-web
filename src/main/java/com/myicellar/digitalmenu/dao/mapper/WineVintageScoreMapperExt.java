@@ -1,5 +1,9 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
-public interface WineVintageScoreMapperExt extends WineVintageScoreMapper{
+import com.myicellar.digitalmenu.vo.response.ScoreRespVO;
 
+import java.util.List;
+
+public interface WineVintageScoreMapperExt extends WineVintageScoreMapper{
+    List<ScoreRespVO> selectScoreByPackageId(Long packageId);
 }

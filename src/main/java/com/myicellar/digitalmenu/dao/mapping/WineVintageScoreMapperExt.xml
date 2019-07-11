@@ -8,4 +8,31 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapper.Base_Column_List" />
   </sql>
 
+
+  <resultMap id="ScoreResultMap" type="com.myicellar.digitalmenu.vo.response.ScoreRespVO">
+    <result column="score_val_str" jdbcType="BIGINT" property="scoreValStr"/>
+    <result column="score_max" jdbcType="BIGINT" property="scoreMax"/>
+    <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng"/>
+    <result column="score_name" jdbcType="VARCHAR" property="scoreName"/>
+    <result column="score_year" jdbcType="SMALLINT" property="scoreYear"/>
+
+  </resultMap>
+
+  <select id="selectScoreByPackageId" parameterType="long" resultMap="ScoreResultMap">
+    SELECT
+	scr.score_val_str,
+	cts.score_max,
+	cts.critics_name_eng,
+	scr.score_name,
+	scr.score_year
+    FROM
+	t_package pkg
+	INNER JOIN t_product prod ON prod.product_id = pkg.product_id
+	LEFT JOIN t_wine_vintage_score scr ON scr.wine_id = prod.wine_id
+	AND scr.vintage_tag = prod.vintage_tag
+	LEFT JOIN t_critics cts ON scr.wine_critics_id = cts.wine_critics_id
+    WHERE
+	pkg.package_id =#{packageId}
+  </select>
+
 </mapper>

@@ -7,13 +7,24 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * 获奖返回信息
+ * 评价获奖返回信息
  */
 @Data
-@ApiModel(value = "获奖返回信息")
+@ApiModel(value = "评价获奖返回信息")
 public class ScoreRespVO {
 
-    @ApiModelProperty(value = "packageId")
-    private Long packageId;
+    @ApiModelProperty(value = "评价分数")
+    private Long scoreValStr;
 
+    @ApiModelProperty(value = "评价分数")
+    private Long scoreMax;
+
+    @ApiModelProperty(value = "酒品评价")
+    private String criticsNameEng;
+
+    @ApiModelProperty(value = "获奖名称")
+    private String scoreName;
+
+    @ApiModelProperty(value = "获奖年份")
+    private Integer scoreYear;
 }

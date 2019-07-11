@@ -3,9 +3,7 @@ package com.myicellar.digitalmenu.service;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Img;
-import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt;
+import com.myicellar.digitalmenu.dao.mapper.*;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +25,13 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
 
     @Autowired
     private WineAttrMapperExt wineAttrMapperExt;
+
+    @Autowired
+    private WineVintageScoreMapperExt wineVintageScoreMapperExt;
+
+    @Autowired
+    private FoodMapperExt foodMapperExt;
+
 
     public PackagePriceRangeRespVO queryPriceRange(Long supplierId){
         return mapper.selectPriceRange(supplierId);
@@ -195,6 +200,12 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     public PackageDetailRespVO queryDetailById(Long packageId) {
         PackageDetailRespVO respVO = mapper.selectDetailById(packageId);
         fillPackageDetailRespVO(respVO);
+        //评价获奖详情
+        List<ScoreRespVO> scoreList= wineVintageScoreMapperExt.selectScoreByPackageId(packageId);
+        respVO.setScoreList(scoreList);
+        //推荐美食列表
+        List<FoodRecommendRespVO> foodList = foodMapperExt.selectFoodListByPackageId(packageId);
+        respVO.setFoodList(foodList);
 
         return respVO;
     }
