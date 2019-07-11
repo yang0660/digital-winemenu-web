@@ -280,4 +280,74 @@
     </if>
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
+
+    <resultMap id="PackageDetailResultMap" type="com.myicellar.digitalmenu.vo.response.PackageDetailRespVO">
+        <id column="package_id" jdbcType="BIGINT" property="packageId"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId"/>
+        <result column="wine_id" jdbcType="BIGINT" property="wineId"/>
+        <result column="wine_img_id" jdbcType="BIGINT" property="wineImgId"/>
+        <result column="wine_small_img_url" jdbcType="VARCHAR" property="wineSmallImgUrl"/>
+        <result column="wine_img_url" jdbcType="VARCHAR" property="wineImgUrl"/>
+        <result column="wine_type_name_eng" jdbcType="VARCHAR" property="wineTypeNameEng"/>
+        <result column="wine_name_eng" jdbcType="VARCHAR" property="wineNameEng"/>
+        <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag"/>
+        <result column="vintage_name" jdbcType="VARCHAR" property="vintageName"/>
+        <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng"/>
+        <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng"/>
+        <result column="variety" jdbcType="VARCHAR" property="variety"/>
+        <result column="style" jdbcType="VARCHAR" property="style"/>
+        <result column="descriptor" jdbcType="VARCHAR" property="descriptor"/>
+        <result column="alcohol" jdbcType="BIGINT" property="alcohol"/>
+        <result column="regular_price" jdbcType="DECIMAL" property="regularPrice"/>
+        <result column="glass_price" jdbcType="DECIMAL" property="glassPrice"/>
+        <result column="winery_name_eng" jdbcType="VARCHAR" property="wineryNameEng"/>
+        <result column="note_plain_eng" jdbcType="VARCHAR" property="notePlainEng"/>
+        <result column="winery_about_url" jdbcType="VARCHAR" property="wineryAboutUrl"/>
+        <result column="score_name" jdbcType="VARCHAR" property="scoreName"/>
+        <result column="score_year" jdbcType="SMALLINT" property="scoreYear"/>
+        <result column="score_val_str" jdbcType="VARCHAR" property="scoreValStr"/>
+        <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng"/>
+        <result column="critics_about_url" jdbcType="VARCHAR" property="criticsAboutUrl"/>
+        <result column="winery_logo_id" jdbcType="BIGINT" property="wineryLogoId"/>
+        <result column="winery_logo_url" jdbcType="VARCHAR" property="wineryLogoUrl"/>
+        <result column="winery_logo_small_url" jdbcType="VARCHAR" property="wineryLogoSmallUrl"/>
+        <result column="banner_img_id" jdbcType="BIGINT" property="bannerImgId"/>
+        <result column="banner_img_url" jdbcType="VARCHAR" property="bannerImgUrl"/>
+        <result column="winery_img_ids" jdbcType="VARCHAR" property="wineryImgIds"/>
+        <result column="winery_img_urls" jdbcType="VARCHAR" property="wineryImgUrls"/>
+    </resultMap>
+
+    <select id="selectDetailById" parameterType="long" resultMap="PackageDetailResultMap">
+        select
+        DISTINCT
+        pkg.package_id,
+        prod.supplier_id,
+        wine.wine_id,
+        wine.wine_img_id,
+        wty.wine_type_name_eng,
+        wny.winery_name_eng,
+        vtg.vintage_tag,
+        vtg.vintage_name,
+        cty.country_name_eng,
+        ori.region_name_eng,
+        vtg.alcohol_bps,
+        pkg.regular_price,
+        pkg.glass_price,
+        wine.wine_name_eng,
+        wny.note_plain_eng,
+        wny.about_url as winery_about_url,
+        wny.logo_img_id,
+        wny.banner_img_id,
+        wny.winery_img_ids
+        from
+        t_wine wine
+        inner join t_product prod on wine.wine_id = prod.wine_id
+        left join t_wine_type wty on wine.wine_type_id = wty.wine_type_id
+        left join t_wine_vintage vtg on prod.vintage_tag = vtg.vintage_tag
+        left join t_package pkg on prod.product_id = pkg.product_id
+        left join t_origin ori on wine.wine_origin_id = ori.wine_origin_id
+        left join t_country cty on ori.country_id = cty.country_id
+        left join t_winery wny on wine.winery_id = wny.winery_id
+        where pkg.package_id = #{packageId}
+  </select>
 </mapper>

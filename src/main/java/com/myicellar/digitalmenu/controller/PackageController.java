@@ -2,13 +2,11 @@ package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.service.PackageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
+import com.myicellar.digitalmenu.vo.request.PackageDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
-import com.myicellar.digitalmenu.vo.response.PackageInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
-import com.myicellar.digitalmenu.vo.response.PageResponseVO;
-import com.myicellar.digitalmenu.vo.response.ResultVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -89,16 +87,16 @@ public class PackageController {
     }
 
     /**
-     * 酒品详情
+     * package详情
      *
      * @param
      * @return
      */
     @PostMapping(value = "/queryDetailById")
     @AuthIgnore
-    @ApiOperation("酒品详情")
-    public ResultVO<PackageInfoRespVO> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
-
+    @ApiOperation("package详情")
+    public ResultVO<PackageDetailRespVO> queryDetailById(@RequestBody PackageDetailReqVO reqVO) {
+        PackageDetailRespVO respVO=packageService.queryDetailById(reqVO.getPackageId());
         return ResultVO.success(null);
     }
 
@@ -116,5 +114,6 @@ public class PackageController {
 
         return ResultVO.success(page);
     }
+
 
 }

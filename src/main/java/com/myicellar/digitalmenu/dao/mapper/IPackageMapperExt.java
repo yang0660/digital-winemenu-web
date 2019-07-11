@@ -1,6 +1,7 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
+import com.myicellar.digitalmenu.vo.response.PackageDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.PackageInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface IPackageMapperExt extends IPackageMapper{
     long selectResultCount(PackageFilterReqVO reqVO);
 
     List<PackageInfoRespVO> selectResult(PackageFilterReqVO reqVO);
+
+    PackageDetailRespVO selectDetailById(Long packageId);
 }

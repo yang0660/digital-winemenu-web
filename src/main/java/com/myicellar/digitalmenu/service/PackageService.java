@@ -178,4 +178,14 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
 
         return page;
     }
+
+    /**
+     * package详情
+     * @return
+     */
+    public PackageDetailRespVO queryDetailById(Long packageId) {
+        PackageDetailRespVO respVO = mapper.selectDetailById(packageId);
+        return respVO;
+    }
+
 }

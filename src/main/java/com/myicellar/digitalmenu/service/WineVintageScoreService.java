@@ -9,5 +9,4 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class WineVintageScoreService extends BaseService<Long, WineVintageScore, WineVintageScoreMapperExt> {
 
-
 }
