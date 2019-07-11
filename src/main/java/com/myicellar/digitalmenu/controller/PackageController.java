@@ -97,13 +97,9 @@ public class PackageController {
     @PostMapping(value = "/queryDetailById")
     @AuthIgnore
     @ApiOperation("酒品详情")
-    public ResultVO<List<PackageInfoRespVO>> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
-        List<PackageInfoRespVO> list = packageService.queryRecomendPackageList(reqVO.getSupplierId());
-        if(CollectionUtils.isEmpty(list)){
-            list = new ArrayList<PackageInfoRespVO>();
-        }
+    public ResultVO<PackageInfoRespVO> queryDetailById(@RequestBody SupplierIdReqVO reqVO) {
 
-        return ResultVO.success(list);
+        return ResultVO.success(null);
     }
 
     /**

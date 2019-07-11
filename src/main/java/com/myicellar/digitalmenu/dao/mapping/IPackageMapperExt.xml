@@ -158,65 +158,125 @@
           resultType="long">
     select
     count(distinct pkg.package_id)
-    from
-    t_wine wine
-    inner join t_product prod on wine.wine_id =prod.wine_id
-    inner join t_wine_type wty on wine.wine_type_id=wty.wine_type_id
-    inner join t_wine_vintage vtg on prod.vintage_tag=vtg.vintage_tag
-    inner join t_package pkg on prod.product_id=pkg.product_id
-    inner join t_origin ori on wine.wine_origin_id=ori.wine_origin_id
-    inner join t_country cty on ori.country_id=cty.country_id
-    where pkg.regular_price &gt; #{priceMin}
-    and pkg.regular_price &lt; #{priceMax}
-    <if test="supplierId!=null and supplierId!=0">
-      and prod.supplier_id=#{supplierId}
+    FROM
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
+    AND prd.vintage_tag = winvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    INNER JOIN t_wine_type wintype ON win.wine_type_id = wintype.wine_type_id
+    LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
+    LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    LEFT JOIN t_wine_attr winattr ON win.wine_id = winattr.wine_id
+    LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
+    AND attr_catg_id = 101
+    WHERE
+    prd.supplier_id = #{supplierId}
+    AND pkg.pkg.regular_price &gt;#{priceMin}
+    AND pkg.regular_price &lt;#{priceMax}
+    <if test="wineTypeIds!=null and wineTypeIds.size()>0">
+      AND wine.wine_type_id IN
+      <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
+        #{wineTypeId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="wineTypeId!=null and wineTypeId!=0">
-      and wine.wine_type_id=#{wineTypeId}
+    <if test="countryIds!=null and countryIds.size()>0">
+      AND ori.country_id IN
+      <foreach collection="countryIds" item="countryId" open="(" close=")" separator=",">
+        #{countryId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="countryId!=null and countryId!=0">
-      and ori.country_id=#{countryId}
+    <if test="attrIds!=null and attrIds.size()>0">
+      AND attr.attr_id IN
+      <foreach collection="attrIds" item="attrId" open="(" close=")" separator=",">
+        #{attrId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="wineOriginId!=null and wineOriginId!=0">
-      and wine.wine_origin_id=#{wineOriginId}
+    <if test="wineOriginIds!=null and wineOriginIds.size()>0">
+      AND wine.wine_origin_id IN
+      <foreach collection="wineOriginIds" item="wineOriginId" open="(" close=")" separator=",">
+        #{wineOriginId,jdbcType=BIGINT}
+      </foreach>
+    </if>
+    <if test="isGlassWine==1">
+      AND pkg.glass_price &lt;&gt; 0.00
+    </if>
+    <if test="isOrganicWine==1">
+      AND prd.is_organic_wine = 1
     </if>
   </select>
 
   <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.PackageFilterReqVO"
           resultMap="PackageInfoResultMap">
-    select
-    DISTINCT
+    SELECT
     pkg.package_id,
-    wine.wine_id,
-    wine.wine_name_eng,
-    wty.wine_type_name_eng,
-    ori.region_name_eng,
-    cty.country_name_eng,
-    vtg.vintage_name,
     pkg.regular_price,
     pkg.glass_price,
-    wine.wine_img_id
-    from
-    t_wine wine
-    inner join t_product prod on wine.wine_id =prod.wine_id
-    inner join t_wine_type wty on wine.wine_type_id=wty.wine_type_id
-    inner join t_wine_vintage vtg on prod.vintage_tag=vtg.vintage_tag
-    inner join t_package pkg on prod.product_id=pkg.product_id
-    inner join t_origin ori on wine.wine_origin_id=ori.wine_origin_id
-    inner join t_country cty on ori.country_id=cty.country_id
-    where pkg.regular_price &gt; #{priceMin}
-    and pkg.regular_price &lt; #{priceMax}
-    <if test="supplierId!=null and supplierId!=0">
-      and prod.supplier_id=#{supplierId}
+    prd.wine_id,
+    prd.supplier_id,
+    win.wine_name_eng,
+    win.wine_name_chs,
+    win.wine_name_cht,
+    wintype.wine_type_name_eng,
+    winry.winery_id,
+    winry.winery_name_eng,
+    winry.logo_img_id AS winery_logo_id,
+    org.region_name_eng,
+    org.region_name_chs,
+    org.region_name_cht,
+    ctry.country_name_eng,
+    ctry.country_name_chs,
+    ctry.country_name_cht,
+    winvtg.vintage_tag,
+    winvtg.vintage_name,
+    win.wine_img_id
+    FROM
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
+    AND prd.vintage_tag = winvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    INNER JOIN t_wine_type wintype ON win.wine_type_id = wintype.wine_type_id
+    LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
+    LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    LEFT JOIN t_wine_attr winattr ON win.wine_id = winattr.wine_id
+    LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
+    AND attr_catg_id = 101
+    WHERE
+    prd.supplier_id = #{supplierId}
+    AND pkg.pkg.regular_price &gt;#{priceMin}
+    AND pkg.regular_price &lt;#{priceMax}
+    <if test="wineTypeIds!=null and wineTypeIds.size()>0">
+      AND wine.wine_type_id IN
+      <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
+        #{wineTypeId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="wineTypeId!=null and wineTypeId!=0">
-      and wine.wine_type_id=#{wineTypeId}
+    <if test="countryIds!=null and countryIds.size()>0">
+      AND ori.country_id IN
+      <foreach collection="countryIds" item="countryId" open="(" close=")" separator=",">
+        #{countryId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="countryId!=null and countryId!=0">
-      and ori.country_id=#{countryId}
+    <if test="attrIds!=null and attrIds.size()>0">
+      AND attr.attr_id IN
+      <foreach collection="attrIds" item="attrId" open="(" close=")" separator=",">
+        #{attrId,jdbcType=BIGINT}
+      </foreach>
     </if>
-    <if test="wineOriginId!=null and wineOriginId!=0">
-      and wine.wine_origin_id=#{wineOriginId}
+    <if test="wineOriginIds!=null and wineOriginIds.size()>0">
+      AND wine.wine_origin_id IN
+      <foreach collection="wineOriginIds" item="wineOriginId" open="(" close=")" separator=",">
+        #{wineOriginId,jdbcType=BIGINT}
+      </foreach>
+    </if>
+    <if test="isGlassWine==1">
+      AND pkg.glass_price &lt;&gt; 0.00
+    </if>
+    <if test="isOrganicWine==1">
+      AND prd.is_organic_wine = 1
     </if>
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
