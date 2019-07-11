@@ -305,7 +305,7 @@
         <result column="variety" jdbcType="VARCHAR" property="variety"/>
         <result column="style" jdbcType="VARCHAR" property="style"/>
         <result column="descriptor" jdbcType="VARCHAR" property="descriptor"/>
-        <result column="alcohol" jdbcType="BIGINT" property="alcohol"/>
+        <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps"/>
         <result column="regular_price" jdbcType="DECIMAL" property="regularPrice"/>
         <result column="glass_price" jdbcType="DECIMAL" property="glassPrice"/>
         <result column="winery_name_eng" jdbcType="VARCHAR" property="wineryNameEng"/>
@@ -317,12 +317,8 @@
         <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng"/>
         <result column="critics_about_url" jdbcType="VARCHAR" property="criticsAboutUrl"/>
         <result column="winery_logo_id" jdbcType="BIGINT" property="wineryLogoId"/>
-        <result column="winery_logo_url" jdbcType="VARCHAR" property="wineryLogoUrl"/>
-        <result column="winery_logo_small_url" jdbcType="VARCHAR" property="wineryLogoSmallUrl"/>
         <result column="banner_img_id" jdbcType="BIGINT" property="bannerImgId"/>
-        <result column="banner_img_url" jdbcType="VARCHAR" property="bannerImgUrl"/>
         <result column="winery_img_ids" jdbcType="VARCHAR" property="wineryImgIds"/>
-        <result column="winery_img_urls" jdbcType="VARCHAR" property="wineryImgUrls"/>
     </resultMap>
 
     <select id="selectDetailById" parameterType="long" resultMap="PackageDetailResultMap">

@@ -20,4 +20,6 @@ public interface FoodMapperExt extends FoodMapper{
     FoodDetailRespVO selectDetailById(Long foodId);
 
     List<FoodRecommendRespVO> selectRecomendFoodList(SupplierIdReqVO reqVO);
+
+    List<FoodRecommendRespVO> selectFoodListByPackageId(Long packageId);
 }

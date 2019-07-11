@@ -193,6 +193,9 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
      */
     public PackageDetailRespVO queryDetailById(Long packageId) {
         PackageDetailRespVO respVO = mapper.selectDetailById(packageId);
+
+
+
         return respVO;
     }
 
