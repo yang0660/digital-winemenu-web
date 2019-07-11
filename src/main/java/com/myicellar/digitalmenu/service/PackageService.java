@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -193,10 +194,88 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
      */
     public PackageDetailRespVO queryDetailById(Long packageId) {
         PackageDetailRespVO respVO = mapper.selectDetailById(packageId);
-
-
+        fillPackageDetailRespVO(respVO);
 
         return respVO;
+    }
+
+    public void fillPackageDetailRespVO(PackageDetailRespVO  respVO){
+        if(respVO!=null){
+            //酒精度
+            if(respVO.getAlcoholBps()!=null && respVO.getAlcoholBps()!=0L){
+                BigDecimal alcohol = new BigDecimal(respVO.getAlcoholBps()).divide(new BigDecimal(100)).setScale(2);
+                respVO.setAlcohol(alcohol);
+            }
+
+            List<Long> imgIds = new ArrayList<Long>();
+            List<Long> wineIds = new ArrayList<Long>();
+            wineIds.add(respVO.getWineId());
+            if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
+                imgIds.add(respVO.getWineImgId());
+            }
+            if(respVO.getWineryLogoId()!=null && respVO.getWineryLogoId()!=0L){
+                imgIds.add(respVO.getWineryLogoId());
+            }
+            if(respVO.getBannerImgId()!=null && respVO.getBannerImgId()!=0L){
+                imgIds.add(respVO.getBannerImgId());
+            }
+
+            List<Long> wineryImgIds = new ArrayList<Long>();
+            if(StringUtils.isNotEmpty(respVO.getWineryImgIds())){
+                try {
+                    String[] imgIdArr = respVO.getWineryImgIds().split(",");
+                    for (String imgIdStr : imgIdArr) {
+                        Long wineryImgId = Long.valueOf(imgIdStr);
+                        wineryImgIds.add(wineryImgId);
+                        imgIds.add(wineryImgId);
+                    }
+                }catch (Exception e){
+                    log.error("解析酒庄图片失败！",e);
+                }
+            }
+
+            Map<Long,WineAttrMapRespVO> wineAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(101L,wineIds);
+            if(!CollectionUtils.isEmpty(wineAttrMap)){
+                    WineAttrMapRespVO attrRespVO = wineAttrMap.get(respVO.getWineId());
+                    if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
+                        List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
+                        respVO.setVariety(listToEngStr(attrlist));
+                    }
+            }
+
+            Map<Long, Img>  imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
+                Img img = imgMap.get(respVO.getWineImgId());
+                if(img!=null) {
+                    respVO.setWineImgUrl(img.getImgUrl());
+                    respVO.setWineSmallImgUrl(img.getSmallImgUrl());
+                }
+            }
+            if(respVO.getWineryLogoId()!=null && respVO.getWineryLogoId()!=0L){
+                Img logoImg = imgMap.get(respVO.getWineryLogoId());
+                if(logoImg!=null) {
+                    respVO.setWineryLogoUrl(logoImg.getImgUrl());
+                    respVO.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
+                }
+            }
+            if(respVO.getBannerImgId()!=null && respVO.getBannerImgId()!=0L){
+                Img bannerImg = imgMap.get(respVO.getBannerImgId());
+                if(bannerImg!=null) {
+                    respVO.setBannerImgUrl(bannerImg.getImgUrl());
+                    respVO.setBannerSmallImgUrl(bannerImg.getSmallImgUrl());
+                }
+            }
+            if(!CollectionUtils.isEmpty(wineryImgIds)){
+                List<String> wineryImgUrls = new ArrayList<String>();
+                for(Long wineryImgId : wineryImgIds){
+                    Img wineryImg = imgMap.get(wineryImgId);
+                    if(wineryImg!=null) {
+                        wineryImgUrls.add(wineryImg.getImgUrl());
+                    }
+                }
+                respVO.setWineryImgUrls(wineryImgUrls);
+            }
+        }
     }
 
 }

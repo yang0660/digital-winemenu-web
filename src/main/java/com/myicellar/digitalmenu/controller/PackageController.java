@@ -96,8 +96,8 @@ public class PackageController {
     @AuthIgnore
     @ApiOperation("package详情")
     public ResultVO<PackageDetailRespVO> queryDetailById(@RequestBody PackageDetailReqVO reqVO) {
-        PackageDetailRespVO respVO=packageService.queryDetailById(reqVO.getPackageId());
-        return ResultVO.success(null);
+        PackageDetailRespVO respVO = packageService.queryDetailById(reqVO.getPackageId());
+        return ResultVO.success(respVO);
     }
 
     /**
