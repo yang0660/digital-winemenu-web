@@ -322,36 +322,37 @@
     </resultMap>
 
     <select id="selectDetailById" parameterType="long" resultMap="PackageDetailResultMap">
-        select
-        DISTINCT
-        pkg.package_id,
-        prod.supplier_id,
-        wine.wine_id,
-        wine.wine_img_id,
-        wty.wine_type_name_eng,
-        wny.winery_name_eng,
-        vtg.vintage_tag,
-        vtg.vintage_name,
-        cty.country_name_eng,
-        ori.region_name_eng,
-        vtg.alcohol_bps,
-        pkg.regular_price,
-        pkg.glass_price,
-        wine.wine_name_eng,
-        wny.note_plain_eng,
-        wny.about_url as winery_about_url,
-        wny.logo_img_id,
-        wny.banner_img_id,
-        wny.winery_img_ids
-        from
-        t_wine wine
-        inner join t_product prod on wine.wine_id = prod.wine_id
-        left join t_wine_type wty on wine.wine_type_id = wty.wine_type_id
-        left join t_wine_vintage vtg on prod.vintage_tag = vtg.vintage_tag
-        left join t_package pkg on prod.product_id = pkg.product_id
-        left join t_origin ori on wine.wine_origin_id = ori.wine_origin_id
-        left join t_country cty on ori.country_id = cty.country_id
-        left join t_winery wny on wine.winery_id = wny.winery_id
-        where pkg.package_id = #{packageId}
+      SELECT DISTINCT
+      pkg.package_id,
+      prod.supplier_id,
+      wine.wine_id,
+      wine.wine_img_id,
+      wty.wine_type_name_eng,
+      wny.winery_name_eng,
+      vtg.vintage_tag,
+      vtg.vintage_name,
+      cty.country_name_eng,
+      ori.region_name_eng,
+      vtg.alcohol_bps,
+      pkg.regular_price,
+      pkg.glass_price,
+      wine.wine_name_eng,
+      wny.note_plain_eng,
+      wny.about_url AS winery_about_url,
+      wny.logo_img_id,
+      wny.banner_img_id,
+      wny.winery_img_ids
+      FROM
+      t_package pkg
+      INNER JOIN t_product prod ON prod.product_id = pkg.product_id
+      INNER JOIN t_wine_vintage vtg ON prd.wine_id = vtg.wine_id
+      AND.vintage_tag = vtg.vintage_tag
+      INNER JOIN t_wine wine ON prod.wine_id = wine.wine_id
+      LEFT JOIN t_wine_type wty ON wine.wine_type_id = wty.wine_type_id
+      LEFT JOIN t_origin ori ON wine.wine_origin_id = ori.wine_origin_id
+      LEFT JOIN t_country cty ON ori.country_id = cty.country_id
+      LEFT JOIN t_winery wny ON wine.winery_id = wny.winery_id
+      WHERE
+      pkg.package_id = #{packageId}
   </select>
 </mapper>
