@@ -12,10 +12,10 @@
   <resultMap id="PackageInfoResultMap" type="com.myicellar.digitalmenu.vo.response.PackageInfoRespVO">
     <id column="package_id" jdbcType="BIGINT" property="packageId" />
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="wine_type_name_eng" jdbcType="VARCHAR" property="wineTypeNameEng" />
     <result column="wine_name_eng" jdbcType="VARCHAR" property="wineNameEng" />
     <result column="wine_name_chs" jdbcType="VARCHAR" property="wineNameChs" />
     <result column="wine_name_cht" jdbcType="VARCHAR" property="wineNameCht" />
+    <result column="wine_type_name_eng" jdbcType="VARCHAR" property="wineTypeNameEng" />
     <result column="winery_id" jdbcType="BIGINT" property="wineryId" />
     <result column="winery_name_eng" jdbcType="VARCHAR" property="wineryNameEng" />
     <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
@@ -35,108 +35,109 @@
 
   <select id="selectRecomendPackageList" parameterType="long" resultMap="PackageInfoResultMap">
     SELECT
-    g.package_id,
-    e.supplier_id,
-    a.wine_id,
-    a.wine_name_eng,
-    a.wine_name_chs,
-    a.wine_name_cht,
-    a.winery_id,
-    d.winery_name_eng,
-    d.logo_img_id AS winery_logo_id,
-    b.region_name_eng,
-    b.region_name_chs,
-    b.region_name_cht,
-    c.country_name_eng,
-    c.country_name_chs,
-    c.country_name_cht,
-    e.vintage_tag,
-    f.vintage_name,
-    g.regular_price,
-    a.wine_img_id
+    pkg.package_id,
+    pkg.regular_price,
+    prd.wine_id,
+    prd.supplier_id,
+    win.wine_name_eng,
+    win.wine_name_chs,
+    win.wine_name_cht,
+    winry.winery_id,
+    winry.winery_name_eng,
+    winry.logo_img_id AS winery_logo_id,
+    org.region_name_eng,
+    org.region_name_chs,
+    org.region_name_cht,
+    ctry.country_name_eng,
+    ctry.country_name_chs,
+    ctry.country_name_cht,
+    winvtg.vintage_tag,
+    winvtg.vintage_name,
+    win.wine_img_id
     FROM
-    t_wine a
-    INNER JOIN t_origin b ON a.wine_origin_id = b.wine_origin_id
-    INNER JOIN t_country c ON b.country_id = c.country_id
-    INNER JOIN t_winery d ON a.winery_id = d.winery_id
-    INNER JOIN t_product e ON a.wine_id = e.wine_id
-    INNER JOIN t_package g ON e.product_id = g.product_id
-    INNER JOIN t_wine_vintage f ON e.wine_id = f.wine_id
-    AND e.vintage_tag = f.vintage_tag
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
+    AND prd.vintage_tag = winvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
+    LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
     WHERE
-    e.is_recommend = 1
-    AND e.supplier_id = #{supplierId}
+    prd.is_recommend = 1
+    AND prd.supplier_id = #{supplierId}
   </select>
 
   <select id="selectPackageListByFoodId" parameterType="long" resultMap="PackageInfoResultMap">
     SELECT
     pkg.package_id,
-    e.supplier_id,
-    a.wine_id,
-    a.wine_name_eng,
-    a.wine_name_chs,
-    a.wine_name_cht,
-    a.winery_id,
-    d.winery_name_eng,
-    d.logo_img_id AS winery_logo_id,
-    b.region_name_eng,
-    b.region_name_chs,
-    b.region_name_cht,
-    c.country_name_eng,
-    c.country_name_chs,
-    c.country_name_cht,
-    e.vintage_tag,
-    f.vintage_name,
     pkg.regular_price,
-    a.wine_img_id
+    prd.wine_id,
+    prd.supplier_id,
+    win.wine_name_eng,
+    win.wine_name_chs,
+    win.wine_name_cht,
+    winry.winery_id,
+    winry.winery_name_eng,
+    winry.logo_img_id AS winery_logo_id,
+    org.region_name_eng,
+    org.region_name_chs,
+    org.region_name_cht,
+    ctry.country_name_eng,
+    ctry.country_name_chs,
+    ctry.country_name_cht,
+    winvtg.vintage_tag,
+    winvtg.vintage_name,
+    win.wine_img_id
     FROM
-    t_wine a
-    INNER JOIN t_origin b ON a.wine_origin_id = b.wine_origin_id
-    INNER JOIN t_country c ON b.country_id = c.country_id
-    INNER JOIN t_winery d ON a.winery_id = d.winery_id
-    INNER JOIN t_product e ON a.wine_id = e.wine_id
-    INNER JOIN t_package pkg ON e.product_id = pkg.product_id
-    INNER JOIN t_wine_vintage f ON e.wine_id = f.wine_id
-    AND e.vintage_tag = f.vintage_tag
-    INNER JOIN t_food_product g ON e.product_id = g.product_id
-    WHERE g.food_id = #{foodId}
+    t_package pkg
+    INNER JOIN t_food_package fpkg ON pkg.package_id = fpkg.package_id
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
+    AND prd.vintage_tag = winvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
+    LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    WHERE
+    fpkg.food_id = #{foodId}
   </select>
 
   <select id="selectPackageListByIds"  resultMap="PackageInfoResultMap">
     SELECT
     pkg.package_id,
-    e.supplier_id,
-    a.wine_id,
-    a.wine_name_eng,
-    a.wine_name_chs,
-    a.wine_name_cht,
-    h.wine_type_name_eng,
-    a.winery_id,
-    d.winery_name_eng,
-    d.logo_img_id AS winery_logo_id,
-    b.region_name_eng,
-    b.region_name_chs,
-    b.region_name_cht,
-    c.country_name_eng,
-    c.country_name_chs,
-    c.country_name_cht,
-    e.vintage_tag,
-    f.vintage_name,
     pkg.regular_price,
     pkg.glass_price,
-    a.wine_img_id
+    prd.wine_id,
+    prd.supplier_id,
+    win.wine_name_eng,
+    win.wine_name_chs,
+    win.wine_name_cht,
+    wintype.wine_type_name_eng,
+    winry.winery_id,
+    winry.winery_name_eng,
+    winry.logo_img_id AS winery_logo_id,
+    org.region_name_eng,
+    org.region_name_chs,
+    org.region_name_cht,
+    ctry.country_name_eng,
+    ctry.country_name_chs,
+    ctry.country_name_cht,
+    winvtg.vintage_tag,
+    winvtg.vintage_name,
+    win.wine_img_id
     FROM
-    t_wine a
-    INNER JOIN t_origin b ON a.wine_origin_id = b.wine_origin_id
-    INNER JOIN t_country c ON b.country_id = c.country_id
-    INNER JOIN t_winery d ON a.winery_id = d.winery_id
-    INNER JOIN t_wine_type h ON a.wine_type_id = h.wine_type_id
-    INNER JOIN t_product e ON a.wine_id = e.wine_id
-    INNER JOIN t_package pkg ON e.product_id = pkg.product_id
-    INNER JOIN t_wine_vintage f ON e.wine_id = f.wine_id
-    AND e.vintage_tag = f.vintage_tag
-    INNER JOIN t_food_product g ON e.product_id = g.product_id
-    WHERE pkg.package_id IN
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
+    AND prd.vintage_tag = winvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    INNER JOIN t_wine_type wintype ON win.wine_type_id = wintype.wine_type_id
+    LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
+    LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    WHERE
+    pkg.package_id IN
     <foreach collection="packageIds" item="packageId" open="(" close=")" separator=",">
       #{packageId,jdbcType=BIGINT}
     </foreach>
