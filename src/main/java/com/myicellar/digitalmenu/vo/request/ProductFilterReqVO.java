@@ -35,5 +35,4 @@ public class ProductFilterReqVO extends PageRequestVO {
     @ApiModelProperty(value = "酒品类型ID")
     private Long wineTypeId;
 
-
 }

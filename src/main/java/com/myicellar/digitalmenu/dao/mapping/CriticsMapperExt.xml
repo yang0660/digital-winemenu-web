@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.CriticsMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Critics">
-    <id column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId" />
-    <result column="critics_seo_name" jdbcType="VARCHAR" property="criticsSeoName" />
-    <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng" />
-    <result column="critics_name_cht" jdbcType="VARCHAR" property="criticsNameCht" />
-    <result column="critics_name_chs" jdbcType="VARCHAR" property="criticsNameChs" />
-    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
-    <result column="score_max" jdbcType="SMALLINT" property="scoreMax" />
-    <result column="score_factor" jdbcType="SMALLINT" property="scoreFactor" />
-    <result column="about_url" jdbcType="VARCHAR" property="aboutUrl" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Critics"
+  extends="com.myicellar.digitalmenu.dao.mapper.CriticsMapper.BaseResultMap">
+
   </resultMap>
   <sql id="Base_Column_List">
-    wine_critics_id, critics_seo_name, critics_name_eng, critics_name_cht, critics_name_chs, 
-    mic_rank, score_max, score_factor, about_url, updated_at
+<include refid="com.myicellar.digitalmenu.dao.mapper.CriticsMapper.Base_Column_List"></include>
   </sql>
 
 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodPackageMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodPackage">
+    <id column="food_id" jdbcType="BIGINT" property="foodId" />
+    <id column="package_id" jdbcType="BIGINT" property="packageId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    food_id, package_id, created_by, created_at, updated_by, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_food_package
+    where food_id = #{foodId,jdbcType=BIGINT}
+      and package_id = #{packageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from t_food_package
+    where food_id = #{foodId,jdbcType=BIGINT}
+      and package_id = #{packageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.FoodPackage">
+    insert into t_food_package (food_id, package_id, created_by, 
+      created_at, updated_by, updated_at
+      )
+    values (#{foodId,jdbcType=BIGINT}, #{packageId,jdbcType=BIGINT}, #{createdBy,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodPackage">
+    insert into t_food_package
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        food_id,
+      </if>
+      <if test="packageId != null">
+        package_id,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        #{foodId,jdbcType=BIGINT},
+      </if>
+      <if test="packageId != null">
+        #{packageId,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodPackage">
+    update t_food_package
+    <set>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where food_id = #{foodId,jdbcType=BIGINT}
+      and package_id = #{packageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.FoodPackage">
+    update t_food_package
+    set created_by = #{createdBy,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where food_id = #{foodId,jdbcType=BIGINT}
+      and package_id = #{packageId,jdbcType=BIGINT}
+  </update>
+</mapper>
