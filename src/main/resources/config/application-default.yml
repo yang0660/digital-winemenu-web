@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://119.23.189.143:3306/myicellar?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://157.230.42.125:3306/myicellar?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: 123456
+    password: Test#123
     type: com.alibaba.druid.pool.DruidDataSource
 
 management:
@@ -12,8 +12,8 @@ management:
       show-details: always
 
 file-upload:
-  base-url: http://localhost:8088/digital-winemenu-web
-  base-path: E:/app/imagedata/
+  base-url: http://157.230.42.125:8088/digital-winemenu-web
+  base-path: /var/app1/imagedata/
   image:
     ext-names: jpg,png,gif,tif,bmp
     max-height: 3000

@@ -18,7 +18,7 @@ logging:
     root: INFO
     org.springframework.web.servlet.DispatcherServlet: DEBUG
     com.myicellar.digitalmenu: DEBUG
-  file: "D:/digital-winemenu-web.log"
+  file: "/usr/software/logs/digital-winemenu-web/digital-winemenu-web.log"
 #  config: classpath:logback-spring.xml
 
 mybatis:
