@@ -9,6 +9,7 @@
     <result column="supplier_name_chs" jdbcType="VARCHAR" property="supplierNameChs" />
     <result column="suppiler_type" jdbcType="TINYINT" property="suppilerType" />
     <result column="logo_img_id" jdbcType="BIGINT" property="logoImgId" />
+    <result column="qrcode_img_url" jdbcType="VARCHAR" property="qrcodeImgUrl" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
@@ -16,7 +17,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     supplier_id, supplier_seo_name, supplier_name_eng, supplier_name_cht, supplier_name_chs, 
-    suppiler_type, logo_img_id, updated_at, updated_by, created_at, created_by
+    suppiler_type, logo_img_id, qrcode_img_url, updated_at, updated_by, created_at, created_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,12 +32,14 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
     insert into t_supplier (supplier_id, supplier_seo_name, supplier_name_eng, 
       supplier_name_cht, supplier_name_chs, suppiler_type, 
-      logo_img_id, updated_at, updated_by, 
-      created_at, created_by)
+      logo_img_id, qrcode_img_url, updated_at, 
+      updated_by, created_at, created_by
+      )
     values (#{supplierId,jdbcType=BIGINT}, #{supplierSeoName,jdbcType=VARCHAR}, #{supplierNameEng,jdbcType=VARCHAR}, 
       #{supplierNameCht,jdbcType=VARCHAR}, #{supplierNameChs,jdbcType=VARCHAR}, #{suppilerType,jdbcType=TINYINT}, 
-      #{logoImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT})
+      #{logoImgId,jdbcType=BIGINT}, #{qrcodeImgUrl,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
     insert into t_supplier
@@ -61,6 +64,9 @@
       </if>
       <if test="logoImgId != null">
         logo_img_id,
+      </if>
+      <if test="qrcodeImgUrl != null">
+        qrcode_img_url,
       </if>
       <if test="updatedAt != null">
         updated_at,
@@ -97,6 +103,9 @@
       <if test="logoImgId != null">
         #{logoImgId,jdbcType=BIGINT},
       </if>
+      <if test="qrcodeImgUrl != null">
+        #{qrcodeImgUrl,jdbcType=VARCHAR},
+      </if>
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
@@ -132,6 +141,9 @@
       <if test="logoImgId != null">
         logo_img_id = #{logoImgId,jdbcType=BIGINT},
       </if>
+      <if test="qrcodeImgUrl != null">
+        qrcode_img_url = #{qrcodeImgUrl,jdbcType=VARCHAR},
+      </if>
       <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
@@ -155,6 +167,7 @@
       supplier_name_chs = #{supplierNameChs,jdbcType=VARCHAR},
       suppiler_type = #{suppilerType,jdbcType=TINYINT},
       logo_img_id = #{logoImgId,jdbcType=BIGINT},
+      qrcode_img_url = #{qrcodeImgUrl,jdbcType=VARCHAR},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       updated_by = #{updatedBy,jdbcType=BIGINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},

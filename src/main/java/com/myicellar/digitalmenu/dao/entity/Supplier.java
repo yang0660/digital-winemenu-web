@@ -17,6 +17,8 @@ public class Supplier {
 
     private Long logoImgId;
 
+    private String qrcodeImgUrl;
+
     private Date updatedAt;
 
     private Long updatedBy;
@@ -79,6 +81,14 @@ public class Supplier {
 
     public void setLogoImgId(Long logoImgId) {
         this.logoImgId = logoImgId;
+    }
+
+    public String getQrcodeImgUrl() {
+        return qrcodeImgUrl;
+    }
+
+    public void setQrcodeImgUrl(String qrcodeImgUrl) {
+        this.qrcodeImgUrl = qrcodeImgUrl;
     }
 
     public Date getUpdatedAt() {

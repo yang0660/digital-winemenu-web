@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.UserBehaviorMapper">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.UserBehavior">
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="package_id" jdbcType="BIGINT" property="packageId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="upload_at" jdbcType="TIMESTAMP" property="uploadAt" />
+  </resultMap>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.UserBehavior">
+    insert into t_user_behavior (supplier_id, package_id, `type`, 
+      upload_at)
+    values (#{supplierId,jdbcType=BIGINT}, #{packageId,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, 
+      #{uploadAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.UserBehavior">
+    insert into t_user_behavior
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="packageId != null">
+        package_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="uploadAt != null">
+        upload_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="packageId != null">
+        #{packageId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="uploadAt != null">
+        #{uploadAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
