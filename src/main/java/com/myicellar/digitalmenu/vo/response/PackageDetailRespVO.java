@@ -44,6 +44,9 @@ public class PackageDetailRespVO {
     @ApiModelProperty(value = "酒品年份")
     private String vintageName;
 
+    @ApiModelProperty(value = "酒评")
+    private String tastingNote;
+
     @ApiModelProperty(value = "国家-英文")
     private String countryNameEng;
 

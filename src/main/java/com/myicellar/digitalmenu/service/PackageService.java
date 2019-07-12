@@ -238,14 +238,32 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                     log.error("解析酒庄图片失败！",e);
                 }
             }
-
-            Map<Long,WineAttrMapRespVO> wineAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(101L,wineIds);
-            if(!CollectionUtils.isEmpty(wineAttrMap)){
-                    WineAttrMapRespVO attrRespVO = wineAttrMap.get(respVO.getWineId());
+            //原料
+            Map<Long,WineAttrMapRespVO> varietyAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(101L,wineIds);
+            if(!CollectionUtils.isEmpty(varietyAttrMap)){
+                    WineAttrMapRespVO attrRespVO = varietyAttrMap.get(respVO.getWineId());
                     if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                         respVO.setVariety(listToEngStr(attrlist));
                     }
+            }
+            //风格
+            Map<Long,WineAttrMapRespVO> styleAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(1001L,wineIds);
+            if(!CollectionUtils.isEmpty(styleAttrMap)){
+                WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId());
+                if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
+                    List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
+                    respVO.setStyle(listToEngStr(attrlist));
+                }
+            }
+            //口味
+            Map<Long,WineAttrMapRespVO> descriptorAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(1002L,wineIds);
+            if(!CollectionUtils.isEmpty(descriptorAttrMap)){
+                WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId());
+                if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
+                    List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
+                    respVO.setDescriptor(listToEngStr(attrlist));
+                }
             }
 
             Map<Long, Img>  imgMap = imgMapperExt.selectImgMapByIds(imgIds);
