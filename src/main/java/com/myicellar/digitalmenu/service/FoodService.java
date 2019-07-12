@@ -51,4 +51,13 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
     public List<FoodRecommendRespVO> queryRecomendFoodList(SupplierIdReqVO reqVO) {
         return mapper.selectRecomendFoodList(reqVO);
     }
+
+    /**
+     * 查询酒品的推荐美食列表
+     *
+     * @return
+     */
+    public List<FoodRecommendRespVO> queryFoodListByPackageId(Long packageId) {
+        return mapper.selectFoodListByPackageId(packageId);
+    }
 }

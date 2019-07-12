@@ -124,11 +124,4 @@ public class PackageDetailRespVO {
 
     @ApiModelProperty(value = "酒品评价网页")
     private String criticsAboutUrl;
-
-    @ApiModelProperty(value = "评价获奖信息集合")
-    private List<ScoreRespVO> scoreList;
-
-    @ApiModelProperty(value = "推荐美食列表")
-    private List<FoodRecommendRespVO> foodList;
-
 }

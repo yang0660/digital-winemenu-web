@@ -200,12 +200,6 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     public PackageDetailRespVO queryDetailById(Long packageId) {
         PackageDetailRespVO respVO = mapper.selectDetailById(packageId);
         fillPackageDetailRespVO(respVO);
-        //评价获奖详情
-        List<ScoreRespVO> scoreList= wineVintageScoreMapperExt.selectScoreByPackageId(packageId);
-        respVO.setScoreList(scoreList);
-        //推荐美食列表
-        List<FoodRecommendRespVO> foodList = foodMapperExt.selectFoodListByPackageId(packageId);
-        respVO.setFoodList(foodList);
 
         return respVO;
     }

@@ -1,6 +1,8 @@
 package com.myicellar.digitalmenu.controller;
 
+import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.PackageService;
+import com.myicellar.digitalmenu.service.WineVintageScoreService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.vo.request.PackageDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
@@ -29,6 +31,12 @@ public class PackageController {
 
     @Autowired
     private PackageService packageService;
+
+    @Autowired
+    private FoodService foodService;
+
+    @Autowired
+    private WineVintageScoreService wineVintageScoreService;
 
     /**
      * 推荐酒品列表
@@ -87,17 +95,45 @@ public class PackageController {
     }
 
     /**
-     * package详情
+     * 酒品详情
      *
      * @param
      * @return
      */
     @PostMapping(value = "/queryDetailById")
     @AuthIgnore
-    @ApiOperation("package详情")
+    @ApiOperation("酒品详情")
     public ResultVO<PackageDetailRespVO> queryDetailById(@RequestBody PackageDetailReqVO reqVO) {
         PackageDetailRespVO respVO = packageService.queryDetailById(reqVO.getPackageId());
         return ResultVO.success(respVO);
+    }
+
+    /**
+     * 酒品详情-美食推荐列表
+     *
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/queryFoodListByPackageId")
+    @AuthIgnore
+    @ApiOperation("酒品详情-美食推荐列表")
+    public ResultVO<List<FoodRecommendRespVO>> queryFoodListByPackageId(@RequestBody PackageDetailReqVO reqVO) {
+        List<FoodRecommendRespVO> list = foodService.queryFoodListByPackageId(reqVO.getPackageId());
+        return ResultVO.success(list);
+    }
+
+    /**
+     * 酒品详情-评分/获奖信息列表
+     *
+     * @param
+     * @return
+     */
+    @PostMapping(value = "/queryScoreListByPackageId")
+    @AuthIgnore
+    @ApiOperation("酒品详情-评分/获奖信息列表")
+    public ResultVO<List<ScoreRespVO>> queryScoreListByPackageId(@RequestBody PackageDetailReqVO reqVO) {
+        List<ScoreRespVO> list = wineVintageScoreService.queryScoreListByPackageId(reqVO.getPackageId());
+        return ResultVO.success(list);
     }
 
     /**
