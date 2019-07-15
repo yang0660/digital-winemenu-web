@@ -168,7 +168,8 @@
     LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
     LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
     LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
-    LEFT JOIN t_wine_attr winattr ON win.wine_id = winattr.wine_id
+    LEFT JOIN t_wine_vintage_attr winattr ON win.wine_id = winattr.wine_id
+    AND AND prd.vintage_tag = winattr.vintage_tag
     LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
     AND attr_catg_id = 101
     WHERE
@@ -245,7 +246,8 @@
     LEFT JOIN t_winery winry ON win.winery_id = winry.winery_id
     LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
     LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
-    LEFT JOIN t_wine_attr winattr ON win.wine_id = winattr.wine_id
+    LEFT JOIN t_wine_vintage_attr winattr ON win.wine_id = winattr.wine_id
+    AND AND prd.vintage_tag = winattr.vintage_tag
     LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
     AND attr_catg_id = 101
     WHERE

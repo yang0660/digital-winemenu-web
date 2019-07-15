@@ -24,7 +24,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     private ImgMapperExt imgMapperExt;
 
     @Autowired
-    private WineAttrMapperExt wineAttrMapperExt;
+    private WineVintageAttrMapperExt wineVintageAttrMapperExt;
 
     @Autowired
     private WineVintageScoreMapperExt wineVintageScoreMapperExt;
@@ -76,9 +76,9 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     public void fillPackageInfoRespVO(List<PackageInfoRespVO>  list){
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();
-            List<Long> wineIds = new ArrayList<Long>();
+            List<String> wineIdVintages = new ArrayList<String>();
             for(PackageInfoRespVO respVO : list){
-                wineIds.add(respVO.getWineId());
+                wineIdVintages.add(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                     imgIds.add(respVO.getWineImgId());
                 }
@@ -87,7 +87,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
 
-            Map<Long,WineAttrMapRespVO> wineAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(101L,wineIds);
+            Map<String,WineAttrMapRespVO> wineAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(101L,wineIdVintages);
             if(!CollectionUtils.isEmpty(wineAttrMap)){
                 list.forEach(info -> {
                     WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId());
@@ -213,8 +213,8 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
             }
 
             List<Long> imgIds = new ArrayList<Long>();
-            List<Long> wineIds = new ArrayList<Long>();
-            wineIds.add(respVO.getWineId());
+            List<String> wineIdVintages = new ArrayList<String>();
+            wineIdVintages.add(respVO.getWineId()+"|"+respVO.getVintageTag());
             if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                 imgIds.add(respVO.getWineImgId());
             }
@@ -239,7 +239,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
             //原料
-            Map<Long,WineAttrMapRespVO> varietyAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(101L,wineIds);
+            Map<String,WineAttrMapRespVO> varietyAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(101L,wineIdVintages);
             if(!CollectionUtils.isEmpty(varietyAttrMap)){
                     WineAttrMapRespVO attrRespVO = varietyAttrMap.get(respVO.getWineId());
                     if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
@@ -248,7 +248,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                     }
             }
             //风格
-            Map<Long,WineAttrMapRespVO> styleAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(1001L,wineIds);
+            Map<String,WineAttrMapRespVO> styleAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(1001L,wineIdVintages);
             if(!CollectionUtils.isEmpty(styleAttrMap)){
                 WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
@@ -257,7 +257,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
             //口味
-            Map<Long,WineAttrMapRespVO> descriptorAttrMap = wineAttrMapperExt.selectAttrMapByWineIds(1002L,wineIds);
+            Map<String,WineAttrMapRespVO> descriptorAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(1002L,wineIdVintages);
             if(!CollectionUtils.isEmpty(descriptorAttrMap)){
                 WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){

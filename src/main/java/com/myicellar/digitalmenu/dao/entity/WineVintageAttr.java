@@ -2,22 +2,16 @@ package com.myicellar.digitalmenu.dao.entity;
 
 import java.util.Date;
 
-public class WineAttr {
-    private Long attrId;
-
+public class WineVintageAttr {
     private Long wineId;
+
+    private Long vintageTag;
+
+    private Long attrId;
 
     private Short micRank;
 
     private Date updatedAt;
-
-    public Long getAttrId() {
-        return attrId;
-    }
-
-    public void setAttrId(Long attrId) {
-        this.attrId = attrId;
-    }
 
     public Long getWineId() {
         return wineId;
@@ -25,6 +19,22 @@ public class WineAttr {
 
     public void setWineId(Long wineId) {
         this.wineId = wineId;
+    }
+
+    public Long getVintageTag() {
+        return vintageTag;
+    }
+
+    public void setVintageTag(Long vintageTag) {
+        this.vintageTag = vintageTag;
+    }
+
+    public Long getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Long attrId) {
+        this.attrId = attrId;
     }
 
     public Short getMicRank() {

@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineAttrMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineAttr">
-    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
-    <id column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineVintageAttrMapperExt">
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageAttr"
+    extends="com.myicellar.digitalmenu.dao.mapper.WineVintageAttrMapper.BaseResultMap">
   </resultMap>
   <sql id="Base_Column_List">
-    attr_id, wine_id, mic_rank, updated_at
+    <include refid="com.myicellar.digitalmenu.dao.mapper.WineVintageAttrMapper.Base_Column_List"/>
   </sql>
 
   <resultMap id="WineAttrInfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO">
-      <result column="wineId" jdbcType="BIGINT" property="wineId" />
-      <result column="attrCatgId" jdbcType="BIGINT" property="attrCatgId" />
+    <result column="wineVintageId" jdbcType="VARCHAR" property="wineVintageId" />
+    <result column="attrCatgId" jdbcType="BIGINT" property="attrCatgId" />
     <collection property="list" column="{wineId=wineId,attrCatgId=attrCatgId}" javaType="ArrayList" select="selectAttrListByWineId" />
   </resultMap>
 
@@ -23,26 +20,26 @@
     <result column="attr_name_cht" jdbcType="VARCHAR" property="attrNameCht" />
   </resultMap>
 
-  <select id="selectAttrMapByWineIds" resultMap="WineAttrInfoResultMap">
+  <select id="selectAttrMapByWineVintageIds" resultMap="WineAttrInfoResultMap">
     SELECT distinct
-           a.wine_id as wineId,
-           b.attr_catg_id as attrCatgId
-    FROM t_wine_attr a
+    concat(a.wine_id,'|',a.vintage_tag) as wineVintageId,
+    b.attr_catg_id as attrCatgId
+    FROM t_wine_vintage_attr a
     INNER JOIN t_attr b ON a.attr_id = b.attr_id
     AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}
-    WHERE a.wine_id IN
-    <foreach collection="wineIds" item="wineId" open="(" close=")" separator=",">
-      #{wineId,jdbcType=BIGINT}
+    WHERE concat(a.wine_id,'|',a.vintage_tag) IN
+    <foreach collection="wineVintageIds" item="wineVintageId" open="(" close=")" separator=",">
+      #{wineVintageId}
     </foreach>
   </select>
 
-  <select id="selectAttrListByWineId" parameterType="java.util.Map" resultMap="WineAttrResultMap">
+  <select id="selectAttrListByWineVintageId" parameterType="java.util.Map" resultMap="WineAttrResultMap">
     SELECT b.attr_name_eng,
     b.attr_name_chs,
     b.attr_name_cht
-    FROM t_wine_attr a
+    FROM t_wine_vintage_attr a
     INNER JOIN t_attr b ON a.attr_id = b.attr_id
     AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}
-    WHERE a.wine_id = #{wineId,jdbcType=BIGINT}
+    WHERE concat(a.wine_id,'|',a.vintage_tag) = #{wineVintageId}
   </select>
 </mapper>

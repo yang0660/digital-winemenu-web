@@ -7,14 +7,14 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 酒品属性
+ * 酒品属性Map
  */
 @Data
-@ApiModel(value = "酒品属性")
+@ApiModel(value = "酒品属性Map")
 public class WineAttrMapRespVO {
 
-    @ApiModelProperty(value = "酒品ID")
-    private Long wineId;
+    @ApiModelProperty(value = "酒品ID|年份")
+    private String wineVintageId;
 
     @ApiModelProperty(value = "属性分类ID")
     private Long attrCatgId;
