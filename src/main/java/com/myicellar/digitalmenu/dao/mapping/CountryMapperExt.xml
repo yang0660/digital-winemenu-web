@@ -23,7 +23,8 @@
     a.country_name_eng,
     a.country_name_chs,
     a.country_name_cht,
-    a.img_id
+    a.img_id,
+    a.mic_rank
     FROM
     t_country a
     INNER JOIN t_origin b ON a.country_id = b.country_id

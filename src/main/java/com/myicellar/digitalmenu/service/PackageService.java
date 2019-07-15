@@ -76,9 +76,9 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     public void fillPackageInfoRespVO(List<PackageInfoRespVO>  list){
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();
-            List<String> wineIdVintages = new ArrayList<String>();
+            List<String> wineVintageIds = new ArrayList<String>();
             for(PackageInfoRespVO respVO : list){
-                wineIdVintages.add(respVO.getWineId()+"|"+respVO.getVintageTag());
+                wineVintageIds.add(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                     imgIds.add(respVO.getWineImgId());
                 }
@@ -87,10 +87,10 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
 
-            Map<String,WineAttrMapRespVO> wineAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(101L,wineIdVintages);
+            Map<String,WineAttrMapRespVO> wineAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(101L,wineVintageIds);
             if(!CollectionUtils.isEmpty(wineAttrMap)){
                 list.forEach(info -> {
-                    WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId());
+                    WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId()+"|"+info.getVintageTag());
                     if(respVO!=null && !CollectionUtils.isEmpty(respVO.getList())){
                         List<WineAttrInfoRespVO> attrlist = respVO.getList();
                         info.setVariety(listToEngStr(attrlist));
@@ -213,8 +213,8 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
             }
 
             List<Long> imgIds = new ArrayList<Long>();
-            List<String> wineIdVintages = new ArrayList<String>();
-            wineIdVintages.add(respVO.getWineId()+"|"+respVO.getVintageTag());
+            List<String> wineVintageIds = new ArrayList<String>();
+            wineVintageIds.add(respVO.getWineId()+"|"+respVO.getVintageTag());
             if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                 imgIds.add(respVO.getWineImgId());
             }
@@ -239,27 +239,27 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
             //原料
-            Map<String,WineAttrMapRespVO> varietyAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(101L,wineIdVintages);
+            Map<String,WineAttrMapRespVO> varietyAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(101L,wineVintageIds);
             if(!CollectionUtils.isEmpty(varietyAttrMap)){
-                    WineAttrMapRespVO attrRespVO = varietyAttrMap.get(respVO.getWineId());
+                    WineAttrMapRespVO attrRespVO = varietyAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                     if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                         respVO.setVariety(listToEngStr(attrlist));
                     }
             }
             //风格
-            Map<String,WineAttrMapRespVO> styleAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(1001L,wineIdVintages);
+            Map<String,WineAttrMapRespVO> styleAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(1001L,wineVintageIds);
             if(!CollectionUtils.isEmpty(styleAttrMap)){
-                WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId());
+                WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                     List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                     respVO.setStyle(listToEngStr(attrlist));
                 }
             }
             //口味
-            Map<String,WineAttrMapRespVO> descriptorAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineIds(1002L,wineIdVintages);
+            Map<String,WineAttrMapRespVO> descriptorAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(1002L,wineVintageIds);
             if(!CollectionUtils.isEmpty(descriptorAttrMap)){
-                WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId());
+                WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                     List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                     respVO.setDescriptor(listToEngStr(attrlist));

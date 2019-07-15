@@ -20,7 +20,8 @@
     a.wine_type_seo_name,
     a.wine_type_name_eng,
     a.wine_type_name_chs,
-    a.wine_type_name_cht
+    a.wine_type_name_cht,
+    a.mic_rank
     FROM
     t_wine_type a
     INNER JOIN t_wine b ON a.wine_type_id = b.wine_type_id

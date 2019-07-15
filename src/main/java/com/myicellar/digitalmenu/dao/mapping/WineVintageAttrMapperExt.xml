@@ -11,7 +11,7 @@
   <resultMap id="WineAttrInfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrMapRespVO">
     <result column="wineVintageId" jdbcType="VARCHAR" property="wineVintageId" />
     <result column="attrCatgId" jdbcType="BIGINT" property="attrCatgId" />
-    <collection property="list" column="{wineId=wineId,attrCatgId=attrCatgId}" javaType="ArrayList" select="selectAttrListByWineId" />
+    <collection property="list" column="{wineVintageId=wineVintageId,attrCatgId=attrCatgId}" javaType="ArrayList" select="selectAttrListByWineVintageId" />
   </resultMap>
 
   <resultMap id="WineAttrResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO">
