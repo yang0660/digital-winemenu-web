@@ -23,8 +23,9 @@
     a.region_name_eng,
     a.region_name_chs,
     a.region_name_cht,
-    parent_origin_id,
-    country_id
+    a.parent_origin_id,
+    a.country_id,
+    a.mic_rank
     FROM
     t_origin a
     INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
@@ -33,7 +34,7 @@
     AND c.vintage_tag = d.vintage_tag
     WHERE
     d.supplier_id = #{supplierId}
-    order by mic_rank
+    order by a.mic_rank
   </select>
 
   <select id="selectListBySupplierIdAndCountryId"  resultMap="BaseResultMap">
@@ -44,7 +45,8 @@
     a.region_name_chs,
     a.region_name_cht,
     a.parent_origin_id,
-    a.country_id
+    a.country_id,
+    a.mic_rank
     FROM
     t_origin a
     INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
