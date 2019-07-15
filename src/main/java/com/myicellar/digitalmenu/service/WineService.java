@@ -33,5 +33,15 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         return list;
     }
 
+    /**
+     * 按酒庄ID查询
+     * @return
+     */
+    public Wine queryByWineryId(Long wineryId){
+        return mapper.selectByWineryId(wineryId);
+
+
+    }
+
 
 }

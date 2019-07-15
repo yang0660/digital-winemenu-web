@@ -31,4 +31,12 @@
     where wine_type_id = #{wineTypeId}
   </select>
 
+  <select id="selectByWineryId" parameterType="long"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_wine
+    where winery_id = #{wineryId}
+  </select>
+
 </mapper>

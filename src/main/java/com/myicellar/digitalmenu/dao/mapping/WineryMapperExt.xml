@@ -28,4 +28,57 @@
     </select>
 
 
+
+    <select id="selectByNameCount" parameterType="com.myicellar.digitalmenu.vo.request.WineryNameReqVO" resultType="long">
+<!--        select-->
+<!--        count(0)-->
+<!--        from-->
+<!--        t_winery-->
+<!--        <where>-->
+<!--            <if test="wineryNameEng != null">-->
+<!--                and winery_name_eng like concat('%',#{wineryNameEng},'%')-->
+<!--            </if>-->
+<!--            <if test="wineryNameCht != null">-->
+<!--                and winery_name_cht like concat('%',#{wineryNameCht},'%')-->
+<!--            </if>-->
+<!--            <if test="wineryNameChs != null">-->
+<!--                and winery_name_chs like concat('%',#{wineryNameChs},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+        select
+        count(0)
+        from
+        t_winery
+        where
+        winery_name_eng like concat('%',#{wineryNameEng},'%')
+    </select>
+
+    <select id="selectByName" parameterType="com.myicellar.digitalmenu.vo.request.WineryNameReqVO" resultMap="BaseResultMap">
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from-->
+<!--        t_winery-->
+<!--        <where>-->
+<!--            <if test="wineryNameEng != null">-->
+<!--                and winery_name_eng like concat('%',#{wineryNameEng},'%')-->
+<!--            </if>-->
+<!--            <if test="wineryNameCht != null">-->
+<!--                and winery_name_cht like concat('%',#{wineryNameCht},'%')-->
+<!--            </if>-->
+<!--            <if test="wineryNameChs != null">-->
+<!--                and winery_name_chs like concat('%',#{wineryNameChs},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}-->
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_winery
+        where
+        winery_name_eng like concat('%',#{wineryNameEng},'%')
+
+        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
+
+
 </mapper>

@@ -13,4 +13,6 @@ public interface WineMapperExt extends WineMapper{
 
     List<Wine> selectDropList(WineTypeReqVO reqVO);
 
+    Wine selectByWineryId(Long wineryId);
+
 }
