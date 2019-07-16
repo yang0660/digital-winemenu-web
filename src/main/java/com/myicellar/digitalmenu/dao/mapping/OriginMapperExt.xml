@@ -56,4 +56,11 @@
     and a.country_id = #{countryId}
     order by a.mic_rank
   </select>
+
+  <select id="selectNameMap" resultMap="BaseResultMap">
+    select
+    wine_origin_id, region_seo_name, lower(region_name_eng) as region_name_eng, region_name_chs, region_name_cht,
+    parent_origin_id, country_id, mic_rank, updated_at
+    from t_origin
+  </select>
 </mapper>

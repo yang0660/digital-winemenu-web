@@ -80,5 +80,12 @@
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
+    <select id="selectNameMap" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_winery
+    </select>
+
 
 </mapper>

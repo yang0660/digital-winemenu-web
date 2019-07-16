@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -34,5 +35,9 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
         //// TODO: 2019/7/15 查询不出结果
         PageResponseVO<Winery> page = selectPage(reqVO, mapper::selectByNameCount, mapper::selectByName);
         return page;
+    }
+
+    public Map<String,Winery> queryNameMap(){
+        return mapper.selectNameMap();
     }
 }

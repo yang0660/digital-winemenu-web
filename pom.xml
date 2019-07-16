@@ -181,6 +181,11 @@
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
 		<!--二维码生成相关依赖-->
 		<dependency>
 			<groupId>com.google.zxing</groupId>

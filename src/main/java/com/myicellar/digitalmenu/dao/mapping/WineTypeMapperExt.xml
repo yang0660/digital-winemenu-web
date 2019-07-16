@@ -31,4 +31,10 @@
     order by a.mic_rank
   </select>
 
+  <select id="selectNameMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_wine_type
+  </select>
+
 </mapper>

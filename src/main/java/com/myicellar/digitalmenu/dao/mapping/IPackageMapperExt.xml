@@ -343,7 +343,7 @@
       wine.wine_name_eng,
       wny.note_plain_eng,
       wny.about_url AS winery_about_url,
-      wny.logo_img_id,
+      wny.logo_img_id AS winery_logo_id,
       wny.banner_img_id,
       wny.winery_img_ids
       FROM

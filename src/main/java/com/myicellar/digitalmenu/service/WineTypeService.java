@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,6 +27,10 @@ public class WineTypeService extends BaseService<Long, WineType, WineTypeMapperE
      */
     public List<WineType> queryListBySupplierId(Long supplierId){
         return mapper.selectListBySupplierId(supplierId);
+    }
+
+    public Map<String,WineType> queryNameMap(){
+        return mapper.selectNameMap();
     }
 
 }

@@ -12,8 +12,8 @@ management:
       show-details: always
 
 file-upload:
-  base-url: http://localhost:8088/digital-winemenu-web
-  base-path: E:/app1/imagedata/
+  base-url: http://157.230.42.125:8088/digital-winemenu-web/
+  base-path: /app1/imagedata/
   image:
     ext-names: jpg,png,gif,tif,bmp
     max-height: 3000
