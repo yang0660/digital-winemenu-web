@@ -15,7 +15,33 @@
     order by mic_rank
   </select>
 
-  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+  <resultMap id="CountryResultMap" type="com.myicellar.digitalmenu.vo.response.CountryRespVO">
+    <id column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="country_seo_name" jdbcType="VARCHAR" property="countrySeoName" />
+    <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng" />
+    <result column="country_name_chs" jdbcType="VARCHAR" property="countryNameChs" />
+    <result column="country_name_cht" jdbcType="VARCHAR" property="countryNameCht" />
+    <result column="img_id" jdbcType="BIGINT" property="imgId" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="supplier_id" jdbcType="TIMESTAMP" property="supplierId" />
+    <collection property="regionList" column="{countryId=country_id,supplierId=supplier_id}" javaType="ArrayList" select="selectRegionsBySupplierAndCountryId" />
+  </resultMap>
+
+  <resultMap id="RegionResultMap" type="com.myicellar.digitalmenu.vo.response.OriginRespVO">
+    <id column="wine_origin_id" jdbcType="BIGINT" property="wineOriginId" />
+    <result column="region_seo_name" jdbcType="VARCHAR" property="regionSeoName" />
+    <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng" />
+    <result column="region_name_chs" jdbcType="VARCHAR" property="regionNameChs" />
+    <result column="region_name_cht" jdbcType="VARCHAR" property="regionNameCht" />
+    <result column="parent_origin_id" jdbcType="BIGINT" property="parentOriginId" />
+    <result column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectListBySupplierId" parameterType="long" resultMap="CountryResultMap">
     SELECT DISTINCT
     a.country_id,
     a.country_code,
@@ -24,7 +50,8 @@
     a.country_name_chs,
     a.country_name_cht,
     a.img_id,
-    a.mic_rank
+    a.mic_rank,
+    d.supplier_id
     FROM
     t_country a
     INNER JOIN t_origin b ON a.country_id = b.country_id
@@ -32,6 +59,26 @@
     INNER JOIN t_product d ON c.wine_id = d.wine_id
     WHERE
     d.supplier_id = #{supplierId}
+    order by a.mic_rank
+  </select>
+
+  <select id="selectRegionsBySupplierAndCountryId"  resultMap="RegionResultMap">
+    SELECT DISTINCT
+    a.wine_origin_id,
+    a.region_seo_name,
+    a.region_name_eng,
+    a.region_name_chs,
+    a.region_name_cht,
+    a.parent_origin_id,
+    a.country_id,
+    a.mic_rank
+    FROM
+    t_origin a
+    INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
+    INNER JOIN t_product c ON b.wine_id = c.wine_id
+    WHERE
+    c.supplier_id = #{supplierId}
+    and a.country_id = #{countryId}
     order by a.mic_rank
   </select>
 

@@ -2,6 +2,7 @@ package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.Country;
 import com.myicellar.digitalmenu.dao.mapper.CountryMapperExt;
+import com.myicellar.digitalmenu.vo.response.CountryRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,8 @@ public class CountryService extends BaseService<Long, Country, CountryMapperExt>
      * 查询国家列表（根据供应商ID）
      * @return
      */
-    public List<Country> queryListBySupplierId(Long supplierId){
-        List<Country> list=mapper.selectListBySupplierId(supplierId);
+    public List<CountryRespVO> queryListBySupplierId(Long supplierId){
+        List<CountryRespVO> list=mapper.selectListBySupplierId(supplierId);
         return list;
     }
 

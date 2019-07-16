@@ -110,21 +110,6 @@ public class PackageDetailRespVO {
     @ApiModelProperty(value = "酒庄图片列表-缩略图")
     private List<String> winerySmallImgUrls;
 
-    @ApiModelProperty(value = "获奖名称")
-    private String scoreName;
-
-    @ApiModelProperty(value = "获奖年份")
-    private Integer scoreYear;
-
-    @ApiModelProperty(value = "评价分数")
-    private String scoreValStr;
-
-    @ApiModelProperty(value = "酒品评价")
-    private String criticsNameEng;
-
-    @ApiModelProperty(value = "评价总分")
-    private String scoreMax;
-
-    @ApiModelProperty(value = "酒品评价网页")
-    private String criticsAboutUrl;
+    @ApiModelProperty(value = "酒品详情-评分/获奖信息列表")
+    private List<ScoreRespVO> scoreList;
 }

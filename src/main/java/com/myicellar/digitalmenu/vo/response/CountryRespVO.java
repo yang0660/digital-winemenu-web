@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 国家信息
@@ -39,5 +40,10 @@ public class CountryRespVO {
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;
 
+    @ApiModelProperty(value = "供应商ID")
+    private Long supplierId;
+
+    @ApiModelProperty(value = "产地列表")
+    private List<OriginRespVO> regionList;
 
 }

@@ -39,14 +39,12 @@ public class CountryController {
     @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<List<CountryRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
-        List<Country> list = countryService.queryListBySupplierId(reqVO.getSupplierId());
-
-        List<CountryRespVO> resultList = new ArrayList<CountryRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,CountryRespVO.class);
+        List<CountryRespVO> list = countryService.queryListBySupplierId(reqVO.getSupplierId());
+        if(CollectionUtils.isEmpty(list)){
+            list = new ArrayList<CountryRespVO>();
         }
 
-        return ResultVO.success(resultList);
+        return ResultVO.success(list);
     }
 
 }

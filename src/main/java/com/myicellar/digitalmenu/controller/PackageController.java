@@ -105,6 +105,11 @@ public class PackageController {
     @ApiOperation("酒品详情")
     public ResultVO<PackageDetailRespVO> queryDetailById(@RequestBody PackageDetailReqVO reqVO) {
         PackageDetailRespVO respVO = packageService.queryDetailById(reqVO.getPackageId());
+        List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreListByPackageId(reqVO.getPackageId());
+        if(!CollectionUtils.isEmpty(scoreList)) {
+            respVO.setScoreList(scoreList);
+        }
+
         return ResultVO.success(respVO);
     }
 
@@ -119,20 +124,6 @@ public class PackageController {
     @ApiOperation("酒品详情-美食推荐列表")
     public ResultVO<List<FoodRecommendRespVO>> queryFoodListByPackageId(@RequestBody PackageDetailReqVO reqVO) {
         List<FoodRecommendRespVO> list = foodService.queryFoodListByPackageId(reqVO.getPackageId());
-        return ResultVO.success(list);
-    }
-
-    /**
-     * 酒品详情-评分/获奖信息列表
-     *
-     * @param
-     * @return
-     */
-    @PostMapping(value = "/queryScoreListByPackageId")
-    @AuthIgnore
-    @ApiOperation("酒品详情-评分/获奖信息列表")
-    public ResultVO<List<ScoreRespVO>> queryScoreListByPackageId(@RequestBody PackageDetailReqVO reqVO) {
-        List<ScoreRespVO> list = wineVintageScoreService.queryScoreListByPackageId(reqVO.getPackageId());
         return ResultVO.success(list);
     }
 
