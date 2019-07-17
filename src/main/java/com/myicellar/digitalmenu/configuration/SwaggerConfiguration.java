@@ -36,7 +36,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo appApiInfo() {
         return new ApiInfoBuilder()
-                .title("contract-housekeeper 接口文档")
+                .title("digital-winemenu-web 接口文档")
                 .version("1.0.0")
                 .build();
     }

@@ -181,13 +181,13 @@
       AND pkg.regular_price &lt;#{priceMax}
     </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
-      AND wine.wine_type_id IN
+      AND win.wine_type_id IN
       <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
         #{wineTypeId,jdbcType=BIGINT}
       </foreach>
     </if>
     <if test="countryIds!=null and countryIds.size()>0">
-      AND ori.country_id IN
+      AND org.country_id IN
       <foreach collection="countryIds" item="countryId" open="(" close=")" separator=",">
         #{countryId,jdbcType=BIGINT}
       </foreach>
@@ -199,7 +199,7 @@
       </foreach>
     </if>
     <if test="wineOriginIds!=null and wineOriginIds.size()>0">
-      AND wine.wine_origin_id IN
+      AND win.wine_origin_id IN
       <foreach collection="wineOriginIds" item="wineOriginId" open="(" close=")" separator=",">
         #{wineOriginId,jdbcType=BIGINT}
       </foreach>
@@ -259,13 +259,13 @@
       AND pkg.regular_price &lt;#{priceMax}
     </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
-      AND wine.wine_type_id IN
+      AND win.wine_type_id IN
       <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
         #{wineTypeId,jdbcType=BIGINT}
       </foreach>
     </if>
     <if test="countryIds!=null and countryIds.size()>0">
-      AND ori.country_id IN
+      AND org.country_id IN
       <foreach collection="countryIds" item="countryId" open="(" close=")" separator=",">
         #{countryId,jdbcType=BIGINT}
       </foreach>
@@ -277,7 +277,7 @@
       </foreach>
     </if>
     <if test="wineOriginIds!=null and wineOriginIds.size()>0">
-      AND wine.wine_origin_id IN
+      AND win.wine_origin_id IN
       <foreach collection="wineOriginIds" item="wineOriginId" open="(" close=")" separator=",">
         #{wineOriginId,jdbcType=BIGINT}
       </foreach>
