@@ -15,11 +15,7 @@ public class WineVintage {
 
     private Date updatedAt;
 
-    private String notePlainEng;
-
-    private String notePlainChs;
-
-    private String notePlainCht;
+    private String tastingNote;
 
     public Long getWineId() {
         return wineId;
@@ -69,27 +65,11 @@ public class WineVintage {
         this.updatedAt = updatedAt;
     }
 
-    public String getNotePlainEng() {
-        return notePlainEng;
+    public String getTastingNote() {
+        return tastingNote;
     }
 
-    public void setNotePlainEng(String notePlainEng) {
-        this.notePlainEng = notePlainEng;
-    }
-
-    public String getNotePlainChs() {
-        return notePlainChs;
-    }
-
-    public void setNotePlainChs(String notePlainChs) {
-        this.notePlainChs = notePlainChs;
-    }
-
-    public String getNotePlainCht() {
-        return notePlainCht;
-    }
-
-    public void setNotePlainCht(String notePlainCht) {
-        this.notePlainCht = notePlainCht;
+    public void setTastingNote(String tastingNote) {
+        this.tastingNote = tastingNote;
     }
 }

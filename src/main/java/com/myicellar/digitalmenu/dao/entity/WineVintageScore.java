@@ -25,11 +25,7 @@ public class WineVintageScore {
 
     private String scoreName;
 
-    private String notePlainEng;
-
-    private String notePlainChs;
-
-    private String notePlainCht;
+    private String notePlain;
 
     public Long getVintageScoreId() {
         return vintageScoreId;
@@ -119,27 +115,11 @@ public class WineVintageScore {
         this.scoreName = scoreName;
     }
 
-    public String getNotePlainEng() {
-        return notePlainEng;
+    public String getNotePlain() {
+        return notePlain;
     }
 
-    public void setNotePlainEng(String notePlainEng) {
-        this.notePlainEng = notePlainEng;
-    }
-
-    public String getNotePlainChs() {
-        return notePlainChs;
-    }
-
-    public void setNotePlainChs(String notePlainChs) {
-        this.notePlainChs = notePlainChs;
-    }
-
-    public String getNotePlainCht() {
-        return notePlainCht;
-    }
-
-    public void setNotePlainCht(String notePlainCht) {
-        this.notePlainCht = notePlainCht;
+    public void setNotePlain(String notePlain) {
+        this.notePlain = notePlain;
     }
 }

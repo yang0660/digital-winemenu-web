@@ -334,7 +334,7 @@
       wny.winery_name_eng,
       vtg.vintage_tag,
       vtg.vintage_name,
-      vtg.note_plain_eng as tasting_note,
+      vtg.tasting_note,
       cty.country_name_eng,
       ori.region_name_eng,
       vtg.alcohol_bps,

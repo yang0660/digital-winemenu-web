@@ -10,15 +10,13 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng" />
-    <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs" />
-    <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht" />
+    <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote" />
   </resultMap>
   <sql id="Base_Column_List">
     wine_id, vintage_tag, vintage_name, alcohol_bps, wine_img_id, updated_at
   </sql>
   <sql id="Blob_Column_List">
-    note_plain_eng, note_plain_chs, note_plain_cht
+    tasting_note
   </sql>
   <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
     select 
@@ -37,12 +35,10 @@
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
     insert into t_wine_vintage (wine_id, vintage_tag, vintage_name, 
       alcohol_bps, wine_img_id, updated_at, 
-      note_plain_eng, note_plain_chs, note_plain_cht
-      )
+      tasting_note)
     values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{vintageName,jdbcType=VARCHAR}, 
       #{alcoholBps,jdbcType=BIGINT}, #{wineImgId,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{notePlainEng,jdbcType=LONGVARCHAR}, #{notePlainChs,jdbcType=LONGVARCHAR}, #{notePlainCht,jdbcType=LONGVARCHAR}
-      )
+      #{tastingNote,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
     insert into t_wine_vintage
@@ -65,14 +61,8 @@
       <if test="updatedAt != null">
         updated_at,
       </if>
-      <if test="notePlainEng != null">
-        note_plain_eng,
-      </if>
-      <if test="notePlainChs != null">
-        note_plain_chs,
-      </if>
-      <if test="notePlainCht != null">
-        note_plain_cht,
+      <if test="tastingNote != null">
+        tasting_note,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -94,14 +84,8 @@
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="notePlainEng != null">
-        #{notePlainEng,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainChs != null">
-        #{notePlainChs,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainCht != null">
-        #{notePlainCht,jdbcType=LONGVARCHAR},
+      <if test="tastingNote != null">
+        #{tastingNote,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -120,14 +104,8 @@
       <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="notePlainEng != null">
-        note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainChs != null">
-        note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainCht != null">
-        note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR},
+      <if test="tastingNote != null">
+        tasting_note = #{tastingNote,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where wine_id = #{wineId,jdbcType=BIGINT}
@@ -139,9 +117,7 @@
       alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
       wine_img_id = #{wineImgId,jdbcType=BIGINT},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
-      note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
-      note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR}
+      tasting_note = #{tastingNote,jdbcType=LONGVARCHAR}
     where wine_id = #{wineId,jdbcType=BIGINT}
       and vintage_tag = #{vintageTag,jdbcType=BIGINT}
   </update>

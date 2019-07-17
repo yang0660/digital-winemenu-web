@@ -15,16 +15,14 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
     <result column="score_val_str" jdbcType="LONGVARCHAR" property="scoreValStr" />
     <result column="score_name" jdbcType="LONGVARCHAR" property="scoreName" />
-    <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng" />
-    <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs" />
-    <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht" />
+    <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain" />
   </resultMap>
   <sql id="Base_Column_List">
     vintage_score_id, wine_id, vintage_tag, wine_critics_id, score_catg_id, score_val_num, 
     score_year, tasted_at, updated_at
   </sql>
   <sql id="Blob_Column_List">
-    score_val_str, score_name, note_plain_eng, note_plain_chs, note_plain_cht
+    score_val_str, score_name, note_plain
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
@@ -42,13 +40,13 @@
     insert into t_wine_vintage_score (vintage_score_id, wine_id, vintage_tag, 
       wine_critics_id, score_catg_id, score_val_num, 
       score_year, tasted_at, updated_at, 
-      score_val_str, score_name, note_plain_eng, 
-      note_plain_chs, note_plain_cht)
+      score_val_str, score_name, note_plain
+      )
     values (#{vintageScoreId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=SMALLINT}, 
       #{wineCriticsId,jdbcType=INTEGER}, #{scoreCatgId,jdbcType=BIGINT}, #{scoreValNum,jdbcType=SMALLINT}, 
       #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{scoreValStr,jdbcType=LONGVARCHAR}, #{scoreName,jdbcType=LONGVARCHAR}, #{notePlainEng,jdbcType=LONGVARCHAR}, 
-      #{notePlainChs,jdbcType=LONGVARCHAR}, #{notePlainCht,jdbcType=LONGVARCHAR})
+      #{scoreValStr,jdbcType=LONGVARCHAR}, #{scoreName,jdbcType=LONGVARCHAR}, #{notePlain,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
     insert into t_wine_vintage_score
@@ -86,14 +84,8 @@
       <if test="scoreName != null">
         score_name,
       </if>
-      <if test="notePlainEng != null">
-        note_plain_eng,
-      </if>
-      <if test="notePlainChs != null">
-        note_plain_chs,
-      </if>
-      <if test="notePlainCht != null">
-        note_plain_cht,
+      <if test="notePlain != null">
+        note_plain,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -130,14 +122,8 @@
       <if test="scoreName != null">
         #{scoreName,jdbcType=LONGVARCHAR},
       </if>
-      <if test="notePlainEng != null">
-        #{notePlainEng,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainChs != null">
-        #{notePlainChs,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainCht != null">
-        #{notePlainCht,jdbcType=LONGVARCHAR},
+      <if test="notePlain != null">
+        #{notePlain,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -174,14 +160,8 @@
       <if test="scoreName != null">
         score_name = #{scoreName,jdbcType=LONGVARCHAR},
       </if>
-      <if test="notePlainEng != null">
-        note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainChs != null">
-        note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlainCht != null">
-        note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR},
+      <if test="notePlain != null">
+        note_plain = #{notePlain,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
@@ -198,9 +178,7 @@
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       score_val_str = #{scoreValStr,jdbcType=LONGVARCHAR},
       score_name = #{scoreName,jdbcType=LONGVARCHAR},
-      note_plain_eng = #{notePlainEng,jdbcType=LONGVARCHAR},
-      note_plain_chs = #{notePlainChs,jdbcType=LONGVARCHAR},
-      note_plain_cht = #{notePlainCht,jdbcType=LONGVARCHAR}
+      note_plain = #{notePlain,jdbcType=LONGVARCHAR}
     where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
