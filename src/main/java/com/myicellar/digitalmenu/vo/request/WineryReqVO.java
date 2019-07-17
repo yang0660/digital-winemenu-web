@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -60,7 +61,7 @@ public class WineryReqVO {
     private String aboutUrl;
 
     @ApiModelProperty(value = "酒庄图片")
-    private String wineryImgIds;
+    private List<Long> wineryImgIds;
 
 
 }

@@ -1,6 +1,7 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.myicellar.digitalmenu.dao.entity.*;
+import com.myicellar.digitalmenu.dao.entity.Food;
+import com.myicellar.digitalmenu.dao.entity.Winery;
 import com.myicellar.digitalmenu.service.*;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;

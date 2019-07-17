@@ -1,6 +1,5 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Winery;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.service.WineryService;
@@ -9,7 +8,6 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WineryDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.WineryNameReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
@@ -18,8 +16,8 @@ import com.myicellar.digitalmenu.vo.response.WineryRespVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,34 +49,10 @@ public class WineryManageController {
     @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<WineryRespVO>> queryListPage(@RequestBody WineryPageReqVO reqVO) {
-        PageResponseVO<Winery> page = wineryService.queryPageList(reqVO);
-
-        PageResponseVO<WineryRespVO> resultPage = new PageResponseVO<WineryRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,WineryRespVO.class);
-        }
-
-        return ResultVO.success(resultPage);
+        PageResponseVO<WineryRespVO> page = wineryService.queryPageList(reqVO);
+        return ResultVO.success(page);
     }
 
-    /**
-     * 详情查询-按酒庄名称
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/queryByName")
-    @AuthIgnore
-    @ApiOperation("详情查询-按酒庄名称")
-    public ResultVO<PageResponseVO<WineryRespVO>> queryByName(@RequestBody WineryNameReqVO reqVO) {
-        PageResponseVO<Winery> page = wineryService.queryByName(reqVO);
-        PageResponseVO<WineryRespVO> resultPage = new PageResponseVO<WineryRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,WineryRespVO.class);
-        }
-
-        return ResultVO.success(resultPage);
-    }
 
     /**
      * 新增
@@ -92,19 +66,23 @@ public class WineryManageController {
     public ResultVO<WineryRespVO> add(@RequestBody WineryReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        Winery winery = ConvertUtils.convert(reqVO,Winery.class);
+
+        Winery winery = ConvertUtils.convert(reqVO, Winery.class);
         winery.setWineryId(snowflakeIdWorker.nextId());
         winery.setCreatedBy(0L);
         winery.setUpdatedBy(0L);
         Date now = new Date();
         winery.setCreatedAt(now);
         winery.setUpdatedAt(now);
+        List<Long> longIds = reqVO.getWineryImgIds();
+        String stringIds = StringUtils.join(longIds, ",");
+        winery.setWineryImgIds(stringIds);
         int i = wineryService.insertSelective(winery);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("save is failed!");
         }
 
-        WineryRespVO respVO = ConvertUtils.convert(winery,WineryRespVO.class);
+        WineryRespVO respVO = ConvertUtils.convert(winery, WineryRespVO.class);
         ResultVO resultVO = ResultVO.success("save is success!");
         return resultVO.setData(respVO);
     }
@@ -121,16 +99,19 @@ public class WineryManageController {
     public ResultVO update(@RequestBody WineryReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        Winery winery = ConvertUtils.convert(reqVO,Winery.class);
+        Winery winery = ConvertUtils.convert(reqVO, Winery.class);
         winery.setUpdatedBy(0L);
         Date now = new Date();
         winery.setUpdatedAt(now);
+        List<Long> longIds = reqVO.getWineryImgIds();
+        String stringIds = StringUtils.join(longIds, ",");
+        winery.setWineryImgIds(stringIds);
         int i = wineryService.updateByPrimaryKeySelective(winery);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("update is failed!");
         }
 
-        WineryRespVO respVO = ConvertUtils.convert(winery,WineryRespVO.class);
+        WineryRespVO respVO = ConvertUtils.convert(winery, WineryRespVO.class);
         ResultVO resultVO = ResultVO.success("update is success!");
         return resultVO.setData(respVO);
     }
@@ -145,15 +126,15 @@ public class WineryManageController {
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody WineryDeleteReqVO reqVO) {
-        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
         }
         //如果酒庄里有关联酒品, 无法删除酒庄
-        if (wineService.queryByWineryId(reqVO.getWineryId())!=null){
-            return ResultVO.validError("delete is failed! winery has wine in it.");
+        if (wineService.queryByWineryId(reqVO.getWineryId()) != null) {
+            return ResultVO.validError("Winery is in use, can not be deleted");
         }
         int i = wineryService.deleteByPrimaryKey(reqVO.getWineryId());
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("delete is failed!");
         }
 
@@ -162,47 +143,70 @@ public class WineryManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    private void checkNewParam(WineryReqVO reqVO){
-        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
-            throw new BizException("winery cannot be empty!");
-        }
-        //判断酒庄名字是否已经存在
-        this.checkWineyName(reqVO.getWineryNameEng());
-        if(StringUtils.isEmpty(reqVO.getWineryNameEng())){
+    private void checkNewParam(WineryReqVO reqVO) {
+        if (StringUtils.isEmpty(reqVO.getWineryNameEng())) {
             throw new BizException("wineryNameEng cannot be empty!");
         }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0) {
+            throw new BizException("winery Logo cannot be empty!");
+        }
+        if (reqVO.getBannerImgId() == null || reqVO.getBannerImgId() == 0) {
+            throw new BizException("winery Banner cannot be empty!");
+        }
+        if (reqVO.getWineryImgIds().isEmpty()) {
+            throw new BizException("winery Image cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getAboutUrl())) {
+            throw new BizException("Url cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("Note cannot be empty!");
+        }
+
+        //判断酒庄名字是否已经存在
+        Winery winery = wineryService.queryByName(reqVO.getWineryNameEng());
+        if (winery != null) {
+            throw new BizException("winery already exists");
+        }
+
     }
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    private void checkUpdateParam(WineryReqVO reqVO){
-        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+    private void checkUpdateParam(WineryReqVO reqVO) {
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
             throw new BizException("wineryId cannot be empty!");
         }
-        //判断酒庄名字是否已经存在
-        this.checkWineyName(reqVO.getWineryNameEng());
-        if(StringUtils.isEmpty(reqVO.getWineryNameEng())){
+        if (StringUtils.isEmpty(reqVO.getWineryNameEng())) {
             throw new BizException("wineryNameEng cannot be empty!");
         }
-    }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0) {
+            throw new BizException("winery Logo cannot be empty!");
+        }
+        if (reqVO.getBannerImgId() == null || reqVO.getBannerImgId() == 0) {
+            throw new BizException("winery Banner cannot be empty!");
+        }
+        if (reqVO.getWineryImgIds().isEmpty()) {
+            throw new BizException("winery Image cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getAboutUrl())) {
+            throw new BizException("Url cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("Note cannot be empty!");
+        }
 
-    /**
-     * 判断酒庄名字是否存在
-     * @param wineryName
-     */
-    private void checkWineyName(String wineryName){
-        //判断酒庄名字是否已经存在
-        WineryNameReqVO wineryNameReqVO= new WineryNameReqVO();
-        wineryNameReqVO.setWineryNameEng(wineryName);
-        if (wineryService.queryByName(wineryNameReqVO)!=null){
+        Winery winery = wineryService.queryByName(reqVO.getWineryNameEng());
+        if (winery != null && !winery.getWineryId().equals(reqVO.getWineryId())) {
             throw new BizException("winery already exists");
         }
     }
-
 
 
 }

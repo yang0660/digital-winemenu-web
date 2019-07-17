@@ -7,80 +7,36 @@
     <sql id="Base_Column_List">
         <include refid="com.myicellar.digitalmenu.dao.mapper.WineryMapper.Base_Column_List"/>
     </sql>
-    <select id="selectCount" resultType="long" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO">
-        select
-        count(0)
-        from
-        t_winery
-        where
-        winery_id = #{wineryId}
+
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultType="long">
+        select count(0) from t_winery
+        <where>
+            <if test="wineryNameEng != null and wineryNameEng != ''">and winery_name_eng like
+                concat('%',#{wineryNameEng},'%')
+            </if>
+        </where>
     </select>
 
-
-    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultMap="BaseResultMap">
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineryNameReqVO"
+            resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from
-        t_winery
-        where
-        winery_id = #{wineryId}
+        from t_winery
+        <where>
+            <if test="wineryNameEng != null and wineryNameEng != ''">and winery_name_eng like
+                concat('%',#{wineryNameEng},'%')
+            </if>
+        </where>
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
-
-
-    <select id="selectByNameCount" parameterType="com.myicellar.digitalmenu.vo.request.WineryNameReqVO" resultType="long">
-<!--        select-->
-<!--        count(0)-->
-<!--        from-->
-<!--        t_winery-->
-<!--        <where>-->
-<!--            <if test="wineryNameEng != null">-->
-<!--                and winery_name_eng like concat('%',#{wineryNameEng},'%')-->
-<!--            </if>-->
-<!--            <if test="wineryNameCht != null">-->
-<!--                and winery_name_cht like concat('%',#{wineryNameCht},'%')-->
-<!--            </if>-->
-<!--            <if test="wineryNameChs != null">-->
-<!--                and winery_name_chs like concat('%',#{wineryNameChs},'%')-->
-<!--            </if>-->
-<!--        </where>-->
-        select
-        count(0)
-        from
-        t_winery
-        where
-        winery_name_eng like concat('%',#{wineryNameEng},'%')
-    </select>
-
-    <select id="selectByName" parameterType="com.myicellar.digitalmenu.vo.request.WineryNameReqVO" resultMap="BaseResultMap">
-<!--        select-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        from-->
-<!--        t_winery-->
-<!--        <where>-->
-<!--            <if test="wineryNameEng != null">-->
-<!--                and winery_name_eng like concat('%',#{wineryNameEng},'%')-->
-<!--            </if>-->
-<!--            <if test="wineryNameCht != null">-->
-<!--                and winery_name_cht like concat('%',#{wineryNameCht},'%')-->
-<!--            </if>-->
-<!--            <if test="wineryNameChs != null">-->
-<!--                and winery_name_chs like concat('%',#{wineryNameChs},'%')-->
-<!--            </if>-->
-<!--        </where>-->
-<!--        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}-->
+    <select id="selectByName" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from
-        t_winery
-        where
-        winery_name_eng like concat('%',#{wineryNameEng},'%')
-
-        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+        from t_winery where winery_name_eng = #{wineryNameEng} limit 1
     </select>
 
-    <select id="selectNameMap" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultMap="BaseResultMap">
+    <select id="selectNameMap" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from
