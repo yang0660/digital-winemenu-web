@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -39,6 +41,25 @@ public class ImgTypeController {
     private ImgService imgService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
+
+    /**
+     * 图库分类下拉列表
+     *
+     * @return
+     */
+    @PostMapping(value = "/queryList")
+    @AuthIgnore
+    @ApiOperation("图库分类下拉列表")
+    public ResultVO<List<ImgTypeRespVO>> queryList() {
+        List<ImgType> list = imgTypeService.queryListAll();
+
+        List<ImgTypeRespVO> resultList = new ArrayList<ImgTypeRespVO>();
+        if(!CollectionUtils.isEmpty(list)){
+            resultList = ConvertUtils.convert(list, ImgTypeRespVO.class);
+        }
+
+        return ResultVO.success(resultList);
+    }
 
     /**
      * 列表查询

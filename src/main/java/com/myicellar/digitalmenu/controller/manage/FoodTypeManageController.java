@@ -10,6 +10,7 @@ import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.FoodTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodTypeReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.response.FoodTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -35,6 +38,29 @@ public class FoodTypeManageController {
     private FoodTypeService foodTypeService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
+
+    /**
+     * 美食分类下拉列表
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryList")
+    @AuthIgnore
+    @ApiOperation("美食分类下拉列表")
+    public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
+        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+            return ResultVO.validError("supplierId cannot be empty！");
+        }
+
+        List<FoodType> list = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
+        List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
+        if(!CollectionUtils.isEmpty(list)){
+            resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);
+        }
+
+        return ResultVO.success(resultList);
+    }
 
     /**
      * 列表查询

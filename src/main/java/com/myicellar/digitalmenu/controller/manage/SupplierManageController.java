@@ -36,9 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -63,6 +61,25 @@ public class SupplierManageController {
 
     @Value("${supplier.indexPageUrl}")
     private String supplierIndexPageUrl;
+
+    /**
+     * 供应商下拉列表
+     *
+     * @return
+     */
+    @PostMapping(value = "/queryList")
+    @AuthIgnore
+    @ApiOperation("供应商下拉列表")
+    public ResultVO<List<SupplierRespVO>> queryListPage() {
+        List<Supplier> list = supplierService.queryListAll();
+
+        List<SupplierRespVO> resultList = new ArrayList<SupplierRespVO>();
+        if(!CollectionUtils.isEmpty(list)){
+            resultList = ConvertUtils.convert(list,SupplierRespVO.class);
+        }
+
+        return ResultVO.success(resultList);
+    }
 
     /**
      * 列表查询

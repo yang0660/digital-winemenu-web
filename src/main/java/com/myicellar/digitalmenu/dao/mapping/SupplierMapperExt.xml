@@ -27,4 +27,11 @@
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
 
+  <select id="selectListAll"  resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List"/>
+    from
+    t_supplier
+  </select>
+
 </mapper>

@@ -1,8 +1,14 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.myicellar.digitalmenu.dao.entity.*;
+import com.myicellar.digitalmenu.dao.entity.Attr;
+import com.myicellar.digitalmenu.dao.entity.Country;
+import com.myicellar.digitalmenu.dao.entity.Origin;
+import com.myicellar.digitalmenu.dao.entity.WineType;
 import com.myicellar.digitalmenu.enums.AttrCatgEnum;
-import com.myicellar.digitalmenu.service.*;
+import com.myicellar.digitalmenu.service.AttrService;
+import com.myicellar.digitalmenu.service.CountryService;
+import com.myicellar.digitalmenu.service.OriginService;
+import com.myicellar.digitalmenu.service.WineTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.AttrListReqVO;
@@ -35,8 +41,6 @@ public class BasicDataController {
     private OriginService originService;
     @Autowired
     private WineTypeService wineTypeService;
-    @Autowired
-    private WineryService wineryService;
 
     /**
      * 风格/口味/葡萄下拉列表
@@ -115,26 +119,6 @@ public class BasicDataController {
         List<WineTypeRespVO> resultList = new ArrayList<WineTypeRespVO>();
         if(!org.springframework.util.CollectionUtils.isEmpty(list)){
             resultList = ConvertUtils.convert(list,WineTypeRespVO.class);
-        }
-
-        return ResultVO.success(resultList);
-    }
-
-
-    /**
-     * 酒庄下拉列表
-     *
-     * @return
-     */
-    @PostMapping(value = "/queryWineryList")
-    @AuthIgnore
-    @ApiOperation("酒庄下拉列表")
-    public ResultVO<List<WineryRespVO>> queryWineryList() {
-        List<Winery> list = wineryService.queryListAll();
-
-        List<WineryRespVO> resultList = new ArrayList<WineryRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,WineryRespVO.class);
         }
 
         return ResultVO.success(resultList);
