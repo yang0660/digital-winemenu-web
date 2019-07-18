@@ -17,9 +17,8 @@ public class OriginService extends BaseService<Long, Origin, OriginMapperExt> {
      * 列表查询
      * @return
      */
-    public List<Origin> queryList(){
-        List<Origin> list=mapper.selectList();
-        return list;
+    public List<Origin> queryListByCountryId(Long countryId){
+        return mapper.selectListByCountryId(countryId);
     }
 
 

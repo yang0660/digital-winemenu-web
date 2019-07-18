@@ -8,14 +8,15 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.AttrMapper.Base_Column_List" />
   </sql>
 
-  <select id="selectList" resultMap="BaseResultMap">
+  <select id="selectListByCatgId" parameterType="long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_attr
+    where attr_catg_id = #{attrCatgId}
     order by mic_rank
   </select>
 
-  <select id="queryListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
     SELECT DISTINCT
     a.attr_id,
     a.attr_catg_id,

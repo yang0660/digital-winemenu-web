@@ -10,7 +10,9 @@ public interface AttrMapperExt extends AttrMapper{
 
     List<Attr> selectList();
 
-    List<Attr> queryListBySupplierId(Long supplierId);
+    List<Attr> selectListBySupplierId(Long supplierId);
+
+    List<Attr> selectListByCatgId(Long attrCatgId);
 
     @MapKey("attrNameEng")
     Map<String,Attr> selectNameMap();

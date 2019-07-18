@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface OriginMapperExt extends OriginMapper{
-    List<Origin> selectList();
+    List<Origin> selectListByCountryId(Long countryId);
 
     List<Origin> selectListBySupplierId(Long supplierId);
 

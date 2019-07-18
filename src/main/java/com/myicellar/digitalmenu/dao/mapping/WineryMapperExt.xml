@@ -8,6 +8,13 @@
         <include refid="com.myicellar.digitalmenu.dao.mapper.WineryMapper.Base_Column_List"/>
     </sql>
 
+    <select id="selectListAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_winery
+        order by mic_rank
+    </select>
+
     <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultType="long">
         select count(0) from t_winery
         <where>

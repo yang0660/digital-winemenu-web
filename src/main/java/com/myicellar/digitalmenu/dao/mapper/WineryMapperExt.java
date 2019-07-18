@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface WineryMapperExt extends WineryMapper {
+    List<Winery> selectListAll();
+
     long selectCount(WineryPageReqVO reqVO);
 
     List<Winery> selectList(WineryPageReqVO reqVO);

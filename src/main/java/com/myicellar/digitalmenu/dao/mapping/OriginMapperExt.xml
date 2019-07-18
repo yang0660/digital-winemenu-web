@@ -9,10 +9,11 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.OriginMapper.Base_Column_List"/>
   </sql>
 
-  <select id="selectList" resultMap="BaseResultMap">
+  <select id="selectListByCountryId" parameterType="long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from t_product
+    from t_origin
+    where country_id = #{countryId}
    order by mic_rank
   </select>
 

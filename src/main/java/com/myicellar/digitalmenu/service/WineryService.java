@@ -24,6 +24,10 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
     @Autowired
     private ImgMapperExt imgMapperExt;
 
+    public List<Winery> queryListAll(){
+        return mapper.selectListAll();
+    }
+
     /**
      * 列表查询-分页
      *

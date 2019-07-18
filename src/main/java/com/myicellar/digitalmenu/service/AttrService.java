@@ -18,8 +18,16 @@ public class AttrService extends BaseService<Long, Attr, AttrMapperExt> {
      * @return
      */
     public List<Attr> queryListBySupplierId(Long supplierId){
-        List<Attr> list=mapper.queryListBySupplierId(supplierId);
-        return list;
+        return mapper.selectListBySupplierId(supplierId);
+    }
+
+
+    /**
+     * 查询属性列表（根据类别ID）
+     * @return
+     */
+    public List<Attr> queryListByCatgId(Long attrCatgId){
+        return mapper.selectListByCatgId(attrCatgId);
     }
 
     public Map<String,Attr> queryNameMap(){

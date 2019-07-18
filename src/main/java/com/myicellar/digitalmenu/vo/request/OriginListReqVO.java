@@ -11,9 +11,6 @@ import lombok.Data;
 @ApiModel(value = "产地筛选参数")
 public class OriginListReqVO {
 
-    @ApiModelProperty(value = "供应商ID")
-    private Long supplierId;
-
     @ApiModelProperty(value = "国家ID")
     private Long countryId;
 
