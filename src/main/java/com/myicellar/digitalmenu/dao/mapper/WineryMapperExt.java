@@ -1,6 +1,7 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Winery;
+import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,8 @@ public interface WineryMapperExt extends WineryMapper {
     List<Winery> selectList(WineryPageReqVO reqVO);
 
     Winery selectByName(@Param("wineryNameEng") String wineryNameEng);
+
+    Winery queryByWineryId(WineryDetailReqVO reqVO);
 
     @MapKey("wineryNameEng")
     Map<String,Winery> selectNameMap();

@@ -39,9 +39,6 @@ public class WineryRespVO {
     @ApiModelProperty(value = "酒庄Logo-原图")
     private String wineryLogoUrl;
 
-    @ApiModelProperty(value = "酒庄Logo-缩略图")
-    private String wineryLogoSmallUrl;
-
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;
 
@@ -66,8 +63,14 @@ public class WineryRespVO {
     @ApiModelProperty(value = "酒庄网页地址")
     private String aboutUrl;
 
+    @ApiModelProperty(value = "酒庄banner图-原图")
+    private String bannerImgUrl;
+
     @ApiModelProperty(value = "酒庄图片")
     private List<Long> wineryImgIds;
+
+    @ApiModelProperty(value = "酒庄图片列表-原图")
+    private List<String> wineryImgUrls;
 
 
 }

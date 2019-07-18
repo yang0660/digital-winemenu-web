@@ -8,6 +8,7 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WineryDeleteReqVO;
+import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
@@ -53,6 +54,21 @@ public class WineryManageController {
         return ResultVO.success(page);
     }
 
+    /**
+     * 详情查询
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryByWineryId")
+    @AuthIgnore
+    @ApiOperation("详情查询")
+    public ResultVO<WineryRespVO> queryByWineryId(@RequestBody WineryDetailReqVO reqVO) {
+
+        WineryRespVO respVO = wineryService.queryByWineryId(reqVO);
+
+        return ResultVO.success(respVO);
+    }
 
     /**
      * 新增
