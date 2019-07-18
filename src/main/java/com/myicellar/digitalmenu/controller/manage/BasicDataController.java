@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/manage/basic")
-@Api(tags = "基础数据", description = "/manage/basic")
+@Api(tags = "基础数据下拉框选项查询", description = "/manage/basic")
 public class BasicDataController {
 
     @Autowired
