@@ -175,10 +175,10 @@
     WHERE
     prd.supplier_id = #{supplierId}
     <if test="priceMin!=null and priceMin!=0">
-      AND pkg.regular_price &gt;#{priceMin}
+      AND pkg.regular_price &gt;=#{priceMin}
     </if>
     <if test="priceMax!=null and priceMax!=0">
-      AND pkg.regular_price &lt;#{priceMax}
+      AND pkg.regular_price &lt;=#{priceMax}
     </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
       AND win.wine_type_id IN
@@ -253,10 +253,10 @@
     WHERE
     prd.supplier_id = #{supplierId}
     <if test="priceMin!=null and priceMin!=0">
-      AND pkg.regular_price &gt;#{priceMin}
+      AND pkg.regular_price &gt;=#{priceMin}
     </if>
     <if test="priceMax!=null and priceMax!=0">
-      AND pkg.regular_price &lt;#{priceMax}
+      AND pkg.regular_price &lt;=#{priceMax}
     </if>
     <if test="wineTypeIds!=null and wineTypeIds.size()>0">
       AND win.wine_type_id IN

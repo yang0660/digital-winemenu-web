@@ -10,4 +10,6 @@ public interface SupplierMapperExt extends SupplierMapper {
     long selectCount(SupplierPageReqVO reqVO);
 
     List<Supplier> selectList(SupplierPageReqVO reqVO);
+
+    List<Supplier> selectListAll();
 }

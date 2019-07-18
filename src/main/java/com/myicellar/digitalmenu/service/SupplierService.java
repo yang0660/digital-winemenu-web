@@ -7,6 +7,8 @@ import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class SupplierService extends BaseService<Long, Supplier, SupplierMapperExt> {
@@ -20,5 +22,9 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         PageResponseVO<Supplier> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         return page;
+    }
+
+    public List<Supplier> queryListAll(){
+        return mapper.selectListAll();
     }
 }
