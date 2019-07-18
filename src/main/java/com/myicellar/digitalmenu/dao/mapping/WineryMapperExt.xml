@@ -12,7 +12,6 @@
         select
         <include refid="Base_Column_List"/>
         from t_winery
-        order by mic_rank
     </select>
 
     <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineryPageReqVO" resultType="long">
@@ -34,6 +33,7 @@
                 concat('%',#{wineryNameEng},'%')
             </if>
         </where>
+        order by
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 

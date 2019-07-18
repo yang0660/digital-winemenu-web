@@ -38,23 +38,17 @@ public class FoodManageController {
     private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
-     * 列表查询-分页
+     * 列表查询
      *
      * @param reqVO
      * @return
      */
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
-    @ApiOperation("列表查询-分页")
+    @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<FoodRespVO>> queryListPage(@RequestBody FoodPageReqVO reqVO) {
-        PageResponseVO<Food> page = foodService.queryPageList(reqVO);
-
-        PageResponseVO<FoodRespVO> resultPage = new PageResponseVO<FoodRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,FoodRespVO.class);
-        }
-
-        return ResultVO.success(resultPage);
+        PageResponseVO<FoodRespVO> page = foodService.queryPageList(reqVO);
+        return ResultVO.success(page);
     }
 
 

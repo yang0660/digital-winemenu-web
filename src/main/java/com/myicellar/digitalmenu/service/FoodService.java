@@ -1,29 +1,59 @@
 package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.Food;
+import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.mapper.FoodMapperExt;
+import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
+import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
-import com.myicellar.digitalmenu.vo.response.FoodDetailRespVO;
-import com.myicellar.digitalmenu.vo.response.FoodDisplayRespVO;
-import com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO;
-import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
 public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
 
+    @Autowired
+    private ImgMapperExt imgMapperExt;
+
     /**
      * 列表查询-分页
+     *
      * @return
      */
-    public PageResponseVO<Food> queryPageList(FoodPageReqVO reqVO){
+    public PageResponseVO<FoodRespVO> queryPageList(FoodPageReqVO reqVO) {
         PageResponseVO<Food> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
-        return page;
+        PageResponseVO<FoodRespVO> resultPage = new PageResponseVO<FoodRespVO>();
+        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
+            resultPage = ConvertUtils.convertPage(page,FoodRespVO.class);
+            List<FoodRespVO> list = resultPage.getItems();
+            List<Long> imgIds = new ArrayList<Long>();
+            for(FoodRespVO respVO : list){
+                if(respVO.getFoodImgId()!=null && respVO.getFoodImgId()!=0L) {
+                    imgIds.add(respVO.getFoodImgId());
+                }
+            }
+            Map<Long, Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            list.forEach(info -> {
+                if(info.getFoodImgId()!=null && info.getFoodImgId()!=0L){
+                    Img img = imgMap.get(info.getFoodImgId());
+                    if(img!=null) {
+                        info.setFoodImg(img.getImgUrl());
+                    }
+                }
+            });
+
+            resultPage.setItems(list);
+        }
+        return resultPage;
     }
 
     /**

@@ -16,8 +16,11 @@ public class FoodRespVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
-    @ApiModelProperty(value = "美食分类ID")
-    private Long foodTypeId;
+    @ApiModelProperty(value = "供应商名称-英")
+    private String supplierNameEng;
+
+    @ApiModelProperty(value = "美食分类名称-英")
+    private String foodTypeNameEng;
 
     @ApiModelProperty(value = "美食名称-英")
     private String foodNameEng;
@@ -31,35 +34,14 @@ public class FoodRespVO {
     @ApiModelProperty(value = "美食图片ID")
     private Long foodImgId;
 
-    @ApiModelProperty(value = "美食价格")
-    private BigDecimal price;
+    @ApiModelProperty(value = "美食图片")
+    private String foodImg;
 
     @ApiModelProperty(value = "美食推荐")
     private Byte isRecommend;
 
-    @ApiModelProperty(value = "美食启用")
-    private Byte isEnabled;
-
-    @ApiModelProperty(value = "创建者")
-    private Long createdBy;
-
     @ApiModelProperty(value = "创建时间")
     private Date createdAt;
-
-    @ApiModelProperty(value = "更新者")
-    private Long updatedBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
-
-    @ApiModelProperty(value = "美食描述-英")
-    private String notePlainEng;
-
-    @ApiModelProperty(value = "美食描述-简")
-    private String notePlainChs;
-
-    @ApiModelProperty(value = "美食描述-繁")
-    private String notePlainCht;
 
 
 }

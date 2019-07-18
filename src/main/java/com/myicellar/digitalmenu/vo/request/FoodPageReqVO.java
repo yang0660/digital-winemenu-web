@@ -11,10 +11,10 @@ import lombok.Data;
 @ApiModel(value = "美食列表参数-分页")
 public class FoodPageReqVO extends PageRequestVO{
 
-    @ApiModelProperty(value = "美食ID")
-    private Long foodId;
+    @ApiModelProperty(value = "美食名称")
+    private String foodName;
 
-    @ApiModelProperty(value = "美食列表ID")
+    @ApiModelProperty(value = "美食分类ID")
     private Long foodTypeId;
 
     @ApiModelProperty(value = "供应商ID")
