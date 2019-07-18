@@ -15,4 +15,6 @@ public interface ImgMapperExt extends ImgMapper{
 
     @MapKey("imgId")
     Map<Long,Img> selectImgMapByIds(@Param("imgIds") List<Long> imgIds);
+
+    Img selectByTypeIdAndImgName(@Param("imgTypeId") Long imgTypeId, @Param("imgNameEng") String imgNameEng);
 }

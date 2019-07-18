@@ -8,6 +8,12 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.ImgTypeMapper.Base_Column_List" />
   </sql>
 
+  <select id="selectListAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_img_type
+  </select>
+
   <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO" resultType="long">
     select count(0)
     from t_img_type
@@ -32,5 +38,13 @@
       img_type_name_eng = #{imgTypeNameEng}
     </if>
   </sql>
+
+  <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_img_type
+    where img_type_name_eng = #{imgTypeNameEng}
+    limit 1
+  </select>
 
 </mapper>

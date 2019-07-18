@@ -20,4 +20,16 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
 
         return page;
     }
+
+    /**
+     * 图片数量查询
+     * @return
+     */
+    public Long queryCount(ImgPageReqVO reqVO){
+        return mapper.selectCount(reqVO);
+    }
+
+    public Img queryByTypeIdAndImgName(Long imgTypeId, String imgNameEng){
+        return mapper.selectByTypeIdAndImgName(imgTypeId,imgNameEng);
+    }
 }

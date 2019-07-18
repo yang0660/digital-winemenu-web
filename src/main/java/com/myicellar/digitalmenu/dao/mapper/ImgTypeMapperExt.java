@@ -9,4 +9,8 @@ public interface ImgTypeMapperExt extends ImgTypeMapper{
     long selectCount(ImgTypePageReqVO reqVO);
 
     List<ImgType> selectList(ImgTypePageReqVO reqVO);
+
+    ImgType selectByName(String imgTypeNameEng);
+
+    List<ImgType> selectListAll();
 }

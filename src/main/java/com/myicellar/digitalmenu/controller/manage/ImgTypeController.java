@@ -2,11 +2,13 @@ package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.ImgType;
+import com.myicellar.digitalmenu.service.ImgService;
 import com.myicellar.digitalmenu.service.ImgTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
+import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeReqVO;
@@ -33,6 +35,8 @@ public class ImgTypeController {
 
     @Autowired
     private ImgTypeService imgTypeService;
+    @Autowired
+    private ImgService imgService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
 
@@ -125,6 +129,13 @@ public class ImgTypeController {
         if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
             return ResultVO.validError("parameter is invalid！");
         }
+        ImgPageReqVO imgPageReqVO = new ImgPageReqVO();
+        imgPageReqVO.setImgTypeId(reqVO.getImgTypeId());
+        Long imgCount = imgService.queryCount(imgPageReqVO);
+        if(imgCount>0){
+            return ResultVO.validError("It already contains images,Can not be deleted！");
+        }
+
         int i = imgTypeService.deleteByPrimaryKey(reqVO.getImgTypeId());
         if(i==0){
             return ResultVO.validError("delete is failed!");
@@ -141,6 +152,10 @@ public class ImgTypeController {
         if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
             throw new BizException("imgTypeNameEng cannot be empty!");
         }
+        ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
+        if(imgType!=null){
+            throw new BizException("imgTypeNameEng is already exists!");
+        }
     }
 
     /**
@@ -153,6 +168,10 @@ public class ImgTypeController {
         }
         if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
             throw new BizException("imgTypeNameEng cannot be empty!");
+        }
+        ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
+        if(imgType!=null && !imgType.getImgTypeId().equals(reqVO.getImgTypeId())){
+            throw new BizException("imgTypeNameEng is already exists!");
         }
     }
 

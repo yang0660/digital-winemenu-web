@@ -45,4 +45,13 @@
       #{imgId,jdbcType=BIGINT}
     </foreach>
   </select>
+
+  <select id="selectByTypeIdAndImgName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_img
+    where img_type_id = #{imgTypeId}
+    and img_name_eng = #{imgNameEng}
+    limit 1
+  </select>
 </mapper>

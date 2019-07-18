@@ -3,7 +3,9 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.Img;
+import com.myicellar.digitalmenu.dao.entity.ImgType;
 import com.myicellar.digitalmenu.service.ImgService;
+import com.myicellar.digitalmenu.service.ImgTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
@@ -13,6 +15,7 @@ import com.myicellar.digitalmenu.vo.request.ImgDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgReqVO;
 import com.myicellar.digitalmenu.vo.response.ImgRespVO;
+import com.myicellar.digitalmenu.vo.response.ImgTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
@@ -25,7 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -34,11 +39,32 @@ import java.util.Date;
 public class ImgController {
 
     @Autowired
+    private ImgTypeService imgTypeService;
+    @Autowired
     private ImgService imgService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
     @Autowired
     private FileUploadHandler fileUploadHandler;
+
+    /**
+     * 图库分类下拉列表
+     *
+     * @return
+     */
+    @PostMapping(value = "/queryTypeList")
+    @AuthIgnore
+    @ApiOperation("图库分类下拉列表")
+    public ResultVO<List<ImgTypeRespVO>> queryTypeList() {
+        List<ImgType> list = imgTypeService.queryListAll();
+
+        List<ImgTypeRespVO> resultList = new ArrayList<ImgTypeRespVO>();
+        if(!CollectionUtils.isEmpty(list)){
+            resultList = ConvertUtils.convert(list, ImgTypeRespVO.class);
+        }
+
+        return ResultVO.success(resultList);
+    }
 
     /**
      * 列表查询
@@ -163,6 +189,10 @@ public class ImgController {
         if(StringUtils.isEmpty(reqVO.getImgNameEng())){
             throw new BizException("imgNameEng cannot be empty!");
         }
+        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(),reqVO.getImgNameEng());
+        if(img!=null){
+            throw new BizException("imgNameEng is already exists!");
+        }
     }
 
     /**
@@ -175,6 +205,10 @@ public class ImgController {
         }
         if(StringUtils.isEmpty(reqVO.getImgNameEng())){
             throw new BizException("imgNameEng cannot be empty!");
+        }
+        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(),reqVO.getImgNameEng());
+        if(img!=null && !img.getImgId().equals(reqVO.getImgId())){
+            throw new BizException("imgNameEng is already exists!");
         }
     }
 
