@@ -18,7 +18,7 @@ public class UserBehaviorReqVO {
     @ApiModelProperty(value = "商品ID(扫码行为上传不需要携带此参数)")
     private Long packageId;
 
-    @ApiModelProperty(value = "用户行为类型(1 - 扫描主页二维码; 2 - 添加酒品到wishlist)")
+    @ApiModelProperty(value = "用户行为类型(1 扫描主页二维码，2 查看酒品详情，3 添加酒品到wishlist)")
     private Byte type;
 
 }
