@@ -2,7 +2,6 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Wine;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.request.WineTypeReqVO;
 import com.myicellar.digitalmenu.vo.response.WineRespVO;
 
 import java.util.List;
