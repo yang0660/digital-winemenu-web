@@ -2,6 +2,7 @@ package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.FoodType;
+import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -37,6 +38,8 @@ public class FoodTypeManageController {
     @Autowired
     private FoodTypeService foodTypeService;
     @Autowired
+    private FoodService foodService;
+    @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
@@ -49,9 +52,6 @@ public class FoodTypeManageController {
     @AuthIgnore
     @ApiOperation("美食分类下拉列表")
     public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            return ResultVO.validError("supplierId cannot be empty！");
-        }
 
         List<FoodType> list = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
@@ -63,14 +63,14 @@ public class FoodTypeManageController {
     }
 
     /**
-     * 列表查询
+     * 列表查询-分页
      *
      * @param reqVO
      * @return
      */
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("列表查询-分页")
     public ResultVO<PageResponseVO<FoodTypeRespVO>> queryListPage(@RequestBody FoodTypePageReqVO reqVO) {
         PageResponseVO<FoodType> page = foodTypeService.queryPageList(reqVO);
 
@@ -147,9 +147,8 @@ public class FoodTypeManageController {
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody FoodTypeDeleteReqVO reqVO) {
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
-            return ResultVO.validError("parameter is invalid！");
-        }
+        //参数校验
+        checkDeleteParam(reqVO);
         int i = foodTypeService.deleteByPrimaryKey(reqVO.getFoodTypeId());
         if(i==0){
             return ResultVO.validError("delete is failed!");
@@ -169,6 +168,7 @@ public class FoodTypeManageController {
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
+        checkFoodTypeName(reqVO);
     }
 
     /**
@@ -185,6 +185,32 @@ public class FoodTypeManageController {
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
+        checkFoodTypeName(reqVO);
+    }
+
+    /**
+     * 校验删除参数
+     * @param reqVO
+     */
+    public void checkDeleteParam(FoodTypeDeleteReqVO reqVO){
+        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+            throw new BizException("foodTypeId cannot be empty!");
+        }
+        if (foodService.queryListByFoodTypeId(reqVO.getFoodTypeId())!=null && !foodService.queryListByFoodTypeId(reqVO.getFoodTypeId()).isEmpty()) {
+            throw new BizException("foodType is in use, can not be deleted!");
+        }
+    }
+
+    /**
+     * 校验美食分类名称是否已存在
+     * @param reqVO
+     */
+    public void checkFoodTypeName(FoodTypeReqVO reqVO){
+        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
+        foodTypes.forEach(foodType -> {if (foodType.getFoodTypeNameEng().equals(reqVO.getFoodTypeNameEng())){
+            throw new BizException("foodTypeNameEng already exists!");
+        }
+        });
     }
 
 }

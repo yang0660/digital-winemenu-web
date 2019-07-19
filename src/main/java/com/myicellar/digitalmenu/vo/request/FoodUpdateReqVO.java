@@ -13,6 +13,10 @@ import java.util.Date;
 @Data
 @ApiModel(value = "美食更新参数")
 public class FoodUpdateReqVO {
+
+    @ApiModelProperty(value = "供应商ID")
+    private Long supplierId;
+
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 

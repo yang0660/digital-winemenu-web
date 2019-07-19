@@ -8,18 +8,36 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.FoodTypeMapper.Base_Column_List" />
   </sql>
 
+  <resultMap id="FoodTypePageResultMap" type="com.myicellar.digitalmenu.vo.response.FoodTypeRespVO">
+    <id column="food_type_id" jdbcType="BIGINT" property="foodTypeId" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="supplier_name_eng" jdbcType="VARCHAR" property="supplierNameEng" />
+    <result column="food_type_name_chs" jdbcType="VARCHAR" property="foodTypeNameChs" />
+    <result column="food_type_name_cht" jdbcType="VARCHAR" property="foodTypeNameCht" />
+    <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+
+  </resultMap>
+
   <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO" resultType="long">
     select count(0)
-    from t_food_type
-    where supplier_id = #{supplierId}
+    from t_food_type fty left join t_supplier sup on fty.supplier_id = sup.supplier_id
+    where fty.supplier_id = #{supplierId}
   </select>
 
   <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_food_type
-    where supplier_id = #{supplierId}
+          resultMap="FoodTypePageResultMap">
+        select
+    sup.supplier_id,
+    sup.supplier_name_eng,
+    fty.food_type_id,
+    fty.food_type_name_eng,
+    fty.food_type_name_chs,
+    fty.food_type_name_cht,
+    fty.created_at
+
+    from t_food_type fty left join t_supplier sup on fty.supplier_id = sup.supplier_id
+    where fty.supplier_id = #{supplierId}
     limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
 

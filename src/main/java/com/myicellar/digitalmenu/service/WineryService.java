@@ -47,15 +47,18 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
                     imgIds.add(respVO.getLogoImgId());
                 }
             }
-            Map<Long, Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
-            list.forEach(info -> {
-                if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
-                    Img logoImg = imgMap.get(info.getLogoImgId());
-                    if(logoImg!=null) {
-                        info.setWineryLogoUrl(logoImg.getImgUrl());
+            if (imgIds.size() > 0) {
+                Map<Long, Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+                list.forEach(info -> {
+                    if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
+                        Img logoImg = imgMap.get(info.getLogoImgId());
+                        if(logoImg!=null) {
+                            info.setWineryLogoUrl(logoImg.getImgUrl());
+                        }
                     }
-                }
-            });
+                });
+            }
+
 
             resultPage.setItems(list);
         }
@@ -64,7 +67,7 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
     }
 
     /**
-     * 酒庄查询-按供应商ID
+     * 酒庄查询-按酒庄ID
      *
      * @return
      */

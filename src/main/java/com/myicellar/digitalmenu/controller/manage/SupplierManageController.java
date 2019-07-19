@@ -82,23 +82,21 @@ public class SupplierManageController {
     }
 
     /**
-     * 列表查询
+     * 列表查询-分页
      *
      * @param reqVO
      * @return
      */
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("列表查询-分页")
     public ResultVO<PageResponseVO<SupplierRespVO>> queryListPage(@RequestBody SupplierPageReqVO reqVO) {
-        PageResponseVO<Supplier> page = supplierService.queryPageList(reqVO);
+        PageResponseVO<SupplierRespVO> page = supplierService.queryPageList(reqVO);
 
-        PageResponseVO<SupplierRespVO> resultPage = new PageResponseVO<SupplierRespVO>();
         if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,SupplierRespVO.class);
+            return ResultVO.success(page);
         }
-
-        return ResultVO.success(resultPage);
+        return ResultVO.success(new PageResponseVO<SupplierRespVO>());
     }
 
     /**

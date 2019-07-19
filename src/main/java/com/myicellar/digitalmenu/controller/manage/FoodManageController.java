@@ -133,12 +133,28 @@ public class FoodManageController {
      * @param reqVO
      */
     private void checkNewParam(FoodReqVO reqVO){
+        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+            throw new BizException("supplierId cannot be empty!");
+        }
         if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
-            throw new BizException("supplier cannot be empty!");
+            throw new BizException("foodTypeId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getFoodNameEng())){
             throw new BizException("foodNameEng cannot be empty!");
         }
+        if(reqVO.getFoodImgId()==null || reqVO.getFoodImgId()==0L){
+            throw new BizException("foodImgId cannot be empty!");
+        }
+        if(StringUtils.isEmpty(reqVO.getNotePlainEng())){
+            throw new BizException("foodNameEng cannot be empty!");
+        }
+        if(reqVO.getPrice()==null){
+            throw new BizException("price cannot be empty!");
+        }
+        if(reqVO.getIsRecommend()==null){
+            throw new BizException("isRecommend cannot be empty!");
+        }
+
     }
 
     /**
@@ -146,11 +162,26 @@ public class FoodManageController {
      * @param reqVO
      */
     private void checkUpdateParam(FoodUpdateReqVO reqVO){
-        if(reqVO.getFoodId()==null || reqVO.getFoodId()==0L){
-            throw new BizException("foodId cannot be empty!");
+        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+            throw new BizException("supplierId cannot be empty!");
+        }
+        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+            throw new BizException("foodTypeId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getFoodNameEng())){
             throw new BizException("foodNameEng cannot be empty!");
+        }
+        if(reqVO.getFoodImgId()==null || reqVO.getFoodImgId()==0L){
+            throw new BizException("foodImgId cannot be empty!");
+        }
+        if(StringUtils.isEmpty(reqVO.getNotePlainEng())){
+            throw new BizException("foodNameEng cannot be empty!");
+        }
+        if(reqVO.getPrice()==null){
+            throw new BizException("price cannot be empty!");
+        }
+        if(reqVO.getIsRecommend()==null){
+            throw new BizException("isRecommend cannot be empty!");
         }
     }
 

@@ -33,7 +33,6 @@
                 concat('%',#{wineryNameEng},'%')
             </if>
         </where>
-        order by
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
