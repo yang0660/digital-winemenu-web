@@ -359,4 +359,12 @@
       WHERE
       pkg.package_id = #{packageId}
   </select>
+
+  <select id="selectByWineId" parameterType="long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+     from t_package
+     where product_id in (select product_id from t_product where wine_id = #{wineId})
+    limit 1
+  </select>
 </mapper>

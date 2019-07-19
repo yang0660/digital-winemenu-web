@@ -1,5 +1,6 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
+import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.PackageDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.PackageInfoRespVO;
@@ -23,4 +24,6 @@ public interface IPackageMapperExt extends IPackageMapper{
     List<PackageInfoRespVO> selectResult(PackageFilterReqVO reqVO);
 
     PackageDetailRespVO selectDetailById(Long packageId);
+
+    IPackage selectByWineId(Long wineId);
 }

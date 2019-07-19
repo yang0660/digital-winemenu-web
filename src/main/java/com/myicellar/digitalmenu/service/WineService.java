@@ -1,15 +1,19 @@
 package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.*;
+import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineMapperExt;
+import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.request.WineTypeReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.WineRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     private WineryService wineryService;
     @Autowired
     private WineService wineService;
+    @Autowired
+    private ImgMapperExt imgMapperExt;
     @Autowired
     private OriginService originService;
     @Autowired
@@ -49,19 +55,40 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
      * 列表查询-分页
      * @return
      */
-    public PageResponseVO<Wine> queryPageList(WinePageReqVO reqVO){
-        PageResponseVO<Wine> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
+    public PageResponseVO<WineRespVO> queryPageList(WinePageReqVO reqVO){
+        PageResponseVO<WineRespVO> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
+
+        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
+            List<WineRespVO> list = page.getItems();
+            List<Long> imgIds = new ArrayList<Long>();
+            for(WineRespVO respVO : list){
+                imgIds.add(respVO.getWineImgId());
+            }
+
+            Map<Long,Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            page.getItems().forEach(respVO ->{
+                Img img = imgMap.get(respVO.getWineImgId());
+                if(img!=null){
+                    respVO.setWineImgUrl(img.getImgUrl());
+                }
+            });
+        }
+
         return page;
     }
 
-    /**
-     * 下拉框查询
-     * @return
-     */
-    public List<Wine> queryDropList(WineTypeReqVO reqVO){
-        List<Wine> list = mapper.selectDropList(reqVO);
+    public WineRespVO queryByWineId(Long wineId){
+        WineRespVO respVO = mapper.selectByWineId(wineId);
+        if(respVO!=null){
+            if(respVO.getWineImgId()!=null) {
+                Img img = imgMapperExt.selectByPrimaryKey(respVO.getWineImgId());
+                if (img != null) {
+                    respVO.setWineImgUrl(img.getImgUrl());
+                }
+            }
+        }
 
-        return list;
+        return respVO;
     }
 
     /**
@@ -70,8 +97,10 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
      */
     public Wine queryByWineryId(Long wineryId){
         return mapper.selectByWineryId(wineryId);
+    }
 
-
+    public Wine queryByName(String wineNameEng){
+        return mapper.selectByName(wineNameEng);
     }
 
 

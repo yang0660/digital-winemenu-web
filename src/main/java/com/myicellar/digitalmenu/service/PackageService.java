@@ -301,4 +301,8 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
         }
     }
 
+    public IPackage queryByWineId(Long wineId){
+        return mapper.selectByWineId(wineId);
+    }
+
 }

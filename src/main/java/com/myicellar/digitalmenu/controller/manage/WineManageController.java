@@ -1,7 +1,9 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
+import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Wine;
+import com.myicellar.digitalmenu.service.PackageService;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -33,6 +35,8 @@ public class WineManageController {
     @Autowired
     private WineService wineService;
     @Autowired
+    private PackageService packageService;
+    @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
@@ -45,14 +49,9 @@ public class WineManageController {
     @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<WineRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
-        PageResponseVO<Wine> page = wineService.queryPageList(reqVO);
+        PageResponseVO<WineRespVO> page = wineService.queryPageList(reqVO);
 
-        PageResponseVO<WineRespVO> resultPage = new PageResponseVO<WineRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,WineRespVO.class);
-        }
-
-        return ResultVO.success(resultPage);
+        return ResultVO.success(page);
     }
 
     /**
@@ -61,36 +60,17 @@ public class WineManageController {
      * @param reqVO
      * @return
      */
-    @PostMapping(value = "/queryByPrimaryKey")
+    @PostMapping(value = "/queryByWineId")
     @AuthIgnore
     @ApiOperation("详情查询")
-    public ResultVO<Wine> queryByPrimaryKey(@RequestBody WineDetailReqVO reqVO) {
+    public ResultVO<WineRespVO> queryByWineId(@RequestBody WineDetailReqVO reqVO) {
         //通过传入wineId查询wine详情
-        Wine wine = wineService.selectByPrimaryKey(reqVO.getWineId());
-        if (wine!=null){
-            return ResultVO.success(wine);
+        WineRespVO respVO = wineService.queryByWineId(reqVO.getWineId());
+        if(reqVO==null){
+            respVO = new WineRespVO();
         }
 
-        return ResultVO.validError("查询失败!");
-    }
-
-    /**
-     * 下拉框查询
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/queryDropList")
-    @AuthIgnore
-    @ApiOperation("下拉框查询")
-    public ResultVO<List<Wine>> queryDropList(@RequestBody WineTypeReqVO reqVO) {
-        //通过传入wineId查询wine详情
-        List<Wine> list = wineService.queryDropList(reqVO);
-        if (list!=null){
-            return ResultVO.success(list);
-        }
-
-        return ResultVO.validError("查询失败!");
+        return ResultVO.success(respVO);
     }
 
     /**
@@ -106,6 +86,8 @@ public class WineManageController {
         //参数校验
         checkNewParam(reqVO);
         Wine wine = ConvertUtils.convert(reqVO,Wine.class);
+        String wineSeoName = wine.getWineNameEng().replaceAll(" ","-").toLowerCase();
+        wine.setWineSeoName(wineSeoName);
         wine.setWineId(snowflakeIdWorker.nextId());
         wine.setUpdatedAt(new Date());
         int i = wineService.insertSelective(wine);
@@ -131,6 +113,8 @@ public class WineManageController {
         //参数校验
         checkUpdateParam(reqVO);
         Wine wine = ConvertUtils.convert(reqVO,Wine.class);
+        String wineSeoName = wine.getWineNameEng().replaceAll(" ","-").toLowerCase();
+        wine.setWineSeoName(wineSeoName);
         wine.setUpdatedAt(new Date());
         int i = wineService.updateByPrimaryKeySelective(wine);
         if(i==0){
@@ -155,6 +139,11 @@ public class WineManageController {
         if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
             return ResultVO.validError("parameter is invalid！");
         }
+        IPackage iPackage = packageService.queryByWineId(reqVO.getWineId());
+        if(iPackage!=null){
+            return ResultVO.validError("Wine is in use, can not be deleted");
+        }
+
         int i = wineService.deleteByPrimaryKey(reqVO.getWineId());
         if(i==0){
             return ResultVO.validError("delete is failed!");
@@ -168,11 +157,17 @@ public class WineManageController {
      * @param reqVO
      */
     private void checkNewParam(WineReqVO reqVO){
-        if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
-            throw new BizException("wine cannot be empty!");
-        }
         if(StringUtils.isEmpty(reqVO.getWineNameEng())){
-            throw new BizException("wineNameEng cannot be empty!");
+            throw new BizException("wineNameEng can not be empty!");
+        }
+        if(reqVO.getWineTypeId()==null || reqVO.getWineTypeId()==0L){
+            throw new BizException("wineTypeId can not be empty!");
+        }
+        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+            throw new BizException("wineryId can not be empty!");
+        }
+        if(reqVO.getWineOriginId()==null || reqVO.getWineOriginId()==0L){
+            throw new BizException("originId can not be empty!");
         }
     }
 
@@ -185,7 +180,20 @@ public class WineManageController {
             throw new BizException("wineId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getWineNameEng())){
-            throw new BizException("wineNameEng cannot be empty!");
+            throw new BizException("wineNameEng can not be empty!");
+        }
+        if(reqVO.getWineTypeId()==null || reqVO.getWineTypeId()==0L){
+            throw new BizException("wineTypeId can not be empty!");
+        }
+        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+            throw new BizException("wineryId can not be empty!");
+        }
+        if(reqVO.getWineOriginId()==null || reqVO.getWineOriginId()==0L){
+            throw new BizException("originId can not be empty!");
+        }
+        Wine wine = wineService.queryByName(reqVO.getWineNameEng());
+        if(wine!=null && !wine.getWineId().equals(reqVO.getWineId())){
+            throw new BizException("wineNameEng is already exists!");
         }
     }
 

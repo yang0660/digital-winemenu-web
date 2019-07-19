@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @ApiModel(value = "酒品相关信息查询参数")
 public class WineReqVO {
-    @ApiModelProperty(value = "酒品ID")
+    @ApiModelProperty(value = "酒品ID（新增不传）")
     private Long wineId;
 
     @ApiModelProperty(value = "酒品类型ID")
@@ -23,9 +23,6 @@ public class WineReqVO {
 
     @ApiModelProperty(value = "酒庄ID")
     private Long wineryId;
-
-    @ApiModelProperty(value = "酒品名称缩写")
-    private String wineSeoName;
 
     @ApiModelProperty(value = "酒品名称-英")
     private String wineNameEng;

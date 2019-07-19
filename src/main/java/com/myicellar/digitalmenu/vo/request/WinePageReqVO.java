@@ -24,24 +24,6 @@ public class WinePageReqVO extends PageRequestVO{
     @ApiModelProperty(value = "酒庄ID")
     private Long wineryId;
 
-    @ApiModelProperty(value = "酒品名称缩写")
-    private String wineSeoName;
-
     @ApiModelProperty(value = "酒品名称-英")
     private String wineNameEng;
-
-    @ApiModelProperty(value = "酒品名称-简")
-    private String wineNameChs;
-
-    @ApiModelProperty(value = "酒品名称-繁")
-    private String wineNameCht;
-
-    @ApiModelProperty(value = "酒品图片")
-    private Long wineImgId;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
-
-
-
 }
