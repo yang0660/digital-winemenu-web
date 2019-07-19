@@ -32,7 +32,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/manage/winery")
-@Api(tags = "酒庄", description = "/manage/winery")
+@Api(tags = "酒庄管理", description = "/manage/winery")
 public class WineryManageController {
 
     @Autowired

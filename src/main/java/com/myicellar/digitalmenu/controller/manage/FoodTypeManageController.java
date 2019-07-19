@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/manage/foodtype")
-@Api(tags = "美食分类", description = "/manage/foodtype")
+@Api(tags = "美食管理-美食分类", description = "/manage/foodtype")
 public class FoodTypeManageController {
 
     @Autowired

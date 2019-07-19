@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/manage/wine")
-@Api(tags = "酒品", description = "/manage/wine")
+@Api(tags = "酒品管理", description = "/manage/wine")
 public class WineManageController {
 
     @Autowired

@@ -28,8 +28,8 @@ public class SupplierReqVO {
     @ApiModelProperty(value = "供应商名称-简")
     private String supplierNameChs;
 
-    @ApiModelProperty(value = "供应商类型")
-    private Byte suppilerType;
+    @ApiModelProperty(value = "供应商类型 0 online, 1 offline")
+    private Byte type;
 
     @ApiModelProperty(value = "供应商LogoID")
     private Long logoImgId;

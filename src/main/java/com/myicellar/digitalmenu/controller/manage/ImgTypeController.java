@@ -32,7 +32,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/manage/imgype")
-@Api(tags = "图库分类", description = "/manage/imgype")
+@Api(tags = "图库管理-图库分类", description = "/manage/imgype")
 public class ImgTypeController {
 
     @Autowired

@@ -30,7 +30,7 @@ import java.util.Date;
 @RestController
 @Slf4j
 @RequestMapping("/manage/img")
-@Api(tags = "图片管理", description = "/manage/img")
+@Api(tags = "图库管理-图片管理", description = "/manage/img")
 public class ImgController {
 
     @Autowired

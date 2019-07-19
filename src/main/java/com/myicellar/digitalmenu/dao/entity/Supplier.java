@@ -13,7 +13,7 @@ public class Supplier {
 
     private String supplierNameChs;
 
-    private Byte suppilerType;
+    private Byte type;
 
     private Long logoImgId;
 
@@ -67,12 +67,12 @@ public class Supplier {
         this.supplierNameChs = supplierNameChs;
     }
 
-    public Byte getSuppilerType() {
-        return suppilerType;
+    public Byte getType() {
+        return type;
     }
 
-    public void setSuppilerType(Byte suppilerType) {
-        this.suppilerType = suppilerType;
+    public void setType(Byte type) {
+        this.type = type;
     }
 
     public Long getLogoImgId() {

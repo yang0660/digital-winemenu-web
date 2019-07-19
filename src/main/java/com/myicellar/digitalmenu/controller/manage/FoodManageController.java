@@ -28,7 +28,7 @@ import java.util.Date;
 @RestController
 @Slf4j
 @RequestMapping("/manage/food")
-@Api(tags = "美食", description = "/manage/food")
+@Api(tags = "美食管理-美食", description = "/manage/food")
 public class FoodManageController {
 
     @Autowired

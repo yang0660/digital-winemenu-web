@@ -7,7 +7,7 @@
     <result column="supplier_name_eng" jdbcType="VARCHAR" property="supplierNameEng" />
     <result column="supplier_name_cht" jdbcType="VARCHAR" property="supplierNameCht" />
     <result column="supplier_name_chs" jdbcType="VARCHAR" property="supplierNameChs" />
-    <result column="suppiler_type" jdbcType="TINYINT" property="suppilerType" />
+    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="logo_img_id" jdbcType="BIGINT" property="logoImgId" />
     <result column="qrcode_img_url" jdbcType="VARCHAR" property="qrcodeImgUrl" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
@@ -17,7 +17,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     supplier_id, supplier_seo_name, supplier_name_eng, supplier_name_cht, supplier_name_chs, 
-    suppiler_type, logo_img_id, qrcode_img_url, updated_at, updated_by, created_at, created_by
+    `type`, logo_img_id, qrcode_img_url, updated_at, updated_by, created_at, created_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -31,12 +31,12 @@
   </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Supplier">
     insert into t_supplier (supplier_id, supplier_seo_name, supplier_name_eng, 
-      supplier_name_cht, supplier_name_chs, suppiler_type, 
+      supplier_name_cht, supplier_name_chs, `type`, 
       logo_img_id, qrcode_img_url, updated_at, 
       updated_by, created_at, created_by
       )
     values (#{supplierId,jdbcType=BIGINT}, #{supplierSeoName,jdbcType=VARCHAR}, #{supplierNameEng,jdbcType=VARCHAR}, 
-      #{supplierNameCht,jdbcType=VARCHAR}, #{supplierNameChs,jdbcType=VARCHAR}, #{suppilerType,jdbcType=TINYINT}, 
+      #{supplierNameCht,jdbcType=VARCHAR}, #{supplierNameChs,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
       #{logoImgId,jdbcType=BIGINT}, #{qrcodeImgUrl,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
       #{updatedBy,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}
       )
@@ -59,8 +59,8 @@
       <if test="supplierNameChs != null">
         supplier_name_chs,
       </if>
-      <if test="suppilerType != null">
-        suppiler_type,
+      <if test="type != null">
+        `type`,
       </if>
       <if test="logoImgId != null">
         logo_img_id,
@@ -97,8 +97,8 @@
       <if test="supplierNameChs != null">
         #{supplierNameChs,jdbcType=VARCHAR},
       </if>
-      <if test="suppilerType != null">
-        #{suppilerType,jdbcType=TINYINT},
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
       <if test="logoImgId != null">
         #{logoImgId,jdbcType=BIGINT},
@@ -135,8 +135,8 @@
       <if test="supplierNameChs != null">
         supplier_name_chs = #{supplierNameChs,jdbcType=VARCHAR},
       </if>
-      <if test="suppilerType != null">
-        suppiler_type = #{suppilerType,jdbcType=TINYINT},
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
       </if>
       <if test="logoImgId != null">
         logo_img_id = #{logoImgId,jdbcType=BIGINT},
@@ -165,7 +165,7 @@
       supplier_name_eng = #{supplierNameEng,jdbcType=VARCHAR},
       supplier_name_cht = #{supplierNameCht,jdbcType=VARCHAR},
       supplier_name_chs = #{supplierNameChs,jdbcType=VARCHAR},
-      suppiler_type = #{suppilerType,jdbcType=TINYINT},
+      `type` = #{type,jdbcType=TINYINT},
       logo_img_id = #{logoImgId,jdbcType=BIGINT},
       qrcode_img_url = #{qrcodeImgUrl,jdbcType=VARCHAR},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},

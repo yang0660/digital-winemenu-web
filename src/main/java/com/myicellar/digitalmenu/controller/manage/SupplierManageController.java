@@ -41,7 +41,7 @@ import java.util.*;
 @RestController
 @Slf4j
 @RequestMapping("/manage/supplier")
-@Api(tags = "供应商", description = "/manage/supplier")
+@Api(tags = "供应商管理", description = "/manage/supplier")
 public class SupplierManageController {
 
     private static final String CHARSET = "utf-8";
