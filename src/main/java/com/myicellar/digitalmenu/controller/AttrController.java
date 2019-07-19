@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/attr")
-@Api(tags = "用户页面-原料", description = "/app/attr")
+@Api(tags = "用户页面", description = "/app/attr")
 public class AttrController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class AttrController {
      */
     @PostMapping(value = "/queryList")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("葡萄列表查询")
     public ResultVO<List<AttrRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         List<Attr> list = attrService.queryListBySupplierId(reqVO.getSupplierId());
         List<AttrRespVO> resultList = new ArrayList<AttrRespVO>();

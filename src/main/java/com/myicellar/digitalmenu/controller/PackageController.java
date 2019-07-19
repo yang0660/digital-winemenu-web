@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/package")
-@Api(tags = "用户页面-酒品", description = "/app/package")
+@Api(tags = "用户页面", description = "/app/package")
 public class PackageController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class PackageController {
      */
     @PostMapping(value = "/queryRecomendPackageList")
     @AuthIgnore
-    @ApiOperation("推荐酒品列表")
+    @ApiOperation("DRINK页-推荐酒品列表")
     public ResultVO<List<PackageInfoRespVO>> queryRecomendPackageList(@RequestBody SupplierIdReqVO reqVO) {
         List<PackageInfoRespVO> list = packageService.queryRecomendPackageList(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){

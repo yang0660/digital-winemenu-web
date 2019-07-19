@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/food")
-@Api(tags = "用户页面-美食", description = "/app/food")
+@Api(tags = "用户页面", description = "/app/food")
 public class FoodController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class FoodController {
      */
     @PostMapping(value = "/queryRecomendFoodList")
     @AuthIgnore
-    @ApiOperation("推荐美食列表")
+    @ApiOperation("首页-推荐美食列表")
     public ResultVO<List<FoodRecommendRespVO>> queryRecomendFoodList(@RequestBody SupplierIdReqVO reqVO) {
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
             return ResultVO.validError("supplierId cannot be empty！");

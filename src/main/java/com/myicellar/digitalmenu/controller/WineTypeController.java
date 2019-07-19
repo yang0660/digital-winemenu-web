@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/winetype")
-@Api(tags = "用户页面－酒品类型", description = "/app/winetype")
+@Api(tags = "用户页面", description = "/app/winetype")
 public class WineTypeController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class WineTypeController {
      */
     @PostMapping(value = "/queryList")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("酒品分类列表查询")
     public ResultVO<List<WineTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         List<WineType> list = wineTypeService.queryListBySupplierId(reqVO.getSupplierId());
 

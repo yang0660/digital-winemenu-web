@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/app/country")
-@Api(tags = "用户页面-国家", description = "/app/country")
+@Api(tags = "用户页面", description = "/app/country")
 public class CountryController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class CountryController {
      */
     @PostMapping(value = "/queryList")
     @AuthIgnore
-    @ApiOperation("列表查询")
+    @ApiOperation("国家列表查询")
     public ResultVO<List<CountryRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         List<CountryRespVO> list = countryService.queryListBySupplierId(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){
