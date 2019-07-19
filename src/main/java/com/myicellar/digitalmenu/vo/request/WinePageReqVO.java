@@ -18,6 +18,9 @@ public class WinePageReqVO extends PageRequestVO{
     @ApiModelProperty(value = "酒品类型ID")
     private Long wineTypeId;
 
+    @ApiModelProperty(value = "国家ID")
+    private Long countryId;
+
     @ApiModelProperty(value = "酒品产地ID")
     private Long wineOriginId;
 
