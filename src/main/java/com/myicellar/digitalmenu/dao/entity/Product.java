@@ -11,6 +11,8 @@ public class Product {
 
     private Long supplierId;
 
+    private Byte isOrganicWine;
+
     private Byte isRecommend;
 
     private Byte isEnabled;
@@ -53,6 +55,14 @@ public class Product {
 
     public void setSupplierId(Long supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public Byte getIsOrganicWine() {
+        return isOrganicWine;
+    }
+
+    public void setIsOrganicWine(Byte isOrganicWine) {
+        this.isOrganicWine = isOrganicWine;
     }
 
     public Byte getIsRecommend() {

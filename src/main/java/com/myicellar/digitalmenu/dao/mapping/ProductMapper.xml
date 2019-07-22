@@ -6,6 +6,7 @@
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
     <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
     <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine" />
     <result column="is_recommend" jdbcType="TINYINT" property="isRecommend" />
     <result column="is_enabled" jdbcType="TINYINT" property="isEnabled" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
@@ -14,8 +15,8 @@
     <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
   </resultMap>
   <sql id="Base_Column_List">
-    product_id, wine_id, vintage_tag, supplier_id, is_recommend, is_enabled, created_at, 
-    created_by, updated_at, updated_by
+    product_id, wine_id, vintage_tag, supplier_id, is_organic_wine, is_recommend, is_enabled, 
+    created_at, created_by, updated_at, updated_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -29,13 +30,13 @@
   </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
     insert into t_product (product_id, wine_id, vintage_tag, 
-      supplier_id, is_recommend, is_enabled, 
-      created_at, created_by, updated_at, 
-      updated_by)
+      supplier_id, is_organic_wine, is_recommend, 
+      is_enabled, created_at, created_by, 
+      updated_at, updated_by)
     values (#{productId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, 
-      #{supplierId,jdbcType=BIGINT}, #{isRecommend,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{updatedBy,jdbcType=BIGINT})
+      #{supplierId,jdbcType=BIGINT}, #{isOrganicWine,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
+      #{isEnabled,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Product">
     insert into t_product
@@ -51,6 +52,9 @@
       </if>
       <if test="supplierId != null">
         supplier_id,
+      </if>
+      <if test="isOrganicWine != null">
+        is_organic_wine,
       </if>
       <if test="isRecommend != null">
         is_recommend,
@@ -84,6 +88,9 @@
       <if test="supplierId != null">
         #{supplierId,jdbcType=BIGINT},
       </if>
+      <if test="isOrganicWine != null">
+        #{isOrganicWine,jdbcType=TINYINT},
+      </if>
       <if test="isRecommend != null">
         #{isRecommend,jdbcType=TINYINT},
       </if>
@@ -116,6 +123,9 @@
       <if test="supplierId != null">
         supplier_id = #{supplierId,jdbcType=BIGINT},
       </if>
+      <if test="isOrganicWine != null">
+        is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
+      </if>
       <if test="isRecommend != null">
         is_recommend = #{isRecommend,jdbcType=TINYINT},
       </if>
@@ -142,6 +152,7 @@
     set wine_id = #{wineId,jdbcType=BIGINT},
       vintage_tag = #{vintageTag,jdbcType=BIGINT},
       supplier_id = #{supplierId,jdbcType=BIGINT},
+      is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
       is_recommend = #{isRecommend,jdbcType=TINYINT},
       is_enabled = #{isEnabled,jdbcType=TINYINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
