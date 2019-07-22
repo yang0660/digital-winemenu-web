@@ -11,8 +11,6 @@ public class WineVintage {
 
     private Long alcoholBps;
 
-    private Long wineImgId;
-
     private Date updatedAt;
 
     private String tastingNote;
@@ -47,14 +45,6 @@ public class WineVintage {
 
     public void setAlcoholBps(Long alcoholBps) {
         this.alcoholBps = alcoholBps;
-    }
-
-    public Long getWineImgId() {
-        return wineImgId;
-    }
-
-    public void setWineImgId(Long wineImgId) {
-        this.wineImgId = wineImgId;
     }
 
     public Date getUpdatedAt() {

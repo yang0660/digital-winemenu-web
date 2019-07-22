@@ -302,7 +302,7 @@
         <result column="wine_name_eng" jdbcType="VARCHAR" property="wineNameEng"/>
         <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag"/>
         <result column="vintage_name" jdbcType="VARCHAR" property="vintageName"/>
-        <result column="tasting_note" jdbcType="VARCHAR" property="tastingNote"/>
+        <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote"/>
         <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng"/>
         <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng"/>
         <result column="variety" jdbcType="VARCHAR" property="variety"/>
