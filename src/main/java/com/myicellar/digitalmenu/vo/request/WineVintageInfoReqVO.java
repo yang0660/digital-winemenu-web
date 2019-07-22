@@ -9,11 +9,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 酒品年份删除参数
+ * 酒品年份参数
  */
 @Data
-@ApiModel(value = "酒品年份删除参数")
-public class WineVintageDeleteReqVO {
+@ApiModel(value = "酒品年份参数")
+public class WineVintageInfoReqVO {
 
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;

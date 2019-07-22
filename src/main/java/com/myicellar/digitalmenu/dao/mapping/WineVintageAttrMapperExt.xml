@@ -15,9 +15,12 @@
   </resultMap>
 
   <resultMap id="WineAttrResultMap" type="com.myicellar.digitalmenu.vo.response.WineAttrInfoRespVO">
+    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
     <result column="attr_name_eng" jdbcType="VARCHAR" property="attrNameEng" />
     <result column="attr_name_chs" jdbcType="VARCHAR" property="attrNameChs" />
     <result column="attr_name_cht" jdbcType="VARCHAR" property="attrNameCht" />
+    <result column="attr_val_num" jdbcType="SMALLINT" property="attrValNum" />
+    <result column="attr_val_str" jdbcType="LONGVARCHAR" property="attrValStr" />
   </resultMap>
 
   <select id="selectAttrMapByWineVintageIds" resultMap="WineAttrInfoResultMap">
@@ -34,12 +37,21 @@
   </select>
 
   <select id="selectAttrListByWineVintageId" parameterType="java.util.Map" resultMap="WineAttrResultMap">
-    SELECT b.attr_name_eng,
+    SELECT b.attr_id,
+    b.attr_name_eng,
     b.attr_name_chs,
-    b.attr_name_cht
+    b.attr_name_cht,
+    b.attr_val_num,
+    b.attr_val_str
     FROM t_wine_vintage_attr a
     INNER JOIN t_attr b ON a.attr_id = b.attr_id
     AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}
     WHERE concat(a.wine_id,'|',a.vintage_tag) = #{wineVintageId}
   </select>
+
+  <delete id="deleteByWineIdAndVintage">
+    delete from t_wine_vintage_attr
+    where wine_id = #{wineId,jdbcType=BIGINT}
+      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+  </delete>
 </mapper>

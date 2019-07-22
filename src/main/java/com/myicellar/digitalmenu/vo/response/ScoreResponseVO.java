@@ -1,4 +1,4 @@
-package com.myicellar.digitalmenu.vo.request;
+package com.myicellar.digitalmenu.vo.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -6,10 +6,10 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
+@Data
 @ApiModel(value = "评分信息")
-public class ScoreReqVO {
+public class ScoreResponseVO {
     @ApiModelProperty(value = "评论机构ID")
     private Long criticsId;
 

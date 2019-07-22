@@ -2,11 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapper">
   <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    <id column="vintage_score_id" jdbcType="BIGINT" property="vintageScoreId" />
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="vintage_tag" jdbcType="SMALLINT" property="vintageTag" />
-    <result column="wine_critics_id" jdbcType="INTEGER" property="wineCriticsId" />
-    <result column="score_catg_id" jdbcType="BIGINT" property="scoreCatgId" />
+    <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
+    <result column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId" />
     <result column="score_val_num" jdbcType="SMALLINT" property="scoreValNum" />
     <result column="score_year" jdbcType="SMALLINT" property="scoreYear" />
     <result column="tasted_at" jdbcType="TIMESTAMP" property="tastedAt" />
@@ -17,43 +15,22 @@
     <result column="score_name" jdbcType="LONGVARCHAR" property="scoreName" />
     <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain" />
   </resultMap>
-  <sql id="Base_Column_List">
-    vintage_score_id, wine_id, vintage_tag, wine_critics_id, score_catg_id, score_val_num, 
-    score_year, tasted_at, updated_at
-  </sql>
   <sql id="Blob_Column_List">
     score_val_str, score_name, note_plain
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_wine_vintage_score
-    where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_wine_vintage_score
-    where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
-  </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    insert into t_wine_vintage_score (vintage_score_id, wine_id, vintage_tag, 
-      wine_critics_id, score_catg_id, score_val_num, 
-      score_year, tasted_at, updated_at, 
-      score_val_str, score_name, note_plain
-      )
-    values (#{vintageScoreId,jdbcType=BIGINT}, #{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=SMALLINT}, 
-      #{wineCriticsId,jdbcType=INTEGER}, #{scoreCatgId,jdbcType=BIGINT}, #{scoreValNum,jdbcType=SMALLINT}, 
-      #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{scoreValStr,jdbcType=LONGVARCHAR}, #{scoreName,jdbcType=LONGVARCHAR}, #{notePlain,jdbcType=LONGVARCHAR}
-      )
+    insert into t_wine_vintage_score (wine_id, vintage_tag, wine_critics_id, 
+      score_val_num, score_year, tasted_at, 
+      updated_at, score_val_str, score_name, 
+      note_plain)
+    values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{wineCriticsId,jdbcType=BIGINT}, 
+      #{scoreValNum,jdbcType=SMALLINT}, #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{scoreValStr,jdbcType=LONGVARCHAR}, #{scoreName,jdbcType=LONGVARCHAR}, 
+      #{notePlain,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
     insert into t_wine_vintage_score
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="vintageScoreId != null">
-        vintage_score_id,
-      </if>
       <if test="wineId != null">
         wine_id,
       </if>
@@ -62,9 +39,6 @@
       </if>
       <if test="wineCriticsId != null">
         wine_critics_id,
-      </if>
-      <if test="scoreCatgId != null">
-        score_catg_id,
       </if>
       <if test="scoreValNum != null">
         score_val_num,
@@ -89,20 +63,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="vintageScoreId != null">
-        #{vintageScoreId,jdbcType=BIGINT},
-      </if>
       <if test="wineId != null">
         #{wineId,jdbcType=BIGINT},
       </if>
       <if test="vintageTag != null">
-        #{vintageTag,jdbcType=SMALLINT},
+        #{vintageTag,jdbcType=BIGINT},
       </if>
       <if test="wineCriticsId != null">
-        #{wineCriticsId,jdbcType=INTEGER},
-      </if>
-      <if test="scoreCatgId != null">
-        #{scoreCatgId,jdbcType=BIGINT},
+        #{wineCriticsId,jdbcType=BIGINT},
       </if>
       <if test="scoreValNum != null">
         #{scoreValNum,jdbcType=SMALLINT},
@@ -127,70 +95,4 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    update t_wine_vintage_score
-    <set>
-      <if test="wineId != null">
-        wine_id = #{wineId,jdbcType=BIGINT},
-      </if>
-      <if test="vintageTag != null">
-        vintage_tag = #{vintageTag,jdbcType=SMALLINT},
-      </if>
-      <if test="wineCriticsId != null">
-        wine_critics_id = #{wineCriticsId,jdbcType=INTEGER},
-      </if>
-      <if test="scoreCatgId != null">
-        score_catg_id = #{scoreCatgId,jdbcType=BIGINT},
-      </if>
-      <if test="scoreValNum != null">
-        score_val_num = #{scoreValNum,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreYear != null">
-        score_year = #{scoreYear,jdbcType=SMALLINT},
-      </if>
-      <if test="tastedAt != null">
-        tasted_at = #{tastedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="scoreValStr != null">
-        score_val_str = #{scoreValStr,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="scoreName != null">
-        score_name = #{scoreName,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="notePlain != null">
-        note_plain = #{notePlain,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    update t_wine_vintage_score
-    set wine_id = #{wineId,jdbcType=BIGINT},
-      vintage_tag = #{vintageTag,jdbcType=SMALLINT},
-      wine_critics_id = #{wineCriticsId,jdbcType=INTEGER},
-      score_catg_id = #{scoreCatgId,jdbcType=BIGINT},
-      score_val_num = #{scoreValNum,jdbcType=SMALLINT},
-      score_year = #{scoreYear,jdbcType=SMALLINT},
-      tasted_at = #{tastedAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      score_val_str = #{scoreValStr,jdbcType=LONGVARCHAR},
-      score_name = #{scoreName,jdbcType=LONGVARCHAR},
-      note_plain = #{notePlain,jdbcType=LONGVARCHAR}
-    where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    update t_wine_vintage_score
-    set wine_id = #{wineId,jdbcType=BIGINT},
-      vintage_tag = #{vintageTag,jdbcType=SMALLINT},
-      wine_critics_id = #{wineCriticsId,jdbcType=INTEGER},
-      score_catg_id = #{scoreCatgId,jdbcType=BIGINT},
-      score_val_num = #{scoreValNum,jdbcType=SMALLINT},
-      score_year = #{scoreYear,jdbcType=SMALLINT},
-      tasted_at = #{tastedAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where vintage_score_id = #{vintageScoreId,jdbcType=BIGINT}
-  </update>
 </mapper>

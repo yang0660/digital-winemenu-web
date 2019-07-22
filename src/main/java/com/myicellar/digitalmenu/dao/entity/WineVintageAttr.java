@@ -9,9 +9,13 @@ public class WineVintageAttr {
 
     private Long attrId;
 
+    private Short attrValNum;
+
     private Short micRank;
 
     private Date updatedAt;
+
+    private String attrValStr;
 
     public Long getWineId() {
         return wineId;
@@ -37,6 +41,14 @@ public class WineVintageAttr {
         this.attrId = attrId;
     }
 
+    public Short getAttrValNum() {
+        return attrValNum;
+    }
+
+    public void setAttrValNum(Short attrValNum) {
+        this.attrValNum = attrValNum;
+    }
+
     public Short getMicRank() {
         return micRank;
     }
@@ -51,5 +63,13 @@ public class WineVintageAttr {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getAttrValStr() {
+        return attrValStr;
+    }
+
+    public void setAttrValStr(String attrValStr) {
+        this.attrValStr = attrValStr;
     }
 }

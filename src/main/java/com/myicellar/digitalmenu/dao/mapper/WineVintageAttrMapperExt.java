@@ -12,4 +12,7 @@ public interface WineVintageAttrMapperExt extends WineVintageAttrMapper {
     @MapKey("wineVintageId")
     Map<String,WineAttrMapRespVO> selectAttrMapByWineVintageIds(@Param("attrCatgId") Long attrCatgId,
                                                        @Param("wineVintageIds") List<String> wineVintageIds);
+
+    Integer deleteByWineIdAndVintage(@Param("wineId") Long wineId,
+                                       @Param("vintageTag") Long vintageTag);
 }

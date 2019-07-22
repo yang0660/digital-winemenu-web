@@ -20,4 +20,16 @@ public class WineVintageScoreService extends BaseService<Long, WineVintageScore,
     public List<ScoreRespVO> queryScoreListByPackageId(Long packageId){
         return mapper.selectScoreByPackageId(packageId);
     }
+
+    public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag){
+        return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
+    }
+
+    public List<WineVintageScore> queryScoreListByWineVintage(Long wineId, Long vintageTag){
+        return mapper.selectScoreListByWineVintage(wineId,vintageTag);
+    }
+
+    public List<WineVintageScore> queryAwardListByWineVintage(Long wineId, Long vintageTag){
+        return mapper.selectAwardListByWineVintage(wineId,vintageTag);
+    }
 }

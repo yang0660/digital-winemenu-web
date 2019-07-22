@@ -35,4 +35,28 @@
 	pkg.package_id =#{packageId}
   </select>
 
+    <delete id="deleteByWineIdAndVintage">
+        delete from t_wine_vintage_score
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectScoreListByWineVintage" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from t_wine_vintage_score
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and score_val_num is not null
+    </select>
+
+    <select id="selectAwardListByWineVintage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_wine_vintage_score
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and score_name is not null
+    </select>
+
 </mapper>

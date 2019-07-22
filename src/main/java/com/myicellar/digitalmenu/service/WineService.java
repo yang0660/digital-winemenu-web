@@ -186,12 +186,10 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
 
                 //添加评分及获奖
                 WineVintageScore wineVintageScore = new WineVintageScore();
-                wineVintageScore.setVintageScoreId(snowflakeIdWorker.nextId());
                 wineVintageScore.setWineId(wineId);
-                wineVintageScore.setVintageTag(new BigDecimal(vintageTag).shortValue());
+                wineVintageScore.setVintageTag(new BigDecimal(vintageTag).longValue());
                 wineVintageScore.setNotePlain(tastingNote);
-                wineVintageScore.setWineCriticsId(104);
-                wineVintageScore.setScoreCatgId(0L);
+                wineVintageScore.setWineCriticsId(104L);
                 wineVintageScore.setScoreValNum(Short.valueOf("950"));
                 wineVintageScore.setScoreValStr("95");
                 wineVintageScore.setTastedAt(now);

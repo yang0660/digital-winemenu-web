@@ -3,15 +3,11 @@ package com.myicellar.digitalmenu.dao.entity;
 import java.util.Date;
 
 public class WineVintageScore {
-    private Long vintageScoreId;
-
     private Long wineId;
 
-    private Short vintageTag;
+    private Long vintageTag;
 
-    private Integer wineCriticsId;
-
-    private Long scoreCatgId;
+    private Long wineCriticsId;
 
     private Short scoreValNum;
 
@@ -27,14 +23,6 @@ public class WineVintageScore {
 
     private String notePlain;
 
-    public Long getVintageScoreId() {
-        return vintageScoreId;
-    }
-
-    public void setVintageScoreId(Long vintageScoreId) {
-        this.vintageScoreId = vintageScoreId;
-    }
-
     public Long getWineId() {
         return wineId;
     }
@@ -43,28 +31,20 @@ public class WineVintageScore {
         this.wineId = wineId;
     }
 
-    public Short getVintageTag() {
+    public Long getVintageTag() {
         return vintageTag;
     }
 
-    public void setVintageTag(Short vintageTag) {
+    public void setVintageTag(Long vintageTag) {
         this.vintageTag = vintageTag;
     }
 
-    public Integer getWineCriticsId() {
+    public Long getWineCriticsId() {
         return wineCriticsId;
     }
 
-    public void setWineCriticsId(Integer wineCriticsId) {
+    public void setWineCriticsId(Long wineCriticsId) {
         this.wineCriticsId = wineCriticsId;
-    }
-
-    public Long getScoreCatgId() {
-        return scoreCatgId;
-    }
-
-    public void setScoreCatgId(Long scoreCatgId) {
-        this.scoreCatgId = scoreCatgId;
     }
 
     public Short getScoreValNum() {

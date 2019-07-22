@@ -4,9 +4,12 @@ import com.myicellar.digitalmenu.service.WineVintageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WineDetailReqVO;
+import com.myicellar.digitalmenu.vo.request.WineVintageInfoReqVO;
+import com.myicellar.digitalmenu.vo.request.WineVintageReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.WineVintageListRespVO;
+import com.myicellar.digitalmenu.vo.response.WineVintageRespVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,67 @@ public class WineVintageManageController {
         PageResponseVO<WineVintageListRespVO> page = wineVintageService.queryPageList(reqVO);
 
         return ResultVO.success(page);
+    }
+
+    /**
+     * 年份详情
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryByWineIdAndVintage")
+    @AuthIgnore
+    @ApiOperation("年份详情")
+    public ResultVO<WineVintageRespVO> queryByWineIdAndVintage(@RequestBody WineVintageInfoReqVO reqVO) {
+        WineVintageRespVO respVO = wineVintageService.queryByWineIdAndVintage(reqVO.getWineId(),
+                reqVO.getVintageTag());
+
+        return ResultVO.success(respVO);
+    }
+
+    /**
+     * 添加年份配置
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/add")
+    @AuthIgnore
+    @ApiOperation("添加年份配置")
+    public ResultVO<Integer> add(@RequestBody WineVintageReqVO reqVO) {
+        Integer result = wineVintageService.addNew(reqVO);
+
+        return ResultVO.success(result);
+    }
+
+    /**
+     * 修改年份配置
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/update")
+    @AuthIgnore
+    @ApiOperation("修改年份配置")
+    public ResultVO<Integer> update(@RequestBody WineVintageReqVO reqVO) {
+        Integer result = wineVintageService.update(reqVO);
+
+        return ResultVO.success(result);
+    }
+
+    /**
+     * 删除年份配置
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/delete")
+    @AuthIgnore
+    @ApiOperation("删除年份配置")
+    public ResultVO<Integer> add(@RequestBody WineVintageInfoReqVO reqVO) {
+        Integer result = wineVintageService.delete(reqVO);
+
+        return ResultVO.success(result);
     }
 
 }

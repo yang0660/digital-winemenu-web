@@ -76,4 +76,8 @@ public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, W
         }
         return subStr.toString();
     }
+
+    public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag){
+        return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
+    }
 }

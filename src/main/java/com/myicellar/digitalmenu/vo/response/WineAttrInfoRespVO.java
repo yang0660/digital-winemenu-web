@@ -14,6 +14,9 @@ public class WineAttrInfoRespVO {
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;
 
+    @ApiModelProperty(value = "属性ID")
+    private Long attrId;
+
     @ApiModelProperty(value = "属性名称-英文")
     private String attrNameEng;
 
@@ -22,4 +25,10 @@ public class WineAttrInfoRespVO {
 
     @ApiModelProperty(value = "属性名称-繁中")
     private String attrNameCht;
+
+    @ApiModelProperty(value = "属性值-数值")
+    private Short attrValNum;
+
+    @ApiModelProperty(value = "属性值-描述")
+    private String attrValStr;
 }
