@@ -4,11 +4,11 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.dao.mapper.FoodMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
-import com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.vo.request.*;
+import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.PackageReqVO;
+import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -351,5 +351,26 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
 
         Integer result = productService.deleteByPrimaryKey(productId);
         return result;
+    }
+
+    public PackageRespVO queryByProductId(Long productId){
+        PackageRespVO respVO = new PackageRespVO();
+        Product product = productService.selectByPrimaryKey(productId);
+        if(product!=null){
+            respVO = ConvertUtils.convert(product,PackageRespVO.class);
+            List<IPackage> packageList = mapper.selectListByProductId(productId);
+            if(!CollectionUtils.isEmpty(packageList)){
+                List<VolumPriceRespVO> volumePrices = new ArrayList<VolumPriceRespVO>();
+                for(IPackage iPackage : packageList){
+                    VolumPriceRespVO volumPriceRespVO = new VolumPriceRespVO();
+                    volumPriceRespVO.setVolumeTypeId(iPackage.getVolumeTypeId());
+                    volumPriceRespVO.setPrice(iPackage.getRegularPrice());
+                    volumePrices.add(volumPriceRespVO);
+                }
+                respVO.setVolumePrices(volumePrices);
+            }
+        }
+
+        return respVO;
     }
 }

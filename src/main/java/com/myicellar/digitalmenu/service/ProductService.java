@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.dao.mapper.ProductMapper;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

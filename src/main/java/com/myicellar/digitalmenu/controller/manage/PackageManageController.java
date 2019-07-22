@@ -1,17 +1,15 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.aliyuncs.utils.StringUtils;
-import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.dao.entity.Wine;
 import com.myicellar.digitalmenu.service.PackageService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
-import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.*;
+import com.myicellar.digitalmenu.vo.request.PackageReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductReqVO;
+import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
+import com.myicellar.digitalmenu.vo.response.PackageRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.WineRespVO;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 @Slf4j
@@ -61,14 +57,13 @@ public class PackageManageController {
      * @param reqVO
      * @return
      */
-    @PostMapping(value = "/queryByWineId")
+    @PostMapping(value = "/queryByProductId")
     @AuthIgnore
     @ApiOperation("详情查询")
-    public ResultVO<WineRespVO> queryByWineId(@RequestBody WineDetailReqVO reqVO) {
-        //通过传入wineId查询wine详情
-        WineRespVO respVO = wineService.queryByWineId(reqVO.getWineId());
+    public ResultVO<PackageRespVO> queryByProductId(@RequestBody ProductReqVO reqVO) {
+        PackageRespVO respVO = packageService.queryByProductId(reqVO.getProductId());
         if(reqVO==null){
-            respVO = new WineRespVO();
+            respVO = new PackageRespVO();
         }
 
         return ResultVO.success(respVO);

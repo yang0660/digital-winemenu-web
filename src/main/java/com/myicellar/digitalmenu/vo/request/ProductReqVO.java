@@ -3,9 +3,6 @@ package com.myicellar.digitalmenu.vo.request;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.util.Date;
 /**
  * 产品新增/修改参数
  */
