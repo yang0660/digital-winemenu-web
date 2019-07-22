@@ -304,6 +304,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                     volumePkgMap.put(iPackage.getVolumeTypeId(),iPackage.getPackageId());
                 }
             }
+            List<Long> newVolumeTypeIds = new ArrayList<>();
             if(!CollectionUtils.isEmpty(reqVO.getVolumePrices())){
                 IPackage iPackage = new IPackage();
                 iPackage.setProductId(product.getProductId());
@@ -311,6 +312,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 iPackage.setUpdatedAt(now);
                 iPackage.setUpdatedBy(1L);
                 for(VolumPriceReqVO volumePrice : reqVO.getVolumePrices()){
+                    newVolumeTypeIds.add(volumePrice.getVolumeTypeId());
                     if(volumeTypeIds.contains(volumePrice.getVolumeTypeId())){
                         iPackage.setPackageId(volumePkgMap.get(volumePrice.getVolumeTypeId()));
                     }else {
@@ -325,6 +327,14 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                         mapper.insertSelective(iPackage);
                     }
                 }
+
+                for(Long volumeTypeId : volumeTypeIds){
+                    if(!newVolumeTypeIds.contains(volumeTypeId)){
+                        mapper.deleteByProductAndVolumeId(product.getProductId(),volumeTypeId);
+                    }
+                }
+            }else{
+                productService.deleteByPrimaryKey(product.getProductId());
             }
         }
         result++;

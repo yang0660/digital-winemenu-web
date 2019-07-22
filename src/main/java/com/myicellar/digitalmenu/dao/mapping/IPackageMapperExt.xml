@@ -381,4 +381,11 @@
     where product_id = #{productId}
   </delete>
 
+  <delete id="deleteByProductAndVolumeId">
+    delete
+    from t_package
+    where product_id = #{productId}
+     and volume_type_id = #{volumeTypeId}
+  </delete>
+
 </mapper>

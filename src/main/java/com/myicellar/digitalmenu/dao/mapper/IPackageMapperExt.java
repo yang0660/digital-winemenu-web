@@ -30,4 +30,6 @@ public interface IPackageMapperExt extends IPackageMapper{
     List<IPackage> selectListByProductId(Long productId);
 
     Integer deleteByProductId(Long productId);
+
+    Integer deleteByProductAndVolumeId(Long productId, Long volumeTypeId);
 }
