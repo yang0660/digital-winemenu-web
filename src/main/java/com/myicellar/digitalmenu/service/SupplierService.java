@@ -2,16 +2,15 @@ package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
-import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.SupplierRespVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.Map;
 public class SupplierService extends BaseService<Long, Supplier, SupplierMapperExt> {
 
     @Autowired
-    private ImgMapperExt imgMapperExt;
+    private ImgService imgService;
 
     /**
      * 列表查询-分页
@@ -42,8 +41,8 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
                     imgIds.add(respVO.getLogoImgId());
                 }
             }
-            if (imgIds.size() > 0) {
-                Map<Long, Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)){
                 list.forEach(info -> {
                     if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
                         Img logoImg = imgMap.get(info.getLogoImgId());
@@ -53,7 +52,6 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
                     }
                 });
             }
-
 
             resultPage.setItems(list);
         }

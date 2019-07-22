@@ -3,7 +3,9 @@ package com.myicellar.digitalmenu.service;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Img;
-import com.myicellar.digitalmenu.dao.mapper.*;
+import com.myicellar.digitalmenu.dao.mapper.FoodMapperExt;
+import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
+import com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapperExt;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +23,10 @@ import java.util.Map;
 public class PackageService extends BaseService<Long, IPackage, IPackageMapperExt> {
 
     @Autowired
-    private ImgMapperExt imgMapperExt;
+    private ImgService imgService;
 
     @Autowired
-    private WineVintageAttrMapperExt wineVintageAttrMapperExt;
+    public WineVintageAttrService wineVintageAttrService;
 
     @Autowired
     private WineVintageScoreMapperExt wineVintageScoreMapperExt;
@@ -87,19 +89,19 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
 
-            Map<String,WineAttrMapRespVO> wineAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(101L,wineVintageIds);
+            Map<String,WineAttrMapRespVO> wineAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(101L,wineVintageIds);
             if(!CollectionUtils.isEmpty(wineAttrMap)){
                 list.forEach(info -> {
                     WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId()+"|"+info.getVintageTag());
                     if(respVO!=null && !CollectionUtils.isEmpty(respVO.getList())){
                         List<WineAttrInfoRespVO> attrlist = respVO.getList();
-                        info.setVariety(listToEngStr(attrlist));
+                        info.setVariety(wineVintageAttrService.listToEngStr(attrlist));
                     }
                 });
             }
 
-            if(!CollectionUtils.isEmpty(imgIds)){
-                Map<Long, Img>  imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)){
                 list.forEach(info -> {
                     if(info.getWineImgId()!=null && info.getWineImgId()!=0L){
                         Img img = imgMap.get(info.getWineImgId());
@@ -118,57 +120,6 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 });
             }
         }
-    }
-
-    public String listToEngStr(List<WineAttrInfoRespVO> list){
-        StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
-            int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameEng())) {
-                    if (i != 0) {
-                        subStr.append(", ");
-                    }
-                    subStr.append(info.getAttrNameEng());
-                    i++;
-                }
-            }
-        }
-        return subStr.toString();
-    }
-
-    public String listToChsStr(List<WineAttrInfoRespVO> list){
-        StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
-            int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameChs())) {
-                    if (i != 0) {
-                        subStr.append(", ");
-                    }
-                    subStr.append(info.getAttrNameChs());
-                    i++;
-                }
-            }
-        }
-        return subStr.toString();
-    }
-
-    public String listToChtStr(List<WineAttrInfoRespVO> list){
-        StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
-            int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameCht())) {
-                    if (i != 0) {
-                        subStr.append(", ");
-                    }
-                    subStr.append(info.getAttrNameCht());
-                    i++;
-                }
-            }
-        }
-        return subStr.toString();
     }
 
     /**
@@ -239,64 +190,66 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
                 }
             }
             //原料
-            Map<String,WineAttrMapRespVO> varietyAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(101L,wineVintageIds);
+            Map<String,WineAttrMapRespVO> varietyAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(101L,wineVintageIds);
             if(!CollectionUtils.isEmpty(varietyAttrMap)){
                     WineAttrMapRespVO attrRespVO = varietyAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                     if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
-                        respVO.setVariety(listToEngStr(attrlist));
+                        respVO.setVariety(wineVintageAttrService.listToEngStr(attrlist));
                     }
             }
             //风格
-            Map<String,WineAttrMapRespVO> styleAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(1001L,wineVintageIds);
+            Map<String,WineAttrMapRespVO> styleAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(1001L,wineVintageIds);
             if(!CollectionUtils.isEmpty(styleAttrMap)){
                 WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                     List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
-                    respVO.setStyle(listToEngStr(attrlist));
+                    respVO.setStyle(wineVintageAttrService.listToEngStr(attrlist));
                 }
             }
             //口味
-            Map<String,WineAttrMapRespVO> descriptorAttrMap = wineVintageAttrMapperExt.selectAttrMapByWineVintageIds(1002L,wineVintageIds);
+            Map<String,WineAttrMapRespVO> descriptorAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(1002L,wineVintageIds);
             if(!CollectionUtils.isEmpty(descriptorAttrMap)){
                 WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO!=null && !CollectionUtils.isEmpty(attrRespVO.getList())){
                     List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
-                    respVO.setDescriptor(listToEngStr(attrlist));
+                    respVO.setDescriptor(wineVintageAttrService.listToEngStr(attrlist));
                 }
             }
 
-            Map<Long, Img>  imgMap = imgMapperExt.selectImgMapByIds(imgIds);
-            if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
-                Img img = imgMap.get(respVO.getWineImgId());
-                if(img!=null) {
-                    respVO.setWineImgUrl(img.getImgUrl());
-                    respVO.setWineSmallImgUrl(img.getSmallImgUrl());
-                }
-            }
-            if(respVO.getWineryLogoId()!=null && respVO.getWineryLogoId()!=0L){
-                Img logoImg = imgMap.get(respVO.getWineryLogoId());
-                if(logoImg!=null) {
-                    respVO.setWineryLogoUrl(logoImg.getImgUrl());
-                    respVO.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
-                }
-            }
-            if(respVO.getBannerImgId()!=null && respVO.getBannerImgId()!=0L){
-                Img bannerImg = imgMap.get(respVO.getBannerImgId());
-                if(bannerImg!=null) {
-                    respVO.setBannerImgUrl(bannerImg.getImgUrl());
-                    respVO.setBannerSmallImgUrl(bannerImg.getSmallImgUrl());
-                }
-            }
-            if(!CollectionUtils.isEmpty(wineryImgIds)){
-                List<String> wineryImgUrls = new ArrayList<String>();
-                for(Long wineryImgId : wineryImgIds){
-                    Img wineryImg = imgMap.get(wineryImgId);
-                    if(wineryImg!=null) {
-                        wineryImgUrls.add(wineryImg.getImgUrl());
+            Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)) {
+                if (respVO.getWineImgId() != null && respVO.getWineImgId() != 0L) {
+                    Img img = imgMap.get(respVO.getWineImgId());
+                    if (img != null) {
+                        respVO.setWineImgUrl(img.getImgUrl());
+                        respVO.setWineSmallImgUrl(img.getSmallImgUrl());
                     }
                 }
-                respVO.setWineryImgUrls(wineryImgUrls);
+                if (respVO.getWineryLogoId() != null && respVO.getWineryLogoId() != 0L) {
+                    Img logoImg = imgMap.get(respVO.getWineryLogoId());
+                    if (logoImg != null) {
+                        respVO.setWineryLogoUrl(logoImg.getImgUrl());
+                        respVO.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
+                    }
+                }
+                if (respVO.getBannerImgId() != null && respVO.getBannerImgId() != 0L) {
+                    Img bannerImg = imgMap.get(respVO.getBannerImgId());
+                    if (bannerImg != null) {
+                        respVO.setBannerImgUrl(bannerImg.getImgUrl());
+                        respVO.setBannerSmallImgUrl(bannerImg.getSmallImgUrl());
+                    }
+                }
+                if (!CollectionUtils.isEmpty(wineryImgIds)) {
+                    List<String> wineryImgUrls = new ArrayList<String>();
+                    for (Long wineryImgId : wineryImgIds) {
+                        Img wineryImg = imgMap.get(wineryImgId);
+                        if (wineryImg != null) {
+                            wineryImgUrls.add(wineryImg.getImgUrl());
+                        }
+                    }
+                    respVO.setWineryImgUrls(wineryImgUrls);
+                }
             }
         }
     }

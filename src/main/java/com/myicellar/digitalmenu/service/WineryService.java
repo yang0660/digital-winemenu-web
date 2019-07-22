@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.service;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Winery;
-import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineryMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
@@ -11,9 +10,9 @@ import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.WineryRespVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
 
     @Autowired
-    private ImgMapperExt imgMapperExt;
+    private ImgService imgService;
 
     public List<Winery> queryListAll(){
         return mapper.selectListAll();
@@ -47,8 +46,8 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
                     imgIds.add(respVO.getLogoImgId());
                 }
             }
-            if (imgIds.size() > 0) {
-                Map<Long, Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
+            Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)){
                 list.forEach(info -> {
                     if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
                         Img logoImg = imgMap.get(info.getLogoImgId());
@@ -107,28 +106,30 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
             }
         }
 
-        Map<Long, Img>  imgMap = imgMapperExt.selectImgMapByIds(imgIds);
-        if(winery.getLogoImgId()!=null && winery.getLogoImgId()!=0L){
-            Img logoImg = imgMap.get(winery.getLogoImgId());
-            if(logoImg!=null) {
-                respVO.setWineryLogoUrl(logoImg.getImgUrl());
-            }
-        }
-        if(winery.getBannerImgId()!=null && winery.getBannerImgId()!=0L){
-            Img bannerImg = imgMap.get(respVO.getBannerImgId());
-            if(bannerImg!=null) {
-                respVO.setBannerImgUrl(bannerImg.getImgUrl());
-            }
-        }
-        if(!org.springframework.util.CollectionUtils.isEmpty(wineryImgIds)){
-            List<String> wineryImgUrls = new ArrayList<String>();
-            for(Long wineryImgId : wineryImgIds){
-                Img wineryImg = imgMap.get(wineryImgId);
-                if(wineryImg!=null) {
-                    wineryImgUrls.add(wineryImg.getImgUrl());
+        Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
+        if(!CollectionUtils.isEmpty(imgMap)) {
+            if (winery.getLogoImgId() != null && winery.getLogoImgId() != 0L) {
+                Img logoImg = imgMap.get(winery.getLogoImgId());
+                if (logoImg != null) {
+                    respVO.setWineryLogoUrl(logoImg.getImgUrl());
                 }
             }
-            respVO.setWineryImgUrls(wineryImgUrls);
+            if (winery.getBannerImgId() != null && winery.getBannerImgId() != 0L) {
+                Img bannerImg = imgMap.get(respVO.getBannerImgId());
+                if (bannerImg != null) {
+                    respVO.setBannerImgUrl(bannerImg.getImgUrl());
+                }
+            }
+            if (!CollectionUtils.isEmpty(wineryImgIds)) {
+                List<String> wineryImgUrls = new ArrayList<String>();
+                for (Long wineryImgId : wineryImgIds) {
+                    Img wineryImg = imgMap.get(wineryImgId);
+                    if (wineryImg != null) {
+                        wineryImgUrls.add(wineryImg.getImgUrl());
+                    }
+                }
+                respVO.setWineryImgUrls(wineryImgUrls);
+            }
         }
     }
 

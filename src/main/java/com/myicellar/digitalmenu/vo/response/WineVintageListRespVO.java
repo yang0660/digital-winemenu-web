@@ -29,14 +29,14 @@ public class WineVintageListRespVO {
     @ApiModelProperty(value = "酒精度放大100倍")
     private  Long alcoholBps;
 
-    @ApiModelProperty(value = "酒精度-百分比")
+    @ApiModelProperty(value = "酒精度%")
     private  BigDecimal acohol;
 
     @ApiModelProperty(value = "口味")
-    private String descriptors;
+    private String descriptor;
 
     @ApiModelProperty(value = "葡萄")
-    private String graps;
+    private String grap;
 
     @ApiModelProperty(value = "酒评")
     private  String tastingNote;

@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.*;
-import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.WineMapperExt;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
@@ -30,7 +29,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     @Autowired
     private WineService wineService;
     @Autowired
-    private ImgMapperExt imgMapperExt;
+    private ImgService imgService;
     @Autowired
     private OriginService originService;
     @Autowired
@@ -63,13 +62,15 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
                 imgIds.add(respVO.getWineImgId());
             }
 
-            Map<Long,Img> imgMap = imgMapperExt.selectImgMapByIds(imgIds);
-            page.getItems().forEach(respVO ->{
-                Img img = imgMap.get(respVO.getWineImgId());
-                if(img!=null){
-                    respVO.setWineImgUrl(img.getImgUrl());
-                }
-            });
+            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)) {
+                page.getItems().forEach(respVO -> {
+                    Img img = imgMap.get(respVO.getWineImgId());
+                    if (img != null) {
+                        respVO.setWineImgUrl(img.getImgUrl());
+                    }
+                });
+            }
         }
 
         return page;
@@ -79,7 +80,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         WineRespVO respVO = mapper.selectByWineId(wineId);
         if(respVO!=null){
             if(respVO.getWineImgId()!=null) {
-                Img img = imgMapperExt.selectByPrimaryKey(respVO.getWineImgId());
+                Img img = imgService.selectByPrimaryKey(respVO.getWineImgId());
                 if (img != null) {
                     respVO.setWineImgUrl(img.getImgUrl());
                 }
