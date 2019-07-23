@@ -17,7 +17,7 @@ public class FoodReqVO {
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 
-    @ApiModelProperty(value = "美食ID")
+    @ApiModelProperty(value = "美食ID-新增时不需要传")
     private Long foodId;
 
     @ApiModelProperty(value = "美食分类ID")
@@ -43,18 +43,6 @@ public class FoodReqVO {
 
     @ApiModelProperty(value = "美食启用")
     private Byte isEnabled;
-
-    @ApiModelProperty(value = "创建者")
-    private Long createdBy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createdAt;
-
-    @ApiModelProperty(value = "更新者")
-    private Long updatedBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
 
     @ApiModelProperty(value = "美食描述-英")
     private String notePlainEng;

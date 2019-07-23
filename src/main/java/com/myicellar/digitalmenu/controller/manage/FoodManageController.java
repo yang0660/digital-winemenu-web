@@ -7,10 +7,8 @@ import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.FoodDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
-import com.myicellar.digitalmenu.vo.request.FoodReqVO;
-import com.myicellar.digitalmenu.vo.request.FoodUpdateReqVO;
+import com.myicellar.digitalmenu.vo.request.*;
+import com.myicellar.digitalmenu.vo.response.FoodDetailBGRespVO;
 import com.myicellar.digitalmenu.vo.response.FoodRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -50,6 +48,20 @@ public class FoodManageController {
         return ResultVO.success(page);
     }
 
+    /**
+     * 后台美食详情
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryFoodDetail")
+    @AuthIgnore
+    @ApiOperation("后台美食详情")
+    public ResultVO<FoodDetailBGRespVO> queryFoodDetail(@RequestBody FoodDetailReqVO reqVO) {
+        FoodDetailBGRespVO result = foodService.queryFoodDetail(reqVO.getFoodId());
+        return ResultVO.success(result);
+    }
+
 
 
     /**
@@ -61,7 +73,7 @@ public class FoodManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO<FoodRespVO> add(@RequestBody FoodReqVO reqVO) {
+    public ResultVO<Integer> add(@RequestBody FoodReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
         Food food = ConvertUtils.convert(reqVO,Food.class);
@@ -71,14 +83,7 @@ public class FoodManageController {
         Date now = new Date();
         food.setCreatedAt(now);
         food.setUpdatedAt(now);
-        int i = foodService.insertSelective(food);
-        if(i==0){
-            return ResultVO.validError("save is failed!");
-        }
-
-        FoodRespVO respVO = ConvertUtils.convert(food,FoodRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(foodService.insertSelective(food));
     }
 
     /**
@@ -90,21 +95,14 @@ public class FoodManageController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody FoodUpdateReqVO reqVO) {
+    public ResultVO<Integer> update(@RequestBody FoodUpdateReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         Food food = ConvertUtils.convert(reqVO,Food.class);
         food.setUpdatedBy(0L);
         Date now = new Date();
         food.setUpdatedAt(now);
-        int i = foodService.updateByPrimaryKeySelective(food);
-        if(i==0){
-            return ResultVO.validError("update is failed!");
-        }
-
-        FoodRespVO respVO = ConvertUtils.convert(food,FoodRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(foodService.updateByPrimaryKeySelective(food));
     }
 
     /**
@@ -116,16 +114,8 @@ public class FoodManageController {
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody FoodDeleteReqVO reqVO) {
-        if(reqVO.getFoodId()==null || reqVO.getFoodId()==0L){
-            return ResultVO.validError("parameter is invalid！");
-        }
-        int i = foodService.deleteByPrimaryKey(reqVO.getFoodId());
-        if(i==0){
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+    public ResultVO<Integer> update(@RequestBody FoodDeleteReqVO reqVO) {
+        return ResultVO.success(foodService.deleteByPrimaryKey(reqVO.getFoodId()));
     }
 
     /**
@@ -154,7 +144,9 @@ public class FoodManageController {
         if(reqVO.getIsRecommend()==null){
             throw new BizException("isRecommend cannot be empty!");
         }
-
+        if (foodService.queryFoodName(reqVO.getFoodNameEng())!=null){
+            throw new BizException("Food already exist!");
+        }
     }
 
     /**
@@ -183,6 +175,11 @@ public class FoodManageController {
         if(reqVO.getIsRecommend()==null){
             throw new BizException("isRecommend cannot be empty!");
         }
-    }
+        if (foodService.queryFoodName(reqVO.getFoodNameEng())!=null){
+            if (foodService.selectByPrimaryKey(reqVO.getFoodId())!=null){
+                throw new BizException("Food already exist!");
+            }
 
+        }
+    }
 }

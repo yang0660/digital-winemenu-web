@@ -91,4 +91,34 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
     public List<FoodRecommendRespVO> queryFoodListByProductId(Long productId) {
         return mapper.selectFoodListByProductId(productId);
     }
+
+    /**
+     * 后台美食详情查询(根据美食id)
+     * @return
+     */
+    public FoodDetailBGRespVO queryFoodDetail(Long foodId){
+        FoodDetailBGRespVO foodDetail = mapper.selectFoodDetail(foodId);
+        Long imgId = foodDetail.getFoodImgId();
+        if (imgId!=null){
+            Img img = imgService.selectByPrimaryKey(imgId);
+            try {
+                if (img.getImgUrl() != null || img.getImgUrl().length() != 0) {
+                    foodDetail.setImgUrl(img.getImgUrl());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return foodDetail;
+    }
+
+    /**
+     * 后台美食查询(根据美食名称)
+     *
+     * @return
+     */
+    public Food queryFoodName(String foodNameEng) {
+        return mapper.selectByFoodName(foodNameEng);
+
+    }
 }

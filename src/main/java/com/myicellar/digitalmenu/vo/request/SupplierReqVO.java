@@ -33,18 +33,4 @@ public class SupplierReqVO {
 
     @ApiModelProperty(value = "供应商LogoID")
     private Long logoImgId;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
-
-    @ApiModelProperty(value = "更新者")
-    private Long updatedBy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createdAt;
-
-    @ApiModelProperty(value = "创建者")
-    private Long createdBy;
-
-
 }

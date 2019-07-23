@@ -279,4 +279,8 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
 
         return page;
     }
+
+    public List<Product> queryListBySupplierId(Long supplierId) {
+        return mapper.selectListBySupplierId(supplierId);
+    }
 }

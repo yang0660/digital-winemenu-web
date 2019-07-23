@@ -161,4 +161,48 @@
     </select>
 
 
+    <resultMap id="FoodDetailBGMap" type="com.myicellar.digitalmenu.vo.response.FoodDetailBGRespVO">
+        <result column="supplier_name_eng" jdbcType="VARCHAR" property="supplierNameEng"/>
+        <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng"/>
+        <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>
+        <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
+        <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
+        <result column="food_img_id" jdbcType="BIGINT" property="foodImgId"/>
+        <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng"/>
+        <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs"/>
+        <result column="note_plain_cht" jdbcType="LONGVARCHAR" property="notePlainCht"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="is_recommend" jdbcType="TINYINT" property="isRecommend"/>
+    </resultMap>
+
+    <select id="selectFoodDetail" parameterType="long" resultMap="FoodDetailBGMap">
+        select
+            sup.supplier_name_eng,
+            fty.food_type_name_eng,
+            food.food_name_eng,
+            food.food_name_chs,
+            food.food_name_cht,
+            food.food_img_id,
+            food.note_plain_eng,
+            food.note_plain_chs,
+            food.note_plain_cht,
+            food.price,
+            food.is_recommend
+        from t_food food
+        left join t_food_type fty on food.food_type_id = fty.food_type_id
+        left join t_supplier sup on fty.supplier_id = sup.supplier_id
+        where
+            food.food_id = #{foodId}
+    </select>
+
+    <select id="selectByFoodName" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_food
+        where
+            food_name_eng = #{foodNameEng}
+        limit 1
+    </select>
+
+
 </mapper>

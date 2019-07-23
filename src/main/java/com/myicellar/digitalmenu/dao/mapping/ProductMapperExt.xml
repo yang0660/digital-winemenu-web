@@ -424,4 +424,11 @@
     </if>
   </sql>
 
+  <select id="selectListBySupplierId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where supplier_id = #{supplierId}
+  </select>
+
 </mapper>

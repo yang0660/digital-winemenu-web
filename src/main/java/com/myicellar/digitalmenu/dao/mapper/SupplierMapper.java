@@ -14,4 +14,6 @@ public interface SupplierMapper extends Mapper<Supplier>{
     int updateByPrimaryKeySelective(Supplier record);
 
     int updateByPrimaryKey(Supplier record);
+
+    Supplier selectBySupplierName(String supplierName);
 }

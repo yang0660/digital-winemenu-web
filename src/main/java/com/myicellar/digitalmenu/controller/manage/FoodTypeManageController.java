@@ -91,7 +91,7 @@ public class FoodTypeManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO<FoodTypeRespVO> add(@RequestBody FoodTypeReqVO reqVO) {
+    public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
@@ -101,14 +101,8 @@ public class FoodTypeManageController {
         Date now = new Date();
         foodType.setCreatedAt(now);
         foodType.setUpdatedAt(now);
-        int i = foodTypeService.insertSelective(foodType);
-        if(i==0){
-            return ResultVO.validError("save is failed!");
-        }
 
-        FoodTypeRespVO respVO = ConvertUtils.convert(foodType,FoodTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(foodTypeService.insertSelective(foodType));
     }
 
     /**
@@ -120,21 +114,14 @@ public class FoodTypeManageController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody FoodTypeReqVO reqVO) {
+    public ResultVO<Integer> update(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
         foodType.setUpdatedBy(0L);
         Date now = new Date();
         foodType.setUpdatedAt(now);
-        int i = foodTypeService.updateByPrimaryKeySelective(foodType);
-        if(i==0){
-            return ResultVO.validError("update is failed!");
-        }
-
-        FoodTypeRespVO respVO = ConvertUtils.convert(foodType,FoodTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(foodTypeService.updateByPrimaryKeySelective(foodType));
     }
 
     /**
@@ -146,15 +133,10 @@ public class FoodTypeManageController {
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody FoodTypeDeleteReqVO reqVO) {
+    public ResultVO<Integer> update(@RequestBody FoodTypeDeleteReqVO reqVO) {
         //参数校验
         checkDeleteParam(reqVO);
-        int i = foodTypeService.deleteByPrimaryKey(reqVO.getFoodTypeId());
-        if(i==0){
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+        return ResultVO.success(foodTypeService.deleteByPrimaryKey(reqVO.getFoodTypeId()));
     }
 
     /**
@@ -168,8 +150,11 @@ public class FoodTypeManageController {
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        checkFoodTypeName(reqVO);
+        if (foodTypeService.queryByFoodTypeName(reqVO.getFoodTypeNameEng()) != null) {
+            throw new BizException("foodType already exists!");
+        }
     }
+
 
     /**
      * 校验修改参数
@@ -185,7 +170,11 @@ public class FoodTypeManageController {
         if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        checkFoodTypeName(reqVO);
+        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng())!=null){
+            if (foodService.selectByPrimaryKey(reqVO.getFoodTypeId())!=null){
+                throw new BizException("Food Type already exist!");
+            }
+        }
     }
 
     /**
@@ -201,16 +190,6 @@ public class FoodTypeManageController {
         }
     }
 
-    /**
-     * 校验美食分类名称是否已存在
-     * @param reqVO
-     */
-    public void checkFoodTypeName(FoodTypeReqVO reqVO){
-        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
-        foodTypes.forEach(foodType -> {if (foodType.getFoodTypeNameEng().equals(reqVO.getFoodTypeNameEng())){
-            throw new BizException("foodTypeNameEng already exists!");
-        }
-        });
-    }
+
 
 }

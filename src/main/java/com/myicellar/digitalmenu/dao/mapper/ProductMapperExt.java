@@ -30,4 +30,6 @@ public interface ProductMapperExt extends ProductMapper {
     Long selectCount(WinePageReqVO reqVO);
 
     List<ProductListRespVO> selectList(WinePageReqVO reqVO);
+
+    List<Product> selectListBySupplierId(Long supplierId);
 }

@@ -7,7 +7,11 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
+import com.myicellar.digitalmenu.dao.entity.FoodType;
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
+import com.myicellar.digitalmenu.service.FoodTypeService;
+import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -55,6 +59,12 @@ public class SupplierManageController {
 
     @Autowired
     private SupplierService supplierService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private FoodTypeService foodTypeService;
 
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
@@ -108,7 +118,8 @@ public class SupplierManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO<SupplierRespVO> add(@RequestBody SupplierReqVO reqVO) {
+    public ResultVO<Integer> add(@RequestBody SupplierReqVO reqVO) {
+
         //参数校验
         checkNewParam(reqVO);
         Supplier supplier = ConvertUtils.convert(reqVO,Supplier.class);
@@ -118,14 +129,7 @@ public class SupplierManageController {
         Date now = new Date();
         supplier.setCreatedAt(now);
         supplier.setUpdatedAt(now);
-        int i = supplierService.insertSelective(supplier);
-        if(i==0){
-            return ResultVO.validError("save is failed!");
-        }
-
-        SupplierRespVO respVO = ConvertUtils.convert(supplier,SupplierRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(supplierService.insertSelective(supplier));
     }
 
     /**
@@ -137,21 +141,14 @@ public class SupplierManageController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody SupplierReqVO reqVO) {
+    public ResultVO<Integer> update(@RequestBody SupplierReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         Supplier supplier = ConvertUtils.convert(reqVO,Supplier.class);
         supplier.setUpdatedBy(0L);
         Date now = new Date();
         supplier.setUpdatedAt(now);
-        int i = supplierService.updateByPrimaryKeySelective(supplier);
-        if(i==0){
-            return ResultVO.validError("update is failed!");
-        }
-
-        SupplierRespVO respVO = ConvertUtils.convert(supplier,SupplierRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(supplierService.updateByPrimaryKeySelective(supplier));
     }
 
     /**
@@ -163,16 +160,10 @@ public class SupplierManageController {
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody SupplierDeleteReqVO reqVO) {
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            return ResultVO.validError("parameter is invalid！");
-        }
-        int i = supplierService.deleteByPrimaryKey(reqVO.getSupplierId());
-        if(i==0){
-            return ResultVO.validError("delete is failed!");
-        }
+    public ResultVO<Integer> update(@RequestBody SupplierDeleteReqVO reqVO) {
+        checkDeleteParam(reqVO);
+        return ResultVO.success(supplierService.deleteByPrimaryKey(reqVO.getSupplierId()));
 
-        return ResultVO.success("delete is success!");
     }
 
     /**
@@ -181,10 +172,19 @@ public class SupplierManageController {
      */
     private void checkNewParam(SupplierReqVO reqVO){
         if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
-            throw new BizException("supplier cannot be empty!");
+            throw new BizException("SupplierId cannot be empty!");
         }
         if(StringUtils.isEmpty(reqVO.getSupplierNameEng())){
             throw new BizException("SupplierNameEng cannot be empty!");
+        }
+        if(reqVO.getLogoImgId()==null || reqVO.getLogoImgId()==0L){
+            throw new BizException("Logo cannot be empty!");
+        }
+        if(reqVO.getType()==null || reqVO.getType()==0){
+            throw new BizException("Type cannot be empty!");
+        }
+        if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
+            throw new BizException("Supplier already exist!");
         }
     }
 
@@ -199,7 +199,35 @@ public class SupplierManageController {
         if(StringUtils.isEmpty(reqVO.getSupplierNameEng())){
             throw new BizException("SupplierNameEng cannot be empty!");
         }
+        if(reqVO.getLogoImgId()==null || reqVO.getLogoImgId()==0L){
+            throw new BizException("Logo cannot be empty!");
+        }
+        if(reqVO.getType()==null || reqVO.getType()==0){
+            throw new BizException("Type cannot be empty!");
+        }
+        if(supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null){
+            if (supplierService.selectByPrimaryKey(reqVO.getSupplierId())!=null){
+                throw new BizException("Supplier already exist!");
+            }
+        }
     }
+
+    /**
+     * 校验删除参数
+     * @param reqVO
+     */
+    private void checkDeleteParam(SupplierDeleteReqVO reqVO){
+        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+            throw new BizException("supplierId cannot be empty!");
+        }
+        List<Product> products = productService.queryListBySupplierId(reqVO.getSupplierId());
+        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
+        if (!products.isEmpty() || !foodTypes.isEmpty()) {
+            throw new BizException("Supplier is in use, can not be deleted!");
+        }
+    }
+
+
 
     /**
      * 查询供应商主页二维码

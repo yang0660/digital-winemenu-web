@@ -66,4 +66,8 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
     public List<Supplier> queryListAll(){
         return mapper.selectListAll();
     }
+
+    public Supplier queryBySupplierName(String supplierName) {
+        return mapper.selectBySupplierName(supplierName);
+    }
 }
