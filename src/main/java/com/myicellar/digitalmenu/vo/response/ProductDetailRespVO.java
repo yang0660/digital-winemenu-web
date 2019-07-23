@@ -12,10 +12,10 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "酒品详情返回信息")
-public class PackageDetailRespVO {
+public class ProductDetailRespVO {
 
-    @ApiModelProperty(value = "商品ID")
-    private Long packageId;
+    @ApiModelProperty(value = "productId")
+    private Long productId;
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;

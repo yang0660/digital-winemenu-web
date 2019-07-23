@@ -8,7 +8,10 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.PackageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.response.*;
+import com.myicellar.digitalmenu.vo.response.PackageRespVO;
+import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.ProductListRespVO;
+import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -39,22 +42,7 @@ public class PackageManageController {
     @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<ProductListRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
-        PageResponseVO<ProductListRespVO> page = packageService.queryPageList(reqVO);
-
-        return ResultVO.success(page);
-    }
-
-    /**
-     * 列表查询
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/queryPackageListPage")
-    @AuthIgnore
-    @ApiOperation("列表查询")
-    public ResultVO<PageResponseVO<PackageListRespVO>> queryPackageListPage(@RequestBody WinePageReqVO reqVO) {
-        PageResponseVO<PackageListRespVO> page = packageService.queryPackagePageList(reqVO);
+        PageResponseVO<ProductListRespVO> page = productService.queryPageList(reqVO);
 
         return ResultVO.success(page);
     }

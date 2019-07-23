@@ -11,10 +11,10 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "商品详细信息")
-public class PackageInfoRespVO {
+public class ProductInfoRespVO {
 
-    @ApiModelProperty(value = "商品ID")
-    private Long packageId;
+    @ApiModelProperty(value = "productId")
+    private Long productId;
 
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;

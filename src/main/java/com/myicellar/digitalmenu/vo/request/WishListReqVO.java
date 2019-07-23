@@ -13,6 +13,6 @@ import java.util.List;
 @ApiModel(value = "WISHLIST列表查询参数")
 public class WishListReqVO {
 
-    @ApiModelProperty(value = "商品ID集合")
-    private List<Long> packageIds;
+    @ApiModelProperty(value = "productId集合")
+    private List<Long> productIds;
 }

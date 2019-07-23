@@ -1,7 +1,7 @@
 package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.service.FoodService;
-import com.myicellar.digitalmenu.service.PackageService;
+import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.vo.request.FoodDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodDisplayReqVO;
@@ -30,7 +30,7 @@ public class FoodController {
     private FoodService foodService;
 
     @Autowired
-    private PackageService packageService;
+    private ProductService productService;
 
     /**
      * 推荐美食列表
@@ -95,8 +95,8 @@ public class FoodController {
         if (respVO==null) {
             respVO = new FoodDetailRespVO();
         }else{
-            List<PackageInfoRespVO> packageList = packageService.queryPackageListByFoodId(reqVO.getFoodId());
-            respVO.setPackageList(packageList);
+            List<ProductInfoRespVO> productList = productService.queryProductListByFoodId(reqVO.getFoodId());
+            respVO.setProductList(productList);
         }
 
         return ResultVO.success(respVO);

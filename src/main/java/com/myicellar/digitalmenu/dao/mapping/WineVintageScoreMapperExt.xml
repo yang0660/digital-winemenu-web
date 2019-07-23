@@ -18,7 +18,7 @@
 
   </resultMap>
 
-  <select id="selectScoreByPackageId" parameterType="long" resultMap="ScoreResultMap">
+  <select id="selectScoreByProductId" parameterType="long" resultMap="ScoreResultMap">
     SELECT
 	scr.score_val_str,
 	cts.score_max,
@@ -26,13 +26,12 @@
 	scr.score_name,
 	scr.score_year
     FROM
-	t_package pkg
-	INNER JOIN t_product prod ON prod.product_id = pkg.product_id
-	LEFT JOIN t_wine_vintage_score scr ON scr.wine_id = prod.wine_id
-	AND scr.vintage_tag = prod.vintage_tag
+	t_product prd
+	LEFT JOIN t_wine_vintage_score scr ON scr.wine_id = prd.wine_id
+	AND scr.vintage_tag = prd.vintage_tag
 	LEFT JOIN t_critics cts ON scr.wine_critics_id = cts.wine_critics_id
     WHERE
-	pkg.package_id =#{packageId}
+	prd.product_id =#{productId}
   </select>
 
     <delete id="deleteByWineIdAndVintage">

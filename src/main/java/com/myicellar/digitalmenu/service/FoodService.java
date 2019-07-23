@@ -88,7 +88,7 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
      *
      * @return
      */
-    public List<FoodRecommendRespVO> queryFoodListByPackageId(Long packageId) {
-        return mapper.selectFoodListByPackageId(packageId);
+    public List<FoodRecommendRespVO> queryFoodListByProductId(Long productId) {
+        return mapper.selectFoodListByProductId(productId);
     }
 }

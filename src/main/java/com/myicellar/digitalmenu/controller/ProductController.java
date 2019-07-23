@@ -2,10 +2,11 @@ package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.PackageService;
+import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.WineVintageScoreService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
-import com.myicellar.digitalmenu.vo.request.PackageDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
@@ -25,18 +26,17 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/app/package")
-@Api(tags = "用户页面", description = "/app/package")
-public class PackageController {
-
+@RequestMapping("/app/product")
+@Api(tags = "用户页面", description = "/app/product")
+public class ProductController {
     @Autowired
-    private PackageService packageService;
-
+    private ProductService productService;
     @Autowired
     private FoodService foodService;
-
     @Autowired
     private WineVintageScoreService wineVintageScoreService;
+    @Autowired
+    private PackageService packageService;
 
     /**
      * 推荐酒品列表
@@ -44,13 +44,13 @@ public class PackageController {
      * @param
      * @return
      */
-    @PostMapping(value = "/queryRecomendPackageList")
+    @PostMapping(value = "/queryRecomendProductList")
     @AuthIgnore
     @ApiOperation("DRINK页-推荐酒品列表")
-    public ResultVO<List<PackageInfoRespVO>> queryRecomendPackageList(@RequestBody SupplierIdReqVO reqVO) {
-        List<PackageInfoRespVO> list = packageService.queryRecomendPackageList(reqVO.getSupplierId());
+    public ResultVO<List<ProductInfoRespVO>> queryRecomendPackageList(@RequestBody SupplierIdReqVO reqVO) {
+        List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
         if(CollectionUtils.isEmpty(list)){
-            list = new ArrayList<PackageInfoRespVO>();
+            list = new ArrayList<ProductInfoRespVO>();
         }
 
         return ResultVO.success(list);
@@ -62,13 +62,13 @@ public class PackageController {
      * @param
      * @return
      */
-    @PostMapping(value = "/queryPackageListByIds")
+    @PostMapping(value = "/queryProductListByIds")
     @AuthIgnore
     @ApiOperation("WISHLIST酒品列表")
-    public ResultVO<List<PackageInfoRespVO>> queryPackageListByIds(@RequestBody WishListReqVO reqVO) {
-        List<PackageInfoRespVO> list = new ArrayList<PackageInfoRespVO>();
-        if(!CollectionUtils.isEmpty(reqVO.getPackageIds())) {
-            list = packageService.queryPackageListByIds(reqVO.getPackageIds());
+    public ResultVO<List<ProductInfoRespVO>> queryPackageListByIds(@RequestBody WishListReqVO reqVO) {
+        List<ProductInfoRespVO> list = new ArrayList<ProductInfoRespVO>();
+        if(!CollectionUtils.isEmpty(reqVO.getProductIds())) {
+            list = productService.queryProductListByIds(reqVO.getProductIds());
         }
 
         return ResultVO.success(list);
@@ -103,9 +103,9 @@ public class PackageController {
     @PostMapping(value = "/queryDetailById")
     @AuthIgnore
     @ApiOperation("酒品详情")
-    public ResultVO<PackageDetailRespVO> queryDetailById(@RequestBody PackageDetailReqVO reqVO) {
-        PackageDetailRespVO respVO = packageService.queryDetailById(reqVO.getPackageId());
-        List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreListByPackageId(reqVO.getPackageId());
+    public ResultVO<ProductDetailRespVO> queryDetailById(@RequestBody ProductDetailReqVO reqVO) {
+        ProductDetailRespVO respVO = productService.queryDetailById(reqVO.getProductId());
+        List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreListByProductId(reqVO.getProductId());
         if(!CollectionUtils.isEmpty(scoreList)) {
             respVO.setScoreList(scoreList);
         }
@@ -119,11 +119,11 @@ public class PackageController {
      * @param
      * @return
      */
-    @PostMapping(value = "/queryFoodListByPackageId")
+    @PostMapping(value = "/queryFoodListByProductId")
     @AuthIgnore
     @ApiOperation("酒品详情-美食推荐列表")
-    public ResultVO<List<FoodRecommendRespVO>> queryFoodListByPackageId(@RequestBody PackageDetailReqVO reqVO) {
-        List<FoodRecommendRespVO> list = foodService.queryFoodListByPackageId(reqVO.getPackageId());
+    public ResultVO<List<FoodRecommendRespVO>> queryFoodListByProductId(@RequestBody ProductDetailReqVO reqVO) {
+        List<FoodRecommendRespVO> list = foodService.queryFoodListByProductId(reqVO.getProductId());
         return ResultVO.success(list);
     }
 
@@ -137,7 +137,7 @@ public class PackageController {
     @AuthIgnore
     @ApiOperation("筛选结果总量统计")
     public ResultVO<Long> queryResultCount(@RequestBody PackageFilterReqVO reqVO) {
-        Long count = packageService.queryResultCount(reqVO);
+        Long count = productService.queryResultCount(reqVO);
 
         return ResultVO.success(count);
     }
@@ -151,8 +151,8 @@ public class PackageController {
     @PostMapping(value = "/queryResultPage")
     @AuthIgnore
     @ApiOperation("筛选结果页列表")
-    public ResultVO<PageResponseVO<PackageInfoRespVO>> queryResultPage(@RequestBody PackageFilterReqVO reqVO) {
-        PageResponseVO<PackageInfoRespVO> page = packageService.queryResultPage(reqVO);
+    public ResultVO<PageResponseVO<ProductInfoRespVO>> queryResultPage(@RequestBody PackageFilterReqVO reqVO) {
+        PageResponseVO<ProductInfoRespVO> page = productService.queryResultPage(reqVO);
 
         return ResultVO.success(page);
     }

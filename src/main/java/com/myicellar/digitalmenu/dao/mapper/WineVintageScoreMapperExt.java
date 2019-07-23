@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface WineVintageScoreMapperExt extends WineVintageScoreMapper{
-    List<ScoreRespVO> selectScoreByPackageId(Long packageId);
+    List<ScoreRespVO> selectScoreByProductId(Long productId);
 
     Integer deleteByWineIdAndVintage(@Param("wineId") Long wineId,
                                      @Param("vintageTag") Long vintageTag);

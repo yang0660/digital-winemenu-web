@@ -45,6 +45,6 @@ public class FoodDetailRespVO {
     private String notePlainCht;
 
     @ApiModelProperty(value = "酒品推荐列表")
-    private List<PackageInfoRespVO> packageList;
+    private List<ProductInfoRespVO> productList;
 
 }

@@ -9,8 +9,8 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "package详情请求信息")
-public class PackageDetailReqVO {
+public class ProductDetailReqVO {
 
-    @ApiModelProperty(value = "PackageId")
-    private Long packageId;
+    @ApiModelProperty(value = "productId")
+    private Long productId;
 }
