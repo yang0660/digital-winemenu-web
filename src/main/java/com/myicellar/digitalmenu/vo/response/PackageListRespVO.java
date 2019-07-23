@@ -24,6 +24,9 @@ public class PackageListRespVO {
     @ApiModelProperty(value = "年份标签")
     private Long vintageTag;
 
+    @ApiModelProperty(value = "年份描述")
+    private String vintageName;
+
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 

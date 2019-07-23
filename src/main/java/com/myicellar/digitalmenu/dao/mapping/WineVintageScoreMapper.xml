@@ -6,26 +6,29 @@
     <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
     <result column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId" />
     <result column="score_val_num" jdbcType="SMALLINT" property="scoreValNum" />
+    <result column="score_val_str" jdbcType="VARCHAR" property="scoreValStr" />
+    <result column="score_name" jdbcType="VARCHAR" property="scoreName" />
     <result column="score_year" jdbcType="SMALLINT" property="scoreYear" />
     <result column="tasted_at" jdbcType="TIMESTAMP" property="tastedAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    <result column="score_val_str" jdbcType="LONGVARCHAR" property="scoreValStr" />
-    <result column="score_name" jdbcType="LONGVARCHAR" property="scoreName" />
     <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain" />
   </resultMap>
+  <sql id="Base_Column_List">
+    wine_id, vintage_tag, wine_critics_id, score_val_num, score_val_str, score_name, score_year, tasted_at, updated_at
+  </sql>
   <sql id="Blob_Column_List">
-    score_val_str, score_name, note_plain
+    note_plain
   </sql>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
     insert into t_wine_vintage_score (wine_id, vintage_tag, wine_critics_id, 
-      score_val_num, score_year, tasted_at, 
-      updated_at, score_val_str, score_name, 
+      score_val_num, score_val_str, score_name, 
+      score_year, tasted_at, updated_at, 
       note_plain)
     values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{wineCriticsId,jdbcType=BIGINT}, 
-      #{scoreValNum,jdbcType=SMALLINT}, #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, 
-      #{updatedAt,jdbcType=TIMESTAMP}, #{scoreValStr,jdbcType=LONGVARCHAR}, #{scoreName,jdbcType=LONGVARCHAR}, 
+      #{scoreValNum,jdbcType=SMALLINT}, #{scoreValStr,jdbcType=VARCHAR}, #{scoreName,jdbcType=VARCHAR}, 
+      #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
       #{notePlain,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
@@ -43,6 +46,12 @@
       <if test="scoreValNum != null">
         score_val_num,
       </if>
+      <if test="scoreValStr != null">
+        score_val_str,
+      </if>
+      <if test="scoreName != null">
+        score_name,
+      </if>
       <if test="scoreYear != null">
         score_year,
       </if>
@@ -51,12 +60,6 @@
       </if>
       <if test="updatedAt != null">
         updated_at,
-      </if>
-      <if test="scoreValStr != null">
-        score_val_str,
-      </if>
-      <if test="scoreName != null">
-        score_name,
       </if>
       <if test="notePlain != null">
         note_plain,
@@ -75,6 +78,12 @@
       <if test="scoreValNum != null">
         #{scoreValNum,jdbcType=SMALLINT},
       </if>
+      <if test="scoreValStr != null">
+        #{scoreValStr,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreName != null">
+        #{scoreName,jdbcType=VARCHAR},
+      </if>
       <if test="scoreYear != null">
         #{scoreYear,jdbcType=SMALLINT},
       </if>
@@ -83,12 +92,6 @@
       </if>
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="scoreValStr != null">
-        #{scoreValStr,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="scoreName != null">
-        #{scoreName,jdbcType=LONGVARCHAR},
       </if>
       <if test="notePlain != null">
         #{notePlain,jdbcType=LONGVARCHAR},

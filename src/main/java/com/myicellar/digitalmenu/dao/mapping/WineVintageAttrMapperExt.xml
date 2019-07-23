@@ -41,8 +41,8 @@
     b.attr_name_eng,
     b.attr_name_chs,
     b.attr_name_cht,
-    b.attr_val_num,
-    b.attr_val_str
+    a.attr_val_num,
+    a.attr_val_str
     FROM t_wine_vintage_attr a
     INNER JOIN t_attr b ON a.attr_id = b.attr_id
     AND b.attr_catg_id = #{attrCatgId,jdbcType=BIGINT}

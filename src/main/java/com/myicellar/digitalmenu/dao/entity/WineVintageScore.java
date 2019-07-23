@@ -11,15 +11,15 @@ public class WineVintageScore {
 
     private Short scoreValNum;
 
+    private String scoreValStr;
+
+    private String scoreName;
+
     private Short scoreYear;
 
     private Date tastedAt;
 
     private Date updatedAt;
-
-    private String scoreValStr;
-
-    private String scoreName;
 
     private String notePlain;
 
@@ -55,6 +55,22 @@ public class WineVintageScore {
         this.scoreValNum = scoreValNum;
     }
 
+    public String getScoreValStr() {
+        return scoreValStr;
+    }
+
+    public void setScoreValStr(String scoreValStr) {
+        this.scoreValStr = scoreValStr;
+    }
+
+    public String getScoreName() {
+        return scoreName;
+    }
+
+    public void setScoreName(String scoreName) {
+        this.scoreName = scoreName;
+    }
+
     public Short getScoreYear() {
         return scoreYear;
     }
@@ -77,22 +93,6 @@ public class WineVintageScore {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public String getScoreValStr() {
-        return scoreValStr;
-    }
-
-    public void setScoreValStr(String scoreValStr) {
-        this.scoreValStr = scoreValStr;
-    }
-
-    public String getScoreName() {
-        return scoreName;
-    }
-
-    public void setScoreName(String scoreName) {
-        this.scoreName = scoreName;
     }
 
     public String getNotePlain() {
