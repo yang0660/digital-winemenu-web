@@ -32,6 +32,9 @@ public class WineVintageListRespVO {
     @ApiModelProperty(value = "酒精度%")
     private  BigDecimal acohol;
 
+    @ApiModelProperty(value = "是否是有机葡萄酒：0 否，1 是")
+    private  Byte isOrganicWine;
+
     @ApiModelProperty(value = "口味")
     private String descriptor;
 

@@ -16,6 +16,7 @@
     <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
     <result column="vintage_name" jdbcType="VARCHAR" property="vintageName" />
     <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps" />
+    <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine" />
     <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
