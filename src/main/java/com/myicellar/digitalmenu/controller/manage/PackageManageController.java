@@ -9,10 +9,7 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.PackageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.response.PackageRespVO;
-import com.myicellar.digitalmenu.vo.response.PageResponseVO;
-import com.myicellar.digitalmenu.vo.response.ResultVO;
-import com.myicellar.digitalmenu.vo.response.WineRespVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/manage/pkg")
 @Api(tags = "酒品管理", description = "/manage/pkg")
 public class PackageManageController {
-
-    @Autowired
-    private WineService wineService;
     @Autowired
     private PackageService packageService;
     @Autowired
@@ -45,8 +39,8 @@ public class PackageManageController {
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
     @ApiOperation("列表查询")
-    public ResultVO<PageResponseVO<WineRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
-        PageResponseVO<WineRespVO> page = wineService.queryPageList(reqVO);
+    public ResultVO<PageResponseVO<PackageListRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
+        PageResponseVO<PackageListRespVO> page = packageService.queryPageList(reqVO);
 
         return ResultVO.success(page);
     }

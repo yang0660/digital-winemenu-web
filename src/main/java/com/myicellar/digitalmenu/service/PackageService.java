@@ -9,6 +9,7 @@ import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.PackageReqVO;
 import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
+import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     @Autowired
     private ImgService imgService;
     @Autowired
-    public WineVintageAttrService wineVintageAttrService;
+    private WineVintageAttrService wineVintageAttrService;
     @Autowired
     private ProductService productService;
 
@@ -372,5 +373,22 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
         }
 
         return respVO;
+    }
+
+    /**
+     * 供应商关联酒品列表查询-分页
+     * @param reqVO
+     * @return
+     */
+    public PageResponseVO<PackageListRespVO> queryPageList(WinePageReqVO reqVO){
+        PageResponseVO<PackageListRespVO> page = selectPage(reqVO,mapper:: selectCount, mapper:: selectList);
+
+        if(page!=null && !CollectionUtils.isEmpty(page.getItems())) {
+            List<PackageListRespVO> list = page.getItems();
+
+            page.setItems(list);
+        }
+
+        return page;
     }
 }
