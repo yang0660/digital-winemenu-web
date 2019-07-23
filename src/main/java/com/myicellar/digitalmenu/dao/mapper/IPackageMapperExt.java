@@ -1,12 +1,10 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.IPackage;
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.response.PackageDetailRespVO;
-import com.myicellar.digitalmenu.vo.response.PackageInfoRespVO;
-import com.myicellar.digitalmenu.vo.response.PackageListRespVO;
-import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -37,5 +35,9 @@ public interface IPackageMapperExt extends IPackageMapper{
 
     Long selectCount(WinePageReqVO reqVO);
 
-    List<PackageListRespVO> selectList(WinePageReqVO reqVO);
+    List<ProductListRespVO> selectList(WinePageReqVO reqVO);
+
+    Long selectPackageCount(WinePageReqVO reqVO);
+
+    List<PackageListRespVO> selectPackageList(WinePageReqVO reqVO);
 }

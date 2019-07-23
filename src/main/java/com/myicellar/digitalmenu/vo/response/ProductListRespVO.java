@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -12,10 +11,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "供应商关联酒品列表")
-public class PackageListRespVO {
-    @ApiModelProperty(value = "packageId")
-    private Long packageId;
-
+public class ProductListRespVO {
     @ApiModelProperty(value = "供应商酒品关联ID")
     private Long productId;
 
@@ -69,12 +65,6 @@ public class PackageListRespVO {
 
     @ApiModelProperty(value = "酒品图片")
     private String wineImgUrl;
-
-    @ApiModelProperty(value = "价格")
-    private BigDecimal regularPrice;
-
-    @ApiModelProperty(value = "容量")
-    private String volumeTypeName;
 
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;

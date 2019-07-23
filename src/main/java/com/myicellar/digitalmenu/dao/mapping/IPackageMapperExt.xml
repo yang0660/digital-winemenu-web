@@ -388,7 +388,7 @@
      and volume_type_id = #{volumeTypeId}
   </delete>
 
-  <resultMap id="ListResultMap" type="com.myicellar.digitalmenu.vo.response.PackageListRespVO">
+  <resultMap id="ProductResultMap" type="com.myicellar.digitalmenu.vo.response.ProductListRespVO">
     <id column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="wine_id" jdbcType="BIGINT" property="wineId" />
     <result column="wine_name" jdbcType="VARCHAR" property="wineName" />
@@ -424,7 +424,7 @@
   </select>
 
   <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO"
-          resultMap="ListResultMap">
+          resultMap="ProductResultMap">
     SELECT DISTINCT
     prd.product_id,
     wvtg.vintage_tag,
@@ -459,6 +459,106 @@
   </select>
 
   <sql id="where">
+    <if test="wineTypeId!=null and wineTypeId!=0">
+      and win.wine_type_id = #{wineTypeId}
+    </if>
+    <if test="wineryId!=null and wineryId!=0">
+      and win.winery_id = #{wineryId}
+    </if>
+    <if test="countryId!=null and countryId!=0">
+      and org.country_id = #{countryId}
+    </if>
+    <if test="wineOriginId!=null and wineOriginId!=0">
+      and win.wine_origin_id = #{wineOriginId}
+    </if>
+    <if test="wineNameEng!=null and wineNameEng!=''">
+      and (win.wine_name_eng like concat('%',#{wineNameEng},'%')
+      or win.wine_name_cht like concat('%',#{wineNameEng},'%')
+      or win.wine_name_chs like concat('%',#{wineNameEng},'%')
+      )
+    </if>
+  </sql>
+
+  <resultMap id="PackageResultMap" type="com.myicellar.digitalmenu.vo.response.PackageListRespVO">
+    <id column="package_id" jdbcType="BIGINT" property="packageId" />
+    <id column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="wine_id" jdbcType="BIGINT" property="wineId" />
+    <result column="wine_name" jdbcType="VARCHAR" property="wineName" />
+    <result column="vintage_tag" jdbcType="BIGINT" property="vintageTage" />
+    <result column="vintage_name" jdbcType="VARCHAR" property="vintageName" />
+    <result column="wine_type_id" jdbcType="BIGINT" property="wineTypeId" />
+    <result column="wine_type_name" jdbcType="VARCHAR" property="wineTypeName" />
+    <result column="wine_origin_id" jdbcType="BIGINT" property="wineOriginId" />
+    <result column="wine_origin_name" jdbcType="VARCHAR" property="wineOriginName" />
+    <result column="country_id" jdbcType="BIGINT" property="countryId" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+    <result column="winery_id" jdbcType="BIGINT" property="wineryId" />
+    <result column="winery_name" jdbcType="VARCHAR" property="wineryName" />
+    <result column="wine_img_id" jdbcType="BIGINT" property="wineImgId" />
+    <result column="regular_price" jdbcType="DECIMAL" property="regularPrice" />
+    <result column="volume_type_name" jdbcType="VARCHAR" property="volumeTypeName" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <select id="selectPackageCount" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO" resultType="long">
+    SELECT
+    COUNT(DISTINCT prd.package_id)
+    FROM
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    LEFT JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
+    AND prd.vintage_tag = wvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    INNER JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
+    LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
+    <where>
+      <include refid="packageWhere" />
+    </where>
+  </select>
+
+  <select id="selectPackageList" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO"
+          resultMap="PackageResultMap">
+    SELECT DISTINCT
+    pkg.package_id,
+    prd.product_id,
+    wvtg.vintage_tag,
+    wvtg.vintage_name,
+    win.wine_id,
+    win.wine_name_eng AS wine_name,
+    wvtg.is_organic_wine,
+    prd.is_recommend,
+    win.wine_type_id,
+    wtype.wine_type_name_eng AS wine_type_name,
+    win.wine_origin_id,
+    org.region_name_eng AS wine_origin_name,
+    org.country_id,
+    ctry.country_name_eng AS country_name,
+    win.winery_id,
+    wry.winery_name_eng AS winery_name,
+    win.wine_img_id,
+    pkg.regular_price,
+    voltype.type_name_eng AS volume_type_name,
+    win.updated_at
+    FROM
+    t_package pkg
+    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    LEFT JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
+    AND prd.vintage_tag = wvtg.vintage_tag
+    INNER JOIN t_wine win ON prd.wine_id = win.wine_id
+    INNER JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
+    LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
+    LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
+    LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
+    LEFT JOIN t_volume_type voltype ON voltype.volume_type_id = pkg.volume_type_id
+    <where>
+      <include refid="packageWhere" />
+    </where>
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <sql id="packageWhere">
     <if test="wineTypeId!=null and wineTypeId!=0">
       and win.wine_type_id = #{wineTypeId}
     </if>

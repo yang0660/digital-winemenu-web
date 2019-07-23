@@ -380,11 +380,64 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
      * @param reqVO
      * @return
      */
-    public PageResponseVO<PackageListRespVO> queryPageList(WinePageReqVO reqVO){
-        PageResponseVO<PackageListRespVO> page = selectPage(reqVO,mapper:: selectCount, mapper:: selectList);
+    public PageResponseVO<ProductListRespVO> queryPageList(WinePageReqVO reqVO){
+        PageResponseVO<ProductListRespVO> page = selectPage(reqVO,mapper:: selectCount, mapper:: selectList);
+
+        if(page!=null && !CollectionUtils.isEmpty(page.getItems())) {
+            List<ProductListRespVO> list = page.getItems();
+            List<Long> imgIds = new ArrayList<Long>();
+            for(ProductListRespVO respVO : list){
+                if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L) {
+                    imgIds.add(respVO.getWineImgId());
+                }
+            }
+            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)) {
+                list.forEach(respVO ->{
+                    if (respVO.getWineImgId() != null && respVO.getWineImgId() != 0L) {
+                        Img img = imgMap.get(respVO.getWineImgId());
+                        if (img != null) {
+                            respVO.setWineImgUrl(img.getImgUrl());
+                        }
+                    }
+                });
+
+            }
+
+            page.setItems(list);
+        }
+
+        return page;
+    }
+
+    /**
+     * 供应商关联酒品列表查询-分页
+     * @param reqVO
+     * @return
+     */
+    public PageResponseVO<PackageListRespVO> queryPackagePageList(WinePageReqVO reqVO){
+        PageResponseVO<PackageListRespVO> page = selectPage(reqVO,mapper:: selectPackageCount, mapper:: selectPackageList);
 
         if(page!=null && !CollectionUtils.isEmpty(page.getItems())) {
             List<PackageListRespVO> list = page.getItems();
+            List<Long> imgIds = new ArrayList<Long>();
+            for(PackageListRespVO respVO : list){
+                if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L) {
+                    imgIds.add(respVO.getWineImgId());
+                }
+            }
+            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if(!CollectionUtils.isEmpty(imgMap)) {
+                list.forEach(respVO ->{
+                    if (respVO.getWineImgId() != null && respVO.getWineImgId() != 0L) {
+                        Img img = imgMap.get(respVO.getWineImgId());
+                        if (img != null) {
+                            respVO.setWineImgUrl(img.getImgUrl());
+                        }
+                    }
+                });
+
+            }
 
             page.setItems(list);
         }
