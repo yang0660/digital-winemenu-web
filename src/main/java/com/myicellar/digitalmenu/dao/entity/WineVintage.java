@@ -11,6 +11,8 @@ public class WineVintage {
 
     private Long alcoholBps;
 
+    private Byte isOrganicWine;
+
     private Date updatedAt;
 
     private String tastingNote;
@@ -45,6 +47,14 @@ public class WineVintage {
 
     public void setAlcoholBps(Long alcoholBps) {
         this.alcoholBps = alcoholBps;
+    }
+
+    public Byte getIsOrganicWine() {
+        return isOrganicWine;
+    }
+
+    public void setIsOrganicWine(Byte isOrganicWine) {
+        this.isOrganicWine = isOrganicWine;
     }
 
     public Date getUpdatedAt() {

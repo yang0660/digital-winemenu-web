@@ -6,13 +6,14 @@
     <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
     <result column="vintage_name" jdbcType="VARCHAR" property="vintageName" />
     <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps" />
+    <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
     <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote" />
   </resultMap>
   <sql id="Base_Column_List">
-    wine_id, vintage_tag, vintage_name, alcohol_bps, updated_at
+    wine_id, vintage_tag, vintage_name, alcohol_bps, is_organic_wine, updated_at
   </sql>
   <sql id="Blob_Column_List">
     tasting_note
@@ -33,11 +34,11 @@
   </delete>
   <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
     insert into t_wine_vintage (wine_id, vintage_tag, vintage_name, 
-      alcohol_bps, updated_at, tasting_note
-      )
+      alcohol_bps, is_organic_wine, updated_at, 
+      tasting_note)
     values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{vintageName,jdbcType=VARCHAR}, 
-      #{alcoholBps,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{tastingNote,jdbcType=LONGVARCHAR}
-      )
+      #{alcoholBps,jdbcType=BIGINT}, #{isOrganicWine,jdbcType=TINYINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{tastingNote,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
     insert into t_wine_vintage
@@ -53,6 +54,9 @@
       </if>
       <if test="alcoholBps != null">
         alcohol_bps,
+      </if>
+      <if test="isOrganicWine != null">
+        is_organic_wine,
       </if>
       <if test="updatedAt != null">
         updated_at,
@@ -74,6 +78,9 @@
       <if test="alcoholBps != null">
         #{alcoholBps,jdbcType=BIGINT},
       </if>
+      <if test="isOrganicWine != null">
+        #{isOrganicWine,jdbcType=TINYINT},
+      </if>
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
@@ -91,6 +98,9 @@
       <if test="alcoholBps != null">
         alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
       </if>
+      <if test="isOrganicWine != null">
+        is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
+      </if>
       <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
@@ -105,6 +115,7 @@
     update t_wine_vintage
     set vintage_name = #{vintageName,jdbcType=VARCHAR},
       alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
+      is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       tasting_note = #{tastingNote,jdbcType=LONGVARCHAR}
     where wine_id = #{wineId,jdbcType=BIGINT}
@@ -114,6 +125,7 @@
     update t_wine_vintage
     set vintage_name = #{vintageName,jdbcType=VARCHAR},
       alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
+      is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where wine_id = #{wineId,jdbcType=BIGINT}
       and vintage_tag = #{vintageTag,jdbcType=BIGINT}

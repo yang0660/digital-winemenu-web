@@ -29,6 +29,9 @@ public class WineVintageRespVO {
     @ApiModelProperty(value = "酒精度")
     private  BigDecimal acoholBps;
 
+    @ApiModelProperty(value = "是否是有机葡萄酒：0 否，1 是")
+    private  Byte isOrganicWine;
+
     @ApiModelProperty(value = "口味属性ID列表")
     private List<Long> descriptorIds;
 
