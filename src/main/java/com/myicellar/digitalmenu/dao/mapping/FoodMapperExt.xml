@@ -152,12 +152,11 @@
         img.small_img_url
         FROM
         t_food fd
-        INNER JOIN t_food_package fdpkg ON fd.food_id = fdpkg.food_id
-        INNER JOIN t_package pkg ON pkg.package_id = fdpkg.package_id
+        INNER JOIN t_food_product fdprd ON fd.food_id = fdprd.food_id
         LEFT JOIN t_food_type fdtype ON fd.food_type_id = fdtype.food_type_id
         LEFT JOIN t_img img ON fd.food_img_id = img.img_id
         WHERE
-        pkg.product_id = #{productId}
+        fdprd.product_id = #{productId}
     </select>
 
 

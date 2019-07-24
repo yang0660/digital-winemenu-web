@@ -11,8 +11,8 @@
 
   <select id="selectPriceRange" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO">
     SELECT
-    max( a.regular_price ) AS minPackagePrice,
-    max( a.regular_price ) AS maxPackagePrice
+    max( a.regular_price ) AS minProductPrice,
+    max( a.regular_price ) AS maxProductPrice
     FROM
     t_package a
     INNER JOIN t_product b ON a.product_id = b.product_id

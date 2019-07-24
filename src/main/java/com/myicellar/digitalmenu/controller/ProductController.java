@@ -85,10 +85,10 @@ public class ProductController {
     @ApiOperation("查询酒品价格区间（根据供应商ID）")
     public ResultVO<PackagePriceRangeRespVO> queryPriceRange(@RequestBody SupplierIdReqVO reqVO) {
         PackagePriceRangeRespVO respVO = packageService.queryPriceRange(reqVO.getSupplierId());
-        if(respVO==null || respVO.getMaxPackagePrice().equals(new BigDecimal(0.00))){
+        if(respVO==null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))){
             respVO = new PackagePriceRangeRespVO();
-        }else if(respVO.getMaxPackagePrice().equals(respVO.getMinPackagePrice())){
-            respVO.setMinPackagePrice(new BigDecimal(0.00));
+        }else if(respVO.getMaxProductPrice().equals(respVO.getMinProductPrice())){
+            respVO.setMinProductPrice(new BigDecimal(0.00));
         }
 
         return ResultVO.success(respVO);

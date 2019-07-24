@@ -12,10 +12,6 @@ public class IPackage {
 
     private Long volumeTypeId;
 
-    private BigDecimal glassPrice;
-
-    private Long glassVolumeTypeId;
-
     private Date createdAt;
 
     private Long createdBy;
@@ -54,22 +50,6 @@ public class IPackage {
 
     public void setVolumeTypeId(Long volumeTypeId) {
         this.volumeTypeId = volumeTypeId;
-    }
-
-    public BigDecimal getGlassPrice() {
-        return glassPrice;
-    }
-
-    public void setGlassPrice(BigDecimal glassPrice) {
-        this.glassPrice = glassPrice;
-    }
-
-    public Long getGlassVolumeTypeId() {
-        return glassVolumeTypeId;
-    }
-
-    public void setGlassVolumeTypeId(Long glassVolumeTypeId) {
-        this.glassVolumeTypeId = glassVolumeTypeId;
     }
 
     public Date getCreatedAt() {

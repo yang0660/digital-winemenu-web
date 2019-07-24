@@ -94,9 +94,8 @@
     winvtg.vintage_name,
     win.wine_img_id
     FROM
-    t_package pkg
-    INNER JOIN t_food_package fpkg ON pkg.package_id = fpkg.package_id
-    INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+    t_food_product fdprd
+    INNER JOIN t_product prd ON fdprd.product_id = prd.product_id
     INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
     AND prd.vintage_tag = winvtg.vintage_tag
     INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -104,7 +103,7 @@
     LEFT JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
     LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
     WHERE
-    fpkg.food_id = #{foodId}
+    fdprd.food_id = #{foodId}
   </select>
 
   <select id="selectProductListByIds"  resultMap="ProductInfoResultMap">
@@ -162,44 +161,10 @@
     AND prd.vintage_tag = winattr.vintage_tag
     LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
     AND attr.attr_catg_id = 101
-    WHERE
-    prd.supplier_id = #{supplierId}
-    <if test="priceMin!=null and priceMin!=0">
-      AND pkg.regular_price &gt;=#{priceMin}
-    </if>
-    <if test="priceMax!=null and priceMax!=0">
-      AND pkg.regular_price &lt;=#{priceMax}
-    </if>
-    <if test="wineTypeIds!=null and wineTypeIds.size()>0">
-      AND win.wine_type_id IN
-      <foreach collection="wineTypeIds" item="wineTypeId" open="(" close=")" separator=",">
-        #{wineTypeId,jdbcType=BIGINT}
-      </foreach>
-    </if>
-    <if test="countryIds!=null and countryIds.size()>0">
-      AND org.country_id IN
-      <foreach collection="countryIds" item="countryId" open="(" close=")" separator=",">
-        #{countryId,jdbcType=BIGINT}
-      </foreach>
-    </if>
-    <if test="attrIds!=null and attrIds.size()>0">
-      AND attr.attr_id IN
-      <foreach collection="attrIds" item="attrId" open="(" close=")" separator=",">
-        #{attrId,jdbcType=BIGINT}
-      </foreach>
-    </if>
-    <if test="wineOriginIds!=null and wineOriginIds.size()>0">
-      AND win.wine_origin_id IN
-      <foreach collection="wineOriginIds" item="wineOriginId" open="(" close=")" separator=",">
-        #{wineOriginId,jdbcType=BIGINT}
-      </foreach>
-    </if>
-    <if test="isGlassWine==1">
-      AND pkg.glass_price &lt;&gt; 0.00
-    </if>
-    <if test="isOrganicWine==1">
-      AND winvtg.is_organic_wine = 1
-    </if>
+    LEFT JOIN t_volume_type voltype ON voltype.volume_type_id = pkg.volume_type_id
+    <where>
+      <include refid="filterWhere" />
+    </where>
   </select>
 
   <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.PackageFilterReqVO"
@@ -238,7 +203,14 @@
     AND prd.vintage_tag = winattr.vintage_tag
     LEFT JOIN t_attr attr ON winattr.attr_id = attr.attr_id
     AND attr.attr_catg_id = 101
-    WHERE
+    LEFT JOIN t_volume_type voltype ON voltype.volume_type_id = pkg.volume_type_id
+    <where>
+      <include refid="filterWhere" />
+    </where>
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <sql id="filterWhere">
     prd.supplier_id = #{supplierId}
     <if test="priceMin!=null and priceMin!=0">
       AND pkg.regular_price &gt;=#{priceMin}
@@ -271,13 +243,12 @@
       </foreach>
     </if>
     <if test="isGlassWine==1">
-      AND pkg.glass_price &lt;&gt; 0.00
+      AND voltype.type = 1
     </if>
     <if test="isOrganicWine==1">
       AND winvtg.is_organic_wine = 1
     </if>
-    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-  </select>
+  </sql>
 
     <resultMap id="ProductDetailResultMap" type="com.myicellar.digitalmenu.vo.response.ProductDetailRespVO">
         <id column="product_id" jdbcType="BIGINT" property="productId"/>
