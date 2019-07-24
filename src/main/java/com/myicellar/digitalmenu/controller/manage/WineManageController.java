@@ -3,7 +3,7 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Wine;
-import com.myicellar.digitalmenu.service.PackageService;
+import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -33,7 +33,7 @@ public class WineManageController {
     @Autowired
     private WineService wineService;
     @Autowired
-    private PackageService packageService;
+    private ProductManageService packageService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
 

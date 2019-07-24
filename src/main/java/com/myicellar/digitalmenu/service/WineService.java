@@ -44,7 +44,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     @Autowired
     private ProductService productService;
     @Autowired
-    private PackageService packageService;
+    private ProductManageService packageService;
 
     /**
      * 列表查询-分页

@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "供应商关联酒品信息")
-public class PackageRespVO {
+public class ProductRespVO {
     @ApiModelProperty(value = "供应商酒品关联ID")
     private Long productId;
 

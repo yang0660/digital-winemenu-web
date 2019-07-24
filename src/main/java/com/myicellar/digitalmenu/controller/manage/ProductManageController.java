@@ -1,16 +1,15 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.service.PackageService;
-import com.myicellar.digitalmenu.service.ProductService;
+import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
-import com.myicellar.digitalmenu.vo.request.PackageReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.response.PackageRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ProductListRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,13 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/manage/pkg")
-@Api(tags = "酒品管理", description = "/manage/pkg")
-public class PackageManageController {
+@RequestMapping("/manage/product")
+@Api(tags = "酒品管理", description = "/manage/product")
+public class ProductManageController {
     @Autowired
-    private PackageService packageService;
-    @Autowired
-    private ProductService productService;
+    private ProductManageService productManageService;
 
     /**
      * 列表查询
@@ -42,7 +39,7 @@ public class PackageManageController {
     @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<ProductListRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
-        PageResponseVO<ProductListRespVO> page = productService.queryPageList(reqVO);
+        PageResponseVO<ProductListRespVO> page = productManageService.queryPageList(reqVO);
 
         return ResultVO.success(page);
     }
@@ -56,10 +53,10 @@ public class PackageManageController {
     @PostMapping(value = "/queryByProductId")
     @AuthIgnore
     @ApiOperation("详情查询")
-    public ResultVO<PackageRespVO> queryByProductId(@RequestBody ProductReqVO reqVO) {
-        PackageRespVO respVO = packageService.queryByProductId(reqVO.getProductId());
+    public ResultVO<ProductRespVO> queryByProductId(@RequestBody ProductReqVO reqVO) {
+        ProductRespVO respVO = productManageService.queryByProductId(reqVO.getProductId());
         if(reqVO==null){
-            respVO = new PackageRespVO();
+            respVO = new ProductRespVO();
         }
 
         return ResultVO.success(respVO);
@@ -74,10 +71,10 @@ public class PackageManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO<Integer> add(@RequestBody PackageReqVO reqVO) {
+    public ResultVO<Integer> add(@RequestBody ProductManageReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        Integer result = packageService.addNew(reqVO);
+        Integer result = productManageService.addNew(reqVO);
 
         return ResultVO.success(result);
     }
@@ -91,10 +88,10 @@ public class PackageManageController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody PackageReqVO reqVO) {
+    public ResultVO update(@RequestBody ProductManageReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        Integer result = packageService.update(reqVO);
+        Integer result = productManageService.update(reqVO);
 
         return ResultVO.success(result);
     }
@@ -112,7 +109,7 @@ public class PackageManageController {
         if(reqVO.getProductId()==null || reqVO.getProductId()==0L){
             return ResultVO.validError("parameter can not be empty!");
         }
-        Integer result = packageService.deleteByProductId(reqVO.getProductId());
+        Integer result = productManageService.deleteByProductId(reqVO.getProductId());
 
         return ResultVO.success(result);
     }
@@ -121,7 +118,7 @@ public class PackageManageController {
      * 校验新增参数
      * @param reqVO
      */
-    private void checkNewParam(PackageReqVO reqVO){
+    private void checkNewParam(ProductManageReqVO reqVO){
         if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
             throw new BizException("wineId can not be empty!");
         }
@@ -141,7 +138,7 @@ public class PackageManageController {
      * 校验修改参数
      * @param reqVO
      */
-    private void checkUpdateParam(PackageReqVO reqVO){
+    private void checkUpdateParam(ProductManageReqVO reqVO){
         if(reqVO.getProductId()==null || reqVO.getProductId()==0L){
             throw new BizException("productId can not be empty!");
         }
@@ -157,7 +154,7 @@ public class PackageManageController {
         if(CollectionUtils.isEmpty(reqVO.getVolumePrices())){
             throw new BizException("volume and price can not be empty!");
         }
-        Product product = productService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
+        Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
         if(product!=null){
             throw new BizException("wine contains this vintage already!");
         }

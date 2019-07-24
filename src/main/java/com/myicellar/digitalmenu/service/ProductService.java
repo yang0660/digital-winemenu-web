@@ -5,7 +5,6 @@ import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
-import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,6 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
     private ImgService imgService;
     @Autowired
     private WineVintageAttrService wineVintageAttrService;
-
-    public Product selectByWineIdAndVintage(Long wineId, Long vintageTag){
-        return mapper.selectByWineIdAndVintage(wineId, vintageTag);
-    }
 
     /**
      * 查询供应商的推荐酒品列表
@@ -267,41 +262,6 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                 }
             }
         }
-    }
-
-    /**
-     * 供应商关联酒品列表查询-分页
-     * @param reqVO
-     * @return
-     */
-    public PageResponseVO<ProductListRespVO> queryPageList(WinePageReqVO reqVO){
-        PageResponseVO<ProductListRespVO> page = selectPage(reqVO,mapper:: selectCount, mapper:: selectList);
-
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())) {
-            List<ProductListRespVO> list = page.getItems();
-            List<Long> imgIds = new ArrayList<Long>();
-            for(ProductListRespVO respVO : list){
-                if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L) {
-                    imgIds.add(respVO.getWineImgId());
-                }
-            }
-            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)) {
-                list.forEach(respVO ->{
-                    if (respVO.getWineImgId() != null && respVO.getWineImgId() != 0L) {
-                        Img img = imgMap.get(respVO.getWineImgId());
-                        if (img != null) {
-                            respVO.setWineImgUrl(img.getImgUrl());
-                        }
-                    }
-                });
-
-            }
-
-            page.setItems(list);
-        }
-
-        return page;
     }
 
     public List<Product> queryListBySupplierId(Long supplierId) {

@@ -327,7 +327,7 @@
     COUNT(DISTINCT prd.product_id)
     FROM
     t_product prd
-    LEFT JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
+    INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
     AND prd.vintage_tag = wvtg.vintage_tag
     INNER JOIN t_wine win ON prd.wine_id = win.wine_id
     INNER JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
@@ -361,7 +361,7 @@
     win.updated_at
     FROM
     t_product prd
-    LEFT JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
+    INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
     AND prd.vintage_tag = wvtg.vintage_tag
     INNER JOIN t_wine win ON prd.wine_id = win.wine_id
     INNER JOIN t_origin org ON win.wine_origin_id = org.wine_origin_id
@@ -386,6 +386,9 @@
     </if>
     <if test="wineOriginId!=null and wineOriginId!=0">
       and win.wine_origin_id = #{wineOriginId}
+    </if>
+    <if test="vintageTag!=null and vintageTag!=0">
+      and wvtg.vintage_tag = #{vintageTag}
     </if>
     <if test="wineNameEng!=null and wineNameEng!=''">
       and (win.wine_name_eng like concat('%',#{wineNameEng},'%')
