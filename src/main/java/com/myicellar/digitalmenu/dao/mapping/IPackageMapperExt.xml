@@ -9,7 +9,7 @@
     <include refid="com.myicellar.digitalmenu.dao.mapper.IPackageMapper.Base_Column_List"/>
   </sql>
 
-  <select id="selectPriceRange" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO">
+  <select id="selectPriceRange" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO">
     SELECT
     max( a.regular_price ) AS minProductPrice,
     max( a.regular_price ) AS maxProductPrice

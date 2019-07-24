@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 @Data
 @ApiModel(value = "供应商酒品价格区间")
-public class PackagePriceRangeRespVO {
+public class ProductPriceRangeRespVO {
 
     @ApiModelProperty(value = "最低价格")
     private BigDecimal minProductPrice = new BigDecimal(0.00);

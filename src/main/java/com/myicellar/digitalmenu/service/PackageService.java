@@ -6,8 +6,8 @@ import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.PackageReqVO;
 import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
-import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.PackageRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 import com.myicellar.digitalmenu.vo.response.VolumPriceRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PackageService extends BaseService<Long, IPackage, IPackageMapperEx
     @Autowired
     private ProductService productService;
 
-    public PackagePriceRangeRespVO queryPriceRange(Long supplierId){
+    public ProductPriceRangeRespVO queryPriceRange(Long supplierId){
         return mapper.selectPriceRange(supplierId);
     }
 

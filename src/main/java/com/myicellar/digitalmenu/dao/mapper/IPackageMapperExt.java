@@ -1,13 +1,13 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.IPackage;
-import com.myicellar.digitalmenu.vo.response.PackagePriceRangeRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 
 import java.util.List;
 
 public interface IPackageMapperExt extends IPackageMapper{
 
-    PackagePriceRangeRespVO selectPriceRange(Long supplierId);
+    ProductPriceRangeRespVO selectPriceRange(Long supplierId);
 
     IPackage selectByWineId(Long wineId);
 
