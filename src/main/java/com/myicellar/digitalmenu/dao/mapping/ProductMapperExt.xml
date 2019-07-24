@@ -402,4 +402,46 @@
     where supplier_id = #{supplierId}
   </select>
 
+  <select id="selectProductPriceMapByIds" resultType="com.myicellar.digitalmenu.vo.response.ProductPriceRespVO">
+    SELECT
+	product_id as productId,
+	max(
+		CASE
+		WHEN t.type = 0 THEN
+			t.price
+		ELSE
+			0
+		END
+	) AS bottlePrice,
+	max(
+		CASE
+		WHEN t.type = 1 THEN
+			t.price
+		ELSE
+			0
+		END
+	) AS glassPrice
+      FROM
+          (
+              SELECT
+                  pkg.product_id,
+                  ifnull(voltype.type, 0) AS type,
+                  min(
+                      ifnull(pkg.regular_price, 0)
+                  ) AS price
+              FROM
+                  t_package pkg
+              LEFT JOIN t_volume_type voltype ON pkg.volume_type_id = voltype.volume_type_id
+              WHERE pkg.product_id IN
+              <foreach collection="productIds" item="productId" open="(" close=")" separator=",">
+                #{productId,jdbcType=BIGINT}
+              </foreach>
+              GROUP BY
+                  pkg.product_id,
+                  voltype.type
+          ) t
+      GROUP BY
+          t.product_id
+  </select>
+
 </mapper>

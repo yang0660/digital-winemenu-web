@@ -6,9 +6,12 @@ import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductListRespVO;
+import com.myicellar.digitalmenu.vo.response.ProductPriceRespVO;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductMapperExt extends ProductMapper {
 
@@ -19,7 +22,7 @@ public interface ProductMapperExt extends ProductMapper {
 
     List<ProductInfoRespVO> selectProductListByFoodId(Long foodId);
 
-    List<ProductInfoRespVO> selectProductListByIds(@Param("ProductIds") List<Long> ProductIds);
+    List<ProductInfoRespVO> selectProductListByIds(@Param("productIds") List<Long> productIds);
 
     long selectResultCount(PackageFilterReqVO reqVO);
 
@@ -32,4 +35,7 @@ public interface ProductMapperExt extends ProductMapper {
     List<ProductListRespVO> selectList(WinePageReqVO reqVO);
 
     List<Product> selectListBySupplierId(Long supplierId);
+
+    @MapKey("productId")
+    Map<Long,ProductPriceRespVO> selectProductPriceMapByIds(@Param("productIds") List<Long> productIds);
 }

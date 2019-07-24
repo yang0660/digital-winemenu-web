@@ -70,7 +70,9 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
         if(!CollectionUtils.isEmpty(list)){
             List<Long> imgIds = new ArrayList<Long>();
             List<String> wineVintageIds = new ArrayList<String>();
+            List<Long> productIds = new ArrayList<Long>();
             for(ProductInfoRespVO respVO : list){
+                productIds.add(respVO.getProductId());
                 wineVintageIds.add(respVO.getWineId()+"|"+respVO.getVintageTag());
                 if(respVO.getWineImgId()!=null && respVO.getWineImgId()!=0L){
                     imgIds.add(respVO.getWineImgId());
@@ -81,19 +83,19 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
             }
 
             Map<String, WineAttrMapRespVO> wineAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(101L,wineVintageIds);
-            if(!CollectionUtils.isEmpty(wineAttrMap)){
-                list.forEach(info -> {
-                    WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId()+"|"+info.getVintageTag());
-                    if(respVO!=null && !CollectionUtils.isEmpty(respVO.getList())){
+            Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
+            Map<Long,ProductPriceRespVO> priceMap = mapper.selectProductPriceMapByIds(productIds);
+            list.forEach(info -> {
+                //拼装葡萄属性
+                if(!CollectionUtils.isEmpty(wineAttrMap)) {
+                    WineAttrMapRespVO respVO = wineAttrMap.get(info.getWineId() + "|" + info.getVintageTag());
+                    if (respVO != null && !CollectionUtils.isEmpty(respVO.getList())) {
                         List<WineAttrInfoRespVO> attrlist = respVO.getList();
                         info.setVariety(wineVintageAttrService.listToEngStr(attrlist));
                     }
-                });
-            }
-
-            Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)){
-                list.forEach(info -> {
+                }
+                //拼装图片url
+                if(!CollectionUtils.isEmpty(imgMap)){
                     if(info.getWineImgId()!=null && info.getWineImgId()!=0L){
                         Img img = imgMap.get(info.getWineImgId());
                         if(img!=null) {
@@ -108,8 +110,19 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                             info.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
                         }
                     }
-                });
-            }
+                }
+                //拼装酒品价格
+                if(!CollectionUtils.isEmpty(priceMap)){
+                    ProductPriceRespVO priceRespVO = priceMap.get(info.getProductId());
+                    if(priceRespVO!=null){
+                        info.setRegularPrice(priceRespVO.getBottlePrice());
+                        info.setGlassPrice(priceRespVO.getGlassPrice());
+                    }
+                }
+            });
+
+
+
         }
     }
 
@@ -240,6 +253,17 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                         }
                     }
                     respVO.setWineryImgUrls(wineryImgUrls);
+                }
+            }
+            List<Long> productIds = new ArrayList<Long>();
+            productIds.add(respVO.getProductId());
+            Map<Long,ProductPriceRespVO> priceMap = mapper.selectProductPriceMapByIds(productIds);
+            //拼装酒品价格
+            if(!CollectionUtils.isEmpty(priceMap)){
+                ProductPriceRespVO priceRespVO = priceMap.get(respVO.getProductId());
+                if(priceRespVO!=null){
+                    respVO.setRegularPrice(priceRespVO.getBottlePrice());
+                    respVO.setGlassPrice(priceRespVO.getGlassPrice());
                 }
             }
         }
