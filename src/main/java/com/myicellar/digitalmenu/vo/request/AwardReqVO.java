@@ -11,8 +11,8 @@ public class AwardReqVO {
     private Long criticsId;
 
     @ApiModelProperty(value = "颁奖年份")
-    private  Short year;
+    private Short year;
 
     @ApiModelProperty(value = "奖项")
-    private  String scoreName;
+    private String scoreName;
 }

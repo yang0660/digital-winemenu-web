@@ -10,7 +10,7 @@ import com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO;
 
 import java.util.List;
 
-public interface FoodMapperExt extends FoodMapper{
+public interface FoodMapperExt extends FoodMapper {
 
     long selectCount(FoodPageReqVO reqVO);
 

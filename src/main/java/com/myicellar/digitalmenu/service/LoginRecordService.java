@@ -13,10 +13,11 @@ public class LoginRecordService extends BaseService<Long, LoginRecord, LoginReco
 
     /**
      * 保存登录日志
+     *
      * @param userAccount
      * @param message
      */
-    public void saveLoginRecord(UserAccount userAccount, String loginIp, String message){
+    public void saveLoginRecord(UserAccount userAccount, String loginIp, String message) {
         LoginRecord lr = new LoginRecord();
         Long id = snowflakeIdWorker.nextId();
         lr.setId(id);
@@ -32,15 +33,16 @@ public class LoginRecordService extends BaseService<Long, LoginRecord, LoginReco
         lr.setRoleName(roleNameStr.toString());
         mapper.insertSelective(lr);
 
-     }
+    }
 
     /**
      * 保存退出日志
+     *
      * @param userId
      * @param userName
      * @param loginIp
      */
-    public void saveLogoutRecord(Long userId,String userName,String loginIp){
+    public void saveLogoutRecord(Long userId, String userName, String loginIp) {
         LoginRecord lr = new LoginRecord();
         Long id = snowflakeIdWorker.nextId();
         lr.setId(id);

@@ -62,7 +62,7 @@
 
     <select id="selectBySupplierName" parameterType="String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from t_supplier
         where
         supplier_name_eng = #{supplierNameEng}

@@ -9,19 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * ShiroHelper
+ *
  * @author daizhiyue
- * @date 2017年8月16日
  * @version 1.0.0
+ * @date 2017年8月16日
  */
 public class ShiroHelper {
 
-	public static Subject getSubject(HttpServletRequest request, HttpServletResponse response) {
-		Subject subject = ThreadContext.getSubject();
-		if (subject == null) {
-			subject = new WebSubject.Builder(request, response).buildSubject();
-			ThreadContext.bind(subject);
-		}
-		return subject;
-		
-	}
+    public static Subject getSubject(HttpServletRequest request, HttpServletResponse response) {
+        Subject subject = ThreadContext.getSubject();
+        if (subject == null) {
+            subject = new WebSubject.Builder(request, response).buildSubject();
+            ThreadContext.bind(subject);
+        }
+        return subject;
+
+    }
 }

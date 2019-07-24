@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Food;
 
-public interface FoodMapper extends Mapper<Food>{
+public interface FoodMapper extends Mapper<Food> {
     int deleteByPrimaryKey(Long foodId);
 
     int insert(Food record);

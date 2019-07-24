@@ -10,8 +10,8 @@ public enum YesNoEnum {
     public final String desc;
 
     public static YesNoEnum enumOf(Byte value) {
-        for(YesNoEnum e: YesNoEnum.values()) {
-            if(e.value.equals(value)) {
+        for (YesNoEnum e : YesNoEnum.values()) {
+            if (e.value.equals(value)) {
                 return e;
             }
         }

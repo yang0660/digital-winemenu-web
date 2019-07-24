@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "酒品相关信息查询参数-分页")
-public class WinePageReqVO extends PageRequestVO{
+public class WinePageReqVO extends PageRequestVO {
     @ApiModelProperty(value = "酒品ID")
     private Long wineId;
 

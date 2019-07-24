@@ -21,5 +21,5 @@ public interface WineryMapperExt extends WineryMapper {
     Winery queryByWineryId(WineryDetailReqVO reqVO);
 
     @MapKey("wineryNameEng")
-    Map<String,Winery> selectNameMap();
+    Map<String, Winery> selectNameMap();
 }

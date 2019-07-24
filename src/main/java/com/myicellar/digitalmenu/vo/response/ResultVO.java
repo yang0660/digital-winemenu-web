@@ -35,7 +35,6 @@ public class ResultVO<T> {
     private Object errorMessageDetail;
 
 
-
     private ResultVO(String respCode, T data, String message, String errorMessage, Object errorMessageDetail) {
         this.respCode = respCode;
         this.data = data;
@@ -46,17 +45,20 @@ public class ResultVO<T> {
 
     /**
      * 处理成功
+     *
      * @param data 业务数据
      */
     public static <T> ResultVO<T> success(T data) {
         return success(data, "success");
     }
+
     public static <T> ResultVO<T> success(T data, String message) {
         return new ResultVO<>(SUCCESS_CODE, data, message, null, null);
     }
 
     /**
      * 校验错误
+     *
      * @param message 错误消息
      */
     public static <T> ResultVO<T> validError(String message) {

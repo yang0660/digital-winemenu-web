@@ -112,6 +112,6 @@ public class ManageRealm extends AuthorizingRealm implements ApplicationListener
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        
+
     }
 }

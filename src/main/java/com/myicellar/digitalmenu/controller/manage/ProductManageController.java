@@ -55,7 +55,7 @@ public class ProductManageController {
     @ApiOperation("详情查询")
     public ResultVO<ProductRespVO> queryByProductId(@RequestBody ProductReqVO reqVO) {
         ProductRespVO respVO = productManageService.queryByProductId(reqVO.getProductId());
-        if(reqVO==null){
+        if (reqVO == null) {
             respVO = new ProductRespVO();
         }
 
@@ -106,7 +106,7 @@ public class ProductManageController {
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody ProductReqVO reqVO) {
-        if(reqVO.getProductId()==null || reqVO.getProductId()==0L){
+        if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {
             return ResultVO.validError("parameter can not be empty!");
         }
         Integer result = productManageService.deleteByProductId(reqVO.getProductId());
@@ -116,19 +116,20 @@ public class ProductManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    private void checkNewParam(ProductManageReqVO reqVO){
-        if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
+    private void checkNewParam(ProductManageReqVO reqVO) {
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             throw new BizException("wineId can not be empty!");
         }
-        if(reqVO.getVintageTag()==null || reqVO.getVintageTag()==0L){
+        if (reqVO.getVintageTag() == null || reqVO.getVintageTag() == 0L) {
             throw new BizException("vintageTag can not be empty!");
         }
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplierId can not be empty!");
         }
-        if(CollectionUtils.isEmpty(reqVO.getVolumePrices())){
+        if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
             throw new BizException("volume and price can not be empty!");
         }
 
@@ -136,26 +137,27 @@ public class ProductManageController {
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    private void checkUpdateParam(ProductManageReqVO reqVO){
-        if(reqVO.getProductId()==null || reqVO.getProductId()==0L){
+    private void checkUpdateParam(ProductManageReqVO reqVO) {
+        if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {
             throw new BizException("productId can not be empty!");
         }
-        if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             throw new BizException("wineId can not be empty!");
         }
-        if(reqVO.getVintageTag()==null || reqVO.getVintageTag()==0L){
+        if (reqVO.getVintageTag() == null || reqVO.getVintageTag() == 0L) {
             throw new BizException("vintageTag can not be empty!");
         }
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplierId can not be empty!");
         }
-        if(CollectionUtils.isEmpty(reqVO.getVolumePrices())){
+        if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
             throw new BizException("volume and price can not be empty!");
         }
-        Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
-        if(product!=null){
+        Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(), reqVO.getVintageTag());
+        if (product != null) {
             throw new BizException("wine contains this vintage already!");
         }
     }

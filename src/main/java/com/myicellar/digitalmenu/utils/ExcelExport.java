@@ -190,9 +190,10 @@ public class ExcelExport {
             }
         }
     }
+
     //输出EXCEL文件流
     public byte[] writeToByteArray() {
-        try(ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             workbook.write(out);
             return out.toByteArray();
         } catch (Exception e) {

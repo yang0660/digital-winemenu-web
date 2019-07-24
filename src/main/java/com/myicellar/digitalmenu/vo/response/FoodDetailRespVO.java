@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
-* 美食详情
-*/
+ * 美食详情
+ */
 @Data
 @ApiModel(value = "美食详情")
 public class FoodDetailRespVO {

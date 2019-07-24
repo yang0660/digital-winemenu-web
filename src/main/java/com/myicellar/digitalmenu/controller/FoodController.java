@@ -42,12 +42,12 @@ public class FoodController {
     @AuthIgnore
     @ApiOperation("首页-推荐美食列表")
     public ResultVO<List<FoodRecommendRespVO>> queryRecomendFoodList(@RequestBody SupplierIdReqVO reqVO) {
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             return ResultVO.validError("supplierId cannot be empty！");
         }
 
         List<FoodRecommendRespVO> list = foodService.queryRecomendFoodList(reqVO);
-        if(org.apache.commons.collections.CollectionUtils.isEmpty(list)){
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(list)) {
             list = new ArrayList<FoodRecommendRespVO>();
         }
 
@@ -65,7 +65,7 @@ public class FoodController {
     @AuthIgnore
     @ApiOperation("查询美食列表（根据美食分类）")
     public ResultVO<List<FoodDisplayRespVO>> queryListByFoodTypeId(@RequestBody FoodDisplayReqVO reqVO) {
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
             return ResultVO.validError("foodTypeId cannot be empty！");
         }
 
@@ -87,14 +87,14 @@ public class FoodController {
     @AuthIgnore
     @ApiOperation("美食详情")
     public ResultVO<FoodDetailRespVO> queryDetailById(@RequestBody FoodDetailReqVO reqVO) {
-        if(reqVO.getFoodId()==null || reqVO.getFoodId()==0L){
+        if (reqVO.getFoodId() == null || reqVO.getFoodId() == 0L) {
             return ResultVO.validError("foodId cannot be empty！");
         }
 
         FoodDetailRespVO respVO = foodService.queryDetailById(reqVO.getFoodId());
-        if (respVO==null) {
+        if (respVO == null) {
             respVO = new FoodDetailRespVO();
-        }else{
+        } else {
             List<ProductInfoRespVO> productList = productService.queryProductListByFoodId(reqVO.getFoodId());
             respVO.setProductList(productList);
         }

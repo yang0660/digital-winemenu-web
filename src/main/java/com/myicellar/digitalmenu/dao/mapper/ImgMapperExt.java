@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface ImgMapperExt extends ImgMapper{
+public interface ImgMapperExt extends ImgMapper {
     long selectCount(ImgPageReqVO reqVO);
 
     List<Img> selectList(ImgPageReqVO reqVO);
 
     @MapKey("imgId")
-    Map<Long,Img> selectImgMapByIds(@Param("imgIds") List<Long> imgIds);
+    Map<Long, Img> selectImgMapByIds(@Param("imgIds") List<Long> imgIds);
 
     Img selectByTypeIdAndImgName(@Param("imgTypeId") Long imgTypeId, @Param("imgNameEng") String imgNameEng);
 

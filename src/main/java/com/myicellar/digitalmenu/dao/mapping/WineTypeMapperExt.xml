@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineTypeMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineType"
-    extends="com.myicellar.digitalmenu.dao.mapper.WineTypeMapper.BaseResultMap">
-  </resultMap>
-  <sql id="Base_Column_List">
-    <include refid="com.myicellar.digitalmenu.dao.mapper.WineTypeMapper.Base_Column_List"/>
-  </sql>
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineType"
+               extends="com.myicellar.digitalmenu.dao.mapper.WineTypeMapper.BaseResultMap">
+    </resultMap>
+    <sql id="Base_Column_List">
+        <include refid="com.myicellar.digitalmenu.dao.mapper.WineTypeMapper.Base_Column_List"/>
+    </sql>
 
-  <select id="selectList" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_wine_type
-  </select>
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wine_type
+    </select>
 
-  <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
-    SELECT DISTINCT
-    a.wine_type_id,
-    a.wine_type_seo_name,
-    a.wine_type_name_eng,
-    a.wine_type_name_chs,
-    a.wine_type_name_cht,
-    a.mic_rank
-    FROM
-    t_wine_type a
-    INNER JOIN t_wine b ON a.wine_type_id = b.wine_type_id
-    INNER JOIN t_product c ON b.wine_id = c.wine_id
-    WHERE
-    c.supplier_id = #{supplierId}
-    order by a.mic_rank
-  </select>
+    <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        a.wine_type_id,
+        a.wine_type_seo_name,
+        a.wine_type_name_eng,
+        a.wine_type_name_chs,
+        a.wine_type_name_cht,
+        a.mic_rank
+        FROM
+        t_wine_type a
+        INNER JOIN t_wine b ON a.wine_type_id = b.wine_type_id
+        INNER JOIN t_product c ON b.wine_id = c.wine_id
+        WHERE
+        c.supplier_id = #{supplierId}
+        order by a.mic_rank
+    </select>
 
-  <select id="selectNameMap" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_wine_type
-  </select>
+    <select id="selectNameMap" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wine_type
+    </select>
 
 </mapper>

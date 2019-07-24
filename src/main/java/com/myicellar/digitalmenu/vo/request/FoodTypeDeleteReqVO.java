@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 美食分类删除参数
-*/
+ * 美食分类删除参数
+ */
 @Data
 @ApiModel(value = "美食分类删除参数")
 public class FoodTypeDeleteReqVO {

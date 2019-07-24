@@ -1,133 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineVintageAttrMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    <id column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
-    <id column="attr_id" jdbcType="BIGINT" property="attrId" />
-    <result column="attr_val_num" jdbcType="SMALLINT" property="attrValNum" />
-    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    <result column="attr_val_str" jdbcType="LONGVARCHAR" property="attrValStr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    wine_id, vintage_tag, attr_id, attr_val_num, mic_rank, updated_at
-  </sql>
-  <sql id="Blob_Column_List">
-    attr_val_str
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_wine_vintage_attr
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-      and attr_id = #{attrId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="map">
-    delete from t_wine_vintage_attr
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-      and attr_id = #{attrId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    insert into t_wine_vintage_attr (wine_id, vintage_tag, attr_id, 
-      attr_val_num, mic_rank, updated_at, 
-      attr_val_str)
-    values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{attrId,jdbcType=BIGINT}, 
-      #{attrValNum,jdbcType=SMALLINT}, #{micRank,jdbcType=SMALLINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{attrValStr,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    insert into t_wine_vintage_attr
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        wine_id,
-      </if>
-      <if test="vintageTag != null">
-        vintage_tag,
-      </if>
-      <if test="attrId != null">
-        attr_id,
-      </if>
-      <if test="attrValNum != null">
-        attr_val_num,
-      </if>
-      <if test="micRank != null">
-        mic_rank,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="attrValStr != null">
-        attr_val_str,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        #{wineId,jdbcType=BIGINT},
-      </if>
-      <if test="vintageTag != null">
-        #{vintageTag,jdbcType=BIGINT},
-      </if>
-      <if test="attrId != null">
-        #{attrId,jdbcType=BIGINT},
-      </if>
-      <if test="attrValNum != null">
-        #{attrValNum,jdbcType=SMALLINT},
-      </if>
-      <if test="micRank != null">
-        #{micRank,jdbcType=SMALLINT},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="attrValStr != null">
-        #{attrValStr,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    update t_wine_vintage_attr
-    <set>
-      <if test="attrValNum != null">
-        attr_val_num = #{attrValNum,jdbcType=SMALLINT},
-      </if>
-      <if test="micRank != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        <id column="wine_id" jdbcType="BIGINT" property="wineId"/>
+        <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag"/>
+        <id column="attr_id" jdbcType="BIGINT" property="attrId"/>
+        <result column="attr_val_num" jdbcType="SMALLINT" property="attrValNum"/>
+        <result column="mic_rank" jdbcType="SMALLINT" property="micRank"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        <result column="attr_val_str" jdbcType="LONGVARCHAR" property="attrValStr"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        wine_id, vintage_tag, attr_id, attr_val_num, mic_rank, updated_at
+    </sql>
+    <sql id="Blob_Column_List">
+        attr_val_str
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_wine_vintage_attr
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and attr_id = #{attrId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="map">
+        delete from t_wine_vintage_attr
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and attr_id = #{attrId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        insert into t_wine_vintage_attr (wine_id, vintage_tag, attr_id,
+        attr_val_num, mic_rank, updated_at,
+        attr_val_str)
+        values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{attrId,jdbcType=BIGINT},
+        #{attrValNum,jdbcType=SMALLINT}, #{micRank,jdbcType=SMALLINT}, #{updatedAt,jdbcType=TIMESTAMP},
+        #{attrValStr,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        insert into t_wine_vintage_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                wine_id,
+            </if>
+            <if test="vintageTag != null">
+                vintage_tag,
+            </if>
+            <if test="attrId != null">
+                attr_id,
+            </if>
+            <if test="attrValNum != null">
+                attr_val_num,
+            </if>
+            <if test="micRank != null">
+                mic_rank,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="attrValStr != null">
+                attr_val_str,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                #{wineId,jdbcType=BIGINT},
+            </if>
+            <if test="vintageTag != null">
+                #{vintageTag,jdbcType=BIGINT},
+            </if>
+            <if test="attrId != null">
+                #{attrId,jdbcType=BIGINT},
+            </if>
+            <if test="attrValNum != null">
+                #{attrValNum,jdbcType=SMALLINT},
+            </if>
+            <if test="micRank != null">
+                #{micRank,jdbcType=SMALLINT},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="attrValStr != null">
+                #{attrValStr,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        update t_wine_vintage_attr
+        <set>
+            <if test="attrValNum != null">
+                attr_val_num = #{attrValNum,jdbcType=SMALLINT},
+            </if>
+            <if test="micRank != null">
+                mic_rank = #{micRank,jdbcType=SMALLINT},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="attrValStr != null">
+                attr_val_str = #{attrValStr,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and attr_id = #{attrId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        update t_wine_vintage_attr
+        set attr_val_num = #{attrValNum,jdbcType=SMALLINT},
         mic_rank = #{micRank,jdbcType=SMALLINT},
-      </if>
-      <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="attrValStr != null">
-        attr_val_str = #{attrValStr,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-      and attr_id = #{attrId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    update t_wine_vintage_attr
-    set attr_val_num = #{attrValNum,jdbcType=SMALLINT},
-      mic_rank = #{micRank,jdbcType=SMALLINT},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      attr_val_str = #{attrValStr,jdbcType=LONGVARCHAR}
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-      and attr_id = #{attrId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
-    update t_wine_vintage_attr
-    set attr_val_num = #{attrValNum,jdbcType=SMALLINT},
-      mic_rank = #{micRank,jdbcType=SMALLINT},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-      and attr_id = #{attrId,jdbcType=BIGINT}
-  </update>
+        attr_val_str = #{attrValStr,jdbcType=LONGVARCHAR}
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and attr_id = #{attrId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageAttr">
+        update t_wine_vintage_attr
+        set attr_val_num = #{attrValNum,jdbcType=SMALLINT},
+        mic_rank = #{micRank,jdbcType=SMALLINT},
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        and attr_id = #{attrId,jdbcType=BIGINT}
+    </update>
 </mapper>

@@ -1,142 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.FoodTypeMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodType">
-    <id column="food_type_id" jdbcType="BIGINT" property="foodTypeId" />
-    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
-    <result column="food_type_name_chs" jdbcType="VARCHAR" property="foodTypeNameChs" />
-    <result column="food_type_name_cht" jdbcType="VARCHAR" property="foodTypeNameCht" />
-    <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
-    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    food_type_id, supplier_id, food_type_name_chs, food_type_name_cht, food_type_name_eng, 
-    created_by, created_at, updated_by, updated_at
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_food_type
-    where food_type_id = #{foodTypeId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_food_type
-    where food_type_id = #{foodTypeId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
-    insert into t_food_type (food_type_id, supplier_id, food_type_name_chs, 
-      food_type_name_cht, food_type_name_eng, created_by, 
-      created_at, updated_by, updated_at
-      )
-    values (#{foodTypeId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{foodTypeNameChs,jdbcType=VARCHAR}, 
-      #{foodTypeNameCht,jdbcType=VARCHAR}, #{foodTypeNameEng,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
-    insert into t_food_type
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="foodTypeId != null">
-        food_type_id,
-      </if>
-      <if test="supplierId != null">
-        supplier_id,
-      </if>
-      <if test="foodTypeNameChs != null">
-        food_type_name_chs,
-      </if>
-      <if test="foodTypeNameCht != null">
-        food_type_name_cht,
-      </if>
-      <if test="foodTypeNameEng != null">
-        food_type_name_eng,
-      </if>
-      <if test="createdBy != null">
-        created_by,
-      </if>
-      <if test="createdAt != null">
-        created_at,
-      </if>
-      <if test="updatedBy != null">
-        updated_by,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="foodTypeId != null">
-        #{foodTypeId,jdbcType=BIGINT},
-      </if>
-      <if test="supplierId != null">
-        #{supplierId,jdbcType=BIGINT},
-      </if>
-      <if test="foodTypeNameChs != null">
-        #{foodTypeNameChs,jdbcType=VARCHAR},
-      </if>
-      <if test="foodTypeNameCht != null">
-        #{foodTypeNameCht,jdbcType=VARCHAR},
-      </if>
-      <if test="foodTypeNameEng != null">
-        #{foodTypeNameEng,jdbcType=VARCHAR},
-      </if>
-      <if test="createdBy != null">
-        #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="createdAt != null">
-        #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedBy != null">
-        #{updatedBy,jdbcType=BIGINT},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
-    update t_food_type
-    <set>
-      <if test="supplierId != null">
-        supplier_id = #{supplierId,jdbcType=BIGINT},
-      </if>
-      <if test="foodTypeNameChs != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.FoodType">
+        <id column="food_type_id" jdbcType="BIGINT" property="foodTypeId"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId"/>
+        <result column="food_type_name_chs" jdbcType="VARCHAR" property="foodTypeNameChs"/>
+        <result column="food_type_name_cht" jdbcType="VARCHAR" property="foodTypeNameCht"/>
+        <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng"/>
+        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        food_type_id, supplier_id, food_type_name_chs, food_type_name_cht, food_type_name_eng,
+        created_by, created_at, updated_by, updated_at
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_food_type
+        where food_type_id = #{foodTypeId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_food_type
+        where food_type_id = #{foodTypeId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
+        insert into t_food_type (food_type_id, supplier_id, food_type_name_chs,
+        food_type_name_cht, food_type_name_eng, created_by,
+        created_at, updated_by, updated_at
+        )
+        values (#{foodTypeId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{foodTypeNameChs,jdbcType=VARCHAR},
+        #{foodTypeNameCht,jdbcType=VARCHAR}, #{foodTypeNameEng,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT},
+        #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
+        insert into t_food_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="foodTypeId != null">
+                food_type_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="foodTypeNameChs != null">
+                food_type_name_chs,
+            </if>
+            <if test="foodTypeNameCht != null">
+                food_type_name_cht,
+            </if>
+            <if test="foodTypeNameEng != null">
+                food_type_name_eng,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="foodTypeId != null">
+                #{foodTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="foodTypeNameChs != null">
+                #{foodTypeNameChs,jdbcType=VARCHAR},
+            </if>
+            <if test="foodTypeNameCht != null">
+                #{foodTypeNameCht,jdbcType=VARCHAR},
+            </if>
+            <if test="foodTypeNameEng != null">
+                #{foodTypeNameEng,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=BIGINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=BIGINT},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
+        update t_food_type
+        <set>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="foodTypeNameChs != null">
+                food_type_name_chs = #{foodTypeNameChs,jdbcType=VARCHAR},
+            </if>
+            <if test="foodTypeNameCht != null">
+                food_type_name_cht = #{foodTypeNameCht,jdbcType=VARCHAR},
+            </if>
+            <if test="foodTypeNameEng != null">
+                food_type_name_eng = #{foodTypeNameEng,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=BIGINT},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy,jdbcType=BIGINT},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where food_type_id = #{foodTypeId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
+        update t_food_type
+        set supplier_id = #{supplierId,jdbcType=BIGINT},
         food_type_name_chs = #{foodTypeNameChs,jdbcType=VARCHAR},
-      </if>
-      <if test="foodTypeNameCht != null">
         food_type_name_cht = #{foodTypeNameCht,jdbcType=VARCHAR},
-      </if>
-      <if test="foodTypeNameEng != null">
         food_type_name_eng = #{foodTypeNameEng,jdbcType=VARCHAR},
-      </if>
-      <if test="createdBy != null">
         created_by = #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="createdAt != null">
         created_at = #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedBy != null">
         updated_by = #{updatedBy,jdbcType=BIGINT},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where food_type_id = #{foodTypeId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.FoodType">
-    update t_food_type
-    set supplier_id = #{supplierId,jdbcType=BIGINT},
-      food_type_name_chs = #{foodTypeNameChs,jdbcType=VARCHAR},
-      food_type_name_cht = #{foodTypeNameCht,jdbcType=VARCHAR},
-      food_type_name_eng = #{foodTypeNameEng,jdbcType=VARCHAR},
-      created_by = #{createdBy,jdbcType=BIGINT},
-      created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_by = #{updatedBy,jdbcType=BIGINT},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where food_type_id = #{foodTypeId,jdbcType=BIGINT}
-  </update>
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where food_type_id = #{foodTypeId,jdbcType=BIGINT}
+    </update>
 </mapper>

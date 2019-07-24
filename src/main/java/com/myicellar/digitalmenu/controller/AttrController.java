@@ -41,8 +41,8 @@ public class AttrController {
     public ResultVO<List<AttrRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         List<Attr> list = attrService.queryListBySupplierId(reqVO.getSupplierId());
         List<AttrRespVO> resultList = new ArrayList<AttrRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,AttrRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, AttrRespVO.class);
         }
 
         return ResultVO.success(resultList);

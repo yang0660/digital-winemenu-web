@@ -14,10 +14,11 @@ public class CriticsService extends BaseService<Long, Critics, CriticsMapperExt>
 
     /**
      * 列表查询
+     *
      * @return
      */
-    public List<Critics> queryList(){
-        List<Critics> list=mapper.selectList();
+    public List<Critics> queryList() {
+        List<Critics> list = mapper.selectList();
         return list;
     }
 

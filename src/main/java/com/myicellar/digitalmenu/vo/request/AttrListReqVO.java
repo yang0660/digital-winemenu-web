@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 酒品属性列表查询参数
-*/
+ * 酒品属性列表查询参数
+ */
 @Data
 @ApiModel(value = "酒品属性列表查询参数")
 public class AttrListReqVO {

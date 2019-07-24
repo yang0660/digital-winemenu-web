@@ -1,133 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineVintageMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    <id column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
-    <result column="vintage_name" jdbcType="VARCHAR" property="vintageName" />
-    <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps" />
-    <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    wine_id, vintage_tag, vintage_name, alcohol_bps, is_organic_wine, updated_at
-  </sql>
-  <sql id="Blob_Column_List">
-    tasting_note
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_wine_vintage
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="map">
-    delete from t_wine_vintage
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    insert into t_wine_vintage (wine_id, vintage_tag, vintage_name, 
-      alcohol_bps, is_organic_wine, updated_at, 
-      tasting_note)
-    values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{vintageName,jdbcType=VARCHAR}, 
-      #{alcoholBps,jdbcType=BIGINT}, #{isOrganicWine,jdbcType=TINYINT}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{tastingNote,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    insert into t_wine_vintage
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        wine_id,
-      </if>
-      <if test="vintageTag != null">
-        vintage_tag,
-      </if>
-      <if test="vintageName != null">
-        vintage_name,
-      </if>
-      <if test="alcoholBps != null">
-        alcohol_bps,
-      </if>
-      <if test="isOrganicWine != null">
-        is_organic_wine,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="tastingNote != null">
-        tasting_note,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        #{wineId,jdbcType=BIGINT},
-      </if>
-      <if test="vintageTag != null">
-        #{vintageTag,jdbcType=BIGINT},
-      </if>
-      <if test="vintageName != null">
-        #{vintageName,jdbcType=VARCHAR},
-      </if>
-      <if test="alcoholBps != null">
-        #{alcoholBps,jdbcType=BIGINT},
-      </if>
-      <if test="isOrganicWine != null">
-        #{isOrganicWine,jdbcType=TINYINT},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tastingNote != null">
-        #{tastingNote,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    update t_wine_vintage
-    <set>
-      <if test="vintageName != null">
-        vintage_name = #{vintageName,jdbcType=VARCHAR},
-      </if>
-      <if test="alcoholBps != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        <id column="wine_id" jdbcType="BIGINT" property="wineId"/>
+        <id column="vintage_tag" jdbcType="BIGINT" property="vintageTag"/>
+        <result column="vintage_name" jdbcType="VARCHAR" property="vintageName"/>
+        <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps"/>
+        <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        wine_id, vintage_tag, vintage_name, alcohol_bps, is_organic_wine, updated_at
+    </sql>
+    <sql id="Blob_Column_List">
+        tasting_note
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_wine_vintage
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="map">
+        delete from t_wine_vintage
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        insert into t_wine_vintage (wine_id, vintage_tag, vintage_name,
+        alcohol_bps, is_organic_wine, updated_at,
+        tasting_note)
+        values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{vintageName,jdbcType=VARCHAR},
+        #{alcoholBps,jdbcType=BIGINT}, #{isOrganicWine,jdbcType=TINYINT}, #{updatedAt,jdbcType=TIMESTAMP},
+        #{tastingNote,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        insert into t_wine_vintage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                wine_id,
+            </if>
+            <if test="vintageTag != null">
+                vintage_tag,
+            </if>
+            <if test="vintageName != null">
+                vintage_name,
+            </if>
+            <if test="alcoholBps != null">
+                alcohol_bps,
+            </if>
+            <if test="isOrganicWine != null">
+                is_organic_wine,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="tastingNote != null">
+                tasting_note,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                #{wineId,jdbcType=BIGINT},
+            </if>
+            <if test="vintageTag != null">
+                #{vintageTag,jdbcType=BIGINT},
+            </if>
+            <if test="vintageName != null">
+                #{vintageName,jdbcType=VARCHAR},
+            </if>
+            <if test="alcoholBps != null">
+                #{alcoholBps,jdbcType=BIGINT},
+            </if>
+            <if test="isOrganicWine != null">
+                #{isOrganicWine,jdbcType=TINYINT},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tastingNote != null">
+                #{tastingNote,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        update t_wine_vintage
+        <set>
+            <if test="vintageName != null">
+                vintage_name = #{vintageName,jdbcType=VARCHAR},
+            </if>
+            <if test="alcoholBps != null">
+                alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
+            </if>
+            <if test="isOrganicWine != null">
+                is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tastingNote != null">
+                tasting_note = #{tastingNote,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        update t_wine_vintage
+        set vintage_name = #{vintageName,jdbcType=VARCHAR},
         alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
-      </if>
-      <if test="isOrganicWine != null">
         is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
-      </if>
-      <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tastingNote != null">
-        tasting_note = #{tastingNote,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    update t_wine_vintage
-    set vintage_name = #{vintageName,jdbcType=VARCHAR},
-      alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
-      is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      tasting_note = #{tastingNote,jdbcType=LONGVARCHAR}
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
-    update t_wine_vintage
-    set vintage_name = #{vintageName,jdbcType=VARCHAR},
-      alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
-      is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where wine_id = #{wineId,jdbcType=BIGINT}
-      and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-  </update>
+        tasting_note = #{tastingNote,jdbcType=LONGVARCHAR}
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintage">
+        update t_wine_vintage
+        set vintage_name = #{vintageName,jdbcType=VARCHAR},
+        alcohol_bps = #{alcoholBps,jdbcType=BIGINT},
+        is_organic_wine = #{isOrganicWine,jdbcType=TINYINT},
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+    </update>
 </mapper>

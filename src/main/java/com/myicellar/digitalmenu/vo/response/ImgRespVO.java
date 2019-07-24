@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 图片信息
-*/
+ * 图片信息
+ */
 @Data
 @ApiModel(value = "图片信息")
 public class ImgRespVO {

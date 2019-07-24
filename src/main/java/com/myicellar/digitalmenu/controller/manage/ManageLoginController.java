@@ -48,7 +48,6 @@ public class ManageLoginController {
      *
      * @param reqVO
      * @return
-     * @since
      */
     @PostMapping(value = "/login")
     @AuthIgnore
@@ -58,7 +57,7 @@ public class ManageLoginController {
         UserAccount user = userAccountService.queryByUserName(reqVO.getUserName(), UserTypeEnum.EMPLOYEE);
         ResultVO result = PrincipalContext.checkManageUser(user);
 
-        if(result==null) {
+        if (result == null) {
             Subject subject = SecurityUtils.getSubject();
             try {
                 ManageUserNamePasswordToken usernamePasswordDeviceToken = new ManageUserNamePasswordToken(String.valueOf(user.getUserId()), reqVO.getPassword(), DeviceTypeEnum.H5);
@@ -75,18 +74,18 @@ public class ManageLoginController {
                 result = ResultVO.success("登录成功");
                 result.setData(loginRespVO);
             } catch (UnknownAccountException e) {
-                log.error("用户不存在!",e);
+                log.error("用户不存在!", e);
                 result = ResultVO.validError("用户不存在!");
             } catch (AuthenticationException e) {
-                log.error("用户名或密码错误!",e);
+                log.error("用户名或密码错误!", e);
                 result = ResultVO.validError("用户名或密码错误!");
             } catch (Exception e) {
-                log.error("网络异常，请稍后重试!",e);
+                log.error("网络异常，请稍后重试!", e);
                 result = ResultVO.validError("网络异常，请稍后重试!");
             }
 
             //记录登录日志
-            loginRecordService.saveLoginRecord(user,requestIp,result.getMessage());
+            loginRecordService.saveLoginRecord(user, requestIp, result.getMessage());
         }
 
         return result;
@@ -103,7 +102,7 @@ public class ManageLoginController {
         curUser.logout();
         log.info("退出loginout方法");
         //记录退出日志
-        loginRecordService.saveLogoutRecord(userId,userName,requestIp);
+        loginRecordService.saveLogoutRecord(userId, userName, requestIp);
         return ResultVO.success("登出成功");
     }
 

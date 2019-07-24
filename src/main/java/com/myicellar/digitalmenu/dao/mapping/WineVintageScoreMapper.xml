@@ -1,101 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    <result column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag" />
-    <result column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId" />
-    <result column="score_val_num" jdbcType="SMALLINT" property="scoreValNum" />
-    <result column="score_val_str" jdbcType="VARCHAR" property="scoreValStr" />
-    <result column="score_name" jdbcType="VARCHAR" property="scoreName" />
-    <result column="score_year" jdbcType="SMALLINT" property="scoreYear" />
-    <result column="tasted_at" jdbcType="TIMESTAMP" property="tastedAt" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    wine_id, vintage_tag, wine_critics_id, score_val_num, score_val_str, score_name, score_year, tasted_at, updated_at
-  </sql>
-  <sql id="Blob_Column_List">
-    note_plain
-  </sql>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    insert into t_wine_vintage_score (wine_id, vintage_tag, wine_critics_id, 
-      score_val_num, score_val_str, score_name, 
-      score_year, tasted_at, updated_at, 
-      note_plain)
-    values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{wineCriticsId,jdbcType=BIGINT}, 
-      #{scoreValNum,jdbcType=SMALLINT}, #{scoreValStr,jdbcType=VARCHAR}, #{scoreName,jdbcType=VARCHAR}, 
-      #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{notePlain,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
-    insert into t_wine_vintage_score
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        wine_id,
-      </if>
-      <if test="vintageTag != null">
-        vintage_tag,
-      </if>
-      <if test="wineCriticsId != null">
-        wine_critics_id,
-      </if>
-      <if test="scoreValNum != null">
-        score_val_num,
-      </if>
-      <if test="scoreValStr != null">
-        score_val_str,
-      </if>
-      <if test="scoreName != null">
-        score_name,
-      </if>
-      <if test="scoreYear != null">
-        score_year,
-      </if>
-      <if test="tastedAt != null">
-        tasted_at,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="notePlain != null">
-        note_plain,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="wineId != null">
-        #{wineId,jdbcType=BIGINT},
-      </if>
-      <if test="vintageTag != null">
-        #{vintageTag,jdbcType=BIGINT},
-      </if>
-      <if test="wineCriticsId != null">
-        #{wineCriticsId,jdbcType=BIGINT},
-      </if>
-      <if test="scoreValNum != null">
-        #{scoreValNum,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreValStr != null">
-        #{scoreValStr,jdbcType=VARCHAR},
-      </if>
-      <if test="scoreName != null">
-        #{scoreName,jdbcType=VARCHAR},
-      </if>
-      <if test="scoreYear != null">
-        #{scoreYear,jdbcType=SMALLINT},
-      </if>
-      <if test="tastedAt != null">
-        #{tastedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="notePlain != null">
-        #{notePlain,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
+        <result column="wine_id" jdbcType="BIGINT" property="wineId"/>
+        <result column="vintage_tag" jdbcType="BIGINT" property="vintageTag"/>
+        <result column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId"/>
+        <result column="score_val_num" jdbcType="SMALLINT" property="scoreValNum"/>
+        <result column="score_val_str" jdbcType="VARCHAR" property="scoreValStr"/>
+        <result column="score_name" jdbcType="VARCHAR" property="scoreName"/>
+        <result column="score_year" jdbcType="SMALLINT" property="scoreYear"/>
+        <result column="tasted_at" jdbcType="TIMESTAMP" property="tastedAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
+        <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        wine_id, vintage_tag, wine_critics_id, score_val_num, score_val_str, score_name, score_year, tasted_at,
+        updated_at
+    </sql>
+    <sql id="Blob_Column_List">
+        note_plain
+    </sql>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
+        insert into t_wine_vintage_score (wine_id, vintage_tag, wine_critics_id,
+        score_val_num, score_val_str, score_name,
+        score_year, tasted_at, updated_at,
+        note_plain)
+        values (#{wineId,jdbcType=BIGINT}, #{vintageTag,jdbcType=BIGINT}, #{wineCriticsId,jdbcType=BIGINT},
+        #{scoreValNum,jdbcType=SMALLINT}, #{scoreValStr,jdbcType=VARCHAR}, #{scoreName,jdbcType=VARCHAR},
+        #{scoreYear,jdbcType=SMALLINT}, #{tastedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+        #{notePlain,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
+        insert into t_wine_vintage_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                wine_id,
+            </if>
+            <if test="vintageTag != null">
+                vintage_tag,
+            </if>
+            <if test="wineCriticsId != null">
+                wine_critics_id,
+            </if>
+            <if test="scoreValNum != null">
+                score_val_num,
+            </if>
+            <if test="scoreValStr != null">
+                score_val_str,
+            </if>
+            <if test="scoreName != null">
+                score_name,
+            </if>
+            <if test="scoreYear != null">
+                score_year,
+            </if>
+            <if test="tastedAt != null">
+                tasted_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="notePlain != null">
+                note_plain,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wineId != null">
+                #{wineId,jdbcType=BIGINT},
+            </if>
+            <if test="vintageTag != null">
+                #{vintageTag,jdbcType=BIGINT},
+            </if>
+            <if test="wineCriticsId != null">
+                #{wineCriticsId,jdbcType=BIGINT},
+            </if>
+            <if test="scoreValNum != null">
+                #{scoreValNum,jdbcType=SMALLINT},
+            </if>
+            <if test="scoreValStr != null">
+                #{scoreValStr,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreName != null">
+                #{scoreName,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreYear != null">
+                #{scoreYear,jdbcType=SMALLINT},
+            </if>
+            <if test="tastedAt != null">
+                #{tastedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="notePlain != null">
+                #{notePlain,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
 </mapper>

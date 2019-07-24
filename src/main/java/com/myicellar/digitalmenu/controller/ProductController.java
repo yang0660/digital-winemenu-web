@@ -49,7 +49,7 @@ public class ProductController {
     @ApiOperation("DRINK页-推荐酒品列表")
     public ResultVO<List<ProductInfoRespVO>> queryRecomendPackageList(@RequestBody SupplierIdReqVO reqVO) {
         List<ProductInfoRespVO> list = productService.queryRecomendProductList(reqVO.getSupplierId());
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             list = new ArrayList<ProductInfoRespVO>();
         }
 
@@ -67,7 +67,7 @@ public class ProductController {
     @ApiOperation("WISHLIST酒品列表")
     public ResultVO<List<ProductInfoRespVO>> queryPackageListByIds(@RequestBody WishListReqVO reqVO) {
         List<ProductInfoRespVO> list = new ArrayList<ProductInfoRespVO>();
-        if(!CollectionUtils.isEmpty(reqVO.getProductIds())) {
+        if (!CollectionUtils.isEmpty(reqVO.getProductIds())) {
             list = productService.queryProductListByIds(reqVO.getProductIds());
         }
 
@@ -85,9 +85,9 @@ public class ProductController {
     @ApiOperation("查询酒品价格区间（根据供应商ID）")
     public ResultVO<ProductPriceRangeRespVO> queryPriceRange(@RequestBody SupplierIdReqVO reqVO) {
         ProductPriceRangeRespVO respVO = packageService.queryPriceRange(reqVO.getSupplierId());
-        if(respVO==null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))){
+        if (respVO == null || respVO.getMaxProductPrice().equals(new BigDecimal(0.00))) {
             respVO = new ProductPriceRangeRespVO();
-        }else if(respVO.getMaxProductPrice().equals(respVO.getMinProductPrice())){
+        } else if (respVO.getMaxProductPrice().equals(respVO.getMinProductPrice())) {
             respVO.setMinProductPrice(new BigDecimal(0.00));
         }
 
@@ -106,7 +106,7 @@ public class ProductController {
     public ResultVO<ProductDetailRespVO> queryDetailById(@RequestBody ProductDetailReqVO reqVO) {
         ProductDetailRespVO respVO = productService.queryDetailById(reqVO.getProductId());
         List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreListByProductId(reqVO.getProductId());
-        if(!CollectionUtils.isEmpty(scoreList)) {
+        if (!CollectionUtils.isEmpty(scoreList)) {
             respVO.setScoreList(scoreList);
         }
 

@@ -31,17 +31,17 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
     public PageResponseVO<FoodRespVO> queryPageList(FoodPageReqVO reqVO) {
         PageResponseVO<Food> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
         PageResponseVO<FoodRespVO> resultPage = new PageResponseVO<FoodRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,FoodRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, FoodRespVO.class);
             List<FoodRespVO> list = resultPage.getItems();
             List<Long> imgIds = new ArrayList<Long>();
-            for(FoodRespVO respVO : list){
-                if(respVO.getFoodImgId()!=null && respVO.getFoodImgId()!=0L) {
+            for (FoodRespVO respVO : list) {
+                if (respVO.getFoodImgId() != null && respVO.getFoodImgId() != 0L) {
                     imgIds.add(respVO.getFoodImgId());
                 }
             }
-            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)) {
+            Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if (!CollectionUtils.isEmpty(imgMap)) {
                 list.forEach(info -> {
                     if (info.getFoodImgId() != null && info.getFoodImgId() != 0L) {
                         Img img = imgMap.get(info.getFoodImgId());
@@ -59,17 +59,19 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
 
     /**
      * 美食列表查询-根据美食分类id
+     *
      * @return
      */
-    public List<FoodDisplayRespVO> queryListByFoodTypeId(Long foodTypeId){
+    public List<FoodDisplayRespVO> queryListByFoodTypeId(Long foodTypeId) {
         return mapper.selectListByFoodTypeId(foodTypeId);
     }
 
     /**
      * 美食详情查询(根据美食id)
+     *
      * @return
      */
-    public FoodDetailRespVO queryDetailById(Long foodId){
+    public FoodDetailRespVO queryDetailById(Long foodId) {
         FoodDetailRespVO page = mapper.selectDetailById(foodId);
         return page;
     }
@@ -94,12 +96,13 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
 
     /**
      * 后台美食详情查询(根据美食id)
+     *
      * @return
      */
-    public FoodDetailBGRespVO queryFoodDetail(Long foodId){
+    public FoodDetailBGRespVO queryFoodDetail(Long foodId) {
         FoodDetailBGRespVO foodDetail = mapper.selectFoodDetail(foodId);
         Long imgId = foodDetail.getFoodImgId();
-        if (imgId!=null){
+        if (imgId != null) {
             Img img = imgService.selectByPrimaryKey(imgId);
             try {
                 if (img.getImgUrl() != null || img.getImgUrl().length() != 0) {

@@ -13,8 +13,8 @@ public enum UserTypeEnum {
     public final String desc;
 
     public static UserTypeEnum enumOf(Byte value) {
-        for(UserTypeEnum e: UserTypeEnum.values()) {
-            if(e.value.equals(value)) {
+        for (UserTypeEnum e : UserTypeEnum.values()) {
+            if (e.value.equals(value)) {
                 return e;
             }
         }

@@ -54,7 +54,7 @@ public class ImgTypeController {
         List<ImgType> list = imgTypeService.queryListAll();
 
         List<ImgTypeRespVO> resultList = new ArrayList<ImgTypeRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             resultList = ConvertUtils.convert(list, ImgTypeRespVO.class);
         }
 
@@ -74,8 +74,8 @@ public class ImgTypeController {
         PageResponseVO<ImgType> page = imgTypeService.queryPageList(reqVO);
 
         PageResponseVO<ImgTypeRespVO> resultPage = new PageResponseVO<ImgTypeRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,ImgTypeRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, ImgTypeRespVO.class);
         }
 
         return ResultVO.success(resultPage);
@@ -93,7 +93,7 @@ public class ImgTypeController {
     public ResultVO<ImgTypeRespVO> add(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        ImgType imgType = ConvertUtils.convert(reqVO,ImgType.class);
+        ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
         imgType.setImgTypeId(snowflakeIdWorker.nextId());
         imgType.setCreatedUser(0L);
         imgType.setUpdatedUser(0L);
@@ -101,11 +101,11 @@ public class ImgTypeController {
         imgType.setCreatedAt(now);
         imgType.setUpdatedAt(now);
         int i = imgTypeService.insertSelective(imgType);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("save is failed!");
         }
 
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType,ImgTypeRespVO.class);
+        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
         ResultVO resultVO = ResultVO.success("save is success!");
         return resultVO.setData(respVO);
     }
@@ -122,16 +122,16 @@ public class ImgTypeController {
     public ResultVO<ImgTypeRespVO> update(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        ImgType imgType = ConvertUtils.convert(reqVO,ImgType.class);
+        ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
         imgType.setUpdatedUser(0L);
         Date now = new Date();
         imgType.setUpdatedAt(now);
         int i = imgTypeService.updateByPrimaryKeySelective(imgType);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("update is failed!");
         }
 
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType,ImgTypeRespVO.class);
+        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
         ResultVO resultVO = ResultVO.success("update is success!");
         return resultVO.setData(respVO);
     }
@@ -141,24 +141,23 @@ public class ImgTypeController {
      *
      * @param reqVO
      * @return
-     * @since
      */
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody ImgTypeDeleteReqVO reqVO) {
-        if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
+        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
         }
         ImgPageReqVO imgPageReqVO = new ImgPageReqVO();
         imgPageReqVO.setImgTypeId(reqVO.getImgTypeId());
         Long imgCount = imgService.queryCount(imgPageReqVO);
-        if(imgCount>0){
+        if (imgCount > 0) {
             return ResultVO.validError("It already contains images,Can not be deleted！");
         }
 
         int i = imgTypeService.deleteByPrimaryKey(reqVO.getImgTypeId());
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("delete is failed!");
         }
 
@@ -167,31 +166,33 @@ public class ImgTypeController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    public void checkNewParam(ImgTypeReqVO reqVO){
-        if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
+    public void checkNewParam(ImgTypeReqVO reqVO) {
+        if (StringUtils.isEmpty(reqVO.getImgTypeNameEng())) {
             throw new BizException("imgTypeNameEng cannot be empty!");
         }
         ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
-        if(imgType!=null){
+        if (imgType != null) {
             throw new BizException("imgTypeNameEng is already exists!");
         }
     }
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    public void checkUpdateParam(ImgTypeReqVO reqVO){
-        if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
+    public void checkUpdateParam(ImgTypeReqVO reqVO) {
+        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
             throw new BizException("imgTypeId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getImgTypeNameEng())){
+        if (StringUtils.isEmpty(reqVO.getImgTypeNameEng())) {
             throw new BizException("imgTypeNameEng cannot be empty!");
         }
         ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
-        if(imgType!=null && !imgType.getImgTypeId().equals(reqVO.getImgTypeId())){
+        if (imgType != null && !imgType.getImgTypeId().equals(reqVO.getImgTypeId())) {
             throw new BizException("imgTypeNameEng is already exists!");
         }
     }

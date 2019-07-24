@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 二维码生成返回参数
-*/
+ * 二维码生成返回参数
+ */
 @Data
 @ApiModel(value = "二维码生成返回参数")
 public class QrcodeRespVO {

@@ -15,9 +15,10 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
 
     /**
      * 列表查询-分页
+     *
      * @return
      */
-    public PageResponseVO<FoodType> queryPageList(FoodTypePageReqVO reqVO){
+    public PageResponseVO<FoodType> queryPageList(FoodTypePageReqVO reqVO) {
         PageResponseVO<FoodType> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         return page;
@@ -25,9 +26,10 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
 
     /**
      * 列表查询
+     *
      * @return
      */
-    public List<FoodType> queryListBysupplierId(Long supplierId){
+    public List<FoodType> queryListBysupplierId(Long supplierId) {
         return mapper.selectListBySupplierId(supplierId);
     }
 

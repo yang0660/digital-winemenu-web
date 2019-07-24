@@ -20,6 +20,6 @@ public class ProductPriceRespVO {
     private BigDecimal bottlePrice = new BigDecimal(0.00);
 
     @ApiModelProperty(value = "最低杯装价格")
-    private BigDecimal glassPrice =  new BigDecimal(0.00);
+    private BigDecimal glassPrice = new BigDecimal(0.00);
 
 }

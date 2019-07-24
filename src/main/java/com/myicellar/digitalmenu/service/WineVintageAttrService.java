@@ -17,21 +17,21 @@ import java.util.Map;
 @Slf4j
 public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, WineVintageAttrMapperExt> {
 
-    public Map<String,WineAttrMapRespVO> queryAttrMapByWineVintageIds(Long attrCtgId,List<String> wineVintageIds){
-        Map<String,WineAttrMapRespVO> resultMap = new HashMap<String,WineAttrMapRespVO>();
-        if(!CollectionUtils.isEmpty(wineVintageIds)){
-            resultMap = mapper.selectAttrMapByWineVintageIds(attrCtgId,wineVintageIds);
+    public Map<String, WineAttrMapRespVO> queryAttrMapByWineVintageIds(Long attrCtgId, List<String> wineVintageIds) {
+        Map<String, WineAttrMapRespVO> resultMap = new HashMap<String, WineAttrMapRespVO>();
+        if (!CollectionUtils.isEmpty(wineVintageIds)) {
+            resultMap = mapper.selectAttrMapByWineVintageIds(attrCtgId, wineVintageIds);
         }
 
         return resultMap;
     }
 
-    public String listToEngStr(List<WineAttrInfoRespVO> list){
+    public String listToEngStr(List<WineAttrInfoRespVO> list) {
         StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameEng())) {
+            for (WineAttrInfoRespVO info : list) {
+                if (!StringUtils.isEmpty(info.getAttrNameEng())) {
                     if (i != 0) {
                         subStr.append(", ");
                     }
@@ -43,12 +43,12 @@ public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, W
         return subStr.toString();
     }
 
-    public String listToChsStr(List<WineAttrInfoRespVO> list){
+    public String listToChsStr(List<WineAttrInfoRespVO> list) {
         StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameChs())) {
+            for (WineAttrInfoRespVO info : list) {
+                if (!StringUtils.isEmpty(info.getAttrNameChs())) {
                     if (i != 0) {
                         subStr.append(", ");
                     }
@@ -60,12 +60,12 @@ public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, W
         return subStr.toString();
     }
 
-    public String listToChtStr(List<WineAttrInfoRespVO> list){
+    public String listToChtStr(List<WineAttrInfoRespVO> list) {
         StringBuffer subStr = new StringBuffer("");
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for(WineAttrInfoRespVO info : list){
-                if(!StringUtils.isEmpty(info.getAttrNameCht())) {
+            for (WineAttrInfoRespVO info : list) {
+                if (!StringUtils.isEmpty(info.getAttrNameCht())) {
                     if (i != 0) {
                         subStr.append(", ");
                     }
@@ -77,7 +77,7 @@ public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, W
         return subStr.toString();
     }
 
-    public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag){
+    public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag) {
         return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
     }
 }

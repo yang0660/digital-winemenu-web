@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.List;
 
 /**
-* WISHLIST列表查询参数
-*/
+ * WISHLIST列表查询参数
+ */
 @Data
 @ApiModel(value = "WISHLIST列表查询参数")
 public class WishListReqVO {

@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
-* 美食分类信息
-*/
+ * 美食分类信息
+ */
 @Data
 @ApiModel(value = "美食分类信息")
 public class FoodTypeRespVO {

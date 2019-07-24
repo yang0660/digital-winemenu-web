@@ -32,21 +32,21 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         PageResponseVO<Supplier> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         PageResponseVO<SupplierRespVO> resultPage = new PageResponseVO<SupplierRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,SupplierRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, SupplierRespVO.class);
             List<SupplierRespVO> list = resultPage.getItems();
             List<Long> imgIds = new ArrayList<Long>();
-            for(SupplierRespVO respVO : list){
-                if(respVO.getLogoImgId()!=null && respVO.getLogoImgId()!=0L) {
+            for (SupplierRespVO respVO : list) {
+                if (respVO.getLogoImgId() != null && respVO.getLogoImgId() != 0L) {
                     imgIds.add(respVO.getLogoImgId());
                 }
             }
             Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)){
+            if (!CollectionUtils.isEmpty(imgMap)) {
                 list.forEach(info -> {
-                    if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
+                    if (info.getLogoImgId() != null && info.getLogoImgId() != 0L) {
                         Img logoImg = imgMap.get(info.getLogoImgId());
-                        if(logoImg!=null) {
+                        if (logoImg != null) {
                             info.setLogoImgUrl(logoImg.getImgUrl());
                         }
                     }
@@ -63,7 +63,7 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
      *
      * @return
      */
-    public List<Supplier> queryListAll(){
+    public List<Supplier> queryListAll() {
         return mapper.selectListAll();
     }
 

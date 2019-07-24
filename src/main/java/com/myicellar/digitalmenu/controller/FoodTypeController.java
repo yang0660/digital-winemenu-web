@@ -39,14 +39,14 @@ public class FoodTypeController {
     @AuthIgnore
     @ApiOperation("美食分类列表查询")
     public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             return ResultVO.validError("supplierId cannot be empty！");
         }
 
         List<FoodType> list = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, FoodTypeRespVO.class);
         }
 
         return ResultVO.success(resultList);

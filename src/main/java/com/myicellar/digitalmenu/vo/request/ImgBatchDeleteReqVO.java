@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.List;
 
 /**
-* 图片批量删除参数
-*/
+ * 图片批量删除参数
+ */
 @Data
 @ApiModel(value = "图片批量删除参数")
 public class ImgBatchDeleteReqVO {

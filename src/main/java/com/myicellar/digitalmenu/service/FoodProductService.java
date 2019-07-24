@@ -23,7 +23,7 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
         Integer result = 0;
         List<Long> oldProductIds = mapper.selectListByFoodId(reqVO.getFoodId());
         List<Long> newProductIds = reqVO.getProductIds();
-        if(!CollectionUtils.isEmpty(newProductIds)){
+        if (!CollectionUtils.isEmpty(newProductIds)) {
             FoodProduct fp = new FoodProduct();
             fp.setFoodId(reqVO.getFoodId());
             fp.setCreatedBy(1L);
@@ -31,8 +31,8 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
             Date now = new Date();
             fp.setCreatedAt(now);
             fp.setUpdatedAt(now);
-            for(Long productId : newProductIds){
-                if(!oldProductIds.contains(productId)){
+            for (Long productId : newProductIds) {
+                if (!oldProductIds.contains(productId)) {
                     fp.setProductId(productId);
                     mapper.insertSelective(fp);
                     result++;
@@ -51,9 +51,9 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
     public Integer delete(FoodProductReqVO reqVO) {
         Integer result = 0;
         List<Long> newProductIds = reqVO.getProductIds();
-        if(!CollectionUtils.isEmpty(newProductIds)){
-            for(Long productId : newProductIds){
-                mapper.deleteByPrimaryKey(reqVO.getFoodId(),productId);
+        if (!CollectionUtils.isEmpty(newProductIds)) {
+            for (Long productId : newProductIds) {
+                mapper.deleteByPrimaryKey(reqVO.getFoodId(), productId);
                 result++;
             }
         }

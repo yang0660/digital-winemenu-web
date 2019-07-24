@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myicellar.digitalmenu.dao.mapper.UserBehaviorMapperExt">
+
+    <select id="selectSupplierReportCount" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="long">
+      SELECT count(0)
+        FROM (SELECT
+              ub.supplier_id  as supplierId,
+              sp.supplier_name_eng as supplierName,
+              DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+              count(0) as num
+              FROM t_user_behavior ub
+              INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+              WHERE ub.type = 1
+              AND ub.supplier_id = #{supplierId}
+              AND ub.upload_at &gt;= #{startDate}
+              AND ub.upload_at &lt; #{endDate}
+              GROUP BY supplierId,
+              supplierName,
+              thisDate) t
+  </select>
+
+    <select id="selectSupplierReport" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="com.myicellar.digitalmenu.vo.response.SupplierReportRespVO">
+    SELECT
+	ub.supplier_id  as supplierId,
+	sp.supplier_name_eng as supplierName,
+	DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+	count(0) as num
+    FROM t_user_behavior ub
+    INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+    WHERE ub.type = 1
+    AND ub.supplier_id = #{supplierId}
+    AND ub.upload_at &gt;= #{startDate}
+    AND ub.upload_at &lt; #{endDate}
+    GROUP BY supplierId,
+              supplierName,
+              thisDate
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+    <select id="selectProductClickReportCount" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="long">
+    SELECT count(0)
+        FROM (SELECT
+              ub.supplier_id as supplierId,
+              sp.supplier_name_eng as supplierName,
+              ub.product_id as productId,
+              win.wine_id as wineId,
+              win.wine_name_eng as wineName,
+              wvtg.vintage_name as vintageName,
+              DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+              count(0) as num
+              FROM
+              t_user_behavior ub
+              INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+              INNER JOIN t_product prd ON ub.supplier_id = prd.supplier_id AND ub.product_id = prd.product_id
+              INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
+              INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
+              WHERE ub.type = 2
+              AND ub.supplier_id = #{supplierId}
+              AND ub.upload_at &gt;= #{startDate}
+              AND ub.upload_at &lt; #{endDate}
+              GROUP BY supplierId,
+              supplierName,
+              productId,
+              wineId,
+              wineName,
+              vintageName,
+              thisDate) t
+  </select>
+
+    <select id="selectProductClickReport" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="com.myicellar.digitalmenu.vo.response.ProductReportRespVO">
+    SELECT
+	ub.supplier_id as supplierId,
+	sp.supplier_name_eng as supplierName,
+    ub.product_id as productId,
+    win.wine_id as wineId,
+    win.wine_name_eng as wineName,
+    wvtg.vintage_name as vintageName,
+	DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+	count(0) as num
+    FROM
+        t_user_behavior ub
+    INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+    INNER JOIN t_product prd ON ub.supplier_id = prd.supplier_id AND ub.product_id = prd.product_id
+    INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
+    INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
+    WHERE ub.type = 2
+    AND ub.supplier_id = #{supplierId}
+    AND ub.upload_at &gt;= #{startDate}
+    AND ub.upload_at &lt; #{endDate}
+    GROUP BY supplierId,
+              supplierName,
+              productId,
+              wineId,
+              wineName,
+              vintageName,
+              thisDate
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+    <select id="selectProductOrderReportCount" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="long">
+    SELECT count(0)
+        FROM (SELECT
+              ub.supplier_id as supplierId,
+              sp.supplier_name_eng as supplierName,
+              ub.product_id as productId,
+              win.wine_id as wineId,
+              win.wine_name_eng as wineName,
+              wvtg.vintage_name as vintageName,
+              DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+              count(0) as num
+              FROM
+              t_user_behavior ub
+              INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+              INNER JOIN t_product prd ON ub.supplier_id = prd.supplier_id AND ub.product_id = prd.product_id
+              INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
+              INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
+              WHERE ub.type = 3
+              AND ub.supplier_id = #{supplierId}
+              AND ub.upload_at &gt;= #{startDate}
+              AND ub.upload_at &lt; #{endDate}
+              GROUP BY supplierId,
+              supplierName,
+              productId,
+              wineId,
+              wineName,
+              vintageName,
+              thisDate) t
+  </select>
+
+    <select id="selectProductOrderReport" parameterType="com.myicellar.digitalmenu.vo.request.ReportDayReqVO"
+            resultType="com.myicellar.digitalmenu.vo.response.ProductReportRespVO">
+    SELECT
+	ub.supplier_id as supplierId,
+	sp.supplier_name_eng as supplierName,
+    ub.product_id as productId,
+    win.wine_id as wineId,
+    win.wine_name_eng as wineName,
+    wvtg.vintage_name as vintageName,
+	DATE_FORMAT(ub.upload_at, '%Y-%m-%d') AS thisDate,
+	count(0) as num
+    FROM
+        t_user_behavior ub
+    INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
+    INNER JOIN t_product prd ON ub.supplier_id = prd.supplier_id AND ub.product_id = prd.product_id
+    INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
+    INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
+    WHERE ub.type = 3
+    AND ub.supplier_id = #{supplierId}
+    AND ub.upload_at &gt;= #{startDate}
+    AND ub.upload_at &lt; #{endDate}
+    GROUP BY supplierId,
+              supplierName,
+              productId,
+              wineId,
+              wineName,
+              vintageName,
+              thisDate
+    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

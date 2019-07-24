@@ -55,8 +55,8 @@ public class FoodTypeManageController {
 
         List<FoodType> list = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
         List<FoodTypeRespVO> resultList = new ArrayList<FoodTypeRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,FoodTypeRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, FoodTypeRespVO.class);
         }
 
         return ResultVO.success(resultList);
@@ -75,8 +75,8 @@ public class FoodTypeManageController {
         PageResponseVO<FoodType> page = foodTypeService.queryPageList(reqVO);
 
         PageResponseVO<FoodTypeRespVO> resultPage = new PageResponseVO<FoodTypeRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,FoodTypeRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, FoodTypeRespVO.class);
         }
 
         return ResultVO.success(resultPage);
@@ -94,7 +94,7 @@ public class FoodTypeManageController {
     public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
+        FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
         foodType.setFoodTypeId(snowflakeIdWorker.nextId());
         foodType.setCreatedBy(0L);
         foodType.setUpdatedBy(0L);
@@ -117,7 +117,7 @@ public class FoodTypeManageController {
     public ResultVO<Integer> update(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        FoodType foodType = ConvertUtils.convert(reqVO,FoodType.class);
+        FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
         foodType.setUpdatedBy(0L);
         Date now = new Date();
         foodType.setUpdatedAt(now);
@@ -141,13 +141,14 @@ public class FoodTypeManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    public void checkNewParam(FoodTypeReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    public void checkNewParam(FoodTypeReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplier cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
+        if (StringUtils.isEmpty(reqVO.getFoodTypeNameEng())) {
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
         if (foodTypeService.queryByFoodTypeName(reqVO.getFoodTypeNameEng()) != null) {
@@ -158,20 +159,21 @@ public class FoodTypeManageController {
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    public void checkUpdateParam(FoodTypeReqVO reqVO){
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+    public void checkUpdateParam(FoodTypeReqVO reqVO) {
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
             throw new BizException("foodTypeId cannot be empty!");
         }
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplier cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getFoodTypeNameEng())){
+        if (StringUtils.isEmpty(reqVO.getFoodTypeNameEng())) {
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng())!=null){
-            if (foodService.selectByPrimaryKey(reqVO.getFoodTypeId())!=null){
+        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng()) != null) {
+            if (foodService.selectByPrimaryKey(reqVO.getFoodTypeId()) != null) {
                 throw new BizException("Food Type already exist!");
             }
         }
@@ -179,17 +181,17 @@ public class FoodTypeManageController {
 
     /**
      * 校验删除参数
+     *
      * @param reqVO
      */
-    public void checkDeleteParam(FoodTypeDeleteReqVO reqVO){
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+    public void checkDeleteParam(FoodTypeDeleteReqVO reqVO) {
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
             throw new BizException("foodTypeId cannot be empty!");
         }
-        if (foodService.queryListByFoodTypeId(reqVO.getFoodTypeId())!=null && !foodService.queryListByFoodTypeId(reqVO.getFoodTypeId()).isEmpty()) {
+        if (foodService.queryListByFoodTypeId(reqVO.getFoodTypeId()) != null && !foodService.queryListByFoodTypeId(reqVO.getFoodTypeId()).isEmpty()) {
             throw new BizException("foodType is in use, can not be deleted!");
         }
     }
-
 
 
 }

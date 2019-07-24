@@ -4,7 +4,7 @@ import com.myicellar.digitalmenu.dao.entity.Menu;
 
 import java.util.List;
 
-public interface MenuMapperExt extends MenuMapper{
+public interface MenuMapperExt extends MenuMapper {
 
     List<Menu> queryMenuList();
 

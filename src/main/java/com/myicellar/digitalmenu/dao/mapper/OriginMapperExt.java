@@ -7,14 +7,14 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface OriginMapperExt extends OriginMapper{
+public interface OriginMapperExt extends OriginMapper {
     List<Origin> selectListByCountryId(Long countryId);
 
     List<Origin> selectListBySupplierId(Long supplierId);
 
-    List<Origin> selectListBySupplierIdAndCountryId(@Param("supplierId") Long supplierId,@Param("countryId") Long countryId);
+    List<Origin> selectListBySupplierIdAndCountryId(@Param("supplierId") Long supplierId, @Param("countryId") Long countryId);
 
     @MapKey("regionNameEng")
-    Map<String,Origin> selectNameMap();
+    Map<String, Origin> selectNameMap();
 
 }

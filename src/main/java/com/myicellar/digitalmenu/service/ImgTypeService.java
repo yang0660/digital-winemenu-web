@@ -15,23 +15,25 @@ public class ImgTypeService extends BaseService<Long, ImgType, ImgTypeMapperExt>
 
     /**
      * 列表查询
+     *
      * @return
      */
-    public List<ImgType> queryListAll(){
+    public List<ImgType> queryListAll() {
         return mapper.selectListAll();
     }
 
     /**
      * 列表查询-分页
+     *
      * @return
      */
-    public PageResponseVO<ImgType> queryPageList(ImgTypePageReqVO reqVO){
+    public PageResponseVO<ImgType> queryPageList(ImgTypePageReqVO reqVO) {
         PageResponseVO<ImgType> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         return page;
     }
 
-    public ImgType queryByName(String imgTypeNameEng){
+    public ImgType queryByName(String imgTypeNameEng) {
         return mapper.selectByName(imgTypeNameEng);
     }
 }

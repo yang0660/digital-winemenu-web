@@ -5,7 +5,7 @@ import com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO;
 
 import java.util.List;
 
-public interface FoodTypeMapperExt extends FoodTypeMapper{
+public interface FoodTypeMapperExt extends FoodTypeMapper {
 
     long selectCount(FoodTypePageReqVO reqVO);
 

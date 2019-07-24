@@ -63,7 +63,6 @@ public class FoodManageController {
     }
 
 
-
     /**
      * 新增
      *
@@ -76,7 +75,7 @@ public class FoodManageController {
     public ResultVO<Integer> add(@RequestBody FoodReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        Food food = ConvertUtils.convert(reqVO,Food.class);
+        Food food = ConvertUtils.convert(reqVO, Food.class);
         food.setFoodId(snowflakeIdWorker.nextId());
         food.setCreatedBy(0L);
         food.setUpdatedBy(0L);
@@ -98,7 +97,7 @@ public class FoodManageController {
     public ResultVO<Integer> update(@RequestBody FoodUpdateReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        Food food = ConvertUtils.convert(reqVO,Food.class);
+        Food food = ConvertUtils.convert(reqVO, Food.class);
         food.setUpdatedBy(0L);
         Date now = new Date();
         food.setUpdatedAt(now);
@@ -120,63 +119,65 @@ public class FoodManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    private void checkNewParam(FoodReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    private void checkNewParam(FoodReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplierId cannot be empty!");
         }
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
             throw new BizException("foodTypeId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getFoodNameEng())){
+        if (StringUtils.isEmpty(reqVO.getFoodNameEng())) {
             throw new BizException("foodNameEng cannot be empty!");
         }
-        if(reqVO.getFoodImgId()==null || reqVO.getFoodImgId()==0L){
+        if (reqVO.getFoodImgId() == null || reqVO.getFoodImgId() == 0L) {
             throw new BizException("foodImgId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getNotePlainEng())){
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
             throw new BizException("foodNameEng cannot be empty!");
         }
-        if(reqVO.getPrice()==null){
+        if (reqVO.getPrice() == null) {
             throw new BizException("price cannot be empty!");
         }
-        if(reqVO.getIsRecommend()==null){
+        if (reqVO.getIsRecommend() == null) {
             throw new BizException("isRecommend cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodNameEng())!=null){
+        if (foodService.queryFoodName(reqVO.getFoodNameEng()) != null) {
             throw new BizException("Food already exist!");
         }
     }
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    private void checkUpdateParam(FoodUpdateReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    private void checkUpdateParam(FoodUpdateReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplierId cannot be empty!");
         }
-        if(reqVO.getFoodTypeId()==null || reqVO.getFoodTypeId()==0L){
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
             throw new BizException("foodTypeId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getFoodNameEng())){
+        if (StringUtils.isEmpty(reqVO.getFoodNameEng())) {
             throw new BizException("foodNameEng cannot be empty!");
         }
-        if(reqVO.getFoodImgId()==null || reqVO.getFoodImgId()==0L){
+        if (reqVO.getFoodImgId() == null || reqVO.getFoodImgId() == 0L) {
             throw new BizException("foodImgId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getNotePlainEng())){
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
             throw new BizException("foodNameEng cannot be empty!");
         }
-        if(reqVO.getPrice()==null){
+        if (reqVO.getPrice() == null) {
             throw new BizException("price cannot be empty!");
         }
-        if(reqVO.getIsRecommend()==null){
+        if (reqVO.getIsRecommend() == null) {
             throw new BizException("isRecommend cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodNameEng())!=null){
-            if (foodService.selectByPrimaryKey(reqVO.getFoodId())!=null){
+        if (foodService.queryFoodName(reqVO.getFoodNameEng()) != null) {
+            if (foodService.selectByPrimaryKey(reqVO.getFoodId()) != null) {
                 throw new BizException("Food already exist!");
             }
 

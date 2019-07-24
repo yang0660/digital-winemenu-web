@@ -106,8 +106,8 @@ public class FileUploadHandler {
             BufferedImage image = ImageIO.read(new FileInputStream(file));
             int smallWidth = image.getWidth();
             int smallHeight = image.getHeight();
-            if((file.length() / ImageUploadUtil.BYTES_CONVERSION) > ImageUploadUtil.PICTURE_LIMITED_SIZE){
-                double  ratio = ImageUploadUtil.SMALL_WIDTH / image.getHeight();
+            if ((file.length() / ImageUploadUtil.BYTES_CONVERSION) > ImageUploadUtil.PICTURE_LIMITED_SIZE) {
+                double ratio = ImageUploadUtil.SMALL_WIDTH / image.getHeight();
                 smallWidth = (int) (image.getWidth() * ratio);
                 smallHeight = (int) (image.getHeight() * ratio);
             }
@@ -125,7 +125,7 @@ public class FileUploadHandler {
         } catch (MalformedURLException e) {
             log.error("生成略缩图失败###MalformedURLException", e);
             e.printStackTrace();
-        }catch (IOException e) {
+        } catch (IOException e) {
             log.error("生成略缩图失败###IOException", e);
             e.printStackTrace();
         }
@@ -277,7 +277,7 @@ public class FileUploadHandler {
     }
 
     public String getAttachmentPath(String url) {
-        if(url == null){
+        if (url == null) {
             return null;
         }
         if (url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://")) {
@@ -287,7 +287,7 @@ public class FileUploadHandler {
     }
 
     @FunctionalInterface
-    public interface UncheckedConsumer <T> {
+    public interface UncheckedConsumer<T> {
         void accept(T t) throws Exception;
     }
 }

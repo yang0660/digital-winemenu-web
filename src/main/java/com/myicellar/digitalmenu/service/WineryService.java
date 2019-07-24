@@ -25,7 +25,7 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
     @Autowired
     private ImgService imgService;
 
-    public List<Winery> queryListAll(){
+    public List<Winery> queryListAll() {
         return mapper.selectListAll();
     }
 
@@ -37,21 +37,21 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
     public PageResponseVO<WineryRespVO> queryPageList(WineryPageReqVO reqVO) {
         PageResponseVO<Winery> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
         PageResponseVO<WineryRespVO> resultPage = new PageResponseVO<WineryRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,WineryRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, WineryRespVO.class);
             List<WineryRespVO> list = resultPage.getItems();
             List<Long> imgIds = new ArrayList<Long>();
-            for(WineryRespVO respVO : list){
-                if(respVO.getLogoImgId()!=null && respVO.getLogoImgId()!=0L) {
+            for (WineryRespVO respVO : list) {
+                if (respVO.getLogoImgId() != null && respVO.getLogoImgId() != 0L) {
                     imgIds.add(respVO.getLogoImgId());
                 }
             }
             Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)){
+            if (!CollectionUtils.isEmpty(imgMap)) {
                 list.forEach(info -> {
-                    if(info.getLogoImgId()!=null && info.getLogoImgId()!=0L){
+                    if (info.getLogoImgId() != null && info.getLogoImgId() != 0L) {
                         Img logoImg = imgMap.get(info.getLogoImgId());
-                        if(logoImg!=null) {
+                        if (logoImg != null) {
                             info.setWineryLogoUrl(logoImg.getImgUrl());
                         }
                     }
@@ -71,28 +71,28 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
      * @return
      */
     public WineryRespVO queryByWineryId(WineryDetailReqVO reqVO) {
-        Winery winery= mapper.selectByPrimaryKey(reqVO.getWineryId());
-        WineryRespVO respVO=new WineryRespVO();
-        if (winery!=null) {
+        Winery winery = mapper.selectByPrimaryKey(reqVO.getWineryId());
+        WineryRespVO respVO = new WineryRespVO();
+        if (winery != null) {
             respVO = ConvertUtils.convert(winery, WineryRespVO.class);
-            fillWineryImage(winery,respVO);
+            fillWineryImage(winery, respVO);
         }
 
         return respVO;
 
     }
 
-    public void fillWineryImage(Winery winery,WineryRespVO respVO){
+    public void fillWineryImage(Winery winery, WineryRespVO respVO) {
         List<Long> imgIds = new ArrayList<Long>();
-        if(winery.getLogoImgId()!=null && winery.getLogoImgId()!=0L){
+        if (winery.getLogoImgId() != null && winery.getLogoImgId() != 0L) {
             imgIds.add(winery.getLogoImgId());
         }
-        if(winery.getBannerImgId()!=null && winery.getBannerImgId()!=0L){
+        if (winery.getBannerImgId() != null && winery.getBannerImgId() != 0L) {
             imgIds.add(winery.getBannerImgId());
         }
 
         List<Long> wineryImgIds = new ArrayList<Long>();
-        if(StringUtils.isNotEmpty(winery.getWineryImgIds())){
+        if (StringUtils.isNotEmpty(winery.getWineryImgIds())) {
             try {
                 String[] imgIdArr = winery.getWineryImgIds().split(",");
                 for (String imgIdStr : imgIdArr) {
@@ -101,13 +101,13 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
                     imgIds.add(wineryImgId);
                 }
                 respVO.setWineryImgIds(wineryImgIds);
-            }catch (Exception e){
-                log.error("解析酒庄图片失败！",e);
+            } catch (Exception e) {
+                log.error("解析酒庄图片失败！", e);
             }
         }
 
-        Map<Long, Img>  imgMap = imgService.queryImgMapByIds(imgIds);
-        if(!CollectionUtils.isEmpty(imgMap)) {
+        Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
+        if (!CollectionUtils.isEmpty(imgMap)) {
             if (winery.getLogoImgId() != null && winery.getLogoImgId() != 0L) {
                 Img logoImg = imgMap.get(winery.getLogoImgId());
                 if (logoImg != null) {
@@ -138,11 +138,11 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
      *
      * @return
      */
-    public  Winery queryByName(String wineryNameEng) {
+    public Winery queryByName(String wineryNameEng) {
         return mapper.selectByName(wineryNameEng);
     }
 
-    public Map<String,Winery> queryNameMap(){
+    public Map<String, Winery> queryNameMap() {
         return mapper.selectNameMap();
     }
 }

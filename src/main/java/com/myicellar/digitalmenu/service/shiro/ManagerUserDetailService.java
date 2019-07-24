@@ -27,6 +27,7 @@ public class ManagerUserDetailService implements UserDetailService {
 
     /**
      * 认证时调用，查询用户信息
+     *
      * @param userId
      * @return
      */
@@ -36,9 +37,9 @@ public class ManagerUserDetailService implements UserDetailService {
         UserAccount user = userAccountMapperExt.selectByPrimaryKey(userId);
         if (user != null) {
             //用户未注册
-            if(StringUtils.isEmpty(user.getPassword())) {
+            if (StringUtils.isEmpty(user.getPassword())) {
                 throw new DisabledAccountException();
-            //状态正常
+                //状态正常
             } else {
                 userAuthPrincipal.setPrincipal(String.valueOf(user.getUserId()));
                 userAuthPrincipal.setCredentials(user.getPassword());
@@ -48,7 +49,7 @@ public class ManagerUserDetailService implements UserDetailService {
                 userAuthPrincipal.setMobile(user.getMobile());
                 userAuthPrincipal.setReserve("");          //业务保留域，传递手机号
             }
-        }else{
+        } else {
             //用户不存在
             throw new UnknownAccountException();
         }
@@ -64,6 +65,7 @@ public class ManagerUserDetailService implements UserDetailService {
 
     /**
      * 授权时调用，查询用户角色列表
+     *
      * @param userId
      * @return
      */
@@ -75,6 +77,7 @@ public class ManagerUserDetailService implements UserDetailService {
 
     /**
      * 授权时调用，查询用户资源列表
+     *
      * @param userId
      * @return
      */

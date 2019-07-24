@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Critics;
 
-public interface CriticsMapper extends Mapper<Critics>{
+public interface CriticsMapper extends Mapper<Critics> {
     int deleteByPrimaryKey(Long wineCriticsId);
 
     int insert(Critics record);

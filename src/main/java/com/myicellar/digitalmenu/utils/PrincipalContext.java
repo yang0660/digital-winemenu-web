@@ -23,6 +23,7 @@ public class PrincipalContext {
 
     /**
      * 获取当前登录用户ID
+     *
      * @return
      */
     public static Long getCurrentUserId() {
@@ -32,6 +33,7 @@ public class PrincipalContext {
 
     /**
      * 获取当前登录用户名
+     *
      * @return
      */
     public static String getCurrentUserName() {
@@ -45,21 +47,21 @@ public class PrincipalContext {
         return sessionId.toString();
     }
 
-    public static ResultVO checkManageUser(UserAccount userAccount){
+    public static ResultVO checkManageUser(UserAccount userAccount) {
         ResultVO result = null;
-        if(userAccount==null){
+        if (userAccount == null) {
             return ResultVO.validError("该用户不存在!");
         }
 
         return result;
     }
 
-    public static ResultVO checkAppUser(UserAccount userAccount){
+    public static ResultVO checkAppUser(UserAccount userAccount) {
         ResultVO result = null;
-        if(userAccount==null){
+        if (userAccount == null) {
             return ResultVO.validError("该用户不存在!");
         }
-        if(StringUtils.isEmpty(userAccount.getPassword())){
+        if (StringUtils.isEmpty(userAccount.getPassword())) {
             result = ResultVO.validError("用户未注册!");
             result.setRespCode(ResultVO.UNREGISTER_ERROR_CODE);
             return result;
@@ -68,14 +70,14 @@ public class PrincipalContext {
         return result;
     }
 
-    public static ResultVO checkAppWxUser(UserAccount userAccount){
+    public static ResultVO checkAppWxUser(UserAccount userAccount) {
         ResultVO result = null;
-        if(userAccount==null){
+        if (userAccount == null) {
             result = ResultVO.validError("请先绑定帐号!");
             result.setRespCode(ResultVO.UNBIND_ERROR_CODE); //未绑定APP帐号
             return result;
         }
-        if(StringUtils.isEmpty(userAccount.getPassword())){
+        if (StringUtils.isEmpty(userAccount.getPassword())) {
             return ResultVO.validError("用户未注册!");
         }
 
@@ -84,11 +86,12 @@ public class PrincipalContext {
 
     /**
      * 用户密码加密
+     *
      * @param password
      * @param salt
      * @return
      */
-    public static String getMd5HashPwd(String password,String salt){
+    public static String getMd5HashPwd(String password, String salt) {
         return new Md5Hash(password, salt, 3).toString(); //迭代次数为3
     }
 

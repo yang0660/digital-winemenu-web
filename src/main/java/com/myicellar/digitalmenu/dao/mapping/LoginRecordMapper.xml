@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.LoginRecordMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.LoginRecord">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
-    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_id, user_name, role_name, login_time, login_ip, `type`
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_login_record
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_login_record
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
-    insert into t_login_record (id, user_id, user_name, 
-      role_name, login_time, login_ip, 
-      `type`)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{roleName,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{loginIp,jdbcType=VARCHAR}, 
-      #{type,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
-    insert into t_login_record
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="roleName != null">
-        role_name,
-      </if>
-      <if test="loginTime != null">
-        login_time,
-      </if>
-      <if test="loginIp != null">
-        login_ip,
-      </if>
-      <if test="type != null">
-        `type`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="roleName != null">
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null">
-        #{loginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginIp != null">
-        #{loginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
-    update t_login_record
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.LoginRecord">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, user_name, role_name, login_time, login_ip, `type`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_login_record
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_login_record
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
+        insert into t_login_record (id, user_id, user_name,
+        role_name, login_time, login_ip,
+        `type`)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+        #{roleName,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{loginIp,jdbcType=VARCHAR},
+        #{type,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
+        insert into t_login_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
+        update t_login_record
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
+        update t_login_record
+        set user_id = #{userId,jdbcType=BIGINT},
         user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="roleName != null">
         role_name = #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null">
         login_time = #{loginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginIp != null">
         login_ip = #{loginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.LoginRecord">
-    update t_login_record
-    set user_id = #{userId,jdbcType=BIGINT},
-      user_name = #{userName,jdbcType=VARCHAR},
-      role_name = #{roleName,jdbcType=VARCHAR},
-      login_time = #{loginTime,jdbcType=TIMESTAMP},
-      login_ip = #{loginIp,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=TINYINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+        `type` = #{type,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

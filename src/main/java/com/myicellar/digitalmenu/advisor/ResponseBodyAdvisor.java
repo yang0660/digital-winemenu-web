@@ -28,9 +28,9 @@ public class ResponseBodyAdvisor implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if (logger.isInfoEnabled()) {
-            if(body!=null) {
+            if (body != null) {
                 String bodyStr = JSON.toJSONString(body, SerializerFeature.UseSingleQuotes);
-                if(bodyStr.getBytes().length < 1024*500) {
+                if (bodyStr.getBytes().length < 1024 * 500) {
                     logger.info("{}: {}", request.getURI(), JSON.toJSONString(body, SerializerFeature.UseSingleQuotes));
                     //            logger.info("json response=========>url:{}", request.getURI());
                 }

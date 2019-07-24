@@ -54,8 +54,8 @@ public class WineryManageController {
         List<Winery> list = wineryService.queryListAll();
 
         List<WineryRespVO> resultList = new ArrayList<WineryRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,WineryRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, WineryRespVO.class);
         }
 
         return ResultVO.success(resultList);

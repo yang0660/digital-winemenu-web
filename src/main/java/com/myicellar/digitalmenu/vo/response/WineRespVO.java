@@ -58,5 +58,4 @@ public class WineRespVO {
     private Date updatedAt;
 
 
-
 }

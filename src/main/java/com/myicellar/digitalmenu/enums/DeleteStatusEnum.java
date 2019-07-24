@@ -10,8 +10,8 @@ public enum DeleteStatusEnum {
     public final String desc;
 
     public static DeleteStatusEnum enumOf(Byte value) {
-        for(DeleteStatusEnum e: DeleteStatusEnum.values()) {
-            if(e.value.equals(value)) {
+        for (DeleteStatusEnum e : DeleteStatusEnum.values()) {
+            if (e.value.equals(value)) {
                 return e;
             }
         }

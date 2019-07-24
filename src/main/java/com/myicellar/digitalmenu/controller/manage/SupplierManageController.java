@@ -84,8 +84,8 @@ public class SupplierManageController {
         List<Supplier> list = supplierService.queryListAll();
 
         List<SupplierRespVO> resultList = new ArrayList<SupplierRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,SupplierRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, SupplierRespVO.class);
         }
 
         return ResultVO.success(resultList);
@@ -103,7 +103,7 @@ public class SupplierManageController {
     public ResultVO<PageResponseVO<SupplierRespVO>> queryListPage(@RequestBody SupplierPageReqVO reqVO) {
         PageResponseVO<SupplierRespVO> page = supplierService.queryPageList(reqVO);
 
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
             return ResultVO.success(page);
         }
         return ResultVO.success(new PageResponseVO<SupplierRespVO>());
@@ -122,7 +122,7 @@ public class SupplierManageController {
 
         //参数校验
         checkNewParam(reqVO);
-        Supplier supplier = ConvertUtils.convert(reqVO,Supplier.class);
+        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
         supplier.setSupplierId(snowflakeIdWorker.nextId());
         supplier.setCreatedBy(0L);
         supplier.setUpdatedBy(0L);
@@ -144,7 +144,7 @@ public class SupplierManageController {
     public ResultVO<Integer> update(@RequestBody SupplierReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        Supplier supplier = ConvertUtils.convert(reqVO,Supplier.class);
+        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
         supplier.setUpdatedBy(0L);
         Date now = new Date();
         supplier.setUpdatedAt(now);
@@ -168,19 +168,20 @@ public class SupplierManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    private void checkNewParam(SupplierReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    private void checkNewParam(SupplierReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("SupplierId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getSupplierNameEng())){
+        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
             throw new BizException("SupplierNameEng cannot be empty!");
         }
-        if(reqVO.getLogoImgId()==null || reqVO.getLogoImgId()==0L){
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
             throw new BizException("Logo cannot be empty!");
         }
-        if(reqVO.getType()==null || reqVO.getType()==0){
+        if (reqVO.getType() == null || reqVO.getType() == 0) {
             throw new BizException("Type cannot be empty!");
         }
         if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
@@ -190,23 +191,24 @@ public class SupplierManageController {
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    private void checkUpdateParam(SupplierReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    private void checkUpdateParam(SupplierReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("SupplierId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getSupplierNameEng())){
+        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
             throw new BizException("SupplierNameEng cannot be empty!");
         }
-        if(reqVO.getLogoImgId()==null || reqVO.getLogoImgId()==0L){
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
             throw new BizException("Logo cannot be empty!");
         }
-        if(reqVO.getType()==null || reqVO.getType()==0){
+        if (reqVO.getType() == null || reqVO.getType() == 0) {
             throw new BizException("Type cannot be empty!");
         }
-        if(supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null){
-            if (supplierService.selectByPrimaryKey(reqVO.getSupplierId())!=null){
+        if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
+            if (supplierService.selectByPrimaryKey(reqVO.getSupplierId()) != null) {
                 throw new BizException("Supplier already exist!");
             }
         }
@@ -214,10 +216,11 @@ public class SupplierManageController {
 
     /**
      * 校验删除参数
+     *
      * @param reqVO
      */
-    private void checkDeleteParam(SupplierDeleteReqVO reqVO){
-        if(reqVO.getSupplierId()==null || reqVO.getSupplierId()==0L){
+    private void checkDeleteParam(SupplierDeleteReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
             throw new BizException("supplierId cannot be empty!");
         }
         List<Product> products = productService.queryListBySupplierId(reqVO.getSupplierId());
@@ -226,7 +229,6 @@ public class SupplierManageController {
             throw new BizException("Supplier is in use, can not be deleted!");
         }
     }
-
 
 
     /**
@@ -240,18 +242,18 @@ public class SupplierManageController {
     @ApiOperation("查询供应商主页二维码")
     private ResultVO<QrcodeRespVO> queryQrCode(@RequestBody SupplierIdReqVO reqVO) {
 
-        QrcodeRespVO respVO =new QrcodeRespVO();
+        QrcodeRespVO respVO = new QrcodeRespVO();
         String qrcodeImgUrl = "";
         Supplier supplier = supplierService.selectByPrimaryKey(reqVO.getSupplierId());
-        if(supplier==null){
+        if (supplier == null) {
             return ResultVO.validError("Supplier does not exist!");
         }
 
         qrcodeImgUrl = supplier.getQrcodeImgUrl();
-        if(StringUtils.isEmpty(qrcodeImgUrl)) {
+        if (StringUtils.isEmpty(qrcodeImgUrl)) {
             //生成供应商主页二维码
             FileUploadProperties.FileUploadResult qrCodeResult = generateQrCode(reqVO.getSupplierId());
-            if(qrCodeResult!=null && StringUtils.isNotEmpty(qrCodeResult.getImageUrl())){
+            if (qrCodeResult != null && StringUtils.isNotEmpty(qrCodeResult.getImageUrl())) {
                 qrcodeImgUrl = qrCodeResult.getImageUrl();
                 Supplier updatesSupplier = new Supplier();
                 updatesSupplier.setSupplierId(reqVO.getSupplierId());
@@ -268,11 +270,12 @@ public class SupplierManageController {
 
     /**
      * 生成供应商主页二维码
+     *
      * @param supplierId
      * @return
      */
-    public FileUploadProperties.FileUploadResult generateQrCode(Long supplierId){
-        FileUploadProperties.FileUploadResult fileUploadResult= null;
+    public FileUploadProperties.FileUploadResult generateQrCode(Long supplierId) {
+        FileUploadProperties.FileUploadResult fileUploadResult = null;
         ByteArrayOutputStream baos = null;
 
         try {
@@ -299,13 +302,13 @@ public class SupplierManageController {
             baos.flush();
             byte[] imageBytes = baos.toByteArray();
             fileUploadResult = fileUploadHandler.upload(imageBytes, false, "jpg");
-        }catch (Exception e){
-            log.error("生成供应商主页二维码失败!",e);
-        }finally {
-            if(baos!=null){
+        } catch (Exception e) {
+            log.error("生成供应商主页二维码失败!", e);
+        } finally {
+            if (baos != null) {
                 try {
                     baos.close();
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }

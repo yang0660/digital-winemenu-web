@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "供应商信息")
-public class SupplierRespVO extends PageResponseVO{
+public class SupplierRespVO extends PageResponseVO {
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;

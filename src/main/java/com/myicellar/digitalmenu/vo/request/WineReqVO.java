@@ -40,5 +40,4 @@ public class WineReqVO {
     private Date updatedAt;
 
 
-
 }

@@ -49,14 +49,14 @@ public class BasicDataController {
     @ApiOperation("风格/口味/葡萄下拉列表")
     public ResultVO<List<AttrRespVO>> queryAttrList(@RequestBody AttrListReqVO reqVO) {
         AttrCatgEnum attrCatgEnum = AttrCatgEnum.enumOf(reqVO.getAttrCatgNo());
-        if(attrCatgEnum==null){
+        if (attrCatgEnum == null) {
             return ResultVO.validError("参数错误！");
         }
 
         List<Attr> list = attrService.queryListByCatgId(attrCatgEnum.attrCatgId);
         List<AttrRespVO> resultList = new ArrayList<AttrRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,AttrRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, AttrRespVO.class);
         }
 
         return ResultVO.success(resultList);
@@ -74,7 +74,7 @@ public class BasicDataController {
         List<Country> list = countryService.queryList();
 
         List<CountryRespVO> resultList = new ArrayList<CountryRespVO>();
-        if(!org.springframework.util.CollectionUtils.isEmpty(list)){
+        if (!org.springframework.util.CollectionUtils.isEmpty(list)) {
             resultList = ConvertUtils.convert(list, CountryRespVO.class);
         }
 
@@ -94,8 +94,8 @@ public class BasicDataController {
         List<Origin> list = originService.queryListByCountryId(reqVO.getCountryId());
 
         List<OriginRespVO> resultList = new ArrayList<OriginRespVO>();
-        if(!org.springframework.util.CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,OriginRespVO.class);
+        if (!org.springframework.util.CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, OriginRespVO.class);
         }
 
         return ResultVO.success(resultList);
@@ -113,8 +113,8 @@ public class BasicDataController {
         List<WineType> list = wineTypeService.queryList();
 
         List<WineTypeRespVO> resultList = new ArrayList<WineTypeRespVO>();
-        if(!org.springframework.util.CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,WineTypeRespVO.class);
+        if (!org.springframework.util.CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, WineTypeRespVO.class);
         }
 
         return ResultVO.success(resultList);
@@ -132,8 +132,8 @@ public class BasicDataController {
         List<Critics> list = criticsService.queryList();
 
         List<CriticsRespVO> resultList = new ArrayList<CriticsRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,CriticsRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, CriticsRespVO.class);
         }
 
         return ResultVO.success(resultList);

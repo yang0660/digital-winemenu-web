@@ -12,5 +12,5 @@ public interface WineTypeMapperExt extends WineTypeMapper {
     List<WineType> selectListBySupplierId(Long supplierId);
 
     @MapKey("wineTypeNameEng")
-    Map<String,WineType> selectNameMap();
+    Map<String, WineType> selectNameMap();
 }

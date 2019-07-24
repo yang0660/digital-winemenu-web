@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
-* 美食详情
-*/
+ * 美食详情
+ */
 @Data
 @ApiModel(value = "美食详情")
 public class FoodRecommendRespVO {

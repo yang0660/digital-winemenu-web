@@ -5,7 +5,7 @@ import com.myicellar.digitalmenu.vo.response.CountryRespVO;
 
 import java.util.List;
 
-public interface CountryMapperExt extends CountryMapper{
+public interface CountryMapperExt extends CountryMapper {
 
     List<Country> selectList();
 

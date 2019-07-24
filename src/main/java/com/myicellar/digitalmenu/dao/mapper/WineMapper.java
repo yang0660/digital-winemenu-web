@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Wine;
 
-public interface WineMapper extends Mapper<Wine>{
+public interface WineMapper extends Mapper<Wine> {
     int deleteByPrimaryKey(Long wineId);
 
     int insert(Wine record);

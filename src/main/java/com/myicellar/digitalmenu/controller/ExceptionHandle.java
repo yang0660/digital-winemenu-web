@@ -28,9 +28,9 @@ public class ExceptionHandle {
         log.error("接口\"" + handlerMethod.getBeanType().getName() + "." + handlerMethod.getMethod().getName() + "\"异常", e);
 
         ResultVO<?> resultVO = ResultVO.unknowError(e);
-        if(e instanceof DuplicateKeyException) {
+        if (e instanceof DuplicateKeyException) {
             Matcher matcher = DUPLICATE_PATTERN.matcher(e.getMessage());
-            if(matcher.matches()) {
+            if (matcher.matches()) {
                 String value = matcher.group(1);
                 String uniqIdx = matcher.group(2);
                 return resultVO.setMessage(getUniqDesc(uniqIdx) + "'" + value + "'重复， 请修改后重试");
@@ -38,7 +38,7 @@ public class ExceptionHandle {
             return resultVO.setMessage("数据有重复，请检查参数");
         } else if (e instanceof DataIntegrityViolationException) {
             Matcher matcher = CANNOT_BE_NULL_PATTERN.matcher(e.getMessage());
-            if(matcher.matches()) {
+            if (matcher.matches()) {
                 String column = matcher.group(1);
                 return resultVO.setMessage("参数'" + getColumnDesc(column) + "'不能为空， 请设值");
             }
@@ -50,16 +50,20 @@ public class ExceptionHandle {
 
     private String getColumnDesc(String column) {
         switch (column) {
-            case "user_id": return "用户ID";
-            case "user_name": return "用户名";
+            case "user_id":
+                return "用户ID";
+            case "user_name":
+                return "用户名";
         }
         return column;
     }
 
     private String getUniqDesc(String uniqIdx) {
         switch (uniqIdx) {
-            case "uniq_idx_user_id": return "用户ID";
-            default: return "数据";
+            case "uniq_idx_user_id":
+                return "用户ID";
+            default:
+                return "数据";
         }
     }
 }

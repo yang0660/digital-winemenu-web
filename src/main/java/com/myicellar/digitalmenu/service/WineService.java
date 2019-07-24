@@ -48,20 +48,21 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
 
     /**
      * 列表查询-分页
+     *
      * @return
      */
-    public PageResponseVO<WineRespVO> queryPageList(WinePageReqVO reqVO){
+    public PageResponseVO<WineRespVO> queryPageList(WinePageReqVO reqVO) {
         PageResponseVO<WineRespVO> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
             List<WineRespVO> list = page.getItems();
             List<Long> imgIds = new ArrayList<Long>();
-            for(WineRespVO respVO : list){
+            for (WineRespVO respVO : list) {
                 imgIds.add(respVO.getWineImgId());
             }
 
-            Map<Long,Img> imgMap = imgService.queryImgMapByIds(imgIds);
-            if(!CollectionUtils.isEmpty(imgMap)) {
+            Map<Long, Img> imgMap = imgService.queryImgMapByIds(imgIds);
+            if (!CollectionUtils.isEmpty(imgMap)) {
                 page.getItems().forEach(respVO -> {
                     Img img = imgMap.get(respVO.getWineImgId());
                     if (img != null) {
@@ -74,10 +75,10 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         return page;
     }
 
-    public WineRespVO queryByWineId(Long wineId){
+    public WineRespVO queryByWineId(Long wineId) {
         WineRespVO respVO = mapper.selectByWineId(wineId);
-        if(respVO!=null){
-            if(respVO.getWineImgId()!=null) {
+        if (respVO != null) {
+            if (respVO.getWineImgId() != null) {
                 Img img = imgService.selectByPrimaryKey(respVO.getWineImgId());
                 if (img != null) {
                     respVO.setWineImgUrl(img.getImgUrl());
@@ -90,13 +91,14 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
 
     /**
      * 按酒庄ID查询
+     *
      * @return
      */
-    public Wine queryByWineryId(Long wineryId){
+    public Wine queryByWineryId(Long wineryId) {
         return mapper.selectByWineryId(wineryId);
     }
 
-    public Wine queryByName(String wineNameEng){
+    public Wine queryByName(String wineNameEng) {
         return mapper.selectByName(wineNameEng);
     }
 }

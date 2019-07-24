@@ -35,14 +35,14 @@ public class UserBehaviorManageController {
     @PostMapping(value = "/uploadUserBehavior")
     @AuthIgnore
     @ApiOperation("上传用户行为数据")
-    public ResultVO<Integer> insertUserBehavior (@RequestBody UserBehaviorReqVO reqVO) {
+    public ResultVO<Integer> insertUserBehavior(@RequestBody UserBehaviorReqVO reqVO) {
         Integer result = 0;
         try {
             UserBehavior userBehavior = ConvertUtils.convert(reqVO, UserBehavior.class);
             userBehavior.setUploadAt(new Date());
 
             result = userBehaviorService.insertSelective(userBehavior);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("上传用户行为数据失败!", e);
         }
 

@@ -5,7 +5,7 @@ import com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO;
 
 import java.util.List;
 
-public interface IPackageMapperExt extends IPackageMapper{
+public interface IPackageMapperExt extends IPackageMapper {
 
     ProductPriceRangeRespVO selectPriceRange(Long supplierId);
 

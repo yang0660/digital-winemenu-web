@@ -5,12 +5,12 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 /**
- *@Description
- *@Author:daizhiyue
- *@Date:23:07 2018/12/15
+ * @Description
+ * @Author:daizhiyue
+ * @Date:23:07 2018/12/15
  */
 @Getter
-public enum  RealTimeRedisHourEnum {
+public enum RealTimeRedisHourEnum {
     Hour_0("0", "0小时时段", new BigDecimal("1.7"), new BigDecimal("1.7"), new BigDecimal("0.9"), new BigDecimal("0.9")),
     Hour_1("1", "1小时时段", new BigDecimal("0.8"), new BigDecimal("2.4"), new BigDecimal("0.4"), new BigDecimal("1.3")),
     Hour_2("2", "2小时时段", new BigDecimal("0.4"), new BigDecimal("2.9"), new BigDecimal("0.4"), new BigDecimal("1.7")),
@@ -34,9 +34,7 @@ public enum  RealTimeRedisHourEnum {
     Hour_20("20", "20小时时段", new BigDecimal("4.4"), new BigDecimal("88.6"), new BigDecimal("4.6"), new BigDecimal("89.7")),
     Hour_21("21", "21小时时段", new BigDecimal("4.6"), new BigDecimal("93.1"), new BigDecimal("4.2"), new BigDecimal("93.9")),
     Hour_22("22", "22小时时段", new BigDecimal("3.9"), new BigDecimal("97.1"), new BigDecimal("3.5"), new BigDecimal("97.4")),
-    Hour_23("23", "23小时时段", new BigDecimal("2.9"), new BigDecimal("100"), new BigDecimal("2.6"), new BigDecimal("100")),
-
-;
+    Hour_23("23", "23小时时段", new BigDecimal("2.9"), new BigDecimal("100"), new BigDecimal("2.6"), new BigDecimal("100")),;
 
     String hour;
 
@@ -62,8 +60,8 @@ public enum  RealTimeRedisHourEnum {
 
 
     RealTimeRedisHourEnum(String hour, String desc,
-                          BigDecimal holidayDayHourRate,  BigDecimal holidayDayHourTotalRate,
-                          BigDecimal workdayDayHourRate,  BigDecimal workdayDayHourTotalRate) {
+                          BigDecimal holidayDayHourRate, BigDecimal holidayDayHourTotalRate,
+                          BigDecimal workdayDayHourRate, BigDecimal workdayDayHourTotalRate) {
         this.hour = hour;
         this.desc = desc;
         this.holidayDayHourRate = holidayDayHourRate;
@@ -74,13 +72,13 @@ public enum  RealTimeRedisHourEnum {
 
     }
 
-   public static RealTimeRedisHourEnum getRealTimeRedisHourEnumByHour(String hour) {
-        for(RealTimeRedisHourEnum realTimeRedisHourEnum : RealTimeRedisHourEnum.values()) {
-            if(realTimeRedisHourEnum.getHour().equals(hour)) {
-                return  realTimeRedisHourEnum;
+    public static RealTimeRedisHourEnum getRealTimeRedisHourEnumByHour(String hour) {
+        for (RealTimeRedisHourEnum realTimeRedisHourEnum : RealTimeRedisHourEnum.values()) {
+            if (realTimeRedisHourEnum.getHour().equals(hour)) {
+                return realTimeRedisHourEnum;
             }
         }
-        return  null;
+        return null;
     }
 
 }

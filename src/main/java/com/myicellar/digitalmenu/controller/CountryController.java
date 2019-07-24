@@ -38,7 +38,7 @@ public class CountryController {
     @ApiOperation("国家列表查询")
     public ResultVO<List<CountryRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
         List<CountryRespVO> list = countryService.queryListBySupplierId(reqVO.getSupplierId());
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             list = new ArrayList<CountryRespVO>();
         }
 

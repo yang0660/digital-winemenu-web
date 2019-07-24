@@ -17,7 +17,7 @@ public interface ProductMapperExt extends ProductMapper {
 
     Product selectByWineIdAndVintage(@Param("wineId") Long wineId,
                                      @Param("vintageTag") Long vintageTag);
-    
+
     List<ProductInfoRespVO> selectRecomendProductList(Long supplierId);
 
     List<ProductInfoRespVO> selectProductListByFoodId(Long foodId);
@@ -37,5 +37,5 @@ public interface ProductMapperExt extends ProductMapper {
     List<Product> selectListBySupplierId(Long supplierId);
 
     @MapKey("productId")
-    Map<Long,ProductPriceRespVO> selectProductPriceMapByIds(@Param("productIds") List<Long> productIds);
+    Map<Long, ProductPriceRespVO> selectProductPriceMapByIds(@Param("productIds") List<Long> productIds);
 }

@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Country;
 
-public interface CountryMapper extends Mapper<Country>{
+public interface CountryMapper extends Mapper<Country> {
     int deleteByPrimaryKey(Long countryId);
 
     int insert(Country record);

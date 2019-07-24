@@ -42,8 +42,8 @@ public class WineTypeController {
         List<WineType> list = wineTypeService.queryListBySupplierId(reqVO.getSupplierId());
 
         List<WineTypeRespVO> resultList = new ArrayList<WineTypeRespVO>();
-        if(!CollectionUtils.isEmpty(list)){
-            resultList = ConvertUtils.convert(list,WineTypeRespVO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, WineTypeRespVO.class);
         }
 
         return ResultVO.success(resultList);

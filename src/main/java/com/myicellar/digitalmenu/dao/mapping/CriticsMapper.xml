@@ -1,153 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.CriticsMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Critics">
-    <id column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId" />
-    <result column="critics_seo_name" jdbcType="VARCHAR" property="criticsSeoName" />
-    <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng" />
-    <result column="critics_name_cht" jdbcType="VARCHAR" property="criticsNameCht" />
-    <result column="critics_name_chs" jdbcType="VARCHAR" property="criticsNameChs" />
-    <result column="mic_rank" jdbcType="SMALLINT" property="micRank" />
-    <result column="score_max" jdbcType="SMALLINT" property="scoreMax" />
-    <result column="score_factor" jdbcType="SMALLINT" property="scoreFactor" />
-    <result column="about_url" jdbcType="VARCHAR" property="aboutUrl" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    wine_critics_id, critics_seo_name, critics_name_eng, critics_name_cht, critics_name_chs, 
-    mic_rank, score_max, score_factor, about_url, updated_at
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_critics
-    where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_critics
-    where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
-    insert into t_critics (wine_critics_id, critics_seo_name, critics_name_eng, 
-      critics_name_cht, critics_name_chs, mic_rank, 
-      score_max, score_factor, about_url, 
-      updated_at)
-    values (#{wineCriticsId,jdbcType=BIGINT}, #{criticsSeoName,jdbcType=VARCHAR}, #{criticsNameEng,jdbcType=VARCHAR}, 
-      #{criticsNameCht,jdbcType=VARCHAR}, #{criticsNameChs,jdbcType=VARCHAR}, #{micRank,jdbcType=SMALLINT}, 
-      #{scoreMax,jdbcType=SMALLINT}, #{scoreFactor,jdbcType=SMALLINT}, #{aboutUrl,jdbcType=VARCHAR}, 
-      #{updatedAt,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
-    insert into t_critics
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="wineCriticsId != null">
-        wine_critics_id,
-      </if>
-      <if test="criticsSeoName != null">
-        critics_seo_name,
-      </if>
-      <if test="criticsNameEng != null">
-        critics_name_eng,
-      </if>
-      <if test="criticsNameCht != null">
-        critics_name_cht,
-      </if>
-      <if test="criticsNameChs != null">
-        critics_name_chs,
-      </if>
-      <if test="micRank != null">
-        mic_rank,
-      </if>
-      <if test="scoreMax != null">
-        score_max,
-      </if>
-      <if test="scoreFactor != null">
-        score_factor,
-      </if>
-      <if test="aboutUrl != null">
-        about_url,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="wineCriticsId != null">
-        #{wineCriticsId,jdbcType=BIGINT},
-      </if>
-      <if test="criticsSeoName != null">
-        #{criticsSeoName,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameEng != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Critics">
+        <id column="wine_critics_id" jdbcType="BIGINT" property="wineCriticsId"/>
+        <result column="critics_seo_name" jdbcType="VARCHAR" property="criticsSeoName"/>
+        <result column="critics_name_eng" jdbcType="VARCHAR" property="criticsNameEng"/>
+        <result column="critics_name_cht" jdbcType="VARCHAR" property="criticsNameCht"/>
+        <result column="critics_name_chs" jdbcType="VARCHAR" property="criticsNameChs"/>
+        <result column="mic_rank" jdbcType="SMALLINT" property="micRank"/>
+        <result column="score_max" jdbcType="SMALLINT" property="scoreMax"/>
+        <result column="score_factor" jdbcType="SMALLINT" property="scoreFactor"/>
+        <result column="about_url" jdbcType="VARCHAR" property="aboutUrl"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        wine_critics_id, critics_seo_name, critics_name_eng, critics_name_cht, critics_name_chs,
+        mic_rank, score_max, score_factor, about_url, updated_at
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_critics
+        where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_critics
+        where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
+        insert into t_critics (wine_critics_id, critics_seo_name, critics_name_eng,
+        critics_name_cht, critics_name_chs, mic_rank,
+        score_max, score_factor, about_url,
+        updated_at)
+        values (#{wineCriticsId,jdbcType=BIGINT}, #{criticsSeoName,jdbcType=VARCHAR},
         #{criticsNameEng,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameCht != null">
-        #{criticsNameCht,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameChs != null">
-        #{criticsNameChs,jdbcType=VARCHAR},
-      </if>
-      <if test="micRank != null">
-        #{micRank,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreMax != null">
-        #{scoreMax,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreFactor != null">
-        #{scoreFactor,jdbcType=SMALLINT},
-      </if>
-      <if test="aboutUrl != null">
-        #{aboutUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
-    update t_critics
-    <set>
-      <if test="criticsSeoName != null">
-        critics_seo_name = #{criticsSeoName,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameEng != null">
+        #{criticsNameCht,jdbcType=VARCHAR}, #{criticsNameChs,jdbcType=VARCHAR}, #{micRank,jdbcType=SMALLINT},
+        #{scoreMax,jdbcType=SMALLINT}, #{scoreFactor,jdbcType=SMALLINT}, #{aboutUrl,jdbcType=VARCHAR},
+        #{updatedAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
+        insert into t_critics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wineCriticsId != null">
+                wine_critics_id,
+            </if>
+            <if test="criticsSeoName != null">
+                critics_seo_name,
+            </if>
+            <if test="criticsNameEng != null">
+                critics_name_eng,
+            </if>
+            <if test="criticsNameCht != null">
+                critics_name_cht,
+            </if>
+            <if test="criticsNameChs != null">
+                critics_name_chs,
+            </if>
+            <if test="micRank != null">
+                mic_rank,
+            </if>
+            <if test="scoreMax != null">
+                score_max,
+            </if>
+            <if test="scoreFactor != null">
+                score_factor,
+            </if>
+            <if test="aboutUrl != null">
+                about_url,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wineCriticsId != null">
+                #{wineCriticsId,jdbcType=BIGINT},
+            </if>
+            <if test="criticsSeoName != null">
+                #{criticsSeoName,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameEng != null">
+                #{criticsNameEng,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameCht != null">
+                #{criticsNameCht,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameChs != null">
+                #{criticsNameChs,jdbcType=VARCHAR},
+            </if>
+            <if test="micRank != null">
+                #{micRank,jdbcType=SMALLINT},
+            </if>
+            <if test="scoreMax != null">
+                #{scoreMax,jdbcType=SMALLINT},
+            </if>
+            <if test="scoreFactor != null">
+                #{scoreFactor,jdbcType=SMALLINT},
+            </if>
+            <if test="aboutUrl != null">
+                #{aboutUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
+        update t_critics
+        <set>
+            <if test="criticsSeoName != null">
+                critics_seo_name = #{criticsSeoName,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameEng != null">
+                critics_name_eng = #{criticsNameEng,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameCht != null">
+                critics_name_cht = #{criticsNameCht,jdbcType=VARCHAR},
+            </if>
+            <if test="criticsNameChs != null">
+                critics_name_chs = #{criticsNameChs,jdbcType=VARCHAR},
+            </if>
+            <if test="micRank != null">
+                mic_rank = #{micRank,jdbcType=SMALLINT},
+            </if>
+            <if test="scoreMax != null">
+                score_max = #{scoreMax,jdbcType=SMALLINT},
+            </if>
+            <if test="scoreFactor != null">
+                score_factor = #{scoreFactor,jdbcType=SMALLINT},
+            </if>
+            <if test="aboutUrl != null">
+                about_url = #{aboutUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
+        update t_critics
+        set critics_seo_name = #{criticsSeoName,jdbcType=VARCHAR},
         critics_name_eng = #{criticsNameEng,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameCht != null">
         critics_name_cht = #{criticsNameCht,jdbcType=VARCHAR},
-      </if>
-      <if test="criticsNameChs != null">
         critics_name_chs = #{criticsNameChs,jdbcType=VARCHAR},
-      </if>
-      <if test="micRank != null">
         mic_rank = #{micRank,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreMax != null">
         score_max = #{scoreMax,jdbcType=SMALLINT},
-      </if>
-      <if test="scoreFactor != null">
         score_factor = #{scoreFactor,jdbcType=SMALLINT},
-      </if>
-      <if test="aboutUrl != null">
         about_url = #{aboutUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Critics">
-    update t_critics
-    set critics_seo_name = #{criticsSeoName,jdbcType=VARCHAR},
-      critics_name_eng = #{criticsNameEng,jdbcType=VARCHAR},
-      critics_name_cht = #{criticsNameCht,jdbcType=VARCHAR},
-      critics_name_chs = #{criticsNameChs,jdbcType=VARCHAR},
-      mic_rank = #{micRank,jdbcType=SMALLINT},
-      score_max = #{scoreMax,jdbcType=SMALLINT},
-      score_factor = #{scoreFactor,jdbcType=SMALLINT},
-      about_url = #{aboutUrl,jdbcType=VARCHAR},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
-  </update>
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where wine_critics_id = #{wineCriticsId,jdbcType=BIGINT}
+    </update>
 </mapper>

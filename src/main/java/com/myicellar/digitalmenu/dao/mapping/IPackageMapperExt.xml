@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.IPackage"
-             extends="com.myicellar.digitalmenu.dao.mapper.IPackageMapper.BaseResultMap">
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.IPackage"
+               extends="com.myicellar.digitalmenu.dao.mapper.IPackageMapper.BaseResultMap">
+    </resultMap>
 
-  <sql id="Base_Column_List">
-    <include refid="com.myicellar.digitalmenu.dao.mapper.IPackageMapper.Base_Column_List"/>
-  </sql>
+    <sql id="Base_Column_List">
+        <include refid="com.myicellar.digitalmenu.dao.mapper.IPackageMapper.Base_Column_List"/>
+    </sql>
 
-  <select id="selectPriceRange" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO">
-    SELECT
-    max( a.regular_price ) AS minProductPrice,
-    max( a.regular_price ) AS maxProductPrice
-    FROM
-    t_package a
-    INNER JOIN t_product b ON a.product_id = b.product_id
-    WHERE
-    b.supplier_id = #{supplierId}
-  </select>
+    <select id="selectPriceRange" parameterType="long"
+            resultType="com.myicellar.digitalmenu.vo.response.ProductPriceRangeRespVO">
+        SELECT
+        max( a.regular_price ) AS minProductPrice,
+        max( a.regular_price ) AS maxProductPrice
+        FROM
+        t_package a
+        INNER JOIN t_product b ON a.product_id = b.product_id
+        WHERE
+        b.supplier_id = #{supplierId}
+    </select>
 
-  <select id="selectByWineId" parameterType="long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-     from t_package
-     where product_id in (select product_id from t_product where wine_id = #{wineId})
-    limit 1
-  </select>
+    <select id="selectByWineId" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_package
+        where product_id in (select product_id from t_product where wine_id = #{wineId})
+        limit 1
+    </select>
 
-  <select id="selectListByProductId" parameterType="long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_package
-    where product_id = #{productId}
-  </select>
+    <select id="selectListByProductId" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_package
+        where product_id = #{productId}
+    </select>
 
-  <delete id="deleteByProductId" parameterType="long">
-    delete
-    from t_package
-    where product_id = #{productId}
-  </delete>
+    <delete id="deleteByProductId" parameterType="long">
+        delete
+        from t_package
+        where product_id = #{productId}
+    </delete>
 
-  <delete id="deleteByProductAndVolumeId">
-    delete
-    from t_package
-    where product_id = #{productId}
-     and volume_type_id = #{volumeTypeId}
-  </delete>
+    <delete id="deleteByProductAndVolumeId">
+        delete
+        from t_package
+        where product_id = #{productId}
+        and volume_type_id = #{volumeTypeId}
+    </delete>
 
 </mapper>

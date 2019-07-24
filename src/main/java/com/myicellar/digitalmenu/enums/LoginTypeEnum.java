@@ -13,8 +13,8 @@ public enum LoginTypeEnum {
     public final String desc;
 
     public static LoginTypeEnum enumOf(Byte value) {
-        for(LoginTypeEnum e: LoginTypeEnum.values()) {
-            if(e.value.equals(value)) {
+        for (LoginTypeEnum e : LoginTypeEnum.values()) {
+            if (e.value.equals(value)) {
                 return e;
             }
         }

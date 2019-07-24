@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.MapKey;
 import java.util.List;
 import java.util.Map;
 
-public interface AttrMapperExt extends AttrMapper{
+public interface AttrMapperExt extends AttrMapper {
 
     List<Attr> selectList();
 
@@ -15,5 +15,5 @@ public interface AttrMapperExt extends AttrMapper{
     List<Attr> selectListByCatgId(Long attrCatgId);
 
     @MapKey("attrNameEng")
-    Map<String,Attr> selectNameMap();
+    Map<String, Attr> selectNameMap();
 }

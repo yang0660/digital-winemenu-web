@@ -109,7 +109,7 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
                     Collection<HandlerInterceptor> values = ((DefaultListableBeanFactory) beanFactory).getBeansOfType(HandlerInterceptor.class).values();
                     interceptors.addAll(values);
                 }
-                
+
                 for (HandlerInterceptor interceptor : interceptors) {
                     registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("/error");
                 }
@@ -128,7 +128,7 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
                 registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
                 // 文件上传路径
                 registry.addResourceHandler(fileUploadProperties.getFileFolder() + "/**")
-                        .addResourceLocations("file:" + fileUploadProperties.getBasePath() + "/"+ fileUploadProperties.getFileFolder()+ "/");
+                        .addResourceLocations("file:" + fileUploadProperties.getBasePath() + "/" + fileUploadProperties.getFileFolder() + "/");
 
                 // 文件上传路径
             }
@@ -141,11 +141,11 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
             /*@Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("*//**")
-                        .allowedOrigins("*")
-                        .allowedHeaders("*")
-                        .allowedMethods("*")
-                        .allowCredentials(true);
-            }*/
+             .allowedOrigins("*")
+             .allowedHeaders("*")
+             .allowedMethods("*")
+             .allowCredentials(true);
+             }*/
         };
     }
 
@@ -252,8 +252,8 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         super.extendMessageConverters(converters);
 
-        for(HttpMessageConverter converter: converters) {
-            if(converter instanceof MappingJackson2HttpMessageConverter) {
+        for (HttpMessageConverter converter : converters) {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
                 ((MappingJackson2HttpMessageConverter) converter).setObjectMapper(jacksonObjectMapper());
             }
         }

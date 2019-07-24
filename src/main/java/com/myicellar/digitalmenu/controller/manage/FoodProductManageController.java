@@ -56,13 +56,14 @@ public class FoodProductManageController {
 
     /**
      * 校验参数
+     *
      * @param reqVO
      */
-    private void checkParam(FoodProductReqVO reqVO){
-        if(reqVO.getFoodId()==null || reqVO.getFoodId()==0L){
+    private void checkParam(FoodProductReqVO reqVO) {
+        if (reqVO.getFoodId() == null || reqVO.getFoodId() == 0L) {
             throw new BizException("foodId cannot be empty!");
         }
-        if(!CollectionUtils.isEmpty(reqVO.getProductIds())){
+        if (!CollectionUtils.isEmpty(reqVO.getProductIds())) {
             throw new BizException("productIds cannot be empty!");
         }
     }

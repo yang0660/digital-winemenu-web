@@ -18,9 +18,10 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
 
     /**
      * 列表查询-分页
+     *
      * @return
      */
-    public PageResponseVO<Img> queryPageList(ImgPageReqVO reqVO){
+    public PageResponseVO<Img> queryPageList(ImgPageReqVO reqVO) {
         PageResponseVO<Img> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         return page;
@@ -28,26 +29,27 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
 
     /**
      * 图片数量查询
+     *
      * @return
      */
-    public Long queryCount(ImgPageReqVO reqVO){
+    public Long queryCount(ImgPageReqVO reqVO) {
         return mapper.selectCount(reqVO);
     }
 
-    public Img queryByTypeIdAndImgName(Long imgTypeId, String imgNameEng){
-        return mapper.selectByTypeIdAndImgName(imgTypeId,imgNameEng);
+    public Img queryByTypeIdAndImgName(Long imgTypeId, String imgNameEng) {
+        return mapper.selectByTypeIdAndImgName(imgTypeId, imgNameEng);
     }
 
-    public Map<Long,Img> queryImgMapByIds(List<Long> imgIds){
-        Map<Long,Img> resultMap = new HashMap<Long,Img>();
-        if(!CollectionUtils.isEmpty(imgIds)){
+    public Map<Long, Img> queryImgMapByIds(List<Long> imgIds) {
+        Map<Long, Img> resultMap = new HashMap<Long, Img>();
+        if (!CollectionUtils.isEmpty(imgIds)) {
             resultMap = mapper.selectImgMapByIds(imgIds);
         }
 
         return resultMap;
     }
 
-    public Integer deleteByIds(List<Long> imgIds){
+    public Integer deleteByIds(List<Long> imgIds) {
         return mapper.deleteByIds(imgIds);
     }
 }

@@ -1,6 +1,6 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 
-public interface VolumeTypeMapperExt extends VolumeTypeMapper{
+public interface VolumeTypeMapperExt extends VolumeTypeMapper {
 
 }

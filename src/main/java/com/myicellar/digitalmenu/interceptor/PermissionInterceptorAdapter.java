@@ -38,7 +38,7 @@ public class PermissionInterceptorAdapter extends HandlerInterceptorAdapter {
 
     private List<String> excludeAuthPaths = new ArrayList<>();
 
-    public void setExcludeAuthPaths(List<String> excludeAuthPaths){
+    public void setExcludeAuthPaths(List<String> excludeAuthPaths) {
         this.excludeAuthPaths = excludeAuthPaths;
     }
 
@@ -59,7 +59,7 @@ public class PermissionInterceptorAdapter extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if(excludeAuthPath(request)){
+        if (excludeAuthPath(request)) {
             return true;
         }
 
@@ -82,14 +82,14 @@ public class PermissionInterceptorAdapter extends HandlerInterceptorAdapter {
             }
             boolean isPermission = false;
             boolean isRole = false;
-            Subject currentUser =  ShiroHelper.getSubject(request, response);
-            if (currentUser!=null && currentUser.getPrincipal()!=null) {
+            Subject currentUser = ShiroHelper.getSubject(request, response);
+            if (currentUser != null && currentUser.getPrincipal() != null) {
                 // shiro鉴权
                 //没有定义资源名称
-                if(permissionArray==null && roleArray==null){
+                if (permissionArray == null && roleArray == null) {
                     return true;
                 }
-                if(permissionArray!=null) {
+                if (permissionArray != null) {
                     for (String permission : permissionArray) {
                         if (currentUser.isPermitted(permission)) {
                             isPermission = true;
@@ -97,7 +97,7 @@ public class PermissionInterceptorAdapter extends HandlerInterceptorAdapter {
                         }
                     }
                 }
-                if(roleArray!=null) {
+                if (roleArray != null) {
                     for (String role : roleArray) {
                         if (currentUser.hasRole(role)) {
                             isRole = true;

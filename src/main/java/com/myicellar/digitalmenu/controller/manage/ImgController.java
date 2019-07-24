@@ -54,8 +54,8 @@ public class ImgController {
         PageResponseVO<Img> page = imgService.queryPageList(reqVO);
 
         PageResponseVO<ImgRespVO> resultPage = new PageResponseVO<ImgRespVO>();
-        if(page!=null && !CollectionUtils.isEmpty(page.getItems())){
-            resultPage = ConvertUtils.convertPage(page,ImgRespVO.class);
+        if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
+            resultPage = ConvertUtils.convertPage(page, ImgRespVO.class);
         }
 
         return ResultVO.success(resultPage);
@@ -75,11 +75,11 @@ public class ImgController {
         checkNewParam(reqVO);
 
         FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
-        if(fileUploadResult==null){
+        if (fileUploadResult == null) {
             return ResultVO.validError("uploading picture is failed!");
         }
 
-        Img img = ConvertUtils.convert(reqVO,Img.class);
+        Img img = ConvertUtils.convert(reqVO, Img.class);
         img.setImgId(snowflakeIdWorker.nextId());
         img.setImgUrl(fileUploadResult.getImageUrl());
         img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
@@ -89,11 +89,11 @@ public class ImgController {
         img.setCreatedAt(now);
         img.setUpdatedAt(now);
         int i = imgService.insertSelective(img);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("save is failed!");
         }
 
-        ImgRespVO respVO = ConvertUtils.convert(img,ImgRespVO.class);
+        ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
         ResultVO resultVO = ResultVO.success("save is success!");
         return resultVO.setData(respVO);
     }
@@ -111,22 +111,22 @@ public class ImgController {
         //参数校验
         checkUpdateParam(reqVO);
         FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
-        if(fileUploadResult==null){
+        if (fileUploadResult == null) {
             return ResultVO.validError("uploading picture is failed!");
         }
 
-        Img img = ConvertUtils.convert(reqVO,Img.class);
+        Img img = ConvertUtils.convert(reqVO, Img.class);
         img.setImgUrl(fileUploadResult.getImageUrl());
         img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
         img.setUpdatedBy(0L);
         Date now = new Date();
         img.setUpdatedAt(now);
         int i = imgService.updateByPrimaryKeySelective(img);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("update is failed!");
         }
 
-        ImgRespVO respVO = ConvertUtils.convert(img,ImgRespVO.class);
+        ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
         ResultVO resultVO = ResultVO.success("update is success!");
         return resultVO.setData(respVO);
     }
@@ -136,17 +136,16 @@ public class ImgController {
      *
      * @param reqVO
      * @return
-     * @since
      */
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody ImgDeleteReqVO reqVO) {
-        if(reqVO.getImgId()==null || reqVO.getImgId()==0L){
+        if (reqVO.getImgId() == null || reqVO.getImgId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
         }
         int i = imgService.deleteByPrimaryKey(reqVO.getImgId());
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("delete is failed!");
         }
 
@@ -158,17 +157,16 @@ public class ImgController {
      *
      * @param reqVO
      * @return
-     * @since
      */
     @PostMapping(value = "/batchDelete")
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody ImgBatchDeleteReqVO reqVO) {
-        if(!CollectionUtils.isEmpty(reqVO.getImgIds())){
+        if (!CollectionUtils.isEmpty(reqVO.getImgIds())) {
             return ResultVO.validError("parameter is invalid！");
         }
         int i = imgService.deleteByIds(reqVO.getImgIds());
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("delete is failed!");
         }
 
@@ -177,44 +175,47 @@ public class ImgController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    public void checkNewParam(ImgReqVO reqVO){
-        if(reqVO.getImgTypeId()==null || reqVO.getImgTypeId()==0L){
+    public void checkNewParam(ImgReqVO reqVO) {
+        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
             throw new BizException("imgTypeId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getImgNameEng())){
+        if (StringUtils.isEmpty(reqVO.getImgNameEng())) {
             throw new BizException("imgNameEng cannot be empty!");
         }
-        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(),reqVO.getImgNameEng());
-        if(img!=null){
+        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(), reqVO.getImgNameEng());
+        if (img != null) {
             throw new BizException("imgNameEng is already exists!");
         }
     }
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    public void checkUpdateParam(ImgReqVO reqVO){
-        if(reqVO.getImgId()==null || reqVO.getImgId()==0L){
+    public void checkUpdateParam(ImgReqVO reqVO) {
+        if (reqVO.getImgId() == null || reqVO.getImgId() == 0L) {
             throw new BizException("imgId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getImgNameEng())){
+        if (StringUtils.isEmpty(reqVO.getImgNameEng())) {
             throw new BizException("imgNameEng cannot be empty!");
         }
-        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(),reqVO.getImgNameEng());
-        if(img!=null && !img.getImgId().equals(reqVO.getImgId())){
+        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(), reqVO.getImgNameEng());
+        if (img != null && !img.getImgId().equals(reqVO.getImgId())) {
             throw new BizException("imgNameEng is already exists!");
         }
     }
 
     /**
      * 图片上传
+     *
      * @param reqVO
      * @return
      */
-    public FileUploadProperties.FileUploadResult fileUpload(ImgReqVO reqVO){
+    public FileUploadProperties.FileUploadResult fileUpload(ImgReqVO reqVO) {
         FileUploadProperties.FileUploadResult fileUploadResult = null;
         try {
             String base64Str = reqVO.getBase64Str();
@@ -226,8 +227,8 @@ public class ImgController {
             if (!StringUtils.isEmpty(reqVO.getBase64Str())) {
                 fileUploadResult = fileUploadHandler.upload(base64Str, true, "jpg");
             }
-        }catch (Exception e){
-            log.error("图片上传失败.",e);
+        } catch (Exception e) {
+            log.error("图片上传失败.", e);
         }
 
         return fileUploadResult;

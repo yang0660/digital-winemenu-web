@@ -1,132 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.WineMapperExt">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Wine"
-             extends="com.myicellar.digitalmenu.dao.mapper.WineMapper.BaseResultMap">
-  </resultMap>
-  <sql id="Base_Column_List">
-    <include refid="com.myicellar.digitalmenu.dao.mapper.WineMapper.Base_Column_List" />
-  </sql>
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Wine"
+               extends="com.myicellar.digitalmenu.dao.mapper.WineMapper.BaseResultMap">
+    </resultMap>
+    <sql id="Base_Column_List">
+        <include refid="com.myicellar.digitalmenu.dao.mapper.WineMapper.Base_Column_List"/>
+    </sql>
 
-  <resultMap id="InfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineRespVO">
-    <id column="wine_id" jdbcType="BIGINT" property="wineId" />
-    <result column="wine_type_id" jdbcType="BIGINT" property="wineTypeId" />
-    <result column="wine_type_name" jdbcType="VARCHAR" property="wineTypeName" />
-    <result column="wine_origin_id" jdbcType="BIGINT" property="wineOriginId" />
-    <result column="wine_origin_name" jdbcType="VARCHAR" property="wineOriginName" />
-    <result column="country_id" jdbcType="BIGINT" property="countryId" />
-    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
-    <result column="winery_id" jdbcType="BIGINT" property="wineryId" />
-    <result column="winery_name" jdbcType="VARCHAR" property="wineryName" />
-    <result column="wine_name_eng" jdbcType="VARCHAR" property="wineNameEng" />
-    <result column="wine_name_chs" jdbcType="VARCHAR" property="wineNameChs" />
-    <result column="wine_name_cht" jdbcType="VARCHAR" property="wineNameCht" />
-    <result column="wine_img_id" jdbcType="BIGINT" property="wineImgId" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
+    <resultMap id="InfoResultMap" type="com.myicellar.digitalmenu.vo.response.WineRespVO">
+        <id column="wine_id" jdbcType="BIGINT" property="wineId"/>
+        <result column="wine_type_id" jdbcType="BIGINT" property="wineTypeId"/>
+        <result column="wine_type_name" jdbcType="VARCHAR" property="wineTypeName"/>
+        <result column="wine_origin_id" jdbcType="BIGINT" property="wineOriginId"/>
+        <result column="wine_origin_name" jdbcType="VARCHAR" property="wineOriginName"/>
+        <result column="country_id" jdbcType="BIGINT" property="countryId"/>
+        <result column="country_name" jdbcType="VARCHAR" property="countryName"/>
+        <result column="winery_id" jdbcType="BIGINT" property="wineryId"/>
+        <result column="winery_name" jdbcType="VARCHAR" property="wineryName"/>
+        <result column="wine_name_eng" jdbcType="VARCHAR" property="wineNameEng"/>
+        <result column="wine_name_chs" jdbcType="VARCHAR" property="wineNameChs"/>
+        <result column="wine_name_cht" jdbcType="VARCHAR" property="wineNameCht"/>
+        <result column="wine_img_id" jdbcType="BIGINT" property="wineImgId"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
 
-  <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO" resultType="long">
-    select count(distinct win.wine_id)
-    from t_wine win
-    inner join t_origin org on win.wine_origin_id = org.wine_origin_id
-    left join t_country ctry on org.country_id = ctry.country_id
-    left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
-    left join t_winery wry on win.winery_id = wry.winery_id
-    <where>
-      <include refid="where" />
-    </where>
-  </select>
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO" resultType="long">
+        select count(distinct win.wine_id)
+        from t_wine win
+        inner join t_origin org on win.wine_origin_id = org.wine_origin_id
+        left join t_country ctry on org.country_id = ctry.country_id
+        left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
+        left join t_winery wry on win.winery_id = wry.winery_id
+        <where>
+            <include refid="where"/>
+        </where>
+    </select>
 
-  <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO"
-          resultMap="InfoResultMap">
-    select distinct
-    win.wine_id,
-    win.wine_type_id,
-    wtype.wine_type_name_eng as wine_type_name,
-    win.wine_origin_id,
-    org.region_name_eng as wine_origin_name,
-    org.country_id,
-    ctry.country_name_eng as country_name,
-    win.winery_id,
-    wry.winery_name_eng as winery_name,
-    win.wine_name_eng,
-    win.wine_name_chs,
-    win.wine_name_cht,
-    win.wine_img_id,
-    win.updated_at
-    from t_wine win
-    inner join t_origin org on win.wine_origin_id = org.wine_origin_id
-    left join t_country ctry on org.country_id = ctry.country_id
-    left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
-    left join t_winery wry on win.winery_id = wry.winery_id
-    <where>
-      <include refid="where" />
-    </where>
-    limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
-  </select>
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO"
+            resultMap="InfoResultMap">
+        select distinct
+        win.wine_id,
+        win.wine_type_id,
+        wtype.wine_type_name_eng as wine_type_name,
+        win.wine_origin_id,
+        org.region_name_eng as wine_origin_name,
+        org.country_id,
+        ctry.country_name_eng as country_name,
+        win.winery_id,
+        wry.winery_name_eng as winery_name,
+        win.wine_name_eng,
+        win.wine_name_chs,
+        win.wine_name_cht,
+        win.wine_img_id,
+        win.updated_at
+        from t_wine win
+        inner join t_origin org on win.wine_origin_id = org.wine_origin_id
+        left join t_country ctry on org.country_id = ctry.country_id
+        left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
+        left join t_winery wry on win.winery_id = wry.winery_id
+        <where>
+            <include refid="where"/>
+        </where>
+        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    </select>
 
-  <sql id="where">
-    <if test="wineTypeId!=null and wineTypeId!=0">
-      and win.wine_type_id = #{wineTypeId}
-    </if>
-    <if test="wineryId!=null and wineryId!=0">
-      and win.winery_id = #{wineryId}
-    </if>
-    <if test="countryId!=null and countryId!=0">
-      and org.country_id = #{countryId}
-    </if>
-    <if test="wineOriginId!=null and wineOriginId!=0">
-      and win.wine_origin_id = #{wineOriginId}
-    </if>
-    <if test="wineNameEng!=null and wineNameEng!=''">
-      and (win.wine_name_eng like concat('%',#{wineNameEng},'%')
-        or win.wine_name_cht like concat('%',#{wineNameEng},'%')
-        or win.wine_name_chs like concat('%',#{wineNameEng},'%')
-      )
-    </if>
-  </sql>
+    <sql id="where">
+        <if test="wineTypeId!=null and wineTypeId!=0">
+            and win.wine_type_id = #{wineTypeId}
+        </if>
+        <if test="wineryId!=null and wineryId!=0">
+            and win.winery_id = #{wineryId}
+        </if>
+        <if test="countryId!=null and countryId!=0">
+            and org.country_id = #{countryId}
+        </if>
+        <if test="wineOriginId!=null and wineOriginId!=0">
+            and win.wine_origin_id = #{wineOriginId}
+        </if>
+        <if test="wineNameEng!=null and wineNameEng!=''">
+            and (win.wine_name_eng like concat('%',#{wineNameEng},'%')
+            or win.wine_name_cht like concat('%',#{wineNameEng},'%')
+            or win.wine_name_chs like concat('%',#{wineNameEng},'%')
+            )
+        </if>
+    </sql>
 
-  <select id="selectByWineId" parameterType="long"
-          resultMap="InfoResultMap">
-    select distinct
-    win.wine_id,
-    win.wine_type_id,
-    wtype.wine_type_name_eng as wine_type_name,
-    win.wine_origin_id,
-    org.region_name_eng as wine_origin_name,
-    org.country_id,
-    ctry.country_name_eng as country_name,
-    win.winery_id,
-    wry.winery_name_eng as winery_name,
-    win.wine_name_eng,
-    win.wine_name_chs,
-    win.wine_name_cht,
-    win.wine_img_id,
-    win.updated_at
-    from t_wine win
-    inner join t_origin org on win.wine_origin_id = org.wine_origin_id
-    left join t_country ctry on org.country_id = ctry.country_id
-    left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
-    left join t_winery wry on win.winery_id = wry.winery_id
-    where win.wine_id = #{wineId}
-  </select>
+    <select id="selectByWineId" parameterType="long"
+            resultMap="InfoResultMap">
+        select distinct
+        win.wine_id,
+        win.wine_type_id,
+        wtype.wine_type_name_eng as wine_type_name,
+        win.wine_origin_id,
+        org.region_name_eng as wine_origin_name,
+        org.country_id,
+        ctry.country_name_eng as country_name,
+        win.winery_id,
+        wry.winery_name_eng as winery_name,
+        win.wine_name_eng,
+        win.wine_name_chs,
+        win.wine_name_cht,
+        win.wine_img_id,
+        win.updated_at
+        from t_wine win
+        inner join t_origin org on win.wine_origin_id = org.wine_origin_id
+        left join t_country ctry on org.country_id = ctry.country_id
+        left join t_wine_type wtype on win.wine_type_id = wtype.wine_type_id
+        left join t_winery wry on win.winery_id = wry.winery_id
+        where win.wine_id = #{wineId}
+    </select>
 
-  <select id="selectByName" parameterType="string"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_wine
-    where wine_name_eng = #{wineNameEng}
-    limit 1
-  </select>
+    <select id="selectByName" parameterType="string"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wine
+        where wine_name_eng = #{wineNameEng}
+        limit 1
+    </select>
 
-  <select id="selectByWineryId" parameterType="long"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_wine
-    where winery_id = #{wineryId}
-    limit 1
-  </select>
+    <select id="selectByWineryId" parameterType="long"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_wine
+        where winery_id = #{wineryId}
+        limit 1
+    </select>
 
 </mapper>

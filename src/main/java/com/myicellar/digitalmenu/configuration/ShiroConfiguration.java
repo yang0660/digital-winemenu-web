@@ -39,7 +39,7 @@ public class ShiroConfiguration implements ApplicationContextAware {
 
     public static final String HASH_ALGORITH_NAME = "md5";
     public static final int HASH_ITERATIONS = 3;
-    public static final int SESSION_TIMEOUT_HOURS = 24*90;
+    public static final int SESSION_TIMEOUT_HOURS = 24 * 90;
 
     private ApplicationContext applicationContext;
     private List<String> excludeAuthPaths = Lists.newArrayList(

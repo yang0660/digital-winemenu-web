@@ -64,7 +64,7 @@ public class WineManageController {
     public ResultVO<WineRespVO> queryByWineId(@RequestBody WineDetailReqVO reqVO) {
         //通过传入wineId查询wine详情
         WineRespVO respVO = wineService.queryByWineId(reqVO.getWineId());
-        if(reqVO==null){
+        if (reqVO == null) {
             respVO = new WineRespVO();
         }
 
@@ -83,17 +83,17 @@ public class WineManageController {
     public ResultVO<WineRespVO> add(@RequestBody WineReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
-        Wine wine = ConvertUtils.convert(reqVO,Wine.class);
-        String wineSeoName = wine.getWineNameEng().replaceAll(" ","-").toLowerCase();
+        Wine wine = ConvertUtils.convert(reqVO, Wine.class);
+        String wineSeoName = wine.getWineNameEng().replaceAll(" ", "-").toLowerCase();
         wine.setWineSeoName(wineSeoName);
         wine.setWineId(snowflakeIdWorker.nextId());
         wine.setUpdatedAt(new Date());
         int i = wineService.insertSelective(wine);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("save is failed!");
         }
 
-        WineRespVO respVO = ConvertUtils.convert(wine,WineRespVO.class);
+        WineRespVO respVO = ConvertUtils.convert(wine, WineRespVO.class);
         ResultVO resultVO = ResultVO.success("save is success!");
         return resultVO.setData(respVO);
     }
@@ -110,16 +110,16 @@ public class WineManageController {
     public ResultVO update(@RequestBody WineUpdateReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
-        Wine wine = ConvertUtils.convert(reqVO,Wine.class);
-        String wineSeoName = wine.getWineNameEng().replaceAll(" ","-").toLowerCase();
+        Wine wine = ConvertUtils.convert(reqVO, Wine.class);
+        String wineSeoName = wine.getWineNameEng().replaceAll(" ", "-").toLowerCase();
         wine.setWineSeoName(wineSeoName);
         wine.setUpdatedAt(new Date());
         int i = wineService.updateByPrimaryKeySelective(wine);
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("update is failed!");
         }
 
-        WineRespVO respVO = ConvertUtils.convert(wine,WineRespVO.class);
+        WineRespVO respVO = ConvertUtils.convert(wine, WineRespVO.class);
         ResultVO resultVO = ResultVO.success("update is success!");
         return resultVO.setData(respVO);
     }
@@ -134,16 +134,16 @@ public class WineManageController {
     @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody WineDeleteReqVO reqVO) {
-        if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
         }
         IPackage iPackage = packageService.queryByWineId(reqVO.getWineId());
-        if(iPackage!=null){
+        if (iPackage != null) {
             return ResultVO.validError("Wine is in use, can not be deleted");
         }
 
         int i = wineService.deleteByPrimaryKey(reqVO.getWineId());
-        if(i==0){
+        if (i == 0) {
             return ResultVO.validError("delete is failed!");
         }
 
@@ -152,45 +152,47 @@ public class WineManageController {
 
     /**
      * 校验新增参数
+     *
      * @param reqVO
      */
-    private void checkNewParam(WineReqVO reqVO){
-        if(StringUtils.isEmpty(reqVO.getWineNameEng())){
+    private void checkNewParam(WineReqVO reqVO) {
+        if (StringUtils.isEmpty(reqVO.getWineNameEng())) {
             throw new BizException("wineNameEng can not be empty!");
         }
-        if(reqVO.getWineTypeId()==null || reqVO.getWineTypeId()==0L){
+        if (reqVO.getWineTypeId() == null || reqVO.getWineTypeId() == 0L) {
             throw new BizException("wineTypeId can not be empty!");
         }
-        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
             throw new BizException("wineryId can not be empty!");
         }
-        if(reqVO.getWineOriginId()==null || reqVO.getWineOriginId()==0L){
+        if (reqVO.getWineOriginId() == null || reqVO.getWineOriginId() == 0L) {
             throw new BizException("originId can not be empty!");
         }
     }
 
     /**
      * 校验修改参数
+     *
      * @param reqVO
      */
-    private void checkUpdateParam(WineUpdateReqVO reqVO){
-        if(reqVO.getWineId()==null || reqVO.getWineId()==0L){
+    private void checkUpdateParam(WineUpdateReqVO reqVO) {
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             throw new BizException("wineId cannot be empty!");
         }
-        if(StringUtils.isEmpty(reqVO.getWineNameEng())){
+        if (StringUtils.isEmpty(reqVO.getWineNameEng())) {
             throw new BizException("wineNameEng can not be empty!");
         }
-        if(reqVO.getWineTypeId()==null || reqVO.getWineTypeId()==0L){
+        if (reqVO.getWineTypeId() == null || reqVO.getWineTypeId() == 0L) {
             throw new BizException("wineTypeId can not be empty!");
         }
-        if(reqVO.getWineryId()==null || reqVO.getWineryId()==0L){
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
             throw new BizException("wineryId can not be empty!");
         }
-        if(reqVO.getWineOriginId()==null || reqVO.getWineOriginId()==0L){
+        if (reqVO.getWineOriginId() == null || reqVO.getWineOriginId() == 0L) {
             throw new BizException("originId can not be empty!");
         }
         Wine wine = wineService.queryByName(reqVO.getWineNameEng());
-        if(wine!=null && !wine.getWineId().equals(reqVO.getWineId())){
+        if (wine != null && !wine.getWineId().equals(reqVO.getWineId())) {
             throw new BizException("wineNameEng is already exists!");
         }
     }

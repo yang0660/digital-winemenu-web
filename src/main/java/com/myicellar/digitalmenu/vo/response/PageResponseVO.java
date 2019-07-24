@@ -20,7 +20,7 @@ public class PageResponseVO<T> implements Serializable {
         if (totalCount < 1) {
             return;
         }
-        this.totalPage = (totalCount+pageSize-1)/ pageSize;
+        this.totalPage = (totalCount + pageSize - 1) / pageSize;
     }
 
 

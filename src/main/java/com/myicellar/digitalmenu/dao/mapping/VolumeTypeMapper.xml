@@ -1,120 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.VolumeTypeMapper">
-  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    <id column="volume_type_id" jdbcType="BIGINT" property="volumeTypeId" />
-    <result column="vol_in_ml" jdbcType="BIGINT" property="volInMl" />
-    <result column="mic_rank" jdbcType="INTEGER" property="micRank" />
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    <result column="volume_type_code" jdbcType="LONGVARCHAR" property="volumeTypeCode" />
-    <result column="type_name_eng" jdbcType="LONGVARCHAR" property="typeNameEng" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    volume_type_id, vol_in_ml, mic_rank, updated_at
-  </sql>
-  <sql id="Blob_Column_List">
-    volume_type_code, type_name_eng
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_volume_type
-    where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_volume_type
-    where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    insert into t_volume_type (volume_type_id, vol_in_ml, mic_rank, 
-      updated_at, volume_type_code, type_name_eng
-      )
-    values (#{volumeTypeId,jdbcType=BIGINT}, #{volInMl,jdbcType=BIGINT}, #{micRank,jdbcType=INTEGER}, 
-      #{updatedAt,jdbcType=TIMESTAMP}, #{volumeTypeCode,jdbcType=LONGVARCHAR}, #{typeNameEng,jdbcType=LONGVARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    insert into t_volume_type
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="volumeTypeId != null">
-        volume_type_id,
-      </if>
-      <if test="volInMl != null">
-        vol_in_ml,
-      </if>
-      <if test="micRank != null">
-        mic_rank,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="volumeTypeCode != null">
-        volume_type_code,
-      </if>
-      <if test="typeNameEng != null">
-        type_name_eng,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="volumeTypeId != null">
-        #{volumeTypeId,jdbcType=BIGINT},
-      </if>
-      <if test="volInMl != null">
-        #{volInMl,jdbcType=BIGINT},
-      </if>
-      <if test="micRank != null">
-        #{micRank,jdbcType=INTEGER},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="volumeTypeCode != null">
-        #{volumeTypeCode,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="typeNameEng != null">
-        #{typeNameEng,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    update t_volume_type
-    <set>
-      <if test="volInMl != null">
-        vol_in_ml = #{volInMl,jdbcType=BIGINT},
-      </if>
-      <if test="micRank != null">
+    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        <id column="volume_type_id" jdbcType="BIGINT" property="volumeTypeId"/>
+        <result column="vol_in_ml" jdbcType="BIGINT" property="volInMl"/>
+        <result column="mic_rank" jdbcType="INTEGER" property="micRank"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        <result column="volume_type_code" jdbcType="LONGVARCHAR" property="volumeTypeCode"/>
+        <result column="type_name_eng" jdbcType="LONGVARCHAR" property="typeNameEng"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        volume_type_id, vol_in_ml, mic_rank, updated_at
+    </sql>
+    <sql id="Blob_Column_List">
+        volume_type_code, type_name_eng
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_volume_type
+        where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_volume_type
+        where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        insert into t_volume_type (volume_type_id, vol_in_ml, mic_rank,
+        updated_at, volume_type_code, type_name_eng
+        )
+        values (#{volumeTypeId,jdbcType=BIGINT}, #{volInMl,jdbcType=BIGINT}, #{micRank,jdbcType=INTEGER},
+        #{updatedAt,jdbcType=TIMESTAMP}, #{volumeTypeCode,jdbcType=LONGVARCHAR}, #{typeNameEng,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        insert into t_volume_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="volumeTypeId != null">
+                volume_type_id,
+            </if>
+            <if test="volInMl != null">
+                vol_in_ml,
+            </if>
+            <if test="micRank != null">
+                mic_rank,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="volumeTypeCode != null">
+                volume_type_code,
+            </if>
+            <if test="typeNameEng != null">
+                type_name_eng,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="volumeTypeId != null">
+                #{volumeTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="volInMl != null">
+                #{volInMl,jdbcType=BIGINT},
+            </if>
+            <if test="micRank != null">
+                #{micRank,jdbcType=INTEGER},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="volumeTypeCode != null">
+                #{volumeTypeCode,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="typeNameEng != null">
+                #{typeNameEng,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        update t_volume_type
+        <set>
+            <if test="volInMl != null">
+                vol_in_ml = #{volInMl,jdbcType=BIGINT},
+            </if>
+            <if test="micRank != null">
+                mic_rank = #{micRank,jdbcType=INTEGER},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="volumeTypeCode != null">
+                volume_type_code = #{volumeTypeCode,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="typeNameEng != null">
+                type_name_eng = #{typeNameEng,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        update t_volume_type
+        set vol_in_ml = #{volInMl,jdbcType=BIGINT},
         mic_rank = #{micRank,jdbcType=INTEGER},
-      </if>
-      <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="volumeTypeCode != null">
         volume_type_code = #{volumeTypeCode,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="typeNameEng != null">
-        type_name_eng = #{typeNameEng,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    update t_volume_type
-    set vol_in_ml = #{volInMl,jdbcType=BIGINT},
-      mic_rank = #{micRank,jdbcType=INTEGER},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      volume_type_code = #{volumeTypeCode,jdbcType=LONGVARCHAR},
-      type_name_eng = #{typeNameEng,jdbcType=LONGVARCHAR}
-    where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
-    update t_volume_type
-    set vol_in_ml = #{volInMl,jdbcType=BIGINT},
-      mic_rank = #{micRank,jdbcType=INTEGER},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-    where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
-  </update>
+        type_name_eng = #{typeNameEng,jdbcType=LONGVARCHAR}
+        where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.VolumeType">
+        update t_volume_type
+        set vol_in_ml = #{volInMl,jdbcType=BIGINT},
+        mic_rank = #{micRank,jdbcType=INTEGER},
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+        where volume_type_id = #{volumeTypeId,jdbcType=BIGINT}
+    </update>
 </mapper>

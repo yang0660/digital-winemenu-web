@@ -27,22 +27,23 @@ public class UserAccountService extends BaseService<Long, UserAccount, UserAccou
     private LoginRecordService loginRecordService;
 
     @Transactional
-    public UserAccount queryByUserName(String userName, UserTypeEnum userTypeEnum){
-        return mapper.selectByUserNameAndType(userName,userTypeEnum.value);
+    public UserAccount queryByUserName(String userName, UserTypeEnum userTypeEnum) {
+        return mapper.selectByUserNameAndType(userName, userTypeEnum.value);
     }
 
     @Transactional
-    public UserAccount queryByUserName(String userName){
+    public UserAccount queryByUserName(String userName) {
         return mapper.selectByUserName(userName);
     }
 
     /**
      * 常规登录-shiro登录处理
+     *
      * @param user
      * @param requestIp
      * @return
      */
-    public ResultVO postLogin(UserAccount user,String password,String requestIp){
+    public ResultVO postLogin(UserAccount user, String password, String requestIp) {
         ResultVO result = null;
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -60,18 +61,18 @@ public class UserAccountService extends BaseService<Long, UserAccount, UserAccou
             result = ResultVO.success("登录成功");
             result.setData(loginRespVO);
         } catch (UnknownAccountException e) {
-            log.error("用户不存在!",e);
+            log.error("用户不存在!", e);
             result = ResultVO.validError("用户不存在!");
         } catch (AuthenticationException e) {
-            log.error("密码错误，请重试!",e);
+            log.error("密码错误，请重试!", e);
             result = ResultVO.validError("密码错误，请重试!");
         } catch (Exception e) {
-            log.error("网络异常，请稍后重试!",e);
+            log.error("网络异常，请稍后重试!", e);
             result = ResultVO.validError("网络异常，请稍后重试!");
         }
 
         //记录登录日志
-        loginRecordService.saveLoginRecord(user,requestIp,result.getMessage());
+        loginRecordService.saveLoginRecord(user, requestIp, result.getMessage());
         return result;
     }
 }

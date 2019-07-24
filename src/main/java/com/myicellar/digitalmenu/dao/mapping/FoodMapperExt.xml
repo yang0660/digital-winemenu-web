@@ -26,41 +26,41 @@
         left join t_food_type fty on food.food_type_id = fty.food_type_id
         left join t_supplier sup on fty.supplier_id = sup.supplier_id
         <where>
-            <include refid="where" />
+            <include refid="where"/>
         </where>
     </select>
 
     <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodPageReqVO"
             resultMap="FoodPageResultMap">
         select
-            food.food_id,
-            food.food_name_eng,
-            food.food_name_cht,
-            food.food_name_chs,
-            food.food_img_id,
-            food.is_recommend,
-            food.created_at,
-            sup.supplier_name_eng,
-            fty.food_type_name_eng
-            from t_food food
-            left join t_food_type fty on food.food_type_id = fty.food_type_id
-            left join t_supplier sup on fty.supplier_id = sup.supplier_id
+        food.food_id,
+        food.food_name_eng,
+        food.food_name_cht,
+        food.food_name_chs,
+        food.food_img_id,
+        food.is_recommend,
+        food.created_at,
+        sup.supplier_name_eng,
+        fty.food_type_name_eng
+        from t_food food
+        left join t_food_type fty on food.food_type_id = fty.food_type_id
+        left join t_supplier sup on fty.supplier_id = sup.supplier_id
         <where>
-            <include refid="where" />
+            <include refid="where"/>
         </where>
-            limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+        limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
     <sql id="where">
-        <if test = 'foodTypeId !=null and foodTypeId != 0'>
+        <if test='foodTypeId !=null and foodTypeId != 0'>
             and fty.food_type_id = #{foodTypeId}
         </if>
-        <if test = 'foodName !=null and foodName != ""'>
+        <if test='foodName !=null and foodName != ""'>
             and (food.food_name_eng like concat('%',#{foodName},'%')
             or food.food_name_cht like concat('%',#{foodName},'%')
             or food.food_name_chs like concat('%',#{foodName},'%'))
         </if>
-        <if test = 'supplierId !=null and supplierId != 0'>
+        <if test='supplierId !=null and supplierId != 0'>
             and sup.supplier_id = #{supplierId}
         </if>
     </sql>
@@ -196,10 +196,10 @@
 
     <select id="selectByFoodName" parameterType="String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from t_food
         where
-            food_name_eng = #{foodNameEng}
+        food_name_eng = #{foodNameEng}
         limit 1
     </select>
 

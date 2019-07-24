@@ -109,7 +109,7 @@ public class CustomMobileAuthenticationFilter extends FormAuthenticationFilter i
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if(super.isAccessAllowed(request, response, mappedValue)) {
+        if (super.isAccessAllowed(request, response, mappedValue)) {
             PassWordStatusEnum passWordStatusEnum = getPassWordStatusEnum();
             return passWordStatusEnum == null || passWordStatusEnum == PassWordStatusEnum.EFFECTIVE || pathsMatch(updatePasswordUrl, request);
         }
@@ -118,12 +118,12 @@ public class CustomMobileAuthenticationFilter extends FormAuthenticationFilter i
 
     protected PassWordStatusEnum getPassWordStatusEnum() {
         Session session = SecurityUtils.getSubject().getSession(false);
-        if(session == null) {
+        if (session == null) {
             return null;
         }
 
         String passwordStatus = (String) session.getAttribute("passwordStatus");
-        if(passwordStatus == null) {
+        if (passwordStatus == null) {
             return null;
         } else {
             return PassWordStatusEnum.valueOf(passwordStatus);
@@ -161,7 +161,7 @@ public class CustomMobileAuthenticationFilter extends FormAuthenticationFilter i
 
                 ResultVO error;
                 PassWordStatusEnum passWordStatusEnum = getPassWordStatusEnum();
-                if(passWordStatusEnum != null && passWordStatusEnum != PassWordStatusEnum.EFFECTIVE) {
+                if (passWordStatusEnum != null && passWordStatusEnum != PassWordStatusEnum.EFFECTIVE) {
                     switch (passWordStatusEnum) {
                         case EXPIRE:
                             error = ResultVO.validError("密码已过期，请前往修改");

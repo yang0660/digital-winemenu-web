@@ -6,7 +6,7 @@ import com.myicellar.digitalmenu.vo.response.WineRespVO;
 
 import java.util.List;
 
-public interface WineMapperExt extends WineMapper{
+public interface WineMapperExt extends WineMapper {
     long selectCount(WinePageReqVO reqVO);
 
     List<WineRespVO> selectList(WinePageReqVO reqVO);

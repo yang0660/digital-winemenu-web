@@ -24,16 +24,16 @@ public class WineVintageListRespVO {
     private String vintageName;
 
     @ApiModelProperty(value = "风格")
-    private  String style;
+    private String style;
 
     @ApiModelProperty(value = "酒精度放大100倍")
-    private  Long alcoholBps;
+    private Long alcoholBps;
 
     @ApiModelProperty(value = "酒精度%")
-    private  BigDecimal acohol;
+    private BigDecimal acohol;
 
     @ApiModelProperty(value = "是否是有机葡萄酒：0 否，1 是")
-    private  Byte isOrganicWine;
+    private Byte isOrganicWine;
 
     @ApiModelProperty(value = "口味")
     private String descriptor;
@@ -42,8 +42,8 @@ public class WineVintageListRespVO {
     private String grap;
 
     @ApiModelProperty(value = "酒评")
-    private  String tastingNote;
+    private String tastingNote;
 
     @ApiModelProperty(value = "创建时间")
-    private  Date updatedAt;
+    private Date updatedAt;
 }
