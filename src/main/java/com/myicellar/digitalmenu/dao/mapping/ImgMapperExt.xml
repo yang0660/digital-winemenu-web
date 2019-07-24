@@ -54,4 +54,12 @@
     and img_name_eng = #{imgNameEng}
     limit 1
   </select>
+
+  <delete id="deleteByIds">
+    delete from t_img
+    where img_id in
+    <foreach collection="imgIds" item="imgId" open="(" close=")" separator=",">
+      #{imgId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
 </mapper>

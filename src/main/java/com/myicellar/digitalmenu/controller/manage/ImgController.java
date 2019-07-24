@@ -9,6 +9,7 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
+import com.myicellar.digitalmenu.vo.request.ImgBatchDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgReqVO;
@@ -145,6 +146,28 @@ public class ImgController {
             return ResultVO.validError("parameter is invalid！");
         }
         int i = imgService.deleteByPrimaryKey(reqVO.getImgId());
+        if(i==0){
+            return ResultVO.validError("delete is failed!");
+        }
+
+        return ResultVO.success("delete is success!");
+    }
+
+    /**
+     * 删除
+     *
+     * @param reqVO
+     * @return
+     * @since
+     */
+    @PostMapping(value = "/batchDelete")
+    @AuthIgnore
+    @ApiOperation("删除")
+    public ResultVO update(@RequestBody ImgBatchDeleteReqVO reqVO) {
+        if(!CollectionUtils.isEmpty(reqVO.getImgIds())){
+            return ResultVO.validError("parameter is invalid！");
+        }
+        int i = imgService.deleteByIds(reqVO.getImgIds());
         if(i==0){
             return ResultVO.validError("delete is failed!");
         }

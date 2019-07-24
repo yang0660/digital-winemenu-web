@@ -46,4 +46,8 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
 
         return resultMap;
     }
+
+    public Integer deleteByIds(List<Long> imgIds){
+        return mapper.deleteByIds(imgIds);
+    }
 }
