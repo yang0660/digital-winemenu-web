@@ -5,7 +5,11 @@ import java.util.Date;
 public class UserBehavior {
     private Long supplierId;
 
-    private Long packageId;
+    private Long productId;
+
+    private String deviceType;
+
+    private String deviceId;
 
     private Byte type;
 
@@ -19,12 +23,28 @@ public class UserBehavior {
         this.supplierId = supplierId;
     }
 
-    public Long getPackageId() {
-        return packageId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setPackageId(Long packageId) {
-        this.packageId = packageId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public Byte getType() {

@@ -1,4 +1,4 @@
-package com.myicellar.digitalmenu.controller.manage;
+package com.myicellar.digitalmenu.controller;
 
 import com.myicellar.digitalmenu.dao.entity.UserBehavior;
 import com.myicellar.digitalmenu.service.UserBehaviorService;
@@ -19,8 +19,8 @@ import java.util.Date;
 
 @RestController
 @Slf4j
-@RequestMapping("/app/userbehavior")
-@Api(tags = "用户行为数据上传", description = "/app/userbehavior")
+@RequestMapping("/app/data")
+@Api(tags = "用户行为数据上传", description = "/app/data")
 public class UserBehaviorManageController {
 
     @Autowired
