@@ -24,9 +24,6 @@ public class ProductManageReqVO {
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
 
-    @ApiModelProperty(value = "是否有机葡萄酒 0 否，1 是")
-    private Byte isOrganicWine;
-
     @ApiModelProperty(value = "是否推荐 0 否，1 是")
     private Byte isRecommend;
 
