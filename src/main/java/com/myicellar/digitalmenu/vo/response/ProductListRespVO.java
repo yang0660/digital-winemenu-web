@@ -22,7 +22,7 @@ public class ProductListRespVO {
     private String wineName;
 
     @ApiModelProperty(value = "年份标签")
-    private Long vintageTag;
+    private Long vintageTage;
 
     @ApiModelProperty(value = "年份描述")
     private String vintageName;
