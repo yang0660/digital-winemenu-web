@@ -1,7 +1,8 @@
 package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
@@ -24,15 +25,15 @@ public interface ProductMapperExt extends ProductMapper {
 
     List<ProductInfoRespVO> selectProductListByIds(@Param("productIds") List<Long> productIds);
 
-    long selectResultCount(PackageFilterReqVO reqVO);
+    long selectResultCount(ProductFilterReqVO reqVO);
 
-    List<ProductInfoRespVO> selectResult(PackageFilterReqVO reqVO);
+    List<ProductInfoRespVO> selectResult(ProductFilterReqVO reqVO);
 
     ProductDetailRespVO selectDetailById(Long ProductId);
 
-    Long selectCount(WinePageReqVO reqVO);
+    Long selectCount(ProductPageReqVO reqVO);
 
-    List<ProductListRespVO> selectList(WinePageReqVO reqVO);
+    List<ProductListRespVO> selectList(ProductPageReqVO reqVO);
 
     List<Product> selectListBySupplierId(Long supplierId);
 

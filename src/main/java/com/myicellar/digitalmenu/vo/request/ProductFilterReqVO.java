@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "筛选结果请求信息")
-public class PackageFilterReqVO extends PageRequestVO {
+public class ProductFilterReqVO extends PageRequestVO {
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;

@@ -4,7 +4,7 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
-import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +126,7 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      *
      * @return
      */
-    public Long queryResultCount(PackageFilterReqVO reqVO) {
+    public Long queryResultCount(ProductFilterReqVO reqVO) {
         return mapper.selectResultCount(reqVO);
     }
 
@@ -135,7 +135,7 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
      *
      * @return
      */
-    public PageResponseVO<ProductInfoRespVO> queryResultPage(PackageFilterReqVO reqVO) {
+    public PageResponseVO<ProductInfoRespVO> queryResultPage(ProductFilterReqVO reqVO) {
         PageResponseVO<ProductInfoRespVO> page = selectPage(reqVO, mapper::selectResultCount, mapper::selectResult);
 
         List<ProductInfoRespVO> list = page.getItems();

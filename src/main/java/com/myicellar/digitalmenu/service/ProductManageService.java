@@ -7,6 +7,7 @@ import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
 import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
@@ -45,7 +46,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      * @param reqVO
      * @return
      */
-    public PageResponseVO<ProductListRespVO> queryPageList(WinePageReqVO reqVO) {
+    public PageResponseVO<ProductListRespVO> queryPageList(ProductPageReqVO reqVO) {
         PageResponseVO<ProductListRespVO> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         if (page != null && !CollectionUtils.isEmpty(page.getItems())) {

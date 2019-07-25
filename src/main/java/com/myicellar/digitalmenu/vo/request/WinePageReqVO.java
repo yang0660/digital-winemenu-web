@@ -30,7 +30,4 @@ public class WinePageReqVO extends PageRequestVO {
 
     @ApiModelProperty(value = "年份标签")
     private Long vintageTag;
-
-    @ApiModelProperty(value = "美食ID")
-    private Long foodId;
 }

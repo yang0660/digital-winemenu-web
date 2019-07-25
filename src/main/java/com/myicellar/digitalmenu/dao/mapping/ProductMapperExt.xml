@@ -143,7 +143,7 @@
         </foreach>
     </select>
 
-    <select id="selectResultCount" parameterType="com.myicellar.digitalmenu.vo.request.PackageFilterReqVO"
+    <select id="selectResultCount" parameterType="com.myicellar.digitalmenu.vo.request.ProductFilterReqVO"
             resultType="long">
         select
         count(distinct prd.product_id)
@@ -167,7 +167,7 @@
         </where>
     </select>
 
-    <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.PackageFilterReqVO"
+    <select id="selectResult" parameterType="com.myicellar.digitalmenu.vo.request.ProductFilterReqVO"
             resultMap="ProductInfoResultMap">
         SELECT DISTINCT
         prd.product_id,
@@ -322,7 +322,7 @@
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
     </resultMap>
 
-    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO" resultType="long">
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.ProductPageReqVO" resultType="long">
         SELECT
         COUNT(DISTINCT prd.product_id)
         FROM
@@ -340,7 +340,7 @@
         </where>
     </select>
 
-    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WinePageReqVO"
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.ProductPageReqVO"
             resultMap="ProductResultMap">
         SELECT DISTINCT
         prd.product_id,
@@ -377,6 +377,7 @@
     </select>
 
     <sql id="where">
+        prd.supplier_id = #{supplierId}
         <if test="wineTypeId!=null and wineTypeId!=0">
             and win.wine_type_id = #{wineTypeId}
         </if>

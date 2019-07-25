@@ -277,7 +277,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         }
         Date now = new Date();
         wineVintage.setUpdatedAt(now);
-        Integer result = mapper.updateByPrimaryKey(wineVintage);
+        Integer result = mapper.updateByPrimaryKeySelective(wineVintage);
         if (result > 0) {
             //删除酒品属性
             Integer deleteNum1 = wineVintageAttrService.deleteByWineIdAndVintage(reqVO.getWineId(),

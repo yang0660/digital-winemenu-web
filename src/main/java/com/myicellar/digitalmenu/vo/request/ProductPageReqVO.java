@@ -5,16 +5,22 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 酒品新增/修改参数
+ * 酒品相关信息查询参数-分页
  */
 @Data
-@ApiModel(value = "酒品新增/修改参数")
-public class WineReqVO {
-    @ApiModelProperty(value = "酒品ID（新增不传）")
+@ApiModel(value = "酒品相关信息查询参数-分页")
+public class ProductPageReqVO extends PageRequestVO {
+    @ApiModelProperty(value = "供应商ID")
+    private Long supplierId;
+
+    @ApiModelProperty(value = "酒品ID")
     private Long wineId;
 
     @ApiModelProperty(value = "酒品类型ID")
     private Long wineTypeId;
+
+    @ApiModelProperty(value = "国家ID")
+    private Long countryId;
 
     @ApiModelProperty(value = "酒品产地ID")
     private Long wineOriginId;
@@ -25,12 +31,9 @@ public class WineReqVO {
     @ApiModelProperty(value = "酒品名称-英")
     private String wineNameEng;
 
-    @ApiModelProperty(value = "酒品名称-简")
-    private String wineNameChs;
+    @ApiModelProperty(value = "年份标签")
+    private Long vintageTag;
 
-    @ApiModelProperty(value = "酒品名称-繁")
-    private String wineNameCht;
-
-    @ApiModelProperty(value = "酒品图片")
-    private Long wineImgId;
+    @ApiModelProperty(value = "美食ID")
+    private Long foodId;
 }

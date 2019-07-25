@@ -5,8 +5,8 @@ import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.WineVintageScoreService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
-import com.myicellar.digitalmenu.vo.request.PackageFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductDetailReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.request.WishListReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
@@ -136,7 +136,7 @@ public class ProductController {
     @PostMapping(value = "/queryResultCount")
     @AuthIgnore
     @ApiOperation("筛选结果总量统计")
-    public ResultVO<Long> queryResultCount(@RequestBody PackageFilterReqVO reqVO) {
+    public ResultVO<Long> queryResultCount(@RequestBody ProductFilterReqVO reqVO) {
         Long count = productService.queryResultCount(reqVO);
 
         return ResultVO.success(count);
@@ -151,7 +151,7 @@ public class ProductController {
     @PostMapping(value = "/queryResultPage")
     @AuthIgnore
     @ApiOperation("筛选结果页列表")
-    public ResultVO<PageResponseVO<ProductInfoRespVO>> queryResultPage(@RequestBody PackageFilterReqVO reqVO) {
+    public ResultVO<PageResponseVO<ProductInfoRespVO>> queryResultPage(@RequestBody ProductFilterReqVO reqVO) {
         PageResponseVO<ProductInfoRespVO> page = productService.queryResultPage(reqVO);
 
         return ResultVO.success(page);

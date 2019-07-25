@@ -5,6 +5,7 @@ import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
@@ -38,7 +39,7 @@ public class ProductManageController {
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
     @ApiOperation("列表查询")
-    public ResultVO<PageResponseVO<ProductListRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
+    public ResultVO<PageResponseVO<ProductListRespVO>> queryListPage(@RequestBody ProductPageReqVO reqVO) {
         PageResponseVO<ProductListRespVO> page = productManageService.queryPageList(reqVO);
 
         return ResultVO.success(page);
