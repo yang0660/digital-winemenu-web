@@ -39,7 +39,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
      * @param reqVO
      * @return
      */
-    public PageResponseVO<WineVintageListRespVO> queryPageList(WineDetailReqVO reqVO) {
+    public PageResponseVO<WineVintageListRespVO> queryPageList(WineVintageListReqVO reqVO) {
         PageResponseVO<WineVintageListRespVO> page = selectPage(reqVO, mapper::selectCount, mapper::selectList);
 
         List<String> wineVintageIds = new ArrayList<String>();

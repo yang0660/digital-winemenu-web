@@ -3,8 +3,8 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.myicellar.digitalmenu.service.WineVintageService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
-import com.myicellar.digitalmenu.vo.request.WineDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.WineVintageInfoReqVO;
+import com.myicellar.digitalmenu.vo.request.WineVintageListReqVO;
 import com.myicellar.digitalmenu.vo.request.WineVintageReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -39,7 +39,7 @@ public class WineVintageManageController {
     @PostMapping(value = "/queryListPage")
     @AuthIgnore
     @ApiOperation("列表查询")
-    public ResultVO<PageResponseVO<WineVintageListRespVO>> queryListPage(@RequestBody WineDetailReqVO reqVO) {
+    public ResultVO<PageResponseVO<WineVintageListRespVO>> queryListPage(@RequestBody WineVintageListReqVO reqVO) {
         PageResponseVO<WineVintageListRespVO> page = wineVintageService.queryPageList(reqVO);
 
         return ResultVO.success(page);

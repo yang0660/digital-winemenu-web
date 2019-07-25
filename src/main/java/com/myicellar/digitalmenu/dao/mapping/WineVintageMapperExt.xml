@@ -21,14 +21,14 @@
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
     </resultMap>
 
-    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineDetailReqVO" resultType="long">
+    <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.WineVintageListReqVO" resultType="long">
         select
         count(0)
         from t_wine_vintage
         where wine_id = #{wineId,jdbcType=BIGINT}
     </select>
 
-    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineDetailReqVO"
+    <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.WineVintageListReqVO"
             resultMap="ListResultMap">
         select
         <include refid="Base_Column_List"/>
