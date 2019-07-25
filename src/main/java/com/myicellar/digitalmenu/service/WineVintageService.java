@@ -62,7 +62,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 //风格
                 if (!CollectionUtils.isEmpty(styleAttrMap)) {
                     WineAttrMapRespVO attrRespVO = styleAttrMap.get(respVO.getWineId() + "|" + respVO.getVintageTag());
-                    if (respVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
+                    if (attrRespVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                         respVO.setStyle(wineVintageAttrService.listToEngStr(attrlist));
                     }
@@ -70,7 +70,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 //口味
                 if (!CollectionUtils.isEmpty(descriptorAttrMap)) {
                     WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(respVO.getWineId() + "|" + respVO.getVintageTag());
-                    if (respVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
+                    if (attrRespVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                         respVO.setDescriptor(wineVintageAttrService.listToEngStr(attrlist));
                     }
@@ -78,7 +78,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 //葡萄
                 if (!CollectionUtils.isEmpty(grapAttrMap)) {
                     WineAttrMapRespVO attrRespVO = grapAttrMap.get(respVO.getWineId() + "|" + respVO.getVintageTag());
-                    if (respVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
+                    if (attrRespVO != null && !CollectionUtils.isEmpty(attrRespVO.getList())) {
                         List<WineAttrInfoRespVO> attrlist = attrRespVO.getList();
                         respVO.setGrap(wineVintageAttrService.listToEngStr(attrlist));
                     }
@@ -201,7 +201,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         Integer result = mapper.insertSelective(wineVintage);
         if (result > 0) {
             List<Long> attrIds = new ArrayList<Long>();
-            if (reqVO.getStyleId() == null && reqVO.getStyleId() != 0L) {
+            if (reqVO.getStyleId() != null && reqVO.getStyleId() != 0L) {
                 //风格
                 attrIds.add(reqVO.getStyleId());
             }
