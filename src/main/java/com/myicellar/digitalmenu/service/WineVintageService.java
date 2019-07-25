@@ -121,7 +121,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 }
             }
             if (!CollectionUtils.isEmpty(descriptorAttrMap)) {
-                WineAttrMapRespVO attrRespVO = styleAttrMap.get(wineVintageStr);
+                WineAttrMapRespVO attrRespVO = descriptorAttrMap.get(wineVintageStr);
                 if (attrRespVO != null) {
                     List<WineAttrInfoRespVO> attrList = attrRespVO.getList();
                     //口味
@@ -133,7 +133,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 }
             }
             if (!CollectionUtils.isEmpty(grapAttrMap)) {
-                WineAttrMapRespVO attrRespVO = styleAttrMap.get(wineVintageStr);
+                WineAttrMapRespVO attrRespVO = grapAttrMap.get(wineVintageStr);
                 if (attrRespVO != null) {
                     List<WineAttrInfoRespVO> attrList = attrRespVO.getList();
                     //葡萄
@@ -231,12 +231,12 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     wineVintageAttrService.insertSelective(attr);
                 }
             }
-            WineVintageScore score = new WineVintageScore();
-            score.setWineId(reqVO.getWineId());
-            score.setVintageTag(reqVO.getVintageTag());
-            score.setUpdatedAt(now);
             //评分
             if (!CollectionUtils.isEmpty(reqVO.getScores())) {
+                WineVintageScore score = new WineVintageScore();
+                score.setWineId(reqVO.getWineId());
+                score.setVintageTag(reqVO.getVintageTag());
+                score.setUpdatedAt(now);
                 for (ScoreReqVO scoreReqVO : reqVO.getScores()) {
                     score.setWineCriticsId(scoreReqVO.getCriticsId());
                     score.setScoreValNum(scoreReqVO.getScore().multiply(new BigDecimal(10)).shortValue());
@@ -247,11 +247,15 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             }
             //获奖
             if (!CollectionUtils.isEmpty(reqVO.getAwards())) {
+                WineVintageScore award = new WineVintageScore();
+                award.setWineId(reqVO.getWineId());
+                award.setVintageTag(reqVO.getVintageTag());
+                award.setUpdatedAt(now);
                 for (AwardReqVO awardReqVO : reqVO.getAwards()) {
-                    score.setWineCriticsId(awardReqVO.getCriticsId());
-                    score.setScoreYear(awardReqVO.getYear());
-                    score.setScoreName(awardReqVO.getScoreName());
-                    wineVintageScoreService.insertSelective(score);
+                    award.setWineCriticsId(awardReqVO.getCriticsId());
+                    award.setScoreYear(awardReqVO.getYear());
+                    award.setScoreName(awardReqVO.getScoreName());
+                    wineVintageScoreService.insertSelective(award);
                 }
             }
         }
@@ -308,15 +312,15 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     wineVintageAttrService.insertSelective(attr);
                 }
             }
-            WineVintageScore score = new WineVintageScore();
-            score.setWineId(reqVO.getWineId());
-            score.setVintageTag(reqVO.getVintageTag());
-            score.setUpdatedAt(now);
             //删除评分、获奖
             Integer deleteNum2 = wineVintageScoreService.deleteByWineIdAndVintage(reqVO.getWineId(),
                     reqVO.getVintageTag());
             //评分
             if (!CollectionUtils.isEmpty(reqVO.getScores())) {
+                WineVintageScore score = new WineVintageScore();
+                score.setWineId(reqVO.getWineId());
+                score.setVintageTag(reqVO.getVintageTag());
+                score.setUpdatedAt(now);
                 for (ScoreReqVO scoreReqVO : reqVO.getScores()) {
                     score.setWineCriticsId(scoreReqVO.getCriticsId());
                     score.setScoreValNum(scoreReqVO.getScore().multiply(new BigDecimal(10)).shortValue());
@@ -327,11 +331,15 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             }
             //获奖
             if (!CollectionUtils.isEmpty(reqVO.getAwards())) {
+                WineVintageScore award = new WineVintageScore();
+                award.setWineId(reqVO.getWineId());
+                award.setVintageTag(reqVO.getVintageTag());
+                award.setUpdatedAt(now);
                 for (AwardReqVO awardReqVO : reqVO.getAwards()) {
-                    score.setWineCriticsId(awardReqVO.getCriticsId());
-                    score.setScoreYear(awardReqVO.getYear());
-                    score.setScoreName(awardReqVO.getScoreName());
-                    wineVintageScoreService.insertSelective(score);
+                    award.setWineCriticsId(awardReqVO.getCriticsId());
+                    award.setScoreYear(awardReqVO.getYear());
+                    award.setScoreName(awardReqVO.getScoreName());
+                    wineVintageScoreService.insertSelective(award);
                 }
             }
         }
