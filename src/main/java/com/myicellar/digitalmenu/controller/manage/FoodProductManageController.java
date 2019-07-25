@@ -63,7 +63,7 @@ public class FoodProductManageController {
         if (reqVO.getFoodId() == null || reqVO.getFoodId() == 0L) {
             throw new BizException("foodId cannot be empty!");
         }
-        if (!CollectionUtils.isEmpty(reqVO.getProductIds())) {
+        if (CollectionUtils.isEmpty(reqVO.getProductIds())) {
             throw new BizException("productIds cannot be empty!");
         }
     }

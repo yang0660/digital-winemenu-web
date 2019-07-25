@@ -16,7 +16,8 @@ import java.util.Map;
 
 public interface ProductMapperExt extends ProductMapper {
 
-    Product selectByWineIdAndVintage(@Param("wineId") Long wineId,
+    Product selectByWineIdAndVintage(@Param("supplierId") Long supplierId,
+                                     @Param("wineId") Long wineId,
                                      @Param("vintageTag") Long vintageTag);
 
     List<ProductInfoRespVO> selectRecomendProductList(Long supplierId);

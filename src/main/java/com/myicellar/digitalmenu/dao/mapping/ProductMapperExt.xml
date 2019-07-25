@@ -13,7 +13,8 @@
         select
         <include refid="Base_Column_List"/>
         from t_product
-        where wine_id = #{wineId,jdbcType=BIGINT}
+        where supplier_id = #{supplierId,jdbcType=BIGINT}
+        and wine_id = #{wineId,jdbcType=BIGINT}
         and vintage_tag = #{vintageTag,jdbcType=BIGINT}
         limit 1
     </select>

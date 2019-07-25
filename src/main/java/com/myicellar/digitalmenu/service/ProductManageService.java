@@ -28,8 +28,8 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
     @Autowired
     private IPackageMapperExt iPackageMapperExt;
 
-    public Product selectByWineIdAndVintage(Long wineId, Long vintageTag) {
-        return mapper.selectByWineIdAndVintage(wineId, vintageTag);
+    public Product selectByWineIdAndVintage(Long supplierId, Long wineId, Long vintageTag) {
+        return mapper.selectByWineIdAndVintage(supplierId, wineId, vintageTag);
     }
 
     public ProductPriceRangeRespVO queryPriceRange(Long supplierId) {
@@ -85,15 +85,25 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
     @Transactional
     public Integer addNew(ProductManageReqVO reqVO) {
         Product product = ConvertUtils.convert(reqVO, Product.class);
-        Long productId = snowflakeIdWorker.nextId();
-        product.setProductId(productId);
-        product.setIsEnabled((byte) 1);
         Date now = new Date();
-        product.setCreatedAt(now);
-        product.setUpdatedAt(now);
-        product.setCreatedBy(1L);
-        product.setUpdatedBy(1L);
-        Integer result = mapper.insertSelective(product);
+        Integer result = 0;
+        Long productId = null;
+
+        Product tmpProduct = mapper.selectByWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
+        if(tmpProduct!=null){
+            productId = tmpProduct.getProductId();
+            result = 1;
+        }else {
+            productId = snowflakeIdWorker.nextId();
+            product.setProductId(productId);
+            product.setIsEnabled((byte) 1);
+            product.setCreatedAt(now);
+            product.setUpdatedAt(now);
+            product.setCreatedBy(1L);
+            product.setUpdatedBy(1L);
+            result = mapper.insertSelective(product);
+        }
+
         if (result > 0) {
             if (!CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
                 IPackage iPackage = new IPackage();

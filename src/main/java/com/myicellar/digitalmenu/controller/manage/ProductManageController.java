@@ -157,7 +157,7 @@ public class ProductManageController {
         if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
             throw new BizException("volume and price can not be empty!");
         }
-        Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(), reqVO.getVintageTag());
+        Product product = productManageService.selectByWineIdAndVintage(reqVO.getSupplierId(), reqVO.getWineId(), reqVO.getVintageTag());
         if (product != null) {
             throw new BizException("wine contains this vintage already!");
         }
