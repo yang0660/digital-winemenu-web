@@ -328,7 +328,6 @@
         COUNT(DISTINCT prd.product_id)
         FROM
         t_product prd
-        INNER JOIN t_food_product fprd ON prd.product_id = fprd.product_id
         INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
         AND prd.vintage_tag = wvtg.vintage_tag
         INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -336,6 +335,7 @@
         LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
         LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
         LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
+        LEFT JOIN t_food_product fprd ON prd.product_id = fprd.product_id
         <where>
             <include refid="where"/>
         </where>
@@ -363,7 +363,6 @@
         win.updated_at
         FROM
         t_product prd
-        INNER JOIN t_food_product fprd ON prd.product_id = fprd.product_id
         INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id
         AND prd.vintage_tag = wvtg.vintage_tag
         INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -371,6 +370,7 @@
         LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
         LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
         LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
+        LEFT JOIN t_food_product fprd ON prd.product_id = fprd.product_id
         <where>
             <include refid="where"/>
         </where>
