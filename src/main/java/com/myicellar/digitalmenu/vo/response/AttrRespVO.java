@@ -7,22 +7,16 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 酒品原材料配料口味信息
+ * 酒品风格/口味/葡萄等属性
  */
 @Data
-@ApiModel(value = "酒品原材料配料口味信息")
+@ApiModel(value = "酒品风格/口味/葡萄等属性")
 public class AttrRespVO {
     @ApiModelProperty(value = "配料ID")
     private Long attrId;
 
     @ApiModelProperty(value = "口味ID")
     private Long attrCatgId;
-
-    @ApiModelProperty(value = "口味名称")
-    private String attrCatgName;
-
-    @ApiModelProperty(value = "配料名称缩写")
-    private String attrSeoName;
 
     @ApiModelProperty(value = "配料名称-英")
     private String attrNameEng;
@@ -32,12 +26,4 @@ public class AttrRespVO {
 
     @ApiModelProperty(value = "配料名称-繁")
     private String attrNameCht;
-
-    @ApiModelProperty(value = "排序")
-    private Short micRank;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
-
-
 }

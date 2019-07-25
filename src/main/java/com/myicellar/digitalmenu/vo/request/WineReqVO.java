@@ -7,10 +7,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 酒品相关信息查询参数
+ * 酒品新增/修改参数
  */
 @Data
-@ApiModel(value = "酒品相关信息查询参数")
+@ApiModel(value = "酒品新增/修改参数")
 public class WineReqVO {
     @ApiModelProperty(value = "酒品ID（新增不传）")
     private Long wineId;
@@ -35,9 +35,4 @@ public class WineReqVO {
 
     @ApiModelProperty(value = "酒品图片")
     private Long wineImgId;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updatedAt;
-
-
 }

@@ -127,7 +127,7 @@ public class BasicDataController {
      */
     @PostMapping(value = "/queryCriticsList")
     @AuthIgnore
-    @ApiOperation("酒品类型下拉列表")
+    @ApiOperation("评论家/机构下拉列表")
     public ResultVO<List<CriticsRespVO>> queryCriticsList() {
         List<Critics> list = criticsService.queryList();
 
