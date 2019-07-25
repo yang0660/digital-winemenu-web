@@ -13,6 +13,7 @@
         <result column="food_name_eng" jdbcType="VARCHAR" property="foodNameEng"/>
         <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
         <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId"/>
         <result column="supplier_name_eng" jdbcType="VARCHAR" property="supplierNameEng"/>
         <result column="food_type_name_eng" jdbcType="VARCHAR" property="foodTypeNameEng"/>
         <result column="food_img_id" jdbcType="BIGINT" property="foodImgId"/>
@@ -40,6 +41,7 @@
         food.food_img_id,
         food.is_recommend,
         food.created_at,
+        sup.supplier_id,
         sup.supplier_name_eng,
         fty.food_type_name_eng
         from t_food food

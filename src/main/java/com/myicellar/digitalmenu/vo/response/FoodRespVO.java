@@ -15,6 +15,9 @@ public class FoodRespVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
+    @ApiModelProperty(value = "供应商ID")
+    private String supplierId;
+
     @ApiModelProperty(value = "供应商名称-英")
     private String supplierNameEng;
 
