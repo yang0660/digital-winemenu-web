@@ -174,6 +174,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     awardRespVO.setCriticsId(vintageAward.getWineCriticsId());
                     awardRespVO.setScoreName(vintageAward.getScoreName());
                     awardRespVO.setYear(vintageAward.getScoreYear());
+                    awards.add(awardRespVO);
                 }
                 respVO.setAwards(awards);
             }
