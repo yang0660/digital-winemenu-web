@@ -100,7 +100,7 @@ public class WineryManageController {
     @PostMapping(value = "/add")
     @AuthIgnore
     @ApiOperation("新增")
-    public ResultVO<WineryRespVO> add(@RequestBody WineryReqVO reqVO) {
+    public ResultVO<Integer> add(@RequestBody WineryReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
 
@@ -114,14 +114,7 @@ public class WineryManageController {
         List<Long> longIds = reqVO.getWineryImgIds();
         String stringIds = StringUtils.join(longIds, ",");
         winery.setWineryImgIds(stringIds);
-        int i = wineryService.insertSelective(winery);
-        if (i == 0) {
-            return ResultVO.validError("save is failed!");
-        }
-
-        WineryRespVO respVO = ConvertUtils.convert(winery, WineryRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(wineryService.insertSelective(winery));
     }
 
     /**
@@ -133,7 +126,7 @@ public class WineryManageController {
     @PostMapping(value = "/update")
     @AuthIgnore
     @ApiOperation("修改")
-    public ResultVO update(@RequestBody WineryReqVO reqVO) {
+    public ResultVO<Integer> update(@RequestBody WineryReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         Winery winery = ConvertUtils.convert(reqVO, Winery.class);
@@ -143,14 +136,7 @@ public class WineryManageController {
         List<Long> longIds = reqVO.getWineryImgIds();
         String stringIds = StringUtils.join(longIds, ",");
         winery.setWineryImgIds(stringIds);
-        int i = wineryService.updateByPrimaryKeySelective(winery);
-        if (i == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-
-        WineryRespVO respVO = ConvertUtils.convert(winery, WineryRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(wineryService.updateByPrimaryKeySelective(winery));
     }
 
     /**
@@ -162,20 +148,9 @@ public class WineryManageController {
     @PostMapping(value = "/delete")
     @AuthIgnore
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody WineryDeleteReqVO reqVO) {
-        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
-            return ResultVO.validError("parameter is invalid！");
-        }
-        //如果酒庄里有关联酒品, 无法删除酒庄
-        if (wineService.queryByWineryId(reqVO.getWineryId()) != null) {
-            return ResultVO.validError("Winery is in use, can not be deleted");
-        }
-        int i = wineryService.deleteByPrimaryKey(reqVO.getWineryId());
-        if (i == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+    public ResultVO<Integer> update(@RequestBody WineryDeleteReqVO reqVO) {
+        checkDeleteParam(reqVO);
+        return ResultVO.success(wineryService.deleteByPrimaryKey(reqVO.getWineryId()));
     }
 
     /**
@@ -242,6 +217,21 @@ public class WineryManageController {
         Winery winery = wineryService.queryByName(reqVO.getWineryNameEng());
         if (winery != null && !winery.getWineryId().equals(reqVO.getWineryId())) {
             throw new BizException("winery already exists");
+        }
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkDeleteParam(WineryDeleteReqVO reqVO) {
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
+            throw new BizException("parameter is invalid！");
+        }
+        //如果酒庄里有关联酒品, 无法删除酒庄
+        if (wineService.queryByWineryId(reqVO.getWineryId()) != null) {
+            throw new BizException("Winery is in use, can not be deleted");
         }
     }
 
