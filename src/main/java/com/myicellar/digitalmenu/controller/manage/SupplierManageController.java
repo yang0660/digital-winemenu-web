@@ -223,7 +223,7 @@ public class SupplierManageController {
         if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
             throw new BizException("Logo cannot be empty!");
         }
-        if (reqVO.getType() == null || reqVO.getType() == 0) {
+        if (reqVO.getType() == null) {
             throw new BizException("Type cannot be empty!");
         }
         if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
