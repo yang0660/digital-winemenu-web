@@ -10,7 +10,6 @@ import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
 import com.myicellar.digitalmenu.vo.request.ImgBatchDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.ImgDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgReqVO;
 import com.myicellar.digitalmenu.vo.response.ImgRespVO;
@@ -99,70 +98,16 @@ public class ImgController {
     }
 
     /**
-     * 修改
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/update")
-    @AuthIgnore
-    @ApiOperation("修改")
-    public ResultVO<ImgRespVO> update(@RequestBody ImgReqVO reqVO) {
-        //参数校验
-        checkUpdateParam(reqVO);
-        FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
-        if (fileUploadResult == null) {
-            return ResultVO.validError("uploading picture is failed!");
-        }
-
-        Img img = ConvertUtils.convert(reqVO, Img.class);
-        img.setImgUrl(fileUploadResult.getImageUrl());
-        img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
-        img.setUpdatedBy(0L);
-        Date now = new Date();
-        img.setUpdatedAt(now);
-        int i = imgService.updateByPrimaryKeySelective(img);
-        if (i == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-
-        ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
-    }
-
-    /**
-     * 删除
-     *
-     * @param reqVO
-     * @return
-     */
-    @PostMapping(value = "/delete")
-    @AuthIgnore
-    @ApiOperation("删除")
-    public ResultVO update(@RequestBody ImgDeleteReqVO reqVO) {
-        if (reqVO.getImgId() == null || reqVO.getImgId() == 0L) {
-            return ResultVO.validError("parameter is invalid！");
-        }
-        int i = imgService.deleteByPrimaryKey(reqVO.getImgId());
-        if (i == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
-    }
-
-    /**
-     * 删除
+     * 批量删除
      *
      * @param reqVO
      * @return
      */
     @PostMapping(value = "/batchDelete")
     @AuthIgnore
-    @ApiOperation("删除")
+    @ApiOperation("批量删除")
     public ResultVO update(@RequestBody ImgBatchDeleteReqVO reqVO) {
-        if (!CollectionUtils.isEmpty(reqVO.getImgIds())) {
+        if (CollectionUtils.isEmpty(reqVO.getImgIds())) {
             return ResultVO.validError("parameter is invalid！");
         }
         int i = imgService.deleteByIds(reqVO.getImgIds());
@@ -187,24 +132,6 @@ public class ImgController {
         }
         Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(), reqVO.getImgNameEng());
         if (img != null) {
-            throw new BizException("imgNameEng is already exists!");
-        }
-    }
-
-    /**
-     * 校验修改参数
-     *
-     * @param reqVO
-     */
-    public void checkUpdateParam(ImgReqVO reqVO) {
-        if (reqVO.getImgId() == null || reqVO.getImgId() == 0L) {
-            throw new BizException("imgId cannot be empty!");
-        }
-        if (StringUtils.isEmpty(reqVO.getImgNameEng())) {
-            throw new BizException("imgNameEng cannot be empty!");
-        }
-        Img img = imgService.queryByTypeIdAndImgName(reqVO.getImgTypeId(), reqVO.getImgNameEng());
-        if (img != null && !img.getImgId().equals(reqVO.getImgId())) {
             throw new BizException("imgNameEng is already exists!");
         }
     }

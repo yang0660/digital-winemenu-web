@@ -20,9 +20,6 @@ public class ImgRespVO {
     @ApiModelProperty(value = "图片url-原图")
     private String imgUrl;
 
-    @ApiModelProperty(value = "图片url-缩略图")
-    private String smallImgUrl;
-
     @ApiModelProperty(value = "图片名称-英文")
     private String imgNameEng;
 

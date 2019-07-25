@@ -35,7 +35,9 @@
 
     <sql id="conditionWhere">
         <if test="imgTypeNameEng!=null and imgTypeNameEng!=''">
-            img_type_name_eng = #{imgTypeNameEng}
+            and (img_type_name_eng like concat('%',#{imgTypeNameEng},'%')
+            or img_type_name_chs like concat('%',#{imgTypeNameEng},'%')
+            or img_type_name_cht like concat('%',#{imgTypeNameEng},'%'))
         </if>
     </sql>
 

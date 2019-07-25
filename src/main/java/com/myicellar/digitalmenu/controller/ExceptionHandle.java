@@ -1,5 +1,6 @@
 package com.myicellar.digitalmenu.controller;
 
+import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,7 +28,7 @@ public class ExceptionHandle {
     public ResultVO<?> handle(HandlerMethod handlerMethod, Exception e) {
         log.error("接口\"" + handlerMethod.getBeanType().getName() + "." + handlerMethod.getMethod().getName() + "\"异常", e);
 
-        ResultVO<?> resultVO = ResultVO.unknowError(e);
+        ResultVO<?> resultVO = ResultVO.validError("网络异常，请稍后重试！");
         if (e instanceof DuplicateKeyException) {
             Matcher matcher = DUPLICATE_PATTERN.matcher(e.getMessage());
             if (matcher.matches()) {
@@ -43,6 +44,8 @@ public class ExceptionHandle {
                 return resultVO.setMessage("参数'" + getColumnDesc(column) + "'不能为空， 请设值");
             }
             return resultVO.setMessage("数据缺失，请检查参数");
+        } else if (e instanceof BizException) {
+            return resultVO.setMessage(e.getMessage());
         }
 
         return resultVO;
