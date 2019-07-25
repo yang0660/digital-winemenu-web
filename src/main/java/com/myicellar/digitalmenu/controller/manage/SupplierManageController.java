@@ -110,6 +110,25 @@ public class SupplierManageController {
     }
 
     /**
+     * 详情查询
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryBySupplierId")
+    @AuthIgnore
+    @ApiOperation("详情查询")
+    public ResultVO<SupplierRespVO> queryByWineryId(@RequestBody SupplierIdReqVO reqVO) {
+
+        Supplier supplier = supplierService.queryBySupplierId(reqVO.getSupplierId());
+        SupplierRespVO respVO = ConvertUtils.convert(supplier, SupplierRespVO.class);
+        if (respVO == null) {
+            return ResultVO.success(new SupplierRespVO());
+        }
+        return ResultVO.success(respVO);
+    }
+
+    /**
      * 新增
      *
      * @param reqVO

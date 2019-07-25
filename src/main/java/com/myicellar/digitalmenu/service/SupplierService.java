@@ -70,4 +70,13 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
     public Supplier queryBySupplierName(String supplierName) {
         return mapper.selectBySupplierName(supplierName);
     }
+
+    /**
+     * 详情查询
+     *
+     * @return
+     */
+    public Supplier queryBySupplierId(Long supplierId) {
+        return mapper.selectByPrimaryKey(supplierId);
+    }
 }
