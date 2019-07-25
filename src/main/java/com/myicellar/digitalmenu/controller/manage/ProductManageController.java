@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequestMapping("/manage/product")
-@Api(tags = "酒品年份管理", description = "/manage/product")
+@Api(tags = "供应商管理-关联酒品", description = "/manage/product")
 public class ProductManageController {
     @Autowired
     private ProductManageService productManageService;
