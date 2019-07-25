@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 酒品相关信息查询参数-分页
+ * 供应商关联酒品列表查询参数-分页
  */
 @Data
-@ApiModel(value = "酒品相关信息查询参数-分页")
+@ApiModel(value = "供应商关联酒品列表查询参数-分页")
 public class ProductPageReqVO extends PageRequestVO {
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
