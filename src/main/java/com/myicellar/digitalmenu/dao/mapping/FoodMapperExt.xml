@@ -72,7 +72,6 @@
         <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
-        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
     </resultMap>
 
     <select id="selectListByFoodTypeId" parameterType="long" resultMap="FoodDisplayResultMap">
@@ -81,8 +80,7 @@
                 a.food_name_chs,
                 a.food_name_cht,
                 a.price,
-                b.img_url,
-                b.small_img_url
+                b.img_url
         FROM t_food a
         LEFT JOIN t_img b ON a.food_img_id = b.img_id
         WHERE a.food_type_id = #{foodTypeId}
@@ -94,7 +92,6 @@
         <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
         <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
         <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
-        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="note_plain_eng" jdbcType="LONGVARCHAR" property="notePlainEng"/>
         <result column="note_plain_chs" jdbcType="LONGVARCHAR" property="notePlainChs"/>
@@ -110,8 +107,7 @@
                 a.note_plain_eng,
                 a.note_plain_chs,
                 a.note_plain_cht,
-                b.img_url,
-                b.small_img_url
+                b.img_url
         FROM t_food a
         LEFT JOIN t_img b ON a.food_img_id = b.img_id
         WHERE a.food_id = #{foodId}
@@ -123,7 +119,6 @@
         <result column="food_name_chs" jdbcType="VARCHAR" property="foodNameChs"/>
         <result column="food_name_cht" jdbcType="VARCHAR" property="foodNameCht"/>
         <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
-        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
     </resultMap>
 
     <select id="selectRecomendFoodList" parameterType="com.myicellar.digitalmenu.vo.request.SupplierIdReqVO"
@@ -132,8 +127,7 @@
                 a.food_name_eng,
                 a.food_name_chs,
                 a.food_name_cht,
-                c.img_url,
-                c.small_img_url
+                c.img_url
         FROM t_food a
         INNER JOIN t_food_type b ON a.food_type_id = b.food_type_id
         LEFT JOIN t_img c ON a.food_img_id = c.img_id
@@ -148,8 +142,7 @@
         fd.food_name_eng,
         fd.food_name_chs,
         fd.food_name_cht,
-        img.img_url,
-        img.small_img_url
+        img.img_url
         FROM
         t_food fd
         INNER JOIN t_food_product fdprd ON fd.food_id = fdprd.food_id

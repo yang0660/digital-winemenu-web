@@ -28,9 +28,6 @@ public class FoodDisplayRespVO {
     @ApiModelProperty(value = "图片-原图")
     private String imgUrl;
 
-    @ApiModelProperty(value = "图片-缩略图")
-    private String smallImgUrl;
-
     @ApiModelProperty(value = "美食价格")
     private BigDecimal price;
 

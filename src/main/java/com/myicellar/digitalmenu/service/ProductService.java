@@ -98,14 +98,12 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                         Img img = imgMap.get(info.getWineImgId());
                         if (img != null) {
                             info.setWineImgUrl(img.getImgUrl());
-                            info.setWineSmallImgUrl(img.getSmallImgUrl());
                         }
                     }
                     if (info.getWineryLogoId() != null && info.getWineryLogoId() != 0L) {
                         Img logoImg = imgMap.get(info.getWineryLogoId());
                         if (logoImg != null) {
                             info.setWineryLogoUrl(logoImg.getImgUrl());
-                            info.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
                         }
                     }
                 }
@@ -227,21 +225,18 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                     Img img = imgMap.get(respVO.getWineImgId());
                     if (img != null) {
                         respVO.setWineImgUrl(img.getImgUrl());
-                        respVO.setWineSmallImgUrl(img.getSmallImgUrl());
                     }
                 }
                 if (respVO.getWineryLogoId() != null && respVO.getWineryLogoId() != 0L) {
                     Img logoImg = imgMap.get(respVO.getWineryLogoId());
                     if (logoImg != null) {
                         respVO.setWineryLogoUrl(logoImg.getImgUrl());
-                        respVO.setWineryLogoSmallUrl(logoImg.getSmallImgUrl());
                     }
                 }
                 if (respVO.getBannerImgId() != null && respVO.getBannerImgId() != 0L) {
                     Img bannerImg = imgMap.get(respVO.getBannerImgId());
                     if (bannerImg != null) {
                         respVO.setBannerImgUrl(bannerImg.getImgUrl());
-                        respVO.setBannerSmallImgUrl(bannerImg.getSmallImgUrl());
                     }
                 }
                 if (!CollectionUtils.isEmpty(wineryImgIds)) {

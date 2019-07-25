@@ -26,9 +26,6 @@ public class ProductDetailRespVO {
     @ApiModelProperty(value = "酒品图片ID")
     private Long wineImgId;
 
-    @ApiModelProperty(value = "酒品图片-缩略图")
-    private String wineSmallImgUrl;
-
     @ApiModelProperty(value = "酒品图片-原图")
     private String wineImgUrl;
 
@@ -89,26 +86,17 @@ public class ProductDetailRespVO {
     @ApiModelProperty(value = "酒庄Logo-原图")
     private String wineryLogoUrl;
 
-    @ApiModelProperty(value = "酒庄Logo-缩略图")
-    private String wineryLogoSmallUrl;
-
     @ApiModelProperty(value = "酒庄banner图ID")
     private Long bannerImgId;
 
     @ApiModelProperty(value = "酒庄banner图-原图")
     private String bannerImgUrl;
 
-    @ApiModelProperty(value = "酒庄banner图-缩略图")
-    private String bannerSmallImgUrl;
-
     @ApiModelProperty(value = "酒庄图片IDs")
     private String wineryImgIds;
 
     @ApiModelProperty(value = "酒庄图片列表-原图")
     private List<String> wineryImgUrls;
-
-    @ApiModelProperty(value = "酒庄图片列表-缩略图")
-    private List<String> winerySmallImgUrls;
 
     @ApiModelProperty(value = "酒品详情-评分/获奖信息列表")
     private List<ScoreRespVO> scoreList;

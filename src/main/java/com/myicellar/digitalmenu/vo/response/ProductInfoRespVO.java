@@ -76,17 +76,11 @@ public class ProductInfoRespVO {
     @ApiModelProperty(value = "酒庄Logo-原图")
     private String wineryLogoUrl;
 
-    @ApiModelProperty(value = "酒庄Logo-缩略图")
-    private String wineryLogoSmallUrl;
-
     @ApiModelProperty(value = "酒品图片ID")
     private Long wineImgId;
 
     @ApiModelProperty(value = "酒品图片-原图")
     private String wineImgUrl;
-
-    @ApiModelProperty(value = "酒品图片-缩略图")
-    private String wineSmallImgUrl;
 
     @ApiModelProperty(value = "原料")
     private String variety;
