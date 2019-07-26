@@ -5,7 +5,6 @@ import com.myicellar.digitalmenu.dao.entity.IPackage;
 import com.myicellar.digitalmenu.dao.entity.Wine;
 import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.WineService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -44,7 +43,6 @@ public class WineManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<WineRespVO>> queryListPage(@RequestBody WinePageReqVO reqVO) {
         PageResponseVO<WineRespVO> page = wineService.queryPageList(reqVO);
@@ -59,7 +57,6 @@ public class WineManageController {
      * @return
      */
     @PostMapping(value = "/queryByWineId")
-    @AuthIgnore
     @ApiOperation("详情查询")
     public ResultVO<WineRespVO> queryByWineId(@RequestBody WineDetailReqVO reqVO) {
         //通过传入wineId查询wine详情
@@ -78,7 +75,6 @@ public class WineManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<WineRespVO> add(@RequestBody WineReqVO reqVO) {
         //参数校验
@@ -105,7 +101,6 @@ public class WineManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO update(@RequestBody WineUpdateReqVO reqVO) {
         //参数校验
@@ -131,7 +126,6 @@ public class WineManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody WineDeleteReqVO reqVO) {
         if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {

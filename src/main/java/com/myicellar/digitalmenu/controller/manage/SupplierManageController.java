@@ -13,7 +13,6 @@ import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -78,7 +77,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/queryList")
-    @AuthIgnore
     @ApiOperation("供应商下拉列表")
     public ResultVO<List<SupplierRespVO>> queryListPage() {
         List<Supplier> list = supplierService.queryListAll();
@@ -98,7 +96,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询-分页")
     public ResultVO<PageResponseVO<SupplierRespVO>> queryListPage(@RequestBody SupplierPageReqVO reqVO) {
         PageResponseVO<SupplierRespVO> page = supplierService.queryPageList(reqVO);
@@ -116,7 +113,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/queryBySupplierId")
-    @AuthIgnore
     @ApiOperation("详情查询")
     public ResultVO<SupplierRespVO> queryByWineryId(@RequestBody SupplierIdReqVO reqVO) {
 
@@ -134,7 +130,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody SupplierReqVO reqVO) {
 
@@ -157,7 +152,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO<Integer> update(@RequestBody SupplierReqVO reqVO) {
         //参数校验
@@ -176,7 +170,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody SupplierDeleteReqVO reqVO) {
         checkDeleteParam(reqVO);
@@ -256,7 +249,6 @@ public class SupplierManageController {
      * @return
      */
     @PostMapping(value = "/queryQrCode")
-    @AuthIgnore
     @ApiOperation("查询供应商主页二维码")
     private ResultVO<QrcodeRespVO> queryQrCode(@RequestBody SupplierIdReqVO reqVO) {
 

@@ -4,7 +4,6 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.service.ImgService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -47,7 +46,6 @@ public class ImgController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<ImgRespVO>> queryListPage(@RequestBody ImgPageReqVO reqVO) {
         PageResponseVO<Img> page = imgService.queryPageList(reqVO);
@@ -67,7 +65,6 @@ public class ImgController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<ImgRespVO> add(@RequestBody ImgReqVO reqVO) {
         //参数校验
@@ -104,7 +101,6 @@ public class ImgController {
      * @return
      */
     @PostMapping(value = "/batchDelete")
-    @AuthIgnore
     @ApiOperation("批量删除")
     public ResultVO update(@RequestBody ImgBatchDeleteReqVO reqVO) {
         if (CollectionUtils.isEmpty(reqVO.getImgIds())) {

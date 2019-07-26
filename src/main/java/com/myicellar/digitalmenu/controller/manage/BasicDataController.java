@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.myicellar.digitalmenu.dao.entity.*;
 import com.myicellar.digitalmenu.enums.AttrCatgEnum;
 import com.myicellar.digitalmenu.service.*;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.AttrListReqVO;
 import com.myicellar.digitalmenu.vo.request.OriginListReqVO;
@@ -47,7 +46,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryAttrList")
-    @AuthIgnore
     @ApiOperation("风格/口味/葡萄下拉列表")
     public ResultVO<List<AttrRespVO>> queryAttrList(@RequestBody AttrListReqVO reqVO) {
         AttrCatgEnum attrCatgEnum = AttrCatgEnum.enumOf(reqVO.getAttrCatgNo());
@@ -70,7 +68,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryCountryList")
-    @AuthIgnore
     @ApiOperation("国家下拉列表")
     public ResultVO<List<CountryRespVO>> queryCountryList() {
         List<Country> list = countryService.queryList();
@@ -90,7 +87,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryRegionListByCountryId")
-    @AuthIgnore
     @ApiOperation("产地下拉列表（参数：国家ID）")
     public ResultVO<List<OriginRespVO>> queryRegionListByCountryId(@RequestBody OriginListReqVO reqVO) {
         List<Origin> list = originService.queryListByCountryId(reqVO.getCountryId());
@@ -109,7 +105,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryWineTypeList")
-    @AuthIgnore
     @ApiOperation("酒品类型下拉列表")
     public ResultVO<List<WineTypeRespVO>> queryWineTypeList() {
         List<WineType> list = wineTypeService.queryList();
@@ -128,7 +123,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryCriticsList")
-    @AuthIgnore
     @ApiOperation("评论家/机构下拉列表")
     public ResultVO<List<CriticsRespVO>> queryCriticsList() {
         List<Critics> list = criticsService.queryList();
@@ -147,7 +141,6 @@ public class BasicDataController {
      * @return
      */
     @PostMapping(value = "/queryVolumeList")
-    @AuthIgnore
     @ApiOperation("容量下拉列表")
     public ResultVO<List<VolumeTypeRespVO>> queryVolumeList() {
         List<VolumeType> list = volumeTypeService.queryVolumeList();

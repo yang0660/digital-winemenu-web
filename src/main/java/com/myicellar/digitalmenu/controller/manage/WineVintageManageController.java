@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.service.WineVintageService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WineVintageInfoReqVO;
 import com.myicellar.digitalmenu.vo.request.WineVintageListReqVO;
@@ -37,7 +36,6 @@ public class WineVintageManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<WineVintageListRespVO>> queryListPage(@RequestBody WineVintageListReqVO reqVO) {
         PageResponseVO<WineVintageListRespVO> page = wineVintageService.queryPageList(reqVO);
@@ -52,7 +50,6 @@ public class WineVintageManageController {
      * @return
      */
     @PostMapping(value = "/queryByWineIdAndVintage")
-    @AuthIgnore
     @ApiOperation("年份详情")
     public ResultVO<WineVintageRespVO> queryByWineIdAndVintage(@RequestBody WineVintageInfoReqVO reqVO) {
         WineVintageRespVO respVO = wineVintageService.queryByWineIdAndVintage(reqVO.getWineId(),
@@ -68,7 +65,6 @@ public class WineVintageManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("添加年份配置")
     public ResultVO<Integer> add(@RequestBody WineVintageReqVO reqVO) {
         Integer result = wineVintageService.addNew(reqVO);
@@ -83,7 +79,6 @@ public class WineVintageManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改年份配置")
     public ResultVO<Integer> update(@RequestBody WineVintageReqVO reqVO) {
         Integer result = wineVintageService.update(reqVO);
@@ -98,7 +93,6 @@ public class WineVintageManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除年份配置")
     public ResultVO<Integer> add(@RequestBody WineVintageInfoReqVO reqVO) {
         Integer result = wineVintageService.delete(reqVO);

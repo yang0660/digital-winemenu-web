@@ -4,7 +4,6 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.FoodTypeService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -49,7 +48,6 @@ public class FoodTypeManageController {
      * @return
      */
     @PostMapping(value = "/queryList")
-    @AuthIgnore
     @ApiOperation("美食分类下拉列表")
     public ResultVO<List<FoodTypeRespVO>> queryList(@RequestBody SupplierIdReqVO reqVO) {
 
@@ -69,7 +67,6 @@ public class FoodTypeManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询-分页")
     public ResultVO<PageResponseVO<FoodTypeRespVO>> queryListPage(@RequestBody FoodTypePageReqVO reqVO) {
         PageResponseVO<FoodType> page = foodTypeService.queryPageList(reqVO);
@@ -89,7 +86,6 @@ public class FoodTypeManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
@@ -112,7 +108,6 @@ public class FoodTypeManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO<Integer> update(@RequestBody FoodTypeReqVO reqVO) {
         //参数校验
@@ -131,7 +126,6 @@ public class FoodTypeManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody FoodTypeDeleteReqVO reqVO) {
         //参数校验

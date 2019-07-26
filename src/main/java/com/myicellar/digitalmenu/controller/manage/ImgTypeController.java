@@ -4,7 +4,6 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.ImgType;
 import com.myicellar.digitalmenu.service.ImgService;
 import com.myicellar.digitalmenu.service.ImgTypeService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -48,7 +47,6 @@ public class ImgTypeController {
      * @return
      */
     @PostMapping(value = "/queryList")
-    @AuthIgnore
     @ApiOperation("图库分类下拉列表")
     public ResultVO<List<ImgTypeRespVO>> queryList() {
         List<ImgType> list = imgTypeService.queryListAll();
@@ -68,7 +66,6 @@ public class ImgTypeController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<ImgTypeRespVO>> queryListPage(@RequestBody ImgTypePageReqVO reqVO) {
         PageResponseVO<ImgType> page = imgTypeService.queryPageList(reqVO);
@@ -88,7 +85,6 @@ public class ImgTypeController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<ImgTypeRespVO> add(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
@@ -117,7 +113,6 @@ public class ImgTypeController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO<ImgTypeRespVO> update(@RequestBody ImgTypeReqVO reqVO) {
         //参数校验
@@ -143,7 +138,6 @@ public class ImgTypeController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO update(@RequestBody ImgTypeDeleteReqVO reqVO) {
         if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {

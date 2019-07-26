@@ -2,7 +2,6 @@ package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.service.ProductManageService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
@@ -36,7 +35,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<ProductListRespVO>> queryListPage(@RequestBody ProductPageReqVO reqVO) {
         PageResponseVO<ProductListRespVO> page = productManageService.queryPageList(reqVO);
@@ -51,7 +49,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/queryVintageList")
-    @AuthIgnore
     @ApiOperation("酒品年份下拉列表")
     public ResultVO<List<VintageRespVO>> queryVintageList(@RequestBody WineDetailReqVO reqVO) {
         List<VintageRespVO> list = productManageService.queryVintageList(reqVO.getWineId());
@@ -66,7 +63,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/queryByProductId")
-    @AuthIgnore
     @ApiOperation("详情查询")
     public ResultVO<ProductRespVO> queryByProductId(@RequestBody ProductReqVO reqVO) {
         ProductRespVO respVO = productManageService.queryByProductId(reqVO.getProductId());
@@ -84,7 +80,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody ProductManageReqVO reqVO) {
         //参数校验
@@ -101,7 +96,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO update(@RequestBody ProductManageReqVO reqVO) {
         //参数校验
@@ -118,7 +112,6 @@ public class ProductManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody ProductReqVO reqVO) {
         if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {

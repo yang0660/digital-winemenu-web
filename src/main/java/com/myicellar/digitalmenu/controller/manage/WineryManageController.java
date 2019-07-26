@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.myicellar.digitalmenu.dao.entity.Winery;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.service.WineryService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -48,7 +47,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/queryList")
-    @AuthIgnore
     @ApiOperation("酒庄下拉列表")
     public ResultVO<List<WineryRespVO>> queryList() {
         List<Winery> list = wineryService.queryListAll();
@@ -68,7 +66,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/queryListPage")
-    @AuthIgnore
     @ApiOperation("列表查询")
     public ResultVO<PageResponseVO<WineryRespVO>> queryListPage(@RequestBody WineryPageReqVO reqVO) {
         PageResponseVO<WineryRespVO> page = wineryService.queryPageList(reqVO);
@@ -82,7 +79,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/queryByWineryId")
-    @AuthIgnore
     @ApiOperation("详情查询")
     public ResultVO<WineryRespVO> queryByWineryId(@RequestBody WineryDetailReqVO reqVO) {
 
@@ -98,7 +94,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody WineryReqVO reqVO) {
         //参数校验
@@ -124,7 +119,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/update")
-    @AuthIgnore
     @ApiOperation("修改")
     public ResultVO<Integer> update(@RequestBody WineryReqVO reqVO) {
         //参数校验
@@ -146,7 +140,6 @@ public class WineryManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody WineryDeleteReqVO reqVO) {
         checkDeleteParam(reqVO);

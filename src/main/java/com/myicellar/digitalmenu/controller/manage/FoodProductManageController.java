@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.service.FoodProductService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.FoodProductReqVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -31,7 +30,6 @@ public class FoodProductManageController {
      * @return
      */
     @PostMapping(value = "/add")
-    @AuthIgnore
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody FoodProductReqVO reqVO) {
         //参数校验
@@ -46,7 +44,6 @@ public class FoodProductManageController {
      * @return
      */
     @PostMapping(value = "/delete")
-    @AuthIgnore
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody FoodProductReqVO reqVO) {
         //参数校验
