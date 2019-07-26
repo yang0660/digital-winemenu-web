@@ -7,11 +7,8 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductReqVO;
-import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
-import com.myicellar.digitalmenu.vo.response.PageResponseVO;
-import com.myicellar.digitalmenu.vo.response.ProductListRespVO;
-import com.myicellar.digitalmenu.vo.response.ProductRespVO;
-import com.myicellar.digitalmenu.vo.response.ResultVO;
+import com.myicellar.digitalmenu.vo.request.WineDetailReqVO;
+import com.myicellar.digitalmenu.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -43,6 +42,21 @@ public class ProductManageController {
         PageResponseVO<ProductListRespVO> page = productManageService.queryPageList(reqVO);
 
         return ResultVO.success(page);
+    }
+
+    /**
+     * 酒品年份下拉列表
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/queryVintageList")
+    @AuthIgnore
+    @ApiOperation("酒品年份下拉列表")
+    public ResultVO<List<VintageRespVO>> queryVintageList(@RequestBody WineDetailReqVO reqVO) {
+        List<VintageRespVO> list = productManageService.queryVintageList(reqVO.getWineId());
+
+        return ResultVO.success(list);
     }
 
     /**

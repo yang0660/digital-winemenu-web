@@ -335,7 +335,13 @@
         LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
         LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
         LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
-        LEFT JOIN t_food_product fprd ON prd.product_id = fprd.product_id
+        LEFT JOIN (select food_id,product_id from t_food_product
+        <where>
+            <if test="foodId!=null and foodId!=0">
+                food_id = #{foodId}
+            </if>
+        </where>
+        )  fprd ON prd.product_id = fprd.product_id
         <where>
             <include refid="where"/>
         </where>
@@ -370,7 +376,13 @@
         LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
         LEFT JOIN t_wine_type wtype ON win.wine_type_id = wtype.wine_type_id
         LEFT JOIN t_winery wry ON win.winery_id = wry.winery_id
-        LEFT JOIN t_food_product fprd ON prd.product_id = fprd.product_id
+        LEFT JOIN (select food_id,product_id from t_food_product
+        <where>
+            <if test="foodId!=null and foodId!=0">
+                food_id = #{foodId}
+            </if>
+        </where>
+        )  fprd ON prd.product_id = fprd.product_id
         <where>
             <include refid="where"/>
         </where>
@@ -394,8 +406,13 @@
         <if test="vintageTag!=null and vintageTag!=0">
             and wvtg.vintage_tag = #{vintageTag}
         </if>
-        <if test="foodId!=null and foodId!=0">
-            and fprd.food_id = #{foodId}
+        <if test="isSelected!=null">
+            <if test="isSelected==1">
+                AND fprd.food_id is null
+            </if>
+            <if test="isSelected==2">
+                AND fprd.food_id is not null
+            </if>
         </if>
         <if test="wineNameEng!=null and wineNameEng!=''">
             and (win.wine_name_eng like concat('%',#{wineNameEng},'%')

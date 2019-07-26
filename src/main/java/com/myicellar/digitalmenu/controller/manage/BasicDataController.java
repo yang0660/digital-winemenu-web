@@ -37,6 +37,8 @@ public class BasicDataController {
     private WineTypeService wineTypeService;
     @Autowired
     private CriticsService criticsService;
+    @Autowired
+    private VolumeTypeService volumeTypeService;
 
     /**
      * 风格/口味/葡萄下拉列表
@@ -134,6 +136,25 @@ public class BasicDataController {
         List<CriticsRespVO> resultList = new ArrayList<CriticsRespVO>();
         if (!CollectionUtils.isEmpty(list)) {
             resultList = ConvertUtils.convert(list, CriticsRespVO.class);
+        }
+
+        return ResultVO.success(resultList);
+    }
+
+    /**
+     * 容量下拉列表
+     *
+     * @return
+     */
+    @PostMapping(value = "/queryVolumeList")
+    @AuthIgnore
+    @ApiOperation("容量下拉列表")
+    public ResultVO<List<VolumeTypeRespVO>> queryVolumeList() {
+        List<VolumeType> list = volumeTypeService.queryVolumeList();
+
+        List<VolumeTypeRespVO> resultList = new ArrayList<VolumeTypeRespVO>();
+        if (!CollectionUtils.isEmpty(list)) {
+            resultList = ConvertUtils.convert(list, VolumeTypeRespVO.class);
         }
 
         return ResultVO.success(resultList);

@@ -20,8 +20,8 @@ import java.util.Date;
 @RestController
 @Slf4j
 @RequestMapping("/app/data")
-@Api(tags = "用户行为数据上传", description = "/app/data")
-public class UserBehaviorManageController {
+@Api(tags = "用户页面", description = "/app/data")
+public class UserBehaviorController {
 
     @Autowired
     private UserBehaviorService userBehaviorService;

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequestMapping("/manage/fdprd")
-@Api(tags = "美食管理-美食", description = "/manage/fdprd")
+@Api(tags = "美食管理-关联酒品", description = "/manage/fdprd")
 public class FoodProductManageController {
 
     @Autowired

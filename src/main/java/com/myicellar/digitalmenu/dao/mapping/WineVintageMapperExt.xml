@@ -39,4 +39,12 @@
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
+    <select id="selectVintageList" parameterType="long" resultType="com.myicellar.digitalmenu.vo.response.VintageRespVO">
+        select
+        vintage_tag as vintageTag,
+        vintage_name as vintageName
+        from t_wine_vintage
+        where wine_id = #{wineId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

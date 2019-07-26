@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.dao.mapper;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.vo.request.ProductFilterReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
-import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.ProductDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductInfoRespVO;
 import com.myicellar.digitalmenu.vo.response.ProductListRespVO;

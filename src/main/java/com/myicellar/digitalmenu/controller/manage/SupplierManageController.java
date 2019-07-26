@@ -120,10 +120,9 @@ public class SupplierManageController {
     @ApiOperation("详情查询")
     public ResultVO<SupplierRespVO> queryByWineryId(@RequestBody SupplierIdReqVO reqVO) {
 
-        Supplier supplier = supplierService.queryBySupplierId(reqVO.getSupplierId());
-        SupplierRespVO respVO = ConvertUtils.convert(supplier, SupplierRespVO.class);
+        SupplierRespVO respVO = supplierService.queryBySupplierId(reqVO.getSupplierId());
         if (respVO == null) {
-            return ResultVO.success(new SupplierRespVO());
+            respVO = new SupplierRespVO();
         }
         return ResultVO.success(respVO);
     }

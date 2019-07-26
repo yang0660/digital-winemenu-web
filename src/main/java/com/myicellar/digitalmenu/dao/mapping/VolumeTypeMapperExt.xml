@@ -8,4 +8,10 @@
         <include refid="com.myicellar.digitalmenu.dao.mapper.VolumeTypeMapper.Base_Column_List"/>
     </sql>
 
+    <select id="selectListAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_volume_type
+        order by mic_rank
+    </select>
 </mapper>

@@ -76,7 +76,20 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
      *
      * @return
      */
-    public Supplier queryBySupplierId(Long supplierId) {
-        return mapper.selectByPrimaryKey(supplierId);
+    public SupplierRespVO queryBySupplierId(Long supplierId) {
+        SupplierRespVO respVO = null;
+        Supplier supplier = mapper.selectByPrimaryKey(supplierId);
+        if(supplier!=null) {
+            respVO = ConvertUtils.convert(supplier, SupplierRespVO.class);
+            Long logoImgId = supplier.getLogoImgId();
+            if (logoImgId != null && logoImgId != 0L) {
+                Img img = imgService.selectByPrimaryKey(logoImgId);
+                if (img!=null){
+                    respVO.setLogoImgUrl(img.getImgUrl());
+                }
+            }
+        }
+
+        return respVO;
     }
 }

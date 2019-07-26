@@ -5,12 +5,12 @@ import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.mapper.IPackageMapperExt;
 import com.myicellar.digitalmenu.dao.mapper.ProductMapperExt;
+import com.myicellar.digitalmenu.dao.mapper.WineVintageMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
 import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
-import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,9 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
     private ImgService imgService;
     @Autowired
     private IPackageMapperExt iPackageMapperExt;
+
+    @Autowired
+    private WineVintageMapperExt wineVintageMapperExt;
 
     public Product selectByWineIdAndVintage(Long supplierId, Long wineId, Long vintageTag) {
         return mapper.selectByWineIdAndVintage(supplierId, wineId, vintageTag);
@@ -203,5 +206,9 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         }
 
         return respVO;
+    }
+
+    public List<VintageRespVO> queryVintageList(Long wineId){
+        return wineVintageMapperExt.selectVintageList(wineId);
     }
 }
