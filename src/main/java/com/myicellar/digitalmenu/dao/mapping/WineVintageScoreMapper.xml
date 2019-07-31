@@ -16,6 +16,10 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.myicellar.digitalmenu.dao.entity.WineVintageScore">
     <result column="note_plain" jdbcType="LONGVARCHAR" property="notePlain" />
   </resultMap>
+  <sql id="Base_Column_List">
+    wine_id, vintage_tag, wine_critics_id, type, score_val_num, score_val_str, score_name, score_year, tasted_at,
+    updated_at
+  </sql>
   <sql id="Blob_Column_List">
     note_plain
   </sql>
