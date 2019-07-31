@@ -78,6 +78,9 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                 if (respVO.getWineryLogoId() != null && respVO.getWineryLogoId() != 0L) {
                     imgIds.add(respVO.getWineryLogoId());
                 }
+                if (respVO.getCountryImgId() != null && respVO.getCountryImgId() != 0L) {
+                    imgIds.add(respVO.getCountryImgId());
+                }
             }
 
             Map<String, WineAttrMapRespVO> wineAttrMap = wineVintageAttrService.queryAttrMapByWineVintageIds(101L, wineVintageIds);
@@ -104,6 +107,12 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                         Img logoImg = imgMap.get(info.getWineryLogoId());
                         if (logoImg != null) {
                             info.setWineryLogoUrl(logoImg.getImgUrl());
+                        }
+                    }
+                    if (info.getCountryImgId() != null && info.getCountryImgId() != 0L) {
+                        Img countryImg = imgMap.get(info.getCountryImgId());
+                        if (countryImg != null) {
+                            info.setCountryImgUrl(countryImg.getImgUrl());
                         }
                     }
                 }
@@ -177,6 +186,9 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
             if (respVO.getBannerImgId() != null && respVO.getBannerImgId() != 0L) {
                 imgIds.add(respVO.getBannerImgId());
             }
+            if (respVO.getCountryImgId() != null && respVO.getCountryImgId() != 0L) {
+                imgIds.add(respVO.getCountryImgId());
+            }
 
             List<Long> wineryImgIds = new ArrayList<Long>();
             if (StringUtils.isNotEmpty(respVO.getWineryImgIds())) {
@@ -237,6 +249,12 @@ public class ProductService extends BaseService<Long, Product, ProductMapperExt>
                     Img bannerImg = imgMap.get(respVO.getBannerImgId());
                     if (bannerImg != null) {
                         respVO.setBannerImgUrl(bannerImg.getImgUrl());
+                    }
+                }
+                if (respVO.getCountryImgId() != null && respVO.getCountryImgId() != 0L) {
+                    Img countryImg = imgMap.get(respVO.getCountryImgId());
+                    if (countryImg != null) {
+                        respVO.setCountryImgUrl(countryImg.getImgUrl());
                     }
                 }
                 if (!CollectionUtils.isEmpty(wineryImgIds)) {

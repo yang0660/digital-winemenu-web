@@ -43,6 +43,7 @@
         <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng"/>
         <result column="country_name_chs" jdbcType="VARCHAR" property="countryNameChs"/>
         <result column="country_name_cht" jdbcType="VARCHAR" property="countryNameCht"/>
+        <result column="country_img_id" jdbcType="VARCHAR" property="countryImgId"/>
         <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng"/>
         <result column="region_name_chs" jdbcType="VARCHAR" property="regionNameChs"/>
         <result column="region_name_cht" jdbcType="VARCHAR" property="regionNameCht"/>
@@ -67,6 +68,7 @@
     ctry.country_name_eng,
     ctry.country_name_chs,
     ctry.country_name_cht,
+    ctry.img_id AS country_img_id,
     winvtg.vintage_tag,
     winvtg.vintage_name,
     win.wine_img_id
@@ -100,6 +102,7 @@
     ctry.country_name_eng,
     ctry.country_name_chs,
     ctry.country_name_cht,
+    ctry.img_id AS country_img_id,
     winvtg.vintage_tag,
     winvtg.vintage_name,
     win.wine_img_id
@@ -134,6 +137,7 @@
         ctry.country_name_eng,
         ctry.country_name_chs,
         ctry.country_name_cht,
+        ctry.img_id AS country_img_id,
         winvtg.vintage_tag,
         winvtg.vintage_name,
         win.wine_img_id
@@ -196,6 +200,7 @@
         ctry.country_name_eng,
         ctry.country_name_chs,
         ctry.country_name_cht,
+        ctry.img_id AS country_img_id,
         winvtg.vintage_tag,
         winvtg.vintage_name,
         win.wine_img_id
@@ -271,6 +276,7 @@
         <result column="vintage_name" jdbcType="VARCHAR" property="vintageName"/>
         <result column="tasting_note" jdbcType="LONGVARCHAR" property="tastingNote"/>
         <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng"/>
+        <result column="country_img_id" jdbcType="VARCHAR" property="countryImgId"/>
         <result column="region_name_eng" jdbcType="VARCHAR" property="regionNameEng"/>
         <result column="alcohol_bps" jdbcType="BIGINT" property="alcoholBps"/>
         <result column="winery_name_eng" jdbcType="VARCHAR" property="wineryNameEng"/>
@@ -293,6 +299,7 @@
       vtg.vintage_name,
       vtg.tasting_note,
       cty.country_name_eng,
+      cty.img_id AS country_img_id,
       ori.region_name_eng,
       vtg.alcohol_bps,
       wine.wine_name_eng,
