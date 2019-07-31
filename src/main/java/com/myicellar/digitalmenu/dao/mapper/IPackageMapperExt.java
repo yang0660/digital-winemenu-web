@@ -9,8 +9,6 @@ public interface IPackageMapperExt extends IPackageMapper {
 
     ProductPriceRangeRespVO selectPriceRange(Long supplierId);
 
-    IPackage selectByWineId(Long wineId);
-
     List<IPackage> selectListByProductId(Long productId);
 
     Integer deleteByProductId(Long productId);

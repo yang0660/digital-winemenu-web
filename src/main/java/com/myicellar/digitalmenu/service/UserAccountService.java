@@ -7,6 +7,9 @@ import com.myicellar.digitalmenu.enums.PassWordStatusEnum;
 import com.myicellar.digitalmenu.enums.UserTypeEnum;
 import com.myicellar.digitalmenu.shiro.ManageUserNamePasswordToken;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
+import com.myicellar.digitalmenu.utils.PrincipalContext;
+import com.myicellar.digitalmenu.utils.StringUtil;
+import com.myicellar.digitalmenu.vo.request.UpdatePasswordReqVO;
 import com.myicellar.digitalmenu.vo.response.LoginRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,9 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -74,5 +80,33 @@ public class UserAccountService extends BaseService<Long, UserAccount, UserAccou
         //记录登录日志
         loginRecordService.saveLoginRecord(user, requestIp, result.getMessage());
         return result;
+    }
+
+    /**
+     * 修改密码
+     * @param reqVO
+     */
+    @Transactional
+    public ResultVO updatePassword(UpdatePasswordReqVO reqVO) {
+        Long currentUserId = PrincipalContext.getCurrentUserId();  //当前登录用户
+        if (StringUtils.isEmpty(reqVO.getOldPassword())) {
+            return ResultVO.validError("原密码不能为空!");
+        }
+        if (StringUtils.isEmpty(reqVO.getPassword())) {
+            return ResultVO.validError("新密码不能为空!");
+        }
+        UserAccount ua = mapper.selectByPrimaryKey(currentUserId);
+        //校验原密码
+        if (!ua.getPassword().equals(PrincipalContext.getMd5HashPwd(reqVO.getOldPassword(), ua.getSalt()))) {
+            return ResultVO.validError("原密码有误!");
+        }
+        //保存新密码
+        String salt = StringUtil.genRandomStr(4); //加密因子
+        ua.setSalt(salt);
+        ua.setPassword(PrincipalContext.getMd5HashPwd(reqVO.getPassword(),salt));
+        ua.setUpdateTime(new Date());
+        mapper.updateByPrimaryKeySelective(ua);
+
+        return ResultVO.success("修改密码成功!");
     }
 }

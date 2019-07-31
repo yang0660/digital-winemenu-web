@@ -18,19 +18,15 @@ public class WineVintageScoreService extends BaseService<Long, WineVintageScore,
      * @param productId
      * @return
      */
-    public List<ScoreRespVO> queryScoreListByProductId(Long productId) {
-        return mapper.selectScoreByProductId(productId);
+    public List<ScoreRespVO> queryScoreAwardListByProductId(Long productId,Byte type) {
+        return mapper.selectScoreAwardByProductId(productId,type);
     }
 
     public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag) {
         return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
     }
 
-    public List<WineVintageScore> queryScoreListByWineVintage(Long wineId, Long vintageTag) {
-        return mapper.selectScoreListByWineVintage(wineId, vintageTag);
-    }
-
-    public List<WineVintageScore> queryAwardListByWineVintage(Long wineId, Long vintageTag) {
-        return mapper.selectAwardListByWineVintage(wineId, vintageTag);
+    public List<WineVintageScore> selectScoreAwardListByWineVintage(Long wineId, Long vintageTag,Byte type) {
+        return mapper.selectScoreAwardListByWineVintage(wineId, vintageTag,type);
     }
 }

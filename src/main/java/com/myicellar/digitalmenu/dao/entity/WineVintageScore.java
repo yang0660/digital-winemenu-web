@@ -9,6 +9,8 @@ public class WineVintageScore {
 
     private Long wineCriticsId;
 
+    private Byte type;
+
     private Short scoreValNum;
 
     private String scoreValStr;
@@ -45,6 +47,14 @@ public class WineVintageScore {
 
     public void setWineCriticsId(Long wineCriticsId) {
         this.wineCriticsId = wineCriticsId;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 
     public Short getScoreValNum() {

@@ -4,6 +4,7 @@ import com.myicellar.digitalmenu.dao.entity.WineVintage;
 import com.myicellar.digitalmenu.dao.entity.WineVintageAttr;
 import com.myicellar.digitalmenu.dao.entity.WineVintageScore;
 import com.myicellar.digitalmenu.dao.mapper.WineVintageMapperExt;
+import com.myicellar.digitalmenu.enums.ScoreAwardTypeEnum;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -151,10 +152,10 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 }
             }
             //评分、获奖
-            List<WineVintageScore> scoreList = wineVintageScoreService.queryScoreListByWineVintage(
-                    wineId, vintageTag);
-            List<WineVintageScore> awardList = wineVintageScoreService.queryAwardListByWineVintage(
-                    wineId, vintageTag);
+            List<WineVintageScore> scoreList = wineVintageScoreService.selectScoreAwardListByWineVintage(
+                    wineId, vintageTag,ScoreAwardTypeEnum.SCORE.value);
+            List<WineVintageScore> awardList = wineVintageScoreService.selectScoreAwardListByWineVintage(
+                    wineId, vintageTag,ScoreAwardTypeEnum.AWARD.value);
             if (!CollectionUtils.isEmpty(scoreList)) {
                 List<ScoreResponseVO> scores = new ArrayList<ScoreResponseVO>();
                 for (WineVintageScore vintageScore : scoreList) {
@@ -243,6 +244,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     score.setScoreValNum(scoreReqVO.getScore().multiply(new BigDecimal(10)).shortValue());
                     score.setScoreValStr(scoreReqVO.getScore().toString());
                     score.setTastedAt(scoreReqVO.getTastedAt());
+                    score.setType(ScoreAwardTypeEnum.SCORE.value);
                     wineVintageScoreService.insertSelective(score);
                 }
             }
@@ -256,6 +258,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     award.setWineCriticsId(awardReqVO.getCriticsId());
                     award.setScoreYear(awardReqVO.getYear());
                     award.setScoreName(awardReqVO.getScoreName());
+                    award.setType(ScoreAwardTypeEnum.AWARD.value);
                     wineVintageScoreService.insertSelective(award);
                 }
             }
@@ -327,6 +330,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     score.setScoreValNum(scoreReqVO.getScore().multiply(new BigDecimal(10)).shortValue());
                     score.setScoreValStr(scoreReqVO.getScore().toString());
                     score.setTastedAt(scoreReqVO.getTastedAt());
+                    score.setType(ScoreAwardTypeEnum.SCORE.value);
                     wineVintageScoreService.insertSelective(score);
                 }
             }
@@ -340,6 +344,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                     award.setWineCriticsId(awardReqVO.getCriticsId());
                     award.setScoreYear(awardReqVO.getYear());
                     award.setScoreName(awardReqVO.getScoreName());
+                    award.setType(ScoreAwardTypeEnum.AWARD.value);
                     wineVintageScoreService.insertSelective(award);
                 }
             }

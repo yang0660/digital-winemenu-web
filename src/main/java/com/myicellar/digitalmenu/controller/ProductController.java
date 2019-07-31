@@ -1,5 +1,6 @@
 package com.myicellar.digitalmenu.controller;
 
+import com.myicellar.digitalmenu.enums.ScoreAwardTypeEnum;
 import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.ProductService;
@@ -105,9 +106,15 @@ public class ProductController {
     @ApiOperation("酒品详情")
     public ResultVO<ProductDetailRespVO> queryDetailById(@RequestBody ProductDetailReqVO reqVO) {
         ProductDetailRespVO respVO = productService.queryDetailById(reqVO.getProductId());
-        List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreListByProductId(reqVO.getProductId());
+        List<ScoreRespVO> scoreList = wineVintageScoreService.queryScoreAwardListByProductId(reqVO.getProductId(),
+                ScoreAwardTypeEnum.SCORE.value);
         if (!CollectionUtils.isEmpty(scoreList)) {
             respVO.setScoreList(scoreList);
+        }
+        List<ScoreRespVO> awardList = wineVintageScoreService.queryScoreAwardListByProductId(reqVO.getProductId(),
+                ScoreAwardTypeEnum.AWARD.value);
+        if (!CollectionUtils.isEmpty(awardList)) {
+            respVO.setAwardList(awardList);
         }
 
         return ResultVO.success(respVO);

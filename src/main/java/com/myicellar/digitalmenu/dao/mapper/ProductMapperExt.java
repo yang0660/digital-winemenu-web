@@ -15,8 +15,11 @@ import java.util.Map;
 
 public interface ProductMapperExt extends ProductMapper {
 
-    Product selectByWineIdAndVintage(@Param("supplierId") Long supplierId,
+    Product selectBySupplierWineIdAndVintage(@Param("supplierId") Long supplierId,
                                      @Param("wineId") Long wineId,
+                                     @Param("vintageTag") Long vintageTag);
+
+    Product selectByWineIdAndVintage(@Param("wineId") Long wineId,
                                      @Param("vintageTag") Long vintageTag);
 
     List<ProductInfoRespVO> selectRecomendProductList(Long supplierId);
@@ -39,4 +42,6 @@ public interface ProductMapperExt extends ProductMapper {
 
     @MapKey("productId")
     Map<Long, ProductPriceRespVO> selectProductPriceMapByIds(@Param("productIds") List<Long> productIds);
+
+    Product selectByWineId(Long wineId);
 }

@@ -13,9 +13,11 @@ import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.PrincipalContext;
 import com.myicellar.digitalmenu.utils.RequestUtil;
 import com.myicellar.digitalmenu.vo.request.ManageLoginReqVO;
+import com.myicellar.digitalmenu.vo.request.UpdatePasswordReqVO;
 import com.myicellar.digitalmenu.vo.response.LoginRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -104,6 +106,18 @@ public class ManageLoginController {
         //记录退出日志
         loginRecordService.saveLogoutRecord(userId, userName, requestIp);
         return ResultVO.success("登出成功");
+    }
+
+    /**
+     * 修改密码
+     * @param reqVO
+     * @return
+     */
+    @PostMapping("updatePassword")
+    @ApiOperation(value = "修改密码")
+    public ResultVO updatePassword(@RequestBody UpdatePasswordReqVO reqVO) {
+        ResultVO result = userAccountService.updatePassword(reqVO);
+        return result;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
-import com.myicellar.digitalmenu.dao.entity.IPackage;
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Wine;
 import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.WineService;
@@ -32,7 +32,7 @@ public class WineManageController {
     @Autowired
     private WineService wineService;
     @Autowired
-    private ProductManageService packageService;
+    private ProductManageService productManageService;
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
 
@@ -131,8 +131,8 @@ public class WineManageController {
         if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
         }
-        IPackage iPackage = packageService.queryByWineId(reqVO.getWineId());
-        if (iPackage != null) {
+        Product product = productManageService.queryByWineId(reqVO.getWineId());
+        if (product != null) {
             return ResultVO.validError("Wine is in use, can not be deleted");
         }
 

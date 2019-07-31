@@ -32,16 +32,20 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
     @Autowired
     private WineVintageMapperExt wineVintageMapperExt;
 
-    public Product selectByWineIdAndVintage(Long supplierId, Long wineId, Long vintageTag) {
-        return mapper.selectByWineIdAndVintage(supplierId, wineId, vintageTag);
+    public Product selectBySupplierWineIdAndVintage(Long supplierId, Long wineId, Long vintageTag) {
+        return mapper.selectBySupplierWineIdAndVintage(supplierId, wineId, vintageTag);
+    }
+
+    public Product selectByWineIdAndVintage(Long wineId, Long vintageTag) {
+        return mapper.selectByWineIdAndVintage(wineId, vintageTag);
     }
 
     public ProductPriceRangeRespVO queryPriceRange(Long supplierId) {
         return iPackageMapperExt.selectPriceRange(supplierId);
     }
 
-    public IPackage queryByWineId(Long wineId) {
-        return iPackageMapperExt.selectByWineId(wineId);
+    public Product queryByWineId(Long wineId) {
+        return mapper.selectByWineId(wineId);
     }
 
     /**
@@ -88,7 +92,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      */
     @Transactional
     public Integer addNew(ProductManageReqVO reqVO) {
-        Product tmpProduct = mapper.selectByWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
+        Product tmpProduct = mapper.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
         if(tmpProduct!=null){
             throw new BizException("wineVintage is already exists!");
         }

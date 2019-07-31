@@ -9,12 +9,21 @@
         <include refid="com.myicellar.digitalmenu.dao.mapper.ProductMapper.Base_Column_List"/>
     </sql>
 
-    <select id="selectByWineIdAndVintage" resultMap="BaseResultMap">
+    <select id="selectBySupplierWineIdAndVintage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_product
         where supplier_id = #{supplierId,jdbcType=BIGINT}
         and wine_id = #{wineId,jdbcType=BIGINT}
+        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
+        limit 1
+    </select>
+
+    <select id="selectByWineIdAndVintage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product
+        where wine_id = #{wineId,jdbcType=BIGINT}
         and vintage_tag = #{vintageTag,jdbcType=BIGINT}
         limit 1
     </select>
@@ -469,6 +478,14 @@
         ) t
         GROUP BY
         t.product_id
+    </select>
+
+    <select id="selectByWineId" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_product
+        where wine_id = #{wineId}
+        limit 1
     </select>
 
 </mapper>

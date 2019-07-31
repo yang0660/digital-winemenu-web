@@ -18,7 +18,7 @@
 
     </resultMap>
 
-    <select id="selectScoreByProductId" parameterType="long" resultMap="ScoreResultMap">
+    <select id="selectScoreAwardByProductId" resultMap="ScoreResultMap">
         SELECT
         scr.score_val_str,
         cts.score_max,
@@ -32,6 +32,7 @@
         LEFT JOIN t_critics cts ON scr.wine_critics_id = cts.wine_critics_id
         WHERE
         prd.product_id =#{productId}
+        AND scr.type = #{type}
     </select>
 
     <delete id="deleteByWineIdAndVintage">
@@ -40,22 +41,13 @@
         and vintage_tag = #{vintageTag,jdbcType=BIGINT}
     </delete>
 
-    <select id="selectScoreListByWineVintage" resultMap="BaseResultMap">
+    <select id="selectScoreAwardListByWineVintage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_wine_vintage_score
         where wine_id = #{wineId,jdbcType=BIGINT}
         and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-        and score_val_num is not null
-    </select>
-
-    <select id="selectAwardListByWineVintage" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_wine_vintage_score
-        where wine_id = #{wineId,jdbcType=BIGINT}
-        and vintage_tag = #{vintageTag,jdbcType=BIGINT}
-        and score_name is not null
+        and type = #{type}
     </select>
 
 </mapper>

@@ -214,7 +214,7 @@ public class WineryManageController {
     }
 
     /**
-     * 校验修改参数
+     * 校验删除参数
      *
      * @param reqVO
      */

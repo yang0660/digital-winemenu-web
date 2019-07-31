@@ -98,6 +98,8 @@ public class ProductDetailRespVO {
     @ApiModelProperty(value = "酒庄图片列表-原图")
     private List<String> wineryImgUrls;
 
-    @ApiModelProperty(value = "酒品详情-评分/获奖信息列表")
+    @ApiModelProperty(value = "酒品详情-评分信息列表")
     private List<ScoreRespVO> scoreList;
+    @ApiModelProperty(value = "酒品详情-获奖信息列表")
+    private List<ScoreRespVO> awardList;
 }
