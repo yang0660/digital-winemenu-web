@@ -52,9 +52,6 @@ public class ProductInfoRespVO {
     @ApiModelProperty(value = "国家-繁中")
     private String countryNameCht;
 
-    @ApiModelProperty(value = "国家图标Id")
-    private Long countryImgId;
-
     @ApiModelProperty(value = "国家图标url")
     private String countryImgUrl;
 

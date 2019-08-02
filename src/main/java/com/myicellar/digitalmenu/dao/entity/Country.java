@@ -15,7 +15,7 @@ public class Country {
 
     private String countryNameCht;
 
-    private Long imgId;
+    private String imgUrl;
 
     private Short micRank;
 
@@ -69,12 +69,12 @@ public class Country {
         this.countryNameCht = countryNameCht;
     }
 
-    public Long getImgId() {
-        return imgId;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgId(Long imgId) {
-        this.imgId = imgId;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public Short getMicRank() {
