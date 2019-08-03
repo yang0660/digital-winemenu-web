@@ -22,7 +22,7 @@
         <result column="country_name_eng" jdbcType="VARCHAR" property="countryNameEng"/>
         <result column="country_name_chs" jdbcType="VARCHAR" property="countryNameChs"/>
         <result column="country_name_cht" jdbcType="VARCHAR" property="countryNameCht"/>
-        <result column="img_id" jdbcType="BIGINT" property="imgId"/>
+        <result column="img_url" jdbcType="BIGINT" property="imgUrl"/>
         <result column="mic_rank" jdbcType="SMALLINT" property="micRank"/>
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
         <result column="supplier_id" jdbcType="TIMESTAMP" property="supplierId"/>
@@ -50,7 +50,7 @@
         a.country_name_eng,
         a.country_name_chs,
         a.country_name_cht,
-        a.img_id,
+        a.img_url,
         a.mic_rank,
         d.supplier_id
         FROM

@@ -31,8 +31,8 @@ public class CountryRespVO {
     @ApiModelProperty(value = "国家名称-繁")
     private String countryNameCht;
 
-    @ApiModelProperty(value = "国家图片")
-    private Long imgId;
+    @ApiModelProperty(value = "国家图片地址")
+    private String imgUrl;
 
     @ApiModelProperty(value = "排序")
     private Short micRank;

@@ -286,7 +286,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             Integer deleteNum1 = wineVintageAttrService.deleteByWineIdAndVintage(reqVO.getWineId(),
                     reqVO.getVintageTag());
             List<Long> attrIds = new ArrayList<Long>();
-            if (reqVO.getStyleId() == null && reqVO.getStyleId() != 0L) {
+            if (reqVO.getStyleId() != null && reqVO.getStyleId() != 0L) {
                 //风格
                 attrIds.add(reqVO.getStyleId());
             }
