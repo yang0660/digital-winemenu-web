@@ -140,6 +140,10 @@ public class ProductManageController {
         if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
             throw new BizException("volume and price can not be empty!");
         }
+        Product product = productManageService.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(), reqVO.getWineId(), reqVO.getVintageTag());
+        if (product != null) {
+            throw new BizException("supplier contains this wineVintage already!");
+        }
 
     }
 
@@ -165,8 +169,8 @@ public class ProductManageController {
             throw new BizException("volume and price can not be empty!");
         }
         Product product = productManageService.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(), reqVO.getWineId(), reqVO.getVintageTag());
-        if (product != null) {
-            throw new BizException("wine contains this vintage already!");
+        if (product != null && !reqVO.getProductId().equals(product.getProductId())) {
+            throw new BizException("supplier contains this wineVintage already!");
         }
     }
 
