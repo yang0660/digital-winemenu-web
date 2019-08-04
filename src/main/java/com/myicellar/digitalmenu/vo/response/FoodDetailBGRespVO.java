@@ -13,8 +13,14 @@ import java.math.BigDecimal;
 @ApiModel(value = "后台美食详情")
 public class FoodDetailBGRespVO {
 
+    @ApiModelProperty(value = "供应商ID")
+    private String supplierId;
+
     @ApiModelProperty(value = "供应商名称-英")
     private String supplierNameEng;
+
+    @ApiModelProperty(value = "美食分类ID")
+    private Long foodTypeId;
 
     @ApiModelProperty(value = "美食分类名称-英")
     private String foodTypeNameEng;
