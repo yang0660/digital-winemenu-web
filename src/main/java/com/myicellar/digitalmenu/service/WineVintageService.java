@@ -58,7 +58,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             list.forEach(respVO -> {
                 //酒精度%
                 if (respVO.getAlcoholBps() != null) {
-                    respVO.setAcohol(new BigDecimal(respVO.getAlcoholBps()).divide(new BigDecimal(100)).setScale(2));
+                    respVO.setAlcohol(new BigDecimal(respVO.getAlcoholBps()).divide(new BigDecimal(100)).setScale(2));
                 }
                 //风格
                 if (!CollectionUtils.isEmpty(styleAttrMap)) {
@@ -100,8 +100,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         WineVintage wineVintage = mapper.selectByPrimaryKey(wineId, vintageTag);
         WineVintageRespVO respVO = ConvertUtils.convert(wineVintage, WineVintageRespVO.class);
         if (respVO != null) {
-            if (respVO.getAcoholBps() != null) {
-                respVO.setAcohol(respVO.getAcoholBps().divide(new BigDecimal(100)).setScale(2));
+            if (respVO.getAlcoholBps() != null) {
+                respVO.setAlcohol(new BigDecimal(respVO.getAlcoholBps()).divide(new BigDecimal(100)).setScale(2));
             }
             List<String> wineVintageIds = new ArrayList<String>();
             String wineVintageStr = respVO.getWineId() + "|" + respVO.getVintageTag();
@@ -191,8 +191,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
 
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
         //酒精度BPS
-        if (reqVO.getAcohol() != null) {
-            wineVintage.setAlcoholBps(reqVO.getAcohol().multiply(new BigDecimal(100)).longValue());
+        if (reqVO.getAlcohol() != null) {
+            wineVintage.setAlcoholBps(reqVO.getAlcohol().multiply(new BigDecimal(100)).longValue());
         }
         //年份描述
         if (reqVO.getVintageTag() == 1001L) {
@@ -271,8 +271,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
     public Integer update(WineVintageReqVO reqVO) {
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
         //酒精度BPS
-        if (reqVO.getAcohol() != null) {
-            wineVintage.setAlcoholBps(reqVO.getAcohol().multiply(new BigDecimal(100)).longValue());
+        if (reqVO.getAlcohol() != null) {
+            wineVintage.setAlcoholBps(reqVO.getAlcohol().multiply(new BigDecimal(100)).longValue());
         }
         //年份描述
         if (reqVO.getVintageTag() == 1001L) {

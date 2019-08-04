@@ -19,12 +19,7 @@
                 and supplier_name_eng like concat('%',#{supplierNameEng},'%')
             </if>
             <if test="type != null">
-                <if test="type ==0">
-                    and `type` = 0
-                </if>
-                <if test="type ==1">
-                    and `type` = 1
-                </if>
+                and `type` = #{type}
             </if>
         </where>
 
@@ -41,12 +36,7 @@
                 and supplier_name_eng like concat('%',#{supplierNameEng},'%')
             </if>
             <if test="type != null">
-                <if test="type ==0">
-                    and `type` = 0
-                </if>
-                <if test="type ==1">
-                    and `type` = 1
-                </if>
+                and `type` = #{type}
             </if>
         </where>
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}

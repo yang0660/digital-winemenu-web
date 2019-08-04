@@ -24,7 +24,7 @@ public class WineVintageReqVO {
     private Long styleId;
 
     @ApiModelProperty(value = "酒精度")
-    private BigDecimal acohol;
+    private BigDecimal alcohol;
 
     @ApiModelProperty(value = "是否是有机葡萄酒：0 否，1 是")
     private Byte isOrganicWine;
