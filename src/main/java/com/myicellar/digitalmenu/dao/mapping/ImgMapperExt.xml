@@ -32,7 +32,9 @@
             and img_type_id = #{imgTypeId}
         </if>
         <if test="imgNameEng!=null and imgNameEng!=''">
-            and img_name_eng = #{imgNameEng}
+            and (img_name_eng like concat('%',#{imgNameEng},'%')
+            or img_name_chs like concat('%',#{imgNameEng},'%')
+            or img_name_ch like concat('%',#{imgNameEng},'%'))
         </if>
     </sql>
 
