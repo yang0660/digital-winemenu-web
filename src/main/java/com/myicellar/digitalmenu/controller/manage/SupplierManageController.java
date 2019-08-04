@@ -183,16 +183,13 @@ public class SupplierManageController {
      * @param reqVO
      */
     private void checkNewParam(SupplierReqVO reqVO) {
-        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
-            throw new BizException("SupplierId cannot be empty!");
-        }
         if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
             throw new BizException("SupplierNameEng cannot be empty!");
         }
         if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
             throw new BizException("Logo cannot be empty!");
         }
-        if (reqVO.getType() == null || reqVO.getType() == 0) {
+        if (reqVO.getType() == null) {
             throw new BizException("Type cannot be empty!");
         }
         if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
