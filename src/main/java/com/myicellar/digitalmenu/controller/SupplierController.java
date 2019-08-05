@@ -36,6 +36,8 @@ public class SupplierController {
         SupplierRespVO respVO = supplierService.queryBySupplierId(reqVO.getSupplierId());
         if (respVO == null) {
             respVO = new SupplierRespVO();
+        }else if(respVO.getIsEnabled()==0){
+            return ResultVO.validError("The supplier is out of service!");
         }
         return ResultVO.success(respVO);
     }

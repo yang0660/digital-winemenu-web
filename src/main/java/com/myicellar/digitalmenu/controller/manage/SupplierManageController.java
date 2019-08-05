@@ -8,8 +8,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
-import com.myicellar.digitalmenu.service.FoodTypeService;
-import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
@@ -53,12 +51,6 @@ public class SupplierManageController {
 
     @Autowired
     private SupplierService supplierService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private FoodTypeService foodTypeService;
 
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;
