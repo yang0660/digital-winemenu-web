@@ -7,9 +7,12 @@ import java.util.List;
 
 public interface SupplierMapperExt extends SupplierMapper {
 
+    Supplier selectBySupplierName(String supplierName);
+
     long selectCount(SupplierPageReqVO reqVO);
 
     List<Supplier> selectList(SupplierPageReqVO reqVO);
 
     List<Supplier> selectListAll();
+
 }

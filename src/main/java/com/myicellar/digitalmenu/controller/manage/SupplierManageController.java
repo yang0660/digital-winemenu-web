@@ -13,14 +13,12 @@ import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
+import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
-import com.myicellar.digitalmenu.vo.request.SupplierDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierReqVO;
+import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.QrcodeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
@@ -171,10 +169,28 @@ public class SupplierManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO<Integer> update(@RequestBody SupplierDeleteReqVO reqVO) {
+    public ResultVO<Integer> delete(@RequestBody SupplierDeleteReqVO reqVO) {
         checkDeleteParam(reqVO);
-        return ResultVO.success(supplierService.deleteByPrimaryKey(reqVO.getSupplierId()));
+        SupplierStatusReqVO statusReqVO = new SupplierStatusReqVO();
+        statusReqVO.setSupplierId(reqVO.getSupplierId());
+        statusReqVO.setIsEnabled((byte)0);
+        return ResultVO.success(supplierService.statusReqVO(statusReqVO));
 
+    }
+
+    /**
+     * 状态切换
+     *
+     * @param reqVO
+     * @return
+     */
+    @PostMapping(value = "/updateStatus")
+    @ApiOperation("状态切换")
+    public ResultVO<Integer> updateStatus(@RequestBody SupplierStatusReqVO reqVO) {
+        if (reqVO.getSupplierId()==null) {
+            return ResultVO.validError("SupplierNameEng cannot be empty!");
+        }
+        return ResultVO.success(supplierService.statusReqVO(reqVO));
     }
 
     /**

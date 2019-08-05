@@ -5,6 +5,7 @@ import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierStatusReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.SupplierRespVO;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,5 +93,14 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         }
 
         return respVO;
+    }
+
+    public Integer statusReqVO(SupplierStatusReqVO reqVO) {
+        Supplier supplier = new Supplier();
+        supplier.setSupplierId(reqVO.getSupplierId());
+        supplier.setIsEnabled(reqVO.getIsEnabled());
+        supplier.setUpdatedBy(1L);
+        supplier.setUpdatedAt(new Date());
+        return mapper.updateByPrimaryKeySelective(supplier);
     }
 }

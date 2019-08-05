@@ -48,6 +48,8 @@
         <include refid="Base_Column_List"/>
         from
         t_supplier
+        where
+        is_enabled = 1
     </select>
 
     <select id="selectBySupplierName" parameterType="String" resultMap="BaseResultMap">
