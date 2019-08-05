@@ -13,7 +13,6 @@ import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;

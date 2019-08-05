@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Calendar;
+
 @RestController
 @Slf4j
 @RequestMapping("/manage/report")
@@ -33,6 +35,12 @@ public class ReportManageController {
     @PostMapping(value = "/querySupplierReport")
     @ApiOperation("供应商扫码量报表查询-分页")
     public ResultVO<PageResponseVO<SupplierReportRespVO>> querySupplierReport(@RequestBody ReportDayReqVO reqVO) {
+        if(reqVO.getEndDate()!=null){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(reqVO.getEndDate());
+            calendar.add(Calendar.DATE,1);
+            reqVO.setEndDate(calendar.getTime());
+        }
         PageResponseVO<SupplierReportRespVO> page = reportService.querySupplierReportPage(reqVO);
 
         if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
@@ -50,6 +58,12 @@ public class ReportManageController {
     @PostMapping(value = "/queryProductClickReport")
     @ApiOperation("酒品点击量报表查询-分页")
     public ResultVO<PageResponseVO<ProductReportRespVO>> queryProductClickReport(@RequestBody ReportDayReqVO reqVO) {
+        if(reqVO.getEndDate()!=null){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(reqVO.getEndDate());
+            calendar.add(Calendar.DATE,1);
+            reqVO.setEndDate(calendar.getTime());
+        }
         PageResponseVO<ProductReportRespVO> page = reportService.queryProductClickReportPage(reqVO);
 
         if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
@@ -67,6 +81,12 @@ public class ReportManageController {
     @PostMapping(value = "/queryProductOrderReport")
     @ApiOperation("酒品点单量报表查询-分页")
     public ResultVO<PageResponseVO<ProductReportRespVO>> queryProductOrderReport(@RequestBody ReportDayReqVO reqVO) {
+        if(reqVO.getEndDate()!=null){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(reqVO.getEndDate());
+            calendar.add(Calendar.DATE,1);
+            reqVO.setEndDate(calendar.getTime());
+        }
         PageResponseVO<ProductReportRespVO> page = reportService.queryProductOrderReportPage(reqVO);
 
         if (page != null && !CollectionUtils.isEmpty(page.getItems())) {
