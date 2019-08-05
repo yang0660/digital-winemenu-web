@@ -45,9 +45,11 @@
 
     <select id="selectListBySupplierId" parameterType="long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from t_food_type
-        where supplier_id = #{supplierId}
+        fty.*
+        from t_food_type fty
+        INNER JOIN t_supplier sp ON fty.supplier_id = sp.supplier_id
+        where sp.is_enabled = 1
+        and sp.supplier_id = #{supplierId}
     </select>
 
     <select id="selectByFoodTypeName" parameterType="String" resultMap="BaseResultMap">

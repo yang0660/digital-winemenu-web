@@ -10,8 +10,6 @@ import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
-import com.myicellar.digitalmenu.service.FoodTypeService;
-import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
 import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -56,12 +54,6 @@ public class SupplierManageController {
 
     @Autowired
     private SupplierService supplierService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private FoodTypeService foodTypeService;
 
     @Autowired
     private SnowflakeIdWorker snowflakeIdWorker;

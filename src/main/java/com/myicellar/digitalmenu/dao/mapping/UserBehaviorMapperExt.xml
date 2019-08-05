@@ -13,7 +13,6 @@
               FROM t_user_behavior ub
               INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
               WHERE ub.type = 1
-              AND sp.is_enabled = 1
               AND ub.supplier_id = #{supplierId}
               AND ub.upload_at &gt;= #{startDate}
               AND ub.upload_at &lt; #{endDate}
@@ -32,7 +31,6 @@
     FROM t_user_behavior ub
     INNER JOIN t_supplier sp ON ub.supplier_id = sp.supplier_id
     WHERE ub.type = 1
-    AND sp.is_enabled = 1
     AND ub.supplier_id = #{supplierId}
     AND ub.upload_at &gt;= #{startDate}
     AND ub.upload_at &lt; #{endDate}
@@ -61,7 +59,6 @@
               INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
               INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
               WHERE ub.type = 2
-              AND sp.is_enabled = 1
               AND ub.supplier_id = #{supplierId}
               AND ub.upload_at &gt;= #{startDate}
               AND ub.upload_at &lt; #{endDate}
@@ -92,7 +89,6 @@
     INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
     INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
     WHERE ub.type = 2
-    AND sp.is_enabled = 1
     AND ub.supplier_id = #{supplierId}
     AND ub.upload_at &gt;= #{startDate}
     AND ub.upload_at &lt; #{endDate}
@@ -125,7 +121,6 @@
               INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
               INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
               WHERE ub.type = 3
-              AND sp.is_enabled = 1
               AND ub.supplier_id = #{supplierId}
               AND ub.upload_at &gt;= #{startDate}
               AND ub.upload_at &lt; #{endDate}
@@ -156,7 +151,6 @@
     INNER JOIN t_wine_vintage wvtg ON prd.wine_id = wvtg.wine_id AND prd.vintage_tag = wvtg.vintage_tag
     INNER JOIN t_wine win ON wvtg.wine_id = win.wine_id
     WHERE ub.type = 3
-    AND sp.is_enabled = 1
     AND ub.supplier_id = #{supplierId}
     AND ub.upload_at &gt;= #{startDate}
     AND ub.upload_at &lt; #{endDate}
