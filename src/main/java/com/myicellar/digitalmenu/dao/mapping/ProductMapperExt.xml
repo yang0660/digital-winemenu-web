@@ -74,6 +74,7 @@
     win.wine_img_id
     FROM
     t_product prd
+    INNER JOIN t_supplier sp ON prd.supplier_id = sp.supplier_id
     INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
     AND prd.vintage_tag = winvtg.vintage_tag
     INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -82,6 +83,7 @@
     LEFT JOIN t_country ctry ON org.country_id = ctry.country_id
     WHERE
     prd.is_recommend = 1
+    AND sp.is_enabled = 1
     AND prd.supplier_id = #{supplierId}
   </select>
 
@@ -164,6 +166,7 @@
         FROM
         t_package pkg
         INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+        INNER JOIN t_supplier sp ON prd.supplier_id = sp.supplier_id
         INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
         AND prd.vintage_tag = winvtg.vintage_tag
         INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -207,6 +210,7 @@
         FROM
         t_package pkg
         INNER JOIN t_product prd ON pkg.product_id = prd.product_id
+        INNER JOIN t_supplier sp ON prd.supplier_id = sp.supplier_id
         INNER JOIN t_wine_vintage winvtg ON prd.wine_id = winvtg.wine_id
         AND prd.vintage_tag = winvtg.vintage_tag
         INNER JOIN t_wine win ON prd.wine_id = win.wine_id
@@ -226,7 +230,8 @@
     </select>
 
     <sql id="filterWhere">
-        prd.supplier_id = #{supplierId}
+        sp.is_enabled = 1
+        AND prd.supplier_id = #{supplierId}
         <if test="priceMin!=null and priceMin!=0">
             AND pkg.regular_price &gt;=#{priceMin}
         </if>
