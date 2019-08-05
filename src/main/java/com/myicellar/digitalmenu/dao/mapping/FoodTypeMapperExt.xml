@@ -22,7 +22,8 @@
     <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO" resultType="long">
         select count(0)
         from t_food_type fty left join t_supplier sup on fty.supplier_id = sup.supplier_id
-        where fty.supplier_id = #{supplierId}
+        where sup.is_enabled = 1
+        and fty.supplier_id = #{supplierId}
     </select>
 
     <select id="selectList" parameterType="com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO"
@@ -37,7 +38,8 @@
         fty.created_at
 
         from t_food_type fty left join t_supplier sup on fty.supplier_id = sup.supplier_id
-        where fty.supplier_id = #{supplierId}
+        where sup.is_enabled = 1
+        and fty.supplier_id = #{supplierId}
         limit #{offset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
     </select>
 
