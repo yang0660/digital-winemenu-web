@@ -7,13 +7,10 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
-import com.myicellar.digitalmenu.dao.entity.FoodType;
-import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
-import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -170,6 +167,9 @@ public class SupplierManageController {
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
     public ResultVO<Integer> delete(@RequestBody SupplierDeleteReqVO reqVO) {
+        if (reqVO.getSupplierId()==null) {
+            return ResultVO.validError("SupplierId cannot be empty!");
+        }
         SupplierStatusReqVO statusReqVO = new SupplierStatusReqVO();
         statusReqVO.setSupplierId(reqVO.getSupplierId());
         statusReqVO.setIsEnabled((byte)0);
@@ -187,7 +187,7 @@ public class SupplierManageController {
     @ApiOperation("状态切换")
     public ResultVO<Integer> updateStatus(@RequestBody SupplierStatusReqVO reqVO) {
         if (reqVO.getSupplierId()==null) {
-            return ResultVO.validError("SupplierNameEng cannot be empty!");
+            return ResultVO.validError("SupplierId cannot be empty!");
         }
         return ResultVO.success(supplierService.updateStatus(reqVO));
     }
