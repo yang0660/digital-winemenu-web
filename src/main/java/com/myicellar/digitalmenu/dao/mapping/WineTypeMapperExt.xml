@@ -26,8 +26,10 @@
         t_wine_type a
         INNER JOIN t_wine b ON a.wine_type_id = b.wine_type_id
         INNER JOIN t_product c ON b.wine_id = c.wine_id
+        INNER JOIN t_supplier d ON c.supplier_id = d.supplier_id
         WHERE
-        c.supplier_id = #{supplierId}
+        d.is_enabled = 1
+        and c.supplier_id = #{supplierId}
         order by a.mic_rank
     </select>
 

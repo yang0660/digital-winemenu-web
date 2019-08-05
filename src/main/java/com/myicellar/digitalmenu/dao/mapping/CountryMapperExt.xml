@@ -58,8 +58,10 @@
         INNER JOIN t_origin b ON a.country_id = b.country_id
         INNER JOIN t_wine c ON b.wine_origin_id = c.wine_origin_id
         INNER JOIN t_product d ON c.wine_id = d.wine_id
+        INNER JOIN t_supplier e ON d.supplier_id = e.supplier_id
         WHERE
-        d.supplier_id = #{supplierId}
+        e.is_enabled = 1
+        AND d.supplier_id = #{supplierId}
         order by a.mic_rank
     </select>
 
@@ -77,8 +79,10 @@
         t_origin a
         INNER JOIN t_wine b ON a.wine_origin_id = b.wine_origin_id
         INNER JOIN t_product c ON b.wine_id = c.wine_id
+        INNER JOIN t_supplier d ON c.supplier_id = d.supplier_id
         WHERE
-        c.supplier_id = #{supplierId}
+        d.is_enabled = 1
+        and c.supplier_id = #{supplierId}
         and a.country_id = #{countryId}
         order by a.mic_rank
     </select>

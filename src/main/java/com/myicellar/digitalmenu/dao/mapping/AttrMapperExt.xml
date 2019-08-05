@@ -28,7 +28,9 @@
         INNER JOIN t_wine_vintage_attr b on a.attr_id = b.attr_id
         INNER JOIN t_product c on b.wine_id = c.wine_id
         AND c.vintage_tag = b.vintage_tag
+        INNER JOIN t_supplier d ON c.supplier_id = d.supplier_id
         WHERE a.attr_catg_id = 101
+        AND d.is_enabled = 1
         AND c.supplier_id = #{supplierId}
         order by a.mic_rank
     </select>

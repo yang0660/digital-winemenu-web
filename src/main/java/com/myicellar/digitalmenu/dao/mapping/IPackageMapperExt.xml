@@ -17,8 +17,10 @@
         FROM
         t_package a
         INNER JOIN t_product b ON a.product_id = b.product_id
+        INNER JOIN t_supplier c ON b.supplier_id = c.supplier_id
         WHERE
-        b.supplier_id = #{supplierId}
+        c.is_enabled = 1
+        AND b.supplier_id = #{supplierId}
     </select>
 
     <select id="selectListByProductId" parameterType="long" resultMap="BaseResultMap">
