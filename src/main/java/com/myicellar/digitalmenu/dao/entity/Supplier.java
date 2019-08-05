@@ -27,6 +27,8 @@ public class Supplier {
 
     private Long createdBy;
 
+    private Byte isEnabled;
+
     public Long getSupplierId() {
         return supplierId;
     }
@@ -121,5 +123,13 @@ public class Supplier {
 
     public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Byte getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(Byte isEnabled) {
+        this.isEnabled = isEnabled;
     }
 }

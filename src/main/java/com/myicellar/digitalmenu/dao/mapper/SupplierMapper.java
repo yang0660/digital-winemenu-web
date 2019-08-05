@@ -2,7 +2,7 @@ package com.myicellar.digitalmenu.dao.mapper;
 
 import com.myicellar.digitalmenu.dao.entity.Supplier;
 
-public interface SupplierMapper extends Mapper<Supplier> {
+public interface SupplierMapper extends Mapper<Supplier>{
     int deleteByPrimaryKey(Long supplierId);
 
     int insert(Supplier record);
@@ -14,6 +14,4 @@ public interface SupplierMapper extends Mapper<Supplier> {
     int updateByPrimaryKeySelective(Supplier record);
 
     int updateByPrimaryKey(Supplier record);
-
-    Supplier selectBySupplierName(String supplierName);
 }
