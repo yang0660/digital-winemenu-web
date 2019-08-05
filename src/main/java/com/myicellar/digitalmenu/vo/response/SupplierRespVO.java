@@ -37,5 +37,8 @@ public class SupplierRespVO {
     @ApiModelProperty(value = "创建时间")
     private Date createdAt;
 
+    @ApiModelProperty(value = "供应商状态码")
+    private Date isEnabled;
+
 
 }

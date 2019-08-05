@@ -170,11 +170,10 @@ public class SupplierManageController {
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
     public ResultVO<Integer> delete(@RequestBody SupplierDeleteReqVO reqVO) {
-        checkDeleteParam(reqVO);
         SupplierStatusReqVO statusReqVO = new SupplierStatusReqVO();
         statusReqVO.setSupplierId(reqVO.getSupplierId());
         statusReqVO.setIsEnabled((byte)0);
-        return ResultVO.success(supplierService.statusReqVO(statusReqVO));
+        return ResultVO.success(supplierService.updateStatus(statusReqVO));
 
     }
 
@@ -190,7 +189,7 @@ public class SupplierManageController {
         if (reqVO.getSupplierId()==null) {
             return ResultVO.validError("SupplierNameEng cannot be empty!");
         }
-        return ResultVO.success(supplierService.statusReqVO(reqVO));
+        return ResultVO.success(supplierService.updateStatus(reqVO));
     }
 
     /**
@@ -237,22 +236,6 @@ public class SupplierManageController {
             if (!reqVO.getSupplierId().equals(nameSupplier.getSupplierId())) {
                 throw new BizException("Supplier already exist!");
             }
-        }
-    }
-
-    /**
-     * 校验删除参数
-     *
-     * @param reqVO
-     */
-    private void checkDeleteParam(SupplierDeleteReqVO reqVO) {
-        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
-            throw new BizException("supplierId cannot be empty!");
-        }
-        List<Product> products = productService.queryListBySupplierId(reqVO.getSupplierId());
-        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
-        if (!products.isEmpty() || !foodTypes.isEmpty()) {
-            throw new BizException("Supplier is in use, can not be deleted!");
         }
     }
 

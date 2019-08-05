@@ -95,7 +95,7 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         return respVO;
     }
 
-    public Integer statusReqVO(SupplierStatusReqVO reqVO) {
+    public Integer updateStatus(SupplierStatusReqVO reqVO) {
         Supplier supplier = new Supplier();
         supplier.setSupplierId(reqVO.getSupplierId());
         supplier.setIsEnabled(reqVO.getIsEnabled());
