@@ -85,8 +85,12 @@
                 a.price,
                 b.img_url
         FROM t_food a
+        INNER JOIN t_food_type fdtype ON a.food_type_id = fdtype.food_type_id
+        INNER JOIN t_supplier sup on fdtype.supplier_id = sup.supplier_id
         LEFT JOIN t_img b ON a.food_img_id = b.img_id
-        WHERE a.food_type_id = #{foodTypeId}
+        WHERE
+        sup.is_enabled = 1
+        AND a.food_type_id = #{foodTypeId}
     </select>
 
     <resultMap id="FoodDetailResultMap" type="com.myicellar.digitalmenu.vo.response.FoodDetailRespVO">
@@ -133,8 +137,10 @@
                 c.img_url
         FROM t_food a
         INNER JOIN t_food_type b ON a.food_type_id = b.food_type_id
+        INNER join t_supplier sup on b.supplier_id = sup.supplier_id
         LEFT JOIN t_img c ON a.food_img_id = c.img_id
         WHERE a.is_recommend = 1
+        AND sup.is_enabled = 1
         AND b.supplier_id = #{supplierId}
     </select>
 
