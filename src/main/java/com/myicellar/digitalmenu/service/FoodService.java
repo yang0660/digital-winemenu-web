@@ -120,8 +120,8 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
      *
      * @return
      */
-    public Food queryFoodName(String foodNameEng) {
-        return mapper.selectByFoodName(foodNameEng);
+    public Food queryFoodName(String foodNameEng,Long supplierId) {
+        return mapper.selectByFoodName(foodNameEng,supplierId);
 
     }
 }

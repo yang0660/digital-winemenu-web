@@ -139,7 +139,11 @@ public class SupplierManageController {
         Date now = new Date();
         supplier.setCreatedAt(now);
         supplier.setUpdatedAt(now);
-        return ResultVO.success(supplierService.insertSelective(supplier));
+        Integer result = supplierService.insertSelective(supplier);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -157,7 +161,12 @@ public class SupplierManageController {
         supplier.setUpdatedBy(0L);
         Date now = new Date();
         supplier.setUpdatedAt(now);
-        return ResultVO.success(supplierService.updateByPrimaryKeySelective(supplier));
+        Integer result = supplierService.updateByPrimaryKeySelective(supplier);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
+
     }
 
     /**
@@ -170,8 +179,11 @@ public class SupplierManageController {
     @ApiOperation("删除")
     public ResultVO<Integer> delete(@RequestBody SupplierDeleteReqVO reqVO) {
         checkDeleteParam(reqVO);
-        return ResultVO.success(supplierService.deleteByPrimaryKey(reqVO.getSupplierId()));
-
+        Integer result = supplierService.deleteByPrimaryKey(reqVO.getSupplierId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -186,7 +198,11 @@ public class SupplierManageController {
         if (reqVO.getSupplierId()==null) {
             return ResultVO.validError("SupplierId cannot be empty!");
         }
-        return ResultVO.success(supplierService.updateStatus(reqVO));
+        Integer result = supplierService.updateStatus(reqVO);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**

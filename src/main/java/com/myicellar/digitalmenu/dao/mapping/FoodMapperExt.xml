@@ -200,12 +200,15 @@
         and food.food_id = #{foodId}
     </select>
 
-    <select id="selectByFoodName" parameterType="String" resultMap="BaseResultMap">
+    <select id="selectByFoodName" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from t_food
+        food.*
+        from t_food food
+        left join t_food_type fty on food.food_type_id = fty.food_type_id
         where
-        food_name_eng = #{foodNameEng}
+        food.food_name_eng = #{foodNameEng}
+        and
+        fty.supplier_id = #{supplierId}
         limit 1
     </select>
 

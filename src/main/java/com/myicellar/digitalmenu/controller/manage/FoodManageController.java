@@ -3,6 +3,7 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Food;
 import com.myicellar.digitalmenu.service.FoodService;
+import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
@@ -41,6 +42,7 @@ public class FoodManageController {
      */
     @PostMapping(value = "/queryListPage")
     @ApiOperation("列表查询")
+    @AuthIgnore
     public ResultVO<PageResponseVO<FoodRespVO>> queryListPage(@RequestBody FoodPageReqVO reqVO) {
         PageResponseVO<FoodRespVO> page = foodService.queryPageList(reqVO);
         return ResultVO.success(page);
@@ -78,7 +80,11 @@ public class FoodManageController {
         Date now = new Date();
         food.setCreatedAt(now);
         food.setUpdatedAt(now);
-        return ResultVO.success(foodService.insertSelective(food));
+        Integer result= foodService.insertSelective(food);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -89,6 +95,7 @@ public class FoodManageController {
      */
     @PostMapping(value = "/update")
     @ApiOperation("修改")
+    @AuthIgnore
     public ResultVO<Integer> update(@RequestBody FoodUpdateReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
@@ -96,7 +103,11 @@ public class FoodManageController {
         food.setUpdatedBy(0L);
         Date now = new Date();
         food.setUpdatedAt(now);
-        return ResultVO.success(foodService.updateByPrimaryKeySelective(food));
+        Integer result = foodService.updateByPrimaryKeySelective(food);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -108,7 +119,11 @@ public class FoodManageController {
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody FoodDeleteReqVO reqVO) {
-        return ResultVO.success(foodService.deleteByPrimaryKey(reqVO.getFoodId()));
+        Integer result = foodService.deleteByPrimaryKey(reqVO.getFoodId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -130,7 +145,7 @@ public class FoodManageController {
             throw new BizException("foodImgId cannot be empty!");
         }
         if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
-            throw new BizException("foodNameEng cannot be empty!");
+            throw new BizException("NotePlainEng cannot be empty!");
         }
         if (reqVO.getPrice() == null) {
             throw new BizException("price cannot be empty!");
@@ -138,7 +153,7 @@ public class FoodManageController {
         if (reqVO.getIsRecommend() == null) {
             throw new BizException("isRecommend cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodNameEng()) != null) {
+        if (foodService.queryFoodName(reqVO.getFoodNameEng(),reqVO.getSupplierId()) != null) {
             throw new BizException("Food already exist!");
         }
     }
@@ -162,7 +177,7 @@ public class FoodManageController {
             throw new BizException("foodImgId cannot be empty!");
         }
         if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
-            throw new BizException("foodNameEng cannot be empty!");
+            throw new BizException("NotePlainEng cannot be empty!");
         }
         if (reqVO.getPrice() == null) {
             throw new BizException("price cannot be empty!");
@@ -170,11 +185,9 @@ public class FoodManageController {
         if (reqVO.getIsRecommend() == null) {
             throw new BizException("isRecommend cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodNameEng()) != null) {
-            if (foodService.selectByPrimaryKey(reqVO.getFoodId()) != null) {
-                throw new BizException("Food already exist!");
-            }
-
+        Food food = foodService.queryFoodName(reqVO.getFoodNameEng(),reqVO.getSupplierId());
+        if (food!=null && !food.getFoodId().equals(reqVO.getFoodId())) {
+            throw new BizException("Food already exist!");
         }
     }
 }

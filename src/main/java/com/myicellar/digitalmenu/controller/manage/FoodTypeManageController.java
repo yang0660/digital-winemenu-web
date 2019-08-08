@@ -97,8 +97,11 @@ public class FoodTypeManageController {
         Date now = new Date();
         foodType.setCreatedAt(now);
         foodType.setUpdatedAt(now);
-
-        return ResultVO.success(foodTypeService.insertSelective(foodType));
+        Integer result= foodTypeService.insertSelective(foodType);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -116,7 +119,11 @@ public class FoodTypeManageController {
         foodType.setUpdatedBy(0L);
         Date now = new Date();
         foodType.setUpdatedAt(now);
-        return ResultVO.success(foodTypeService.updateByPrimaryKeySelective(foodType));
+        Integer result= foodTypeService.updateByPrimaryKeySelective(foodType);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -130,7 +137,11 @@ public class FoodTypeManageController {
     public ResultVO<Integer> update(@RequestBody FoodTypeDeleteReqVO reqVO) {
         //参数校验
         checkDeleteParam(reqVO);
-        return ResultVO.success(foodTypeService.deleteByPrimaryKey(reqVO.getFoodTypeId()));
+        Integer result= foodTypeService.deleteByPrimaryKey(reqVO.getFoodTypeId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -166,7 +177,7 @@ public class FoodTypeManageController {
         if (StringUtils.isEmpty(reqVO.getFoodTypeNameEng())) {
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng()) != null) {
+        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng(),reqVO.getSupplierId()) != null) {
             if (foodService.selectByPrimaryKey(reqVO.getFoodTypeId()) != null) {
                 throw new BizException("Food Type already exist!");
             }

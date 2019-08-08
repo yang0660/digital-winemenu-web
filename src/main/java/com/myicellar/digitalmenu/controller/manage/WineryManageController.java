@@ -109,7 +109,11 @@ public class WineryManageController {
         List<Long> longIds = reqVO.getWineryImgIds();
         String stringIds = StringUtils.join(longIds, ",");
         winery.setWineryImgIds(stringIds);
-        return ResultVO.success(wineryService.insertSelective(winery));
+        Integer result= wineryService.insertSelective(winery);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -130,7 +134,11 @@ public class WineryManageController {
         List<Long> longIds = reqVO.getWineryImgIds();
         String stringIds = StringUtils.join(longIds, ",");
         winery.setWineryImgIds(stringIds);
-        return ResultVO.success(wineryService.updateByPrimaryKeySelective(winery));
+        Integer result= wineryService.updateByPrimaryKeySelective(winery);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**
@@ -143,7 +151,11 @@ public class WineryManageController {
     @ApiOperation("删除")
     public ResultVO<Integer> update(@RequestBody WineryDeleteReqVO reqVO) {
         checkDeleteParam(reqVO);
-        return ResultVO.success(wineryService.deleteByPrimaryKey(reqVO.getWineryId()));
+        Integer result= wineryService.deleteByPrimaryKey(reqVO.getWineryId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success(result);
     }
 
     /**

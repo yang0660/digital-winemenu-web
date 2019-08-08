@@ -7,6 +7,7 @@ import com.myicellar.digitalmenu.vo.response.FoodDetailBGRespVO;
 import com.myicellar.digitalmenu.vo.response.FoodDetailRespVO;
 import com.myicellar.digitalmenu.vo.response.FoodDisplayRespVO;
 import com.myicellar.digitalmenu.vo.response.FoodRecommendRespVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,5 +27,5 @@ public interface FoodMapperExt extends FoodMapper {
 
     FoodDetailBGRespVO selectFoodDetail(Long foodId);
 
-    Food selectByFoodName(String foodNameEng);
+    Food selectByFoodName(@Param("foodNameEng") String foodNameEng, @Param("supplierId")Long supplierId);
 }
