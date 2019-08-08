@@ -14,5 +14,5 @@ public interface FoodTypeMapperExt extends FoodTypeMapper {
 
     List<FoodType> selectListBySupplierId(Long supplierId);
 
-    FoodType selectByFoodTypeName(@Param("FoodTypeName") String FoodTypeName,@Param("supplierId") Long supplierId);
+    FoodType selectByFoodTypeName(@Param("foodTypeNameEng") String foodTypeNameEng,@Param("supplierId") Long supplierId);
 }
