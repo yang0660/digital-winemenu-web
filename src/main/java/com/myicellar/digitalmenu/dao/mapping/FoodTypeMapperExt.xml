@@ -52,12 +52,13 @@
         and sp.supplier_id = #{supplierId}
     </select>
 
-    <select id="selectByFoodTypeName" parameterType="String" resultMap="BaseResultMap">
+    <select id="selectByFoodTypeName"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_food_type
         where
         food_type_name_eng = #{foodTypeNameEng}
+        and supplier_id = #{supplierId}
         limit 1
     </select>
 

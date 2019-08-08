@@ -38,7 +38,7 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
      *
      * @return
      */
-    public FoodType queryByFoodTypeName(String foodTypeNameEng) {
-        return mapper.selectByFoodTypeName(foodTypeNameEng);
+    public FoodType queryByFoodTypeName(String foodTypeNameEng,Long supplierId) {
+        return mapper.selectByFoodTypeName(foodTypeNameEng,supplierId);
     }
 }

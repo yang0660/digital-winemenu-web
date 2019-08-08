@@ -156,7 +156,7 @@ public class FoodTypeManageController {
         if (StringUtils.isEmpty(reqVO.getFoodTypeNameEng())) {
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        if (foodTypeService.queryByFoodTypeName(reqVO.getFoodTypeNameEng()) != null) {
+        if (foodTypeService.queryByFoodTypeName(reqVO.getFoodTypeNameEng(),reqVO.getSupplierId()) != null) {
             throw new BizException("foodType already exists!");
         }
     }
@@ -177,10 +177,9 @@ public class FoodTypeManageController {
         if (StringUtils.isEmpty(reqVO.getFoodTypeNameEng())) {
             throw new BizException("foodTypeNameEng cannot be empty!");
         }
-        if (foodService.queryFoodName(reqVO.getFoodTypeNameEng(),reqVO.getSupplierId()) != null) {
-            if (foodService.selectByPrimaryKey(reqVO.getFoodTypeId()) != null) {
-                throw new BizException("Food Type already exist!");
-            }
+        FoodType foodType = foodTypeService.queryByFoodTypeName(reqVO.getFoodTypeNameEng(),reqVO.getSupplierId());
+        if (foodType!=null && !foodType.getFoodTypeId().equals(reqVO.getFoodTypeId())) {
+            throw new BizException("Food Type already exist!");
         }
     }
 

@@ -171,8 +171,13 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
                         iPackageMapperExt.deleteByProductAndVolumeId(product.getProductId(), volumeTypeId);
                     }
                 }
-            } else {
-                mapper.deleteByPrimaryKey(product.getProductId());
+            }
+            //更新是否推荐属性
+            if(!reqVO.getIsRecommend().equals(product.getIsRecommend())) {
+                Product updateProduct = new Product();
+                updateProduct.setProductId(reqVO.getProductId());
+                updateProduct.setIsRecommend(reqVO.getIsRecommend());
+                mapper.updateByPrimaryKeySelective(updateProduct);
             }
         }
         result++;
