@@ -152,6 +152,7 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
     private CorsConfiguration addcorsConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         List<String> list = new ArrayList<>();
+        list.add("http://zzz.vcforest.cn");
         list.add("*");
         corsConfiguration.setAllowedOrigins(list);
         corsConfiguration.addAllowedOrigin("*");

@@ -22,10 +22,4 @@ public class ImgRespVO {
 
     @ApiModelProperty(value = "图片名称-英文")
     private String imgNameEng;
-
-    @ApiModelProperty(value = "图片名称-简体中文")
-    private String imgNameChs;
-
-    @ApiModelProperty(value = "图片名称-繁体中文")
-    private String imgNameCht;
 }
