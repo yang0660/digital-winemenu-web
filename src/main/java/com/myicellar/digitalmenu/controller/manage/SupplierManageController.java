@@ -227,12 +227,9 @@ public class SupplierManageController {
         if (reqVO.getType() == null) {
             throw new BizException("Type cannot be empty!");
         }
-        Supplier supplier = supplierService.selectByPrimaryKey(reqVO.getSupplierId());
-        if (!reqVO.getSupplierNameEng().equals(supplier.getSupplierNameEng())) {
-            Supplier nameSupplier = supplierService.queryBySupplierName(reqVO.getSupplierNameEng());
-            if (nameSupplier!=null && !nameSupplier.getSupplierId().equals(reqVO.getSupplierId())) {
-                throw new BizException("Supplier already exist!");
-            }
+        Supplier nameSupplier = supplierService.queryBySupplierName(reqVO.getSupplierNameEng());
+        if (nameSupplier!=null && !nameSupplier.getSupplierId().equals(reqVO.getSupplierId())) {
+            throw new BizException("Supplier already exist!");
         }
     }
 
