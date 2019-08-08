@@ -342,6 +342,8 @@
         <result column="winery_name" jdbcType="VARCHAR" property="wineryName"/>
         <result column="wine_img_id" jdbcType="BIGINT" property="wineImgId"/>
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="is_recommend" jdbcType="TINYINT" property="isRecommend"/>
+        <result column="is_organic_wine" jdbcType="TINYINT" property="isOrganicWine"/>
     </resultMap>
 
     <select id="selectCount" parameterType="com.myicellar.digitalmenu.vo.request.ProductPageReqVO" resultType="long">

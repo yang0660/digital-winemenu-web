@@ -230,7 +230,7 @@ public class SupplierManageController {
         Supplier supplier = supplierService.selectByPrimaryKey(reqVO.getSupplierId());
         if (!reqVO.getSupplierNameEng().equals(supplier.getSupplierNameEng())) {
             Supplier nameSupplier = supplierService.queryBySupplierName(reqVO.getSupplierNameEng());
-            if (!reqVO.getSupplierId().equals(nameSupplier.getSupplierId())) {
+            if (nameSupplier!=null && !nameSupplier.getSupplierId().equals(reqVO.getSupplierId())) {
                 throw new BizException("Supplier already exist!");
             }
         }
