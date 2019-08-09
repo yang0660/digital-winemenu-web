@@ -9,10 +9,6 @@ public class Img {
 
     private String imgNameEng;
 
-    private String imgNameChs;
-
-    private String imgNameCht;
-
     private String imgUrl;
 
     private String smallImgUrl;
@@ -47,22 +43,6 @@ public class Img {
 
     public void setImgNameEng(String imgNameEng) {
         this.imgNameEng = imgNameEng;
-    }
-
-    public String getImgNameChs() {
-        return imgNameChs;
-    }
-
-    public void setImgNameChs(String imgNameChs) {
-        this.imgNameChs = imgNameChs;
-    }
-
-    public String getImgNameCht() {
-        return imgNameCht;
-    }
-
-    public void setImgNameCht(String imgNameCht) {
-        this.imgNameCht = imgNameCht;
     }
 
     public String getImgUrl() {

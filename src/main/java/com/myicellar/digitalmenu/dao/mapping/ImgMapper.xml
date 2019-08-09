@@ -1,164 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myicellar.digitalmenu.dao.mapper.ImgMapper">
-    <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Img">
-        <id column="img_id" jdbcType="BIGINT" property="imgId"/>
-        <result column="img_type_id" jdbcType="BIGINT" property="imgTypeId"/>
-        <result column="img_name_eng" jdbcType="VARCHAR" property="imgNameEng"/>
-        <result column="img_name_chs" jdbcType="VARCHAR" property="imgNameChs"/>
-        <result column="img_name_cht" jdbcType="VARCHAR" property="imgNameCht"/>
-        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
-        <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl"/>
-        <result column="created_by" jdbcType="BIGINT" property="createdBy"/>
-        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-        <result column="updated_by" jdbcType="BIGINT" property="updatedBy"/>
-        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        img_id, img_type_id, img_name_eng, img_name_chs, img_name_cht, img_url, small_img_url,
-        created_by, created_at, updated_by, updated_at
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_img
-        where img_id = #{imgId,jdbcType=BIGINT}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from t_img
-        where img_id = #{imgId,jdbcType=BIGINT}
-    </delete>
-    <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
-        insert into t_img (img_id, img_type_id, img_name_eng,
-        img_name_chs, img_name_cht, img_url,
-        small_img_url, created_by, created_at,
-        updated_by, updated_at)
-        values (#{imgId,jdbcType=BIGINT}, #{imgTypeId,jdbcType=BIGINT}, #{imgNameEng,jdbcType=VARCHAR},
-        #{imgNameChs,jdbcType=VARCHAR}, #{imgNameCht,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
-        #{smallImgUrl,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP},
-        #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP})
-    </insert>
-    <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
-        insert into t_img
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="imgId != null">
-                img_id,
-            </if>
-            <if test="imgTypeId != null">
-                img_type_id,
-            </if>
-            <if test="imgNameEng != null">
-                img_name_eng,
-            </if>
-            <if test="imgNameChs != null">
-                img_name_chs,
-            </if>
-            <if test="imgNameCht != null">
-                img_name_cht,
-            </if>
-            <if test="imgUrl != null">
-                img_url,
-            </if>
-            <if test="smallImgUrl != null">
-                small_img_url,
-            </if>
-            <if test="createdBy != null">
-                created_by,
-            </if>
-            <if test="createdAt != null">
-                created_at,
-            </if>
-            <if test="updatedBy != null">
-                updated_by,
-            </if>
-            <if test="updatedAt != null">
-                updated_at,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="imgId != null">
-                #{imgId,jdbcType=BIGINT},
-            </if>
-            <if test="imgTypeId != null">
-                #{imgTypeId,jdbcType=BIGINT},
-            </if>
-            <if test="imgNameEng != null">
-                #{imgNameEng,jdbcType=VARCHAR},
-            </if>
-            <if test="imgNameChs != null">
-                #{imgNameChs,jdbcType=VARCHAR},
-            </if>
-            <if test="imgNameCht != null">
-                #{imgNameCht,jdbcType=VARCHAR},
-            </if>
-            <if test="imgUrl != null">
-                #{imgUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="smallImgUrl != null">
-                #{smallImgUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="createdBy != null">
-                #{createdBy,jdbcType=BIGINT},
-            </if>
-            <if test="createdAt != null">
-                #{createdAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedBy != null">
-                #{updatedBy,jdbcType=BIGINT},
-            </if>
-            <if test="updatedAt != null">
-                #{updatedAt,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
-        update t_img
-        <set>
-            <if test="imgTypeId != null">
-                img_type_id = #{imgTypeId,jdbcType=BIGINT},
-            </if>
-            <if test="imgNameEng != null">
-                img_name_eng = #{imgNameEng,jdbcType=VARCHAR},
-            </if>
-            <if test="imgNameChs != null">
-                img_name_chs = #{imgNameChs,jdbcType=VARCHAR},
-            </if>
-            <if test="imgNameCht != null">
-                img_name_cht = #{imgNameCht,jdbcType=VARCHAR},
-            </if>
-            <if test="imgUrl != null">
-                img_url = #{imgUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="smallImgUrl != null">
-                small_img_url = #{smallImgUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="createdBy != null">
-                created_by = #{createdBy,jdbcType=BIGINT},
-            </if>
-            <if test="createdAt != null">
-                created_at = #{createdAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedBy != null">
-                updated_by = #{updatedBy,jdbcType=BIGINT},
-            </if>
-            <if test="updatedAt != null">
-                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where img_id = #{imgId,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
-        update t_img
-        set img_type_id = #{imgTypeId,jdbcType=BIGINT},
+  <resultMap id="BaseResultMap" type="com.myicellar.digitalmenu.dao.entity.Img">
+    <id column="img_id" jdbcType="BIGINT" property="imgId" />
+    <result column="img_type_id" jdbcType="BIGINT" property="imgTypeId" />
+    <result column="img_name_eng" jdbcType="VARCHAR" property="imgNameEng" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="small_img_url" jdbcType="VARCHAR" property="smallImgUrl" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    img_id, img_type_id, img_name_eng, img_url, small_img_url, created_by, created_at, 
+    updated_by, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_img
+    where img_id = #{imgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_img
+    where img_id = #{imgId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
+    insert into t_img (img_id, img_type_id, img_name_eng, 
+      img_url, small_img_url, created_by, 
+      created_at, updated_by, updated_at
+      )
+    values (#{imgId,jdbcType=BIGINT}, #{imgTypeId,jdbcType=BIGINT}, #{imgNameEng,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{smallImgUrl,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
+    insert into t_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="imgId != null">
+        img_id,
+      </if>
+      <if test="imgTypeId != null">
+        img_type_id,
+      </if>
+      <if test="imgNameEng != null">
+        img_name_eng,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="smallImgUrl != null">
+        small_img_url,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="imgId != null">
+        #{imgId,jdbcType=BIGINT},
+      </if>
+      <if test="imgTypeId != null">
+        #{imgTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="imgNameEng != null">
+        #{imgNameEng,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImgUrl != null">
+        #{smallImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
+    update t_img
+    <set>
+      <if test="imgTypeId != null">
+        img_type_id = #{imgTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="imgNameEng != null">
         img_name_eng = #{imgNameEng,jdbcType=VARCHAR},
-        img_name_chs = #{imgNameChs,jdbcType=VARCHAR},
-        img_name_cht = #{imgNameCht,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
         img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImgUrl != null">
         small_img_url = #{smallImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
         created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
         created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
         updated_by = #{updatedBy,jdbcType=BIGINT},
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP}
-        where img_id = #{imgId,jdbcType=BIGINT}
-    </update>
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where img_id = #{imgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myicellar.digitalmenu.dao.entity.Img">
+    update t_img
+    set img_type_id = #{imgTypeId,jdbcType=BIGINT},
+      img_name_eng = #{imgNameEng,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      small_img_url = #{smallImgUrl,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where img_id = #{imgId,jdbcType=BIGINT}
+  </update>
 </mapper>

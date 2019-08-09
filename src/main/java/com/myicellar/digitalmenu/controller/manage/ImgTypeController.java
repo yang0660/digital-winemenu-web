@@ -2,6 +2,7 @@ package com.myicellar.digitalmenu.controller.manage;
 
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.ImgType;
+import com.myicellar.digitalmenu.enums.ImgTypeEnum;
 import com.myicellar.digitalmenu.service.ImgService;
 import com.myicellar.digitalmenu.service.ImgTypeService;
 import com.myicellar.digitalmenu.utils.BizException;
@@ -142,6 +143,10 @@ public class ImgTypeController {
     public ResultVO update(@RequestBody ImgTypeDeleteReqVO reqVO) {
         if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
             return ResultVO.validError("parameter is invalid！");
+        }
+        ImgTypeEnum imgTypeEnum = ImgTypeEnum.enumOf(reqVO.getImgTypeId());
+        if(imgTypeEnum!=null){
+            return ResultVO.validError("Built-in type, cannot be deleted！");
         }
         ImgPageReqVO imgPageReqVO = new ImgPageReqVO();
         imgPageReqVO.setImgTypeId(reqVO.getImgTypeId());
