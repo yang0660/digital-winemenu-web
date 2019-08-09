@@ -12,6 +12,6 @@ import lombok.Data;
 public class QrcodeRespVO {
 
     @ApiModelProperty(value = "二维码图片地址")
-    private String imageUrl;
+    private String imageUrl = "";
 
 }

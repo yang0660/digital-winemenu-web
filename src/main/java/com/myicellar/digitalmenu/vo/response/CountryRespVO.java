@@ -32,7 +32,7 @@ public class CountryRespVO {
     private String countryNameCht;
 
     @ApiModelProperty(value = "国家图片地址")
-    private String imgUrl;
+    private String imgUrl = "";
 
     @ApiModelProperty(value = "排序")
     private Short micRank;

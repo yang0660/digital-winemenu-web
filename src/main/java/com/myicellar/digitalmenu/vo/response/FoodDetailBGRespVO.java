@@ -38,7 +38,7 @@ public class FoodDetailBGRespVO {
     private Long foodImgId;
 
     @ApiModelProperty(value = "图片")
-    private String imgUrl;
+    private String imgUrl = "";
 
     @ApiModelProperty(value = "美食描述-英")
     private String notePlainEng;

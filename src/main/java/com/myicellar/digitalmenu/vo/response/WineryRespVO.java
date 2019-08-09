@@ -37,7 +37,7 @@ public class WineryRespVO {
     private Long bannerImgId;
 
     @ApiModelProperty(value = "酒庄Logo-原图")
-    private String wineryLogoUrl;
+    private String wineryLogoUrl = "";
 
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;
@@ -64,7 +64,7 @@ public class WineryRespVO {
     private String aboutUrl;
 
     @ApiModelProperty(value = "酒庄banner图-原图")
-    private String bannerImgUrl;
+    private String bannerImgUrl = "";
 
     @ApiModelProperty(value = "酒庄图片")
     private List<Long> wineryImgIds;

@@ -18,7 +18,7 @@ public class ImgRespVO {
     private Long imgTypeId;
 
     @ApiModelProperty(value = "图片url-原图")
-    private String imgUrl;
+    private String imgUrl = "";
 
     @ApiModelProperty(value = "图片名称-英文")
     private String imgNameEng;

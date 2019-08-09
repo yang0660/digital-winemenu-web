@@ -37,7 +37,7 @@ public class FoodRespVO {
     private Long foodImgId;
 
     @ApiModelProperty(value = "美食图片")
-    private String foodImg;
+    private String foodImg = "";
 
     @ApiModelProperty(value = "美食推荐")
     private Byte isRecommend;

@@ -29,7 +29,7 @@ public class SupplierRespVO {
     private Long logoImgId;
 
     @ApiModelProperty(value = "供应商Logo")
-    private String logoImgUrl;
+    private String logoImgUrl = "";
 
     @ApiModelProperty(value = "供应商类型 0 online, 1 offline")
     private Byte type;

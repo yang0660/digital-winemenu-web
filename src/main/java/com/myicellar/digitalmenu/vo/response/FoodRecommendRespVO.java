@@ -24,5 +24,5 @@ public class FoodRecommendRespVO {
     private String foodNameCht;
 
     @ApiModelProperty(value = "图片-原图")
-    private String imgUrl;
+    private String imgUrl = "";
 }

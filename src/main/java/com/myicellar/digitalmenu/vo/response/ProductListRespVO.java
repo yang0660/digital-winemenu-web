@@ -64,7 +64,7 @@ public class ProductListRespVO {
     private Long wineImgId;
 
     @ApiModelProperty(value = "酒品图片")
-    private String wineImgUrl;
+    private String wineImgUrl = "";
 
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;

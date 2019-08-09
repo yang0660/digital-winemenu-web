@@ -27,7 +27,7 @@ public class ProductDetailRespVO {
     private Long wineImgId;
 
     @ApiModelProperty(value = "酒品图片-原图")
-    private String wineImgUrl;
+    private String wineImgUrl = "";
 
     @ApiModelProperty(value = "酒品类型名称-英文")
     private String wineTypeNameEng;
@@ -48,7 +48,7 @@ public class ProductDetailRespVO {
     private String countryNameEng;
 
     @ApiModelProperty(value = "国家图标url")
-    private String countryImgUrl;
+    private String countryImgUrl = "";
 
     @ApiModelProperty(value = "产地-英文")
     private String regionNameEng;
@@ -87,13 +87,13 @@ public class ProductDetailRespVO {
     private Long wineryLogoId;
 
     @ApiModelProperty(value = "酒庄Logo-原图")
-    private String wineryLogoUrl;
+    private String wineryLogoUrl = "";
 
     @ApiModelProperty(value = "酒庄banner图ID")
     private Long bannerImgId;
 
     @ApiModelProperty(value = "酒庄banner图-原图")
-    private String bannerImgUrl;
+    private String bannerImgUrl = "";
 
     @ApiModelProperty(value = "酒庄图片IDs")
     private String wineryImgIds;

@@ -53,7 +53,7 @@ public class ProductInfoRespVO {
     private String countryNameCht;
 
     @ApiModelProperty(value = "国家图标url")
-    private String countryImgUrl;
+    private String countryImgUrl = "";
 
     @ApiModelProperty(value = "产地-英文")
     private String regionNameEng;
@@ -77,13 +77,13 @@ public class ProductInfoRespVO {
     private Long wineryLogoId;
 
     @ApiModelProperty(value = "酒庄Logo-原图")
-    private String wineryLogoUrl;
+    private String wineryLogoUrl = "";
 
     @ApiModelProperty(value = "酒品图片ID")
     private Long wineImgId;
 
     @ApiModelProperty(value = "酒品图片-原图")
-    private String wineImgUrl;
+    private String wineImgUrl = "";
 
     @ApiModelProperty(value = "原料")
     private String variety;
