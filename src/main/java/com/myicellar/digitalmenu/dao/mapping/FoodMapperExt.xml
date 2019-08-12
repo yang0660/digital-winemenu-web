@@ -66,6 +66,9 @@
         <if test='supplierId !=null and supplierId != 0'>
             and sup.supplier_id = #{supplierId}
         </if>
+        <if test='isRecommend !=null'>
+            and food.is_recommend = #{isRecommend}
+        </if>
     </sql>
 
     <resultMap id="FoodDisplayResultMap" type="com.myicellar.digitalmenu.vo.response.FoodDisplayRespVO">

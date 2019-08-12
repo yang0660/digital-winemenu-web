@@ -19,4 +19,7 @@ public class FoodPageReqVO extends PageRequestVO {
 
     @ApiModelProperty(value = "供应商ID")
     private Long supplierId;
+
+    @ApiModelProperty(value = "美食推荐")
+    private Byte isRecommend;
 }
