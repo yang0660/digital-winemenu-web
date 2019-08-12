@@ -109,6 +109,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         Integer result = mapper.insertSelective(product);
 
         if (result > 0) {
+            Set<Long> volumeTypeIds = new HashSet<Long>();
             if (!CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
                 IPackage iPackage = new IPackage();
                 iPackage.setProductId(productId);
@@ -117,10 +118,13 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
                 iPackage.setCreatedBy(1L);
                 iPackage.setUpdatedBy(1L);
                 for (VolumPriceReqVO volumePrice : reqVO.getVolumePrices()) {
-                    iPackage.setPackageId(snowflakeIdWorker.nextId());
-                    iPackage.setVolumeTypeId(volumePrice.getVolumeTypeId());
-                    iPackage.setRegularPrice(volumePrice.getPrice());
-                    iPackageMapperExt.insertSelective(iPackage);
+                    if(!volumeTypeIds.contains(volumePrice.getVolumeTypeId())) {
+                        iPackage.setPackageId(snowflakeIdWorker.nextId());
+                        iPackage.setVolumeTypeId(volumePrice.getVolumeTypeId());
+                        iPackage.setRegularPrice(volumePrice.getPrice());
+                        iPackageMapperExt.insertSelective(iPackage);
+                        volumeTypeIds.add(volumePrice.getVolumeTypeId());
+                    }
                 }
             }
         }
@@ -134,7 +138,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         Product product = mapper.selectByPrimaryKey(reqVO.getProductId());
         if (product != null) {
             List<IPackage> packageList = iPackageMapperExt.selectListByProductId(product.getProductId());
-            List<Long> volumeTypeIds = new ArrayList<>();
+            Set<Long> volumeTypeIds = new HashSet<Long>();
             Map<Long, Long> volumePkgMap = new HashMap<Long, Long>();
             if (!CollectionUtils.isEmpty(packageList)) {
                 for (IPackage iPackage : packageList) {
@@ -142,7 +146,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
                     volumePkgMap.put(iPackage.getVolumeTypeId(), iPackage.getPackageId());
                 }
             }
-            List<Long> newVolumeTypeIds = new ArrayList<>();
+            Set<Long> newVolumeTypeIds = new HashSet<Long>();
             if (!CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
                 IPackage iPackage = new IPackage();
                 iPackage.setProductId(product.getProductId());
@@ -151,17 +155,13 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
                 iPackage.setUpdatedBy(1L);
                 for (VolumPriceReqVO volumePrice : reqVO.getVolumePrices()) {
                     newVolumeTypeIds.add(volumePrice.getVolumeTypeId());
+                    iPackage.setRegularPrice(volumePrice.getPrice());
                     if (volumeTypeIds.contains(volumePrice.getVolumeTypeId())) {
                         iPackage.setPackageId(volumePkgMap.get(volumePrice.getVolumeTypeId()));
+                        iPackageMapperExt.updateByPrimaryKeySelective(iPackage);
                     } else {
                         iPackage.setPackageId(snowflakeIdWorker.nextId());
                         iPackage.setVolumeTypeId(volumePrice.getVolumeTypeId());
-                    }
-                    iPackage.setRegularPrice(volumePrice.getPrice());
-
-                    if (volumeTypeIds.contains(volumePrice.getVolumeTypeId())) {
-                        iPackageMapperExt.updateByPrimaryKeySelective(iPackage);
-                    } else {
                         iPackageMapperExt.insertSelective(iPackage);
                     }
                 }

@@ -2,6 +2,7 @@ package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.service.ProductManageService;
+import com.myicellar.digitalmenu.shiro.AuthIgnore;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
@@ -97,6 +98,7 @@ public class ProductManageController {
      */
     @PostMapping(value = "/update")
     @ApiOperation("修改")
+    @AuthIgnore
     public ResultVO update(@RequestBody ProductManageReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
