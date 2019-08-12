@@ -429,6 +429,9 @@
         <if test="vintageTag!=null and vintageTag!=0">
             and wvtg.vintage_tag = #{vintageTag}
         </if>
+        <if test="isRecommend!=null">
+            and prd.is_recommend = #{isRecommend}
+        </if>
         <if test="isSelected!=null">
             <if test="isSelected==1">
                 AND fprd.food_id is null

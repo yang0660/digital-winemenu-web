@@ -37,6 +37,9 @@ public class ProductPageReqVO extends PageRequestVO {
     @ApiModelProperty(value = "美食ID")
     private Long foodId;
 
+    @ApiModelProperty(value = "是否推荐 0 否，1 是")
+    private Byte isRecommend;
+
     @ApiModelProperty(value = "0 全部，1 未关联美食， 2 已关联美食")
     private Byte isSelected;
 }
