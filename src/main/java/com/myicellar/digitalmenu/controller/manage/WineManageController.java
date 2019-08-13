@@ -162,6 +162,10 @@ public class WineManageController {
         if (reqVO.getWineOriginId() == null || reqVO.getWineOriginId() == 0L) {
             throw new BizException("originId can not be empty!");
         }
+        Wine wine = wineService.queryByName(reqVO.getWineNameEng());
+        if (wine != null) {
+            throw new BizException("wineNameEng is already exists!");
+        }
     }
 
     /**
