@@ -77,21 +77,23 @@ public class WineManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<WineRespVO> add(@RequestBody WineReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
-        Wine wine = ConvertUtils.convert(reqVO, Wine.class);
-        String wineSeoName = wine.getWineNameEng().replaceAll(" ", "-").toLowerCase();
-        wine.setWineSeoName(wineSeoName);
-        wine.setWineId(snowflakeIdWorker.nextId());
-        wine.setUpdatedAt(new Date());
-        int i = wineService.insertSelective(wine);
-        if (i == 0) {
-            return ResultVO.validError("save is failed!");
-        }
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
+            Wine wine = ConvertUtils.convert(reqVO, Wine.class);
+            String wineSeoName = wine.getWineNameEng().replaceAll(" ", "-").toLowerCase();
+            wine.setWineSeoName(wineSeoName);
+            wine.setWineId(snowflakeIdWorker.nextId());
+            wine.setUpdatedAt(new Date());
+            int i = wineService.insertSelective(wine);
+            if (i == 0) {
+                return ResultVO.validError("save is failed!");
+            }
 
-        WineRespVO respVO = ConvertUtils.convert(wine, WineRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+            WineRespVO respVO = ConvertUtils.convert(wine, WineRespVO.class);
+            ResultVO resultVO = ResultVO.success("save is success!");
+            return resultVO.setData(respVO);
+        }
     }
 
     /**

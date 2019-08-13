@@ -88,20 +88,22 @@ public class FoodTypeManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
-        FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
-        foodType.setFoodTypeId(snowflakeIdWorker.nextId());
-        foodType.setCreatedBy(0L);
-        foodType.setUpdatedBy(0L);
-        Date now = new Date();
-        foodType.setCreatedAt(now);
-        foodType.setUpdatedAt(now);
-        Integer result= foodTypeService.insertSelective(foodType);
-        if (result == 0) {
-            return ResultVO.validError("save is failed!");
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
+            FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
+            foodType.setFoodTypeId(snowflakeIdWorker.nextId());
+            foodType.setCreatedBy(0L);
+            foodType.setUpdatedBy(0L);
+            Date now = new Date();
+            foodType.setCreatedAt(now);
+            foodType.setUpdatedAt(now);
+            Integer result = foodTypeService.insertSelective(foodType);
+            if (result == 0) {
+                return ResultVO.validError("save is failed!");
+            }
+            return ResultVO.success(result);
         }
-        return ResultVO.success(result);
     }
 
     /**

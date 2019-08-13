@@ -83,11 +83,13 @@ public class ProductManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody ProductManageReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
-        Integer result = productManageService.addNew(reqVO);
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
+            Integer result = productManageService.addNew(reqVO);
 
-        return ResultVO.success(result);
+            return ResultVO.success(result);
+        }
     }
 
     /**

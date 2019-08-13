@@ -129,21 +129,22 @@ public class SupplierManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody SupplierReqVO reqVO) {
-
-        //参数校验
-        checkNewParam(reqVO);
-        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
-        supplier.setSupplierId(snowflakeIdWorker.nextId());
-        supplier.setCreatedBy(0L);
-        supplier.setUpdatedBy(0L);
-        Date now = new Date();
-        supplier.setCreatedAt(now);
-        supplier.setUpdatedAt(now);
-        Integer result = supplierService.insertSelective(supplier);
-        if (result == 0) {
-            return ResultVO.validError("save is failed!");
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
+            Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
+            supplier.setSupplierId(snowflakeIdWorker.nextId());
+            supplier.setCreatedBy(0L);
+            supplier.setUpdatedBy(0L);
+            Date now = new Date();
+            supplier.setCreatedAt(now);
+            supplier.setUpdatedAt(now);
+            Integer result = supplierService.insertSelective(supplier);
+            if (result == 0) {
+                return ResultVO.validError("save is failed!");
+            }
+            return ResultVO.success(result);
         }
-        return ResultVO.success(result);
     }
 
     /**

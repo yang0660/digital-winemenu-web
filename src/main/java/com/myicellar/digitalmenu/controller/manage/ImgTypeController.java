@@ -88,23 +88,26 @@ public class ImgTypeController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<ImgTypeRespVO> add(@RequestBody ImgTypeReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
-        ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
-        imgType.setImgTypeId(snowflakeIdWorker.nextId());
-        imgType.setCreatedUser(0L);
-        imgType.setUpdatedUser(0L);
-        Date now = new Date();
-        imgType.setCreatedAt(now);
-        imgType.setUpdatedAt(now);
-        int i = imgTypeService.insertSelective(imgType);
-        if (i == 0) {
-            return ResultVO.validError("save is failed!");
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
+            ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
+            imgType.setImgTypeId(snowflakeIdWorker.nextId());
+            imgType.setCreatedUser(0L);
+            imgType.setUpdatedUser(0L);
+            Date now = new Date();
+            imgType.setCreatedAt(now);
+            imgType.setUpdatedAt(now);
+            int i = imgTypeService.insertSelective(imgType);
+            if (i == 0) {
+                return ResultVO.validError("save is failed!");
+            }
+
+            ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
+            ResultVO resultVO = ResultVO.success("save is success!");
+            return resultVO.setData(respVO);
         }
 
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
     }
 
     /**

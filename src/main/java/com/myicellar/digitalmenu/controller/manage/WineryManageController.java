@@ -96,24 +96,26 @@ public class WineryManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody WineryReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
 
-        Winery winery = ConvertUtils.convert(reqVO, Winery.class);
-        winery.setWineryId(snowflakeIdWorker.nextId());
-        winery.setCreatedBy(0L);
-        winery.setUpdatedBy(0L);
-        Date now = new Date();
-        winery.setCreatedAt(now);
-        winery.setUpdatedAt(now);
-        List<Long> longIds = reqVO.getWineryImgIds();
-        String stringIds = StringUtils.join(longIds, ",");
-        winery.setWineryImgIds(stringIds);
-        Integer result= wineryService.insertSelective(winery);
-        if (result == 0) {
-            return ResultVO.validError("save is failed!");
+            Winery winery = ConvertUtils.convert(reqVO, Winery.class);
+            winery.setWineryId(snowflakeIdWorker.nextId());
+            winery.setCreatedBy(0L);
+            winery.setUpdatedBy(0L);
+            Date now = new Date();
+            winery.setCreatedAt(now);
+            winery.setUpdatedAt(now);
+            List<Long> longIds = reqVO.getWineryImgIds();
+            String stringIds = StringUtils.join(longIds, ",");
+            winery.setWineryImgIds(stringIds);
+            Integer result = wineryService.insertSelective(winery);
+            if (result == 0) {
+                return ResultVO.validError("save is failed!");
+            }
+            return ResultVO.success(result);
         }
-        return ResultVO.success(result);
     }
 
     /**
