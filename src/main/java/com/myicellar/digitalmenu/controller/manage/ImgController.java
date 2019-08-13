@@ -67,31 +67,33 @@ public class ImgController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<ImgRespVO> add(@RequestBody ImgReqVO reqVO) {
-        //参数校验
-        checkNewParam(reqVO);
+        synchronized (this) {
+            //参数校验
+            checkNewParam(reqVO);
 
-        FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
-        if (fileUploadResult == null) {
-            return ResultVO.validError("uploading picture is failed!");
+            FileUploadProperties.FileUploadResult fileUploadResult = fileUpload(reqVO);
+            if (fileUploadResult == null) {
+                return ResultVO.validError("uploading picture is failed!");
+            }
+
+            Img img = ConvertUtils.convert(reqVO, Img.class);
+            img.setImgId(snowflakeIdWorker.nextId());
+            img.setImgUrl(fileUploadResult.getImageUrl());
+            img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
+            img.setCreatedBy(0L);
+            img.setUpdatedBy(0L);
+            Date now = new Date();
+            img.setCreatedAt(now);
+            img.setUpdatedAt(now);
+            int i = imgService.insertSelective(img);
+            if (i == 0) {
+                return ResultVO.validError("save is failed!");
+            }
+
+            ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
+            ResultVO resultVO = ResultVO.success("save is success!");
+            return resultVO.setData(respVO);
         }
-
-        Img img = ConvertUtils.convert(reqVO, Img.class);
-        img.setImgId(snowflakeIdWorker.nextId());
-        img.setImgUrl(fileUploadResult.getImageUrl());
-        img.setSmallImgUrl(fileUploadResult.getSmallImageUrl());
-        img.setCreatedBy(0L);
-        img.setUpdatedBy(0L);
-        Date now = new Date();
-        img.setCreatedAt(now);
-        img.setUpdatedAt(now);
-        int i = imgService.insertSelective(img);
-        if (i == 0) {
-            return ResultVO.validError("save is failed!");
-        }
-
-        ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
     }
 
     /**
