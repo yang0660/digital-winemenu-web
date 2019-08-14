@@ -13,6 +13,7 @@ import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -185,7 +186,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
     }
 
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer addNew(WineVintageReqVO reqVO) {
         checkNewParam(reqVO);
 
@@ -267,7 +268,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         return result;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer update(WineVintageReqVO reqVO) {
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
         //酒精度BPS
@@ -353,7 +354,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         return result;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer delete(WineVintageInfoReqVO reqVO) {
         //删除酒品属性
         Integer deleteNum1 = wineVintageAttrService.deleteByWineIdAndVintage(reqVO.getWineId(),

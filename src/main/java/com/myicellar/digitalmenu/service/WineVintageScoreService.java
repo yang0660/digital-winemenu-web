@@ -5,6 +5,8 @@ import com.myicellar.digitalmenu.dao.mapper.WineVintageScoreMapperExt;
 import com.myicellar.digitalmenu.vo.response.ScoreRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class WineVintageScoreService extends BaseService<Long, WineVintageScore,
         return mapper.selectScoreAwardByProductId(productId,type);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag) {
         return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
     }

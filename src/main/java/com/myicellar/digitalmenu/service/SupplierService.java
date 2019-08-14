@@ -11,6 +11,8 @@ import com.myicellar.digitalmenu.vo.response.SupplierRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -95,6 +97,7 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         return respVO;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer updateStatus(SupplierStatusReqVO reqVO) {
         Supplier supplier = new Supplier();
         supplier.setSupplierId(reqVO.getSupplierId());

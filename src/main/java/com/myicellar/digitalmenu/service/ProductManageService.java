@@ -15,6 +15,7 @@ import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -90,7 +91,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      * @param reqVO
      * @return
      */
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer addNew(ProductManageReqVO reqVO) {
         Product tmpProduct = mapper.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
         if(tmpProduct!=null){
@@ -132,7 +133,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         return result;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer update(ProductManageReqVO reqVO) {
         Integer result = 0;
         Product product = mapper.selectByPrimaryKey(reqVO.getProductId());
@@ -185,7 +186,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         return result;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer deleteByProductId(Long productId) {
         Product product = mapper.selectByPrimaryKey(productId);
         if (product != null) {
