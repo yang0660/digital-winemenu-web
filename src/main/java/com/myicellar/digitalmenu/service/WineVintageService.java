@@ -270,6 +270,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public Integer update(WineVintageReqVO reqVO) {
+        checkUpdateParam(reqVO);
+
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
         //酒精度BPS
         if (reqVO.getAlcohol() != null) {
@@ -386,6 +388,10 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         }
         if (reqVO.getVintageTag() == null || reqVO.getVintageTag() == 0L) {
             throw new BizException("vintageTage can not be empty!");
+        }
+        WineVintage wineVintage = mapper.selectByPrimaryKey(reqVO.getWineId(), reqVO.getVintageTag());
+        if (wineVintage == null) {
+            throw new BizException("vintageTage is not exists!");
         }
     }
 }
