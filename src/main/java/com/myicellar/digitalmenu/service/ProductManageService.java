@@ -91,7 +91,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      * @param reqVO
      * @return
      */
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer addNew(ProductManageReqVO reqVO) {
         Product tmpProduct = mapper.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
         if(tmpProduct!=null){
@@ -133,7 +133,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         return result;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer update(ProductManageReqVO reqVO) {
         Integer result = 0;
         Product product = mapper.selectByPrimaryKey(reqVO.getProductId());
@@ -186,7 +186,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         return result;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer deleteByProductId(Long productId) {
         Product product = mapper.selectByPrimaryKey(productId);
         if (product != null) {

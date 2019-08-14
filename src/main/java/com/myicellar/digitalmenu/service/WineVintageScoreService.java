@@ -24,7 +24,7 @@ public class WineVintageScoreService extends BaseService<Long, WineVintageScore,
         return mapper.selectScoreAwardByProductId(productId,type);
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag) {
         return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
     }

@@ -186,7 +186,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
     }
 
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer addNew(WineVintageReqVO reqVO) {
         checkNewParam(reqVO);
 
@@ -268,7 +268,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         return result;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer update(WineVintageReqVO reqVO) {
         checkUpdateParam(reqVO);
 
@@ -356,7 +356,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         return result;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer delete(WineVintageInfoReqVO reqVO) {
         //删除酒品属性
         Integer deleteNum1 = wineVintageAttrService.deleteByWineIdAndVintage(reqVO.getWineId(),

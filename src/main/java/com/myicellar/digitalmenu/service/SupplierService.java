@@ -97,7 +97,7 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         return respVO;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer updateStatus(SupplierStatusReqVO reqVO) {
         Supplier supplier = new Supplier();
         supplier.setSupplierId(reqVO.getSupplierId());

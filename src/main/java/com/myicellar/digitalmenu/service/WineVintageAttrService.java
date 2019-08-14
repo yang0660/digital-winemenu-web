@@ -79,7 +79,7 @@ public class WineVintageAttrService extends BaseService<Long, WineVintageAttr, W
         return subStr.toString();
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer deleteByWineIdAndVintage(Long wineId, Long vintageTag) {
         return mapper.deleteByWineIdAndVintage(wineId, vintageTag);
     }

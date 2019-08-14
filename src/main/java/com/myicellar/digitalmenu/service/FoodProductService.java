@@ -21,7 +21,7 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
      *
      * @return
      */
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer addNew(FoodProductReqVO reqVO) {
         Integer result = 0;
         List<Long> oldProductIds = mapper.selectListByFoodId(reqVO.getFoodId());
@@ -51,7 +51,7 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
      *
      * @return
      */
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public Integer delete(FoodProductReqVO reqVO) {
         Integer result = 0;
         List<Long> newProductIds = reqVO.getProductIds();
