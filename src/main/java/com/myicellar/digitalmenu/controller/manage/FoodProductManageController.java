@@ -32,11 +32,9 @@ public class FoodProductManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody FoodProductReqVO reqVO) {
-        synchronized (this) {
-            //参数校验
-            checkParam(reqVO);
-            return ResultVO.success(foodProductService.addNew(reqVO));
-        }
+        //参数校验
+        checkParam(reqVO);
+        return ResultVO.success(foodProductService.addNew(reqVO));
     }
 
     /**

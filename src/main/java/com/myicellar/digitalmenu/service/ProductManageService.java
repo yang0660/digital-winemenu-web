@@ -15,7 +15,6 @@ import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -92,7 +91,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      * @return
      */
     @Transactional
-    public Integer addNew(ProductManageReqVO reqVO) {
+    public synchronized Integer addNew(ProductManageReqVO reqVO) {
         Product tmpProduct = mapper.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
         if(tmpProduct!=null){
             throw new BizException("wineVintage is already exists!");

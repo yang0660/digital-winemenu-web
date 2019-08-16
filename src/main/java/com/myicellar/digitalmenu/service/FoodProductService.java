@@ -5,7 +5,6 @@ import com.myicellar.digitalmenu.dao.mapper.FoodProductMapperExt;
 import com.myicellar.digitalmenu.vo.request.FoodProductReqVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -22,7 +21,7 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
      * @return
      */
     @Transactional
-    public Integer addNew(FoodProductReqVO reqVO) {
+    public synchronized Integer addNew(FoodProductReqVO reqVO) {
         Integer result = 0;
         List<Long> oldProductIds = mapper.selectListByFoodId(reqVO.getFoodId());
         List<Long> newProductIds = reqVO.getProductIds();

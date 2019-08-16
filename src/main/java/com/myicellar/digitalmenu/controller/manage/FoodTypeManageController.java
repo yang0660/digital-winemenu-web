@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -88,22 +87,7 @@ public class FoodTypeManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
-        synchronized (this) {
-            //参数校验
-            checkNewParam(reqVO);
-            FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
-            foodType.setFoodTypeId(snowflakeIdWorker.nextId());
-            foodType.setCreatedBy(0L);
-            foodType.setUpdatedBy(0L);
-            Date now = new Date();
-            foodType.setCreatedAt(now);
-            foodType.setUpdatedAt(now);
-            Integer result = foodTypeService.insertSelective(foodType);
-            if (result == 0) {
-                return ResultVO.validError("save is failed!");
-            }
-            return ResultVO.success(result);
-        }
+        return foodTypeService.addNew(reqVO);
     }
 
     /**
@@ -115,17 +99,7 @@ public class FoodTypeManageController {
     @PostMapping(value = "/update")
     @ApiOperation("修改")
     public ResultVO<Integer> update(@RequestBody FoodTypeReqVO reqVO) {
-        //参数校验
-        checkUpdateParam(reqVO);
-        FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
-        foodType.setUpdatedBy(0L);
-        Date now = new Date();
-        foodType.setUpdatedAt(now);
-        Integer result= foodTypeService.updateByPrimaryKeySelective(foodType);
-        if (result == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-        return ResultVO.success(result);
+        return foodTypeService.update(reqVO);
     }
 
     /**

@@ -1,10 +1,14 @@
 package com.myicellar.digitalmenu.service;
 
+import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Food;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.mapper.FoodMapperExt;
+import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodReqVO;
+import com.myicellar.digitalmenu.vo.request.FoodUpdateReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +27,102 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
 
     @Autowired
     private ImgService imgService;
+
+    /**
+     * 校验新增参数
+     *
+     * @param reqVO
+     */
+    private void checkNewParam(FoodReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("supplierId cannot be empty!");
+        }
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
+            throw new BizException("foodTypeId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getFoodNameEng())) {
+            throw new BizException("foodNameEng cannot be empty!");
+        }
+        if (reqVO.getFoodImgId() == null || reqVO.getFoodImgId() == 0L) {
+            throw new BizException("foodImgId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("NotePlainEng cannot be empty!");
+        }
+        if (reqVO.getPrice() == null) {
+            throw new BizException("price cannot be empty!");
+        }
+        if (reqVO.getIsRecommend() == null) {
+            throw new BizException("isRecommend cannot be empty!");
+        }
+        if (queryFoodName(reqVO.getFoodNameEng(),reqVO.getSupplierId()) != null) {
+            throw new BizException("Food already exist!");
+        }
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkUpdateParam(FoodUpdateReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("supplierId cannot be empty!");
+        }
+        if (reqVO.getFoodTypeId() == null || reqVO.getFoodTypeId() == 0L) {
+            throw new BizException("foodTypeId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getFoodNameEng())) {
+            throw new BizException("foodNameEng cannot be empty!");
+        }
+        if (reqVO.getFoodImgId() == null || reqVO.getFoodImgId() == 0L) {
+            throw new BizException("foodImgId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("NotePlainEng cannot be empty!");
+        }
+        if (reqVO.getPrice() == null) {
+            throw new BizException("price cannot be empty!");
+        }
+        if (reqVO.getIsRecommend() == null) {
+            throw new BizException("isRecommend cannot be empty!");
+        }
+        Food food = queryFoodName(reqVO.getFoodNameEng(),reqVO.getSupplierId());
+        if (food!=null && !food.getFoodId().equals(reqVO.getFoodId())) {
+            throw new BizException("Food already exist!");
+        }
+    }
+
+    public synchronized ResultVO<Integer> addNew(FoodReqVO reqVO){
+        //参数校验
+        checkNewParam(reqVO);
+        Food food = ConvertUtils.convert(reqVO, Food.class);
+        food.setFoodId(snowflakeIdWorker.nextId());
+        food.setCreatedBy(0L);
+        food.setUpdatedBy(0L);
+        Date now = new Date();
+        food.setCreatedAt(now);
+        food.setUpdatedAt(now);
+        Integer result= mapper.insertSelective(food);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
+    }
+
+    public ResultVO<Integer> update(FoodUpdateReqVO reqVO){
+        //参数校验
+        checkUpdateParam(reqVO);
+        Food food = ConvertUtils.convert(reqVO, Food.class);
+        food.setUpdatedBy(0L);
+        Date now = new Date();
+        food.setUpdatedAt(now);
+        Integer result = mapper.updateByPrimaryKeySelective(food);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
+    }
 
     /**
      * 列表查询-分页
