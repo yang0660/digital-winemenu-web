@@ -6,7 +6,6 @@ import com.myicellar.digitalmenu.service.FoodService;
 import com.myicellar.digitalmenu.service.FoodTypeService;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.FoodTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodTypePageReqVO;
 import com.myicellar.digitalmenu.vo.request.FoodTypeReqVO;
@@ -37,8 +36,6 @@ public class FoodTypeManageController {
     private FoodTypeService foodTypeService;
     @Autowired
     private FoodService foodService;
-    @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
      * 美食分类下拉列表

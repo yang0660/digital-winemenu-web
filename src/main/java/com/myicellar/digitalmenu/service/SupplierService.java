@@ -1,12 +1,16 @@
 package com.myicellar.digitalmenu.service;
 
+import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
+import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
+import com.myicellar.digitalmenu.vo.request.SupplierReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierStatusReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.SupplierRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,88 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
 
     @Autowired
     private ImgService imgService;
+
+    /**
+     * 校验新增参数
+     *
+     * @param reqVO
+     */
+    private void checkNewParam(SupplierReqVO reqVO) {
+        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
+            throw new BizException("SupplierNameEng cannot be empty!");
+        }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
+            throw new BizException("Logo cannot be empty!");
+        }
+        if (reqVO.getType() == null) {
+            throw new BizException("Type cannot be empty!");
+        }
+        if (queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
+            throw new BizException("Supplier already exist!");
+        }
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkUpdateParam(SupplierReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("SupplierId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
+            throw new BizException("SupplierNameEng cannot be empty!");
+        }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
+            throw new BizException("Logo cannot be empty!");
+        }
+        if (reqVO.getType() == null) {
+            throw new BizException("Type cannot be empty!");
+        }
+        Supplier nameSupplier = queryBySupplierName(reqVO.getSupplierNameEng());
+        if (nameSupplier!=null && !nameSupplier.getSupplierId().equals(reqVO.getSupplierId())) {
+            throw new BizException("Supplier already exist!");
+        }
+    }
+
+    public synchronized ResultVO<Integer> addNew(SupplierReqVO reqVO) {
+        //参数校验
+        checkNewParam(reqVO);
+        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
+        supplier.setSupplierId(snowflakeIdWorker.nextId());
+        supplier.setCreatedBy(0L);
+        supplier.setUpdatedBy(0L);
+        Date now = new Date();
+        supplier.setCreatedAt(now);
+        supplier.setUpdatedAt(now);
+        Integer result = mapper.insertSelective(supplier);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
+    }
+
+    /**
+     * 修改
+     *
+     * @param reqVO
+     * @return
+     */
+    public ResultVO<Integer> update(SupplierReqVO reqVO) {
+        //参数校验
+        checkUpdateParam(reqVO);
+        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
+        supplier.setUpdatedBy(0L);
+        Date now = new Date();
+        supplier.setUpdatedAt(now);
+        Integer result = mapper.updateByPrimaryKeySelective(supplier);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
+
+    }
 
     /**
      * 列表查询-分页

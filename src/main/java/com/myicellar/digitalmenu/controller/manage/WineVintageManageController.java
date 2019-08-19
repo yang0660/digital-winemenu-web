@@ -3,7 +3,6 @@ package com.myicellar.digitalmenu.controller.manage;
 import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.WineVintageService;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.WineVintageInfoReqVO;
 import com.myicellar.digitalmenu.vo.request.WineVintageListReqVO;
 import com.myicellar.digitalmenu.vo.request.WineVintageReqVO;
@@ -30,8 +29,6 @@ public class WineVintageManageController {
     private WineVintageService wineVintageService;
     @Autowired
     private ProductManageService productManageService;
-    @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
      * 列表查询
@@ -98,7 +95,7 @@ public class WineVintageManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除年份配置")
-    public ResultVO<Integer> add(@RequestBody WineVintageInfoReqVO reqVO) {
+    public ResultVO<Integer> delete(@RequestBody WineVintageInfoReqVO reqVO) {
         Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
         if(product!=null){
             return ResultVO.validError("WineVintage is in use, can not be deleted");

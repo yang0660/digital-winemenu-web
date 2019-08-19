@@ -32,6 +32,58 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
     @Autowired
     private WineVintageMapperExt wineVintageMapperExt;
 
+    /**
+     * 校验新增参数
+     *
+     * @param reqVO
+     */
+    private void checkNewParam(ProductManageReqVO reqVO) {
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
+            throw new BizException("wineId can not be empty!");
+        }
+        if (reqVO.getVintageTag() == null || reqVO.getVintageTag() == 0L) {
+            throw new BizException("vintageTag can not be empty!");
+        }
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("supplierId can not be empty!");
+        }
+        if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
+            throw new BizException("volume and price can not be empty!");
+        }
+        Product product = selectBySupplierWineIdAndVintage(reqVO.getSupplierId(), reqVO.getWineId(), reqVO.getVintageTag());
+        if (product != null) {
+            throw new BizException("supplier contains this wineVintage already!");
+        }
+
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkUpdateParam(ProductManageReqVO reqVO) {
+        if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {
+            throw new BizException("productId can not be empty!");
+        }
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
+            throw new BizException("wineId can not be empty!");
+        }
+        if (reqVO.getVintageTag() == null || reqVO.getVintageTag() == 0L) {
+            throw new BizException("vintageTag can not be empty!");
+        }
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("supplierId can not be empty!");
+        }
+        if (CollectionUtils.isEmpty(reqVO.getVolumePrices())) {
+            throw new BizException("volume and price can not be empty!");
+        }
+        Product product = selectBySupplierWineIdAndVintage(reqVO.getSupplierId(), reqVO.getWineId(), reqVO.getVintageTag());
+        if (product != null && !reqVO.getProductId().equals(product.getProductId())) {
+            throw new BizException("supplier contains this wineVintage already!");
+        }
+    }
+
     public Product selectBySupplierWineIdAndVintage(Long supplierId, Long wineId, Long vintageTag) {
         return mapper.selectBySupplierWineIdAndVintage(supplierId, wineId, vintageTag);
     }
@@ -91,11 +143,9 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
      * @return
      */
     @Transactional
-    public synchronized Integer addNew(ProductManageReqVO reqVO) {
-        Product tmpProduct = mapper.selectBySupplierWineIdAndVintage(reqVO.getSupplierId(),reqVO.getWineId(),reqVO.getVintageTag());
-        if(tmpProduct!=null){
-            throw new BizException("wineVintage is already exists!");
-        }
+    public synchronized ResultVO<Integer> addNew(ProductManageReqVO reqVO) {
+        //参数校验
+        checkNewParam(reqVO);
 
         Product product = ConvertUtils.convert(reqVO, Product.class);
         Long productId = snowflakeIdWorker.nextId();
@@ -129,11 +179,14 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
             }
         }
 
-        return result;
+        return ResultVO.success(result);
     }
 
     @Transactional
-    public Integer update(ProductManageReqVO reqVO) {
+    public ResultVO<Integer> update(ProductManageReqVO reqVO) {
+        //参数校验
+        checkUpdateParam(reqVO);
+
         Integer result = 0;
         Product product = mapper.selectByPrimaryKey(reqVO.getProductId());
         if (product != null) {
@@ -182,7 +235,7 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         }
         result++;
 
-        return result;
+        return ResultVO.success(result);
     }
 
     @Transactional

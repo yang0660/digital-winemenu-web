@@ -4,17 +4,22 @@ import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Winery;
 import com.myicellar.digitalmenu.dao.mapper.WineryMapperExt;
+import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
+import com.myicellar.digitalmenu.vo.request.WineryReqVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.WineryRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +29,119 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
 
     @Autowired
     private ImgService imgService;
+
+    /**
+     * 校验新增参数
+     *
+     * @param reqVO
+     */
+    private void checkNewParam(WineryReqVO reqVO) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getWineryNameEng())) {
+            throw new BizException("wineryNameEng cannot be empty!");
+        }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0) {
+            throw new BizException("winery Logo cannot be empty!");
+        }
+        if (reqVO.getBannerImgId() == null || reqVO.getBannerImgId() == 0) {
+            throw new BizException("winery Banner cannot be empty!");
+        }
+        if (reqVO.getWineryImgIds().isEmpty()) {
+            throw new BizException("winery Image cannot be empty!");
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getAboutUrl())) {
+            throw new BizException("Url cannot be empty!");
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("Note cannot be empty!");
+        }
+
+        //判断酒庄名字是否已经存在
+        Winery winery = queryByName(reqVO.getWineryNameEng());
+        if (winery != null) {
+            throw new BizException("winery already exists");
+        }
+
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkUpdateParam(WineryReqVO reqVO) {
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
+            throw new BizException("wineryId cannot be empty!");
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getWineryNameEng())) {
+            throw new BizException("wineryNameEng cannot be empty!");
+        }
+        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0) {
+            throw new BizException("winery Logo cannot be empty!");
+        }
+        if (reqVO.getBannerImgId() == null || reqVO.getBannerImgId() == 0) {
+            throw new BizException("winery Banner cannot be empty!");
+        }
+        if (reqVO.getWineryImgIds().isEmpty()) {
+            throw new BizException("winery Image cannot be empty!");
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getAboutUrl())) {
+            throw new BizException("Url cannot be empty!");
+        }
+        if (org.apache.commons.lang3.StringUtils.isEmpty(reqVO.getNotePlainEng())) {
+            throw new BizException("Note cannot be empty!");
+        }
+
+        Winery winery = queryByName(reqVO.getWineryNameEng());
+        if (winery != null && !winery.getWineryId().equals(reqVO.getWineryId())) {
+            throw new BizException("winery already exists");
+        }
+    }
+
+    @Transactional
+    public synchronized ResultVO<Integer> addNew(WineryReqVO reqVO) {
+        //参数校验
+        checkNewParam(reqVO);
+
+        Winery winery = ConvertUtils.convert(reqVO, Winery.class);
+        winery.setWineryId(snowflakeIdWorker.nextId());
+        winery.setCreatedBy(0L);
+        winery.setUpdatedBy(0L);
+        Date now = new Date();
+        winery.setCreatedAt(now);
+        winery.setUpdatedAt(now);
+        List<Long> longIds = reqVO.getWineryImgIds();
+        String stringIds = org.apache.commons.lang3.StringUtils.join(longIds, ",");
+        winery.setWineryImgIds(stringIds);
+        Integer result = mapper.insertSelective(winery);
+        if (result == 0) {
+            return ResultVO.validError("save is failed!");
+        }
+        return ResultVO.success(result);
+    }
+
+    /**
+     * 修改
+     *
+     * @param reqVO
+     * @return
+     */
+    @Transactional
+    public ResultVO<Integer> update(WineryReqVO reqVO) {
+        //参数校验
+        checkUpdateParam(reqVO);
+        Winery winery = ConvertUtils.convert(reqVO, Winery.class);
+        winery.setUpdatedBy(0L);
+        Date now = new Date();
+        winery.setUpdatedAt(now);
+        List<Long> longIds = reqVO.getWineryImgIds();
+        String stringIds = org.apache.commons.lang3.StringUtils.join(longIds, ",");
+        winery.setWineryImgIds(stringIds);
+        Integer result= mapper.updateByPrimaryKeySelective(winery);
+        if (result == 0) {
+            return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
+    }
 
     public List<Winery> queryListAll() {
         return mapper.selectListAll();

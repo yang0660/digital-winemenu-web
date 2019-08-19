@@ -1,7 +1,6 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.service.FoodService;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.FoodDetailBGRespVO;
 import com.myicellar.digitalmenu.vo.response.FoodRespVO;
@@ -24,8 +23,6 @@ public class FoodManageController {
 
     @Autowired
     private FoodService foodService;
-    @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
      * 列表查询

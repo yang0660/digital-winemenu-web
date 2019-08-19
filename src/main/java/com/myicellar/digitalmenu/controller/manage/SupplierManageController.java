@@ -15,7 +15,6 @@ import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
 import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
@@ -36,7 +35,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -61,9 +63,6 @@ public class SupplierManageController {
 
     @Autowired
     private FoodTypeService foodTypeService;
-
-    @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
 
     @Value("${supplier.indexPageUrl}")
     private String supplierIndexPageUrl;
@@ -129,22 +128,7 @@ public class SupplierManageController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<Integer> add(@RequestBody SupplierReqVO reqVO) {
-        synchronized (this) {
-            //参数校验
-            checkNewParam(reqVO);
-            Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
-            supplier.setSupplierId(snowflakeIdWorker.nextId());
-            supplier.setCreatedBy(0L);
-            supplier.setUpdatedBy(0L);
-            Date now = new Date();
-            supplier.setCreatedAt(now);
-            supplier.setUpdatedAt(now);
-            Integer result = supplierService.insertSelective(supplier);
-            if (result == 0) {
-                return ResultVO.validError("save is failed!");
-            }
-            return ResultVO.success(result);
-        }
+        return supplierService.addNew(reqVO);
     }
 
     /**
@@ -156,18 +140,7 @@ public class SupplierManageController {
     @PostMapping(value = "/update")
     @ApiOperation("修改")
     public ResultVO<Integer> update(@RequestBody SupplierReqVO reqVO) {
-        //参数校验
-        checkUpdateParam(reqVO);
-        Supplier supplier = ConvertUtils.convert(reqVO, Supplier.class);
-        supplier.setUpdatedBy(0L);
-        Date now = new Date();
-        supplier.setUpdatedAt(now);
-        Integer result = supplierService.updateByPrimaryKeySelective(supplier);
-        if (result == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-        return ResultVO.success(result);
-
+        return supplierService.update(reqVO);
     }
 
     /**
@@ -204,50 +177,6 @@ public class SupplierManageController {
             return ResultVO.validError("update is failed!");
         }
         return ResultVO.success(result);
-    }
-
-    /**
-     * 校验新增参数
-     *
-     * @param reqVO
-     */
-    private void checkNewParam(SupplierReqVO reqVO) {
-        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
-            throw new BizException("SupplierNameEng cannot be empty!");
-        }
-        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
-            throw new BizException("Logo cannot be empty!");
-        }
-        if (reqVO.getType() == null) {
-            throw new BizException("Type cannot be empty!");
-        }
-        if (supplierService.queryBySupplierName(reqVO.getSupplierNameEng()) != null) {
-            throw new BizException("Supplier already exist!");
-        }
-    }
-
-    /**
-     * 校验修改参数
-     *
-     * @param reqVO
-     */
-    private void checkUpdateParam(SupplierReqVO reqVO) {
-        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
-            throw new BizException("SupplierId cannot be empty!");
-        }
-        if (StringUtils.isEmpty(reqVO.getSupplierNameEng())) {
-            throw new BizException("SupplierNameEng cannot be empty!");
-        }
-        if (reqVO.getLogoImgId() == null || reqVO.getLogoImgId() == 0L) {
-            throw new BizException("Logo cannot be empty!");
-        }
-        if (reqVO.getType() == null) {
-            throw new BizException("Type cannot be empty!");
-        }
-        Supplier nameSupplier = supplierService.queryBySupplierName(reqVO.getSupplierNameEng());
-        if (nameSupplier!=null && !nameSupplier.getSupplierId().equals(reqVO.getSupplierId())) {
-            throw new BizException("Supplier already exist!");
-        }
     }
 
     /**

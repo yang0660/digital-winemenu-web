@@ -1,13 +1,10 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.ImgType;
 import com.myicellar.digitalmenu.enums.ImgTypeEnum;
 import com.myicellar.digitalmenu.service.ImgService;
 import com.myicellar.digitalmenu.service.ImgTypeService;
-import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO;
@@ -26,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,8 +35,6 @@ public class ImgTypeController {
     private ImgTypeService imgTypeService;
     @Autowired
     private ImgService imgService;
-    @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
      * 图库分类下拉列表
@@ -88,25 +82,7 @@ public class ImgTypeController {
     @PostMapping(value = "/add")
     @ApiOperation("新增")
     public ResultVO<ImgTypeRespVO> add(@RequestBody ImgTypeReqVO reqVO) {
-        synchronized (this) {
-            //参数校验
-            checkNewParam(reqVO);
-            ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
-            imgType.setImgTypeId(snowflakeIdWorker.nextId());
-            imgType.setCreatedUser(0L);
-            imgType.setUpdatedUser(0L);
-            Date now = new Date();
-            imgType.setCreatedAt(now);
-            imgType.setUpdatedAt(now);
-            int i = imgTypeService.insertSelective(imgType);
-            if (i == 0) {
-                return ResultVO.validError("save is failed!");
-            }
-
-            ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
-            ResultVO resultVO = ResultVO.success("save is success!");
-            return resultVO.setData(respVO);
-        }
+        return imgTypeService.addNew(reqVO);
 
     }
 
@@ -119,20 +95,7 @@ public class ImgTypeController {
     @PostMapping(value = "/update")
     @ApiOperation("修改")
     public ResultVO<ImgTypeRespVO> update(@RequestBody ImgTypeReqVO reqVO) {
-        //参数校验
-        checkUpdateParam(reqVO);
-        ImgType imgType = ConvertUtils.convert(reqVO, ImgType.class);
-        imgType.setUpdatedUser(0L);
-        Date now = new Date();
-        imgType.setUpdatedAt(now);
-        int i = imgTypeService.updateByPrimaryKeySelective(imgType);
-        if (i == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return imgTypeService.update(reqVO);
     }
 
     /**
@@ -165,38 +128,4 @@ public class ImgTypeController {
 
         return ResultVO.success("delete is success!");
     }
-
-    /**
-     * 校验新增参数
-     *
-     * @param reqVO
-     */
-    public void checkNewParam(ImgTypeReqVO reqVO) {
-        if (StringUtils.isEmpty(reqVO.getImgTypeNameEng())) {
-            throw new BizException("imgTypeNameEng cannot be empty!");
-        }
-        ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
-        if (imgType != null) {
-            throw new BizException("imgTypeNameEng is already exists!");
-        }
-    }
-
-    /**
-     * 校验修改参数
-     *
-     * @param reqVO
-     */
-    public void checkUpdateParam(ImgTypeReqVO reqVO) {
-        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
-            throw new BizException("imgTypeId cannot be empty!");
-        }
-        if (StringUtils.isEmpty(reqVO.getImgTypeNameEng())) {
-            throw new BizException("imgTypeNameEng cannot be empty!");
-        }
-        ImgType imgType = imgTypeService.queryByName(reqVO.getImgTypeNameEng());
-        if (imgType != null && !imgType.getImgTypeId().equals(reqVO.getImgTypeId())) {
-            throw new BizException("imgTypeNameEng is already exists!");
-        }
-    }
-
 }
