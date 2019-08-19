@@ -185,7 +185,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
 
 
     @Transactional
-    public synchronized Integer addNew(WineVintageReqVO reqVO) {
+    public synchronized ResultVO<Integer> addNew(WineVintageReqVO reqVO) {
         checkNewParam(reqVO);
 
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
@@ -263,11 +263,11 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             }
         }
 
-        return result;
+        return ResultVO.success(result);
     }
 
     @Transactional
-    public Integer update(WineVintageReqVO reqVO) {
+    public ResultVO<Integer> update(WineVintageReqVO reqVO) {
         checkUpdateParam(reqVO);
 
         WineVintage wineVintage = ConvertUtils.convert(reqVO, WineVintage.class);
@@ -351,11 +351,11 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
             }
         }
 
-        return result;
+        return ResultVO.success(result);
     }
 
     @Transactional
-    public Integer delete(WineVintageInfoReqVO reqVO) {
+    public ResultVO<Integer> delete(WineVintageInfoReqVO reqVO) {
         Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
         if(product!=null){
             throw new BizException("WineVintage is in use, can not be deleted");
@@ -369,7 +369,7 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
                 reqVO.getVintageTag());
         Integer result = mapper.deleteByPrimaryKey(reqVO.getWineId(), reqVO.getVintageTag());
 
-        return result;
+        return ResultVO.success(result);
     }
 
     public void checkNewParam(WineVintageReqVO reqVO) {

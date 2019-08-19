@@ -79,9 +79,7 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
             return ResultVO.validError("save is failed!");
         }
 
-        ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(ConvertUtils.convert(img, ImgRespVO.class), "save is success!");
     }
 
     /**

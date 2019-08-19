@@ -77,9 +77,7 @@ public class ImgTypeService extends BaseService<Long, ImgType, ImgTypeMapperExt>
             return ResultVO.validError("save is failed!");
         }
 
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("save is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(ConvertUtils.convert(imgType, ImgTypeRespVO.class),"save is success!");
     }
 
     /**
@@ -101,9 +99,7 @@ public class ImgTypeService extends BaseService<Long, ImgType, ImgTypeMapperExt>
             return ResultVO.validError("update is failed!");
         }
 
-        ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
-        ResultVO resultVO = ResultVO.success("update is success!");
-        return resultVO.setData(respVO);
+        return ResultVO.success(ConvertUtils.convert(imgType, ImgTypeRespVO.class),"update is success!");
     }
 
     /**

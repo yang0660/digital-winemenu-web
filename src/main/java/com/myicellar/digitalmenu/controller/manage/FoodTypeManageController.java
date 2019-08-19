@@ -78,7 +78,7 @@ public class FoodTypeManageController {
      */
     @PostMapping(value = "/add")
     @ApiOperation("新增")
-    public ResultVO<Integer> add(@RequestBody FoodTypeReqVO reqVO) {
+    public ResultVO add(@RequestBody FoodTypeReqVO reqVO) {
         return foodTypeService.addNew(reqVO);
     }
 
@@ -90,7 +90,7 @@ public class FoodTypeManageController {
      */
     @PostMapping(value = "/update")
     @ApiOperation("修改")
-    public ResultVO<Integer> update(@RequestBody FoodTypeReqVO reqVO) {
+    public ResultVO update(@RequestBody FoodTypeReqVO reqVO) {
         return foodTypeService.update(reqVO);
     }
 
@@ -102,7 +102,7 @@ public class FoodTypeManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO<Integer> delete(@RequestBody FoodTypeDeleteReqVO reqVO) {
+    public ResultVO delete(@RequestBody FoodTypeDeleteReqVO reqVO) {
         return foodTypeService.delete(reqVO);
     }
 }

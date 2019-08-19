@@ -64,9 +64,7 @@ public class WineVintageManageController {
     @PostMapping(value = "/add")
     @ApiOperation("添加年份配置")
     public ResultVO<Integer> add(@RequestBody WineVintageReqVO reqVO) {
-        Integer result = wineVintageService.addNew(reqVO);
-
-        return ResultVO.success(result);
+        return wineVintageService.addNew(reqVO);
     }
 
     /**
@@ -78,9 +76,7 @@ public class WineVintageManageController {
     @PostMapping(value = "/update")
     @ApiOperation("修改年份配置")
     public ResultVO<Integer> update(@RequestBody WineVintageReqVO reqVO) {
-        Integer result = wineVintageService.update(reqVO);
-
-        return ResultVO.success(result);
+        return wineVintageService.update(reqVO);
     }
 
     /**
@@ -92,9 +88,7 @@ public class WineVintageManageController {
     @PostMapping(value = "/delete")
     @ApiOperation("删除年份配置")
     public ResultVO<Integer> delete(@RequestBody WineVintageInfoReqVO reqVO) {
-        Integer result = wineVintageService.delete(reqVO);
-
-        return ResultVO.success(result);
+        return wineVintageService.delete(reqVO);
     }
 
 }

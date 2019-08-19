@@ -1,6 +1,12 @@
 package com.myicellar.digitalmenu.service;
 
 import com.aliyuncs.utils.StringUtils;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
 import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.entity.Product;
@@ -8,23 +14,23 @@ import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.vo.request.SupplierDeleteReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierStatusReqVO;
+import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
+import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
+import com.myicellar.digitalmenu.vo.response.QrcodeRespVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import com.myicellar.digitalmenu.vo.response.SupplierRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -32,12 +38,22 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
 
     @Autowired
     private ImgService imgService;
-
     @Autowired
     private ProductService productService;
-
     @Autowired
     private FoodTypeService foodTypeService;
+    @Autowired
+    private FileUploadHandler fileUploadHandler;
+
+    // 字符编码
+    private static final String CHARSET = "utf-8";
+    // 二维码图片格式
+    private static final String FORMAT = "JPG";
+    // 二维码尺寸
+    private static final int QRCODE_SIZE = 300;
+    // 二维码url
+    @Value("${supplier.indexPageUrl}")
+    private String supplierIndexPageUrl;
 
     /**
      * 校验新增参数
@@ -246,5 +262,88 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         }
 
         return respVO;
+    }
+
+    /**
+     * 查询供应商主页二维码
+     *
+     * @param reqVO
+     * @return
+     */
+    @Transactional
+    public ResultVO<QrcodeRespVO> queryQrCode(SupplierIdReqVO reqVO) {
+        QrcodeRespVO respVO = new QrcodeRespVO();
+        String qrcodeImgUrl = "";
+        Supplier supplier = mapper.selectByPrimaryKey(reqVO.getSupplierId());
+        if (supplier == null) {
+            return ResultVO.validError("Supplier does not exist!");
+        }
+
+        qrcodeImgUrl = supplier.getQrcodeImgUrl();
+        if (StringUtils.isEmpty(qrcodeImgUrl)) {
+            //生成供应商主页二维码
+            FileUploadProperties.FileUploadResult qrCodeResult = generateQrCode(reqVO.getSupplierId());
+            if (qrCodeResult != null && StringUtils.isNotEmpty(qrCodeResult.getImageUrl())) {
+                qrcodeImgUrl = qrCodeResult.getImageUrl();
+                Supplier updatesSupplier = new Supplier();
+                updatesSupplier.setSupplierId(reqVO.getSupplierId());
+                updatesSupplier.setQrcodeImgUrl(qrcodeImgUrl);
+                //更新供应商主页二维码字段
+                mapper.updateByPrimaryKeySelective(updatesSupplier);
+            }
+        }
+
+        respVO.setImageUrl(qrcodeImgUrl);
+
+        return ResultVO.success(respVO);
+    }
+
+    /**
+     * 生成供应商主页二维码
+     *
+     * @param supplierId
+     * @return
+     */
+    public FileUploadProperties.FileUploadResult generateQrCode(Long supplierId) {
+        FileUploadProperties.FileUploadResult fileUploadResult = null;
+        ByteArrayOutputStream baos = null;
+
+        try {
+            Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
+            hints.put(EncodeHintType.MARGIN, 1);
+            StringBuilder url = new StringBuilder();
+            url.append(supplierIndexPageUrl).append(supplierId);
+
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(url.toString(), BarcodeFormat.QR_CODE, QRCODE_SIZE, QRCODE_SIZE,
+                    hints);
+
+            //设置二维码条纹颜色
+            BufferedImage image = new BufferedImage(bitMatrix.getWidth(), bitMatrix.getHeight(), BufferedImage.TYPE_INT_RGB);
+            for (int x = 0; x < bitMatrix.getWidth(); x++) {
+                for (int y = 0; y < bitMatrix.getHeight(); y++) {
+                    image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                }
+            }
+
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, FORMAT, baos);
+            baos.flush();
+            byte[] imageBytes = baos.toByteArray();
+            fileUploadResult = fileUploadHandler.upload(imageBytes, false, "jpg");
+        } catch (Exception e) {
+            log.error("生成供应商主页二维码失败!", e);
+        } finally {
+            if (baos != null) {
+                try {
+                    baos.close();
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
+        return fileUploadResult;
     }
 }

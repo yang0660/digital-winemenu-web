@@ -82,7 +82,7 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
     }
 
     @Transactional
-    public synchronized ResultVO<Integer> addNew( FoodTypeReqVO reqVO) {
+    public synchronized ResultVO addNew( FoodTypeReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
@@ -96,11 +96,11 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
         if (result == 0) {
             return ResultVO.validError("save is failed!");
         }
-        return ResultVO.success(result);
+        return ResultVO.success("save is success!");
     }
 
     @Transactional
-    public ResultVO<Integer> update(FoodTypeReqVO reqVO) {
+    public ResultVO update(FoodTypeReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         FoodType foodType = ConvertUtils.convert(reqVO, FoodType.class);
@@ -111,7 +111,7 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
         if (result == 0) {
             return ResultVO.validError("update is failed!");
         }
-        return ResultVO.success(result);
+        return ResultVO.success("update is success!");
     }
 
     /**
@@ -121,14 +121,14 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
      * @return
      */
     @Transactional
-    public ResultVO<Integer> delete(FoodTypeDeleteReqVO reqVO) {
+    public ResultVO delete(FoodTypeDeleteReqVO reqVO) {
         //参数校验
         checkDeleteParam(reqVO);
         Integer result= mapper.deleteByPrimaryKey(reqVO.getFoodTypeId());
         if (result == 0) {
             return ResultVO.validError("delete is failed!");
         }
-        return ResultVO.success(result);
+        return ResultVO.success("delete is success!");
     }
 
     /**
