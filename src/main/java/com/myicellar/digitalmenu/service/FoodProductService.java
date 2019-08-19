@@ -2,7 +2,9 @@ package com.myicellar.digitalmenu.service;
 
 import com.myicellar.digitalmenu.dao.entity.FoodProduct;
 import com.myicellar.digitalmenu.dao.mapper.FoodProductMapperExt;
+import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.vo.request.FoodProductReqVO;
+import com.myicellar.digitalmenu.vo.response.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +18,29 @@ import java.util.List;
 public class FoodProductService extends BaseService<Long, FoodProduct, FoodProductMapperExt> {
 
     /**
+     * 校验参数
+     *
+     * @param reqVO
+     */
+    private void checkParam(FoodProductReqVO reqVO) {
+        if (reqVO.getFoodId() == null || reqVO.getFoodId() == 0L) {
+            throw new BizException("foodId cannot be empty!");
+        }
+        if (CollectionUtils.isEmpty(reqVO.getProductIds())) {
+            throw new BizException("productIds cannot be empty!");
+        }
+    }
+
+    /**
      * 新增美食酒品关联关系
      *
      * @return
      */
     @Transactional
-    public synchronized Integer addNew(FoodProductReqVO reqVO) {
+    public synchronized ResultVO<Integer> addNew(FoodProductReqVO reqVO) {
+        //参数校验
+        checkParam(reqVO);
+
         Integer result = 0;
         List<Long> oldProductIds = mapper.selectListByFoodId(reqVO.getFoodId());
         List<Long> newProductIds = reqVO.getProductIds();
@@ -42,7 +61,7 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
             }
         }
 
-        return result;
+        return ResultVO.success(result);
     }
 
     /**
@@ -51,7 +70,10 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
      * @return
      */
     @Transactional
-    public Integer delete(FoodProductReqVO reqVO) {
+    public ResultVO<Integer> delete(FoodProductReqVO reqVO) {
+        //参数校验
+        checkParam(reqVO);
+
         Integer result = 0;
         List<Long> newProductIds = reqVO.getProductIds();
         if (!CollectionUtils.isEmpty(newProductIds)) {
@@ -61,6 +83,6 @@ public class FoodProductService extends BaseService<Long, FoodProduct, FoodProdu
             }
         }
 
-        return result;
+        return ResultVO.success(result);
     }
 }

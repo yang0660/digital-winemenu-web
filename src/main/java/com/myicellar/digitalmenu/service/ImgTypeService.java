@@ -3,14 +3,18 @@ package com.myicellar.digitalmenu.service;
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.ImgType;
 import com.myicellar.digitalmenu.dao.mapper.ImgTypeMapperExt;
+import com.myicellar.digitalmenu.enums.ImgTypeEnum;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
+import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
+import com.myicellar.digitalmenu.vo.request.ImgTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeReqVO;
 import com.myicellar.digitalmenu.vo.response.ImgTypeRespVO;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
 import com.myicellar.digitalmenu.vo.response.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,6 +23,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class ImgTypeService extends BaseService<Long, ImgType, ImgTypeMapperExt> {
+
+    @Autowired
+    private ImgService imgService;
 
     /**
      * 校验新增参数
@@ -94,6 +101,35 @@ public class ImgTypeService extends BaseService<Long, ImgType, ImgTypeMapperExt>
         ImgTypeRespVO respVO = ConvertUtils.convert(imgType, ImgTypeRespVO.class);
         ResultVO resultVO = ResultVO.success("update is success!");
         return resultVO.setData(respVO);
+    }
+
+    /**
+     * 删除
+     *
+     * @param reqVO
+     * @return
+     */
+    public ResultVO delete(ImgTypeDeleteReqVO reqVO) {
+        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
+            return ResultVO.validError("parameter is invalid！");
+        }
+        ImgTypeEnum imgTypeEnum = ImgTypeEnum.enumOf(reqVO.getImgTypeId());
+        if(imgTypeEnum!=null){
+            return ResultVO.validError("Built-in type, cannot be deleted！");
+        }
+        ImgPageReqVO imgPageReqVO = new ImgPageReqVO();
+        imgPageReqVO.setImgTypeId(reqVO.getImgTypeId());
+        Long imgCount = imgService.queryCount(imgPageReqVO);
+        if (imgCount > 0) {
+            return ResultVO.validError("It already contains images,Can not be deleted！");
+        }
+
+        int i = mapper.deleteByPrimaryKey(reqVO.getImgTypeId());
+        if (i == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+
+        return ResultVO.success("delete is success!");
     }
 
     /**

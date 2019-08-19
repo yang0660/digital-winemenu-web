@@ -6,6 +6,7 @@ import com.myicellar.digitalmenu.dao.entity.Winery;
 import com.myicellar.digitalmenu.dao.mapper.WineryMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
+import com.myicellar.digitalmenu.vo.request.WineryDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryPageReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryReqVO;
@@ -29,6 +30,8 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
 
     @Autowired
     private ImgService imgService;
+    @Autowired
+    private WineService wineService;
 
     /**
      * 校验新增参数
@@ -97,8 +100,23 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
         }
     }
 
+    /**
+     * 校验删除参数
+     *
+     * @param reqVO
+     */
+    private void checkDeleteParam(WineryDeleteReqVO reqVO) {
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
+            throw new BizException("parameter is invalid！");
+        }
+        //如果酒庄里有关联酒品, 无法删除酒庄
+        if (wineService.queryByWineryId(reqVO.getWineryId()) != null) {
+            throw new BizException("Winery is in use, can not be deleted");
+        }
+    }
+
     @Transactional
-    public synchronized ResultVO<Integer> addNew(WineryReqVO reqVO) {
+    public synchronized ResultVO addNew(WineryReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
 
@@ -116,7 +134,7 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
         if (result == 0) {
             return ResultVO.validError("save is failed!");
         }
-        return ResultVO.success(result);
+        return ResultVO.success("save is success!");
     }
 
     /**
@@ -126,7 +144,7 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
      * @return
      */
     @Transactional
-    public ResultVO<Integer> update(WineryReqVO reqVO) {
+    public ResultVO update(WineryReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
         Winery winery = ConvertUtils.convert(reqVO, Winery.class);
@@ -140,7 +158,23 @@ public class WineryService extends BaseService<Long, Winery, WineryMapperExt> {
         if (result == 0) {
             return ResultVO.validError("update is failed!");
         }
-        return ResultVO.success(result);
+        return ResultVO.success("update is success!");
+    }
+
+    /**
+     * 删除
+     *
+     * @param reqVO
+     * @return
+     */
+    @Transactional
+    public ResultVO delete(WineryDeleteReqVO reqVO) {
+        checkDeleteParam(reqVO);
+        Integer result= mapper.deleteByPrimaryKey(reqVO.getWineryId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success("delete is success!");
     }
 
     public List<Winery> queryListAll() {

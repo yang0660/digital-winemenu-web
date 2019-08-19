@@ -1,11 +1,14 @@
 package com.myicellar.digitalmenu.service;
 
 import com.aliyuncs.utils.StringUtils;
+import com.myicellar.digitalmenu.dao.entity.FoodType;
 import com.myicellar.digitalmenu.dao.entity.Img;
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
 import com.myicellar.digitalmenu.dao.mapper.SupplierMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
+import com.myicellar.digitalmenu.vo.request.SupplierDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierPageReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierReqVO;
 import com.myicellar.digitalmenu.vo.request.SupplierStatusReqVO;
@@ -29,6 +32,12 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
 
     @Autowired
     private ImgService imgService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private FoodTypeService foodTypeService;
 
     /**
      * 校验新增参数
@@ -74,6 +83,23 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         }
     }
 
+    /**
+     * 校验删除参数
+     *
+     * @param reqVO
+     */
+    private void checkDeleteParam(SupplierDeleteReqVO reqVO) {
+        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
+            throw new BizException("supplierId cannot be empty!");
+        }
+        List<Product> products = productService.queryListBySupplierId(reqVO.getSupplierId());
+        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
+        if (!products.isEmpty() || !foodTypes.isEmpty()) {
+            throw new BizException("Supplier is in use, can not be deleted!");
+        }
+    }
+
+    @Transactional
     public synchronized ResultVO<Integer> addNew(SupplierReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
@@ -97,6 +123,7 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
      * @param reqVO
      * @return
      */
+    @Transactional
     public ResultVO<Integer> update(SupplierReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
@@ -110,6 +137,45 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         }
         return ResultVO.success(result);
 
+    }
+
+    /**
+     * 删除
+     *
+     * @param reqVO
+     * @return
+     */
+    @Transactional
+    public ResultVO delete(SupplierDeleteReqVO reqVO) {
+        checkDeleteParam(reqVO);
+        Integer result = mapper.deleteByPrimaryKey(reqVO.getSupplierId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+        return ResultVO.success("delete is success!");
+    }
+
+    /**
+     * 状态切换
+     *
+     * @param reqVO
+     * @return
+     */
+    @Transactional
+    public ResultVO updateStatus(SupplierStatusReqVO reqVO) {
+        if (reqVO.getSupplierId()==null) {
+            return ResultVO.validError("SupplierId cannot be empty!");
+        }
+        Supplier supplier = new Supplier();
+        supplier.setSupplierId(reqVO.getSupplierId());
+        supplier.setIsEnabled(reqVO.getIsEnabled());
+        supplier.setUpdatedBy(1L);
+        supplier.setUpdatedAt(new Date());
+        Integer i = mapper.updateByPrimaryKeySelective(supplier);
+        if (i == 0) {
+            return ResultVO.validError("update is success!");
+        }
+        return ResultVO.success("update is failed!");
     }
 
     /**
@@ -180,15 +246,5 @@ public class SupplierService extends BaseService<Long, Supplier, SupplierMapperE
         }
 
         return respVO;
-    }
-
-    @Transactional
-    public Integer updateStatus(SupplierStatusReqVO reqVO) {
-        Supplier supplier = new Supplier();
-        supplier.setSupplierId(reqVO.getSupplierId());
-        supplier.setIsEnabled(reqVO.getIsEnabled());
-        supplier.setUpdatedBy(1L);
-        supplier.setUpdatedAt(new Date());
-        return mapper.updateByPrimaryKeySelective(supplier);
     }
 }

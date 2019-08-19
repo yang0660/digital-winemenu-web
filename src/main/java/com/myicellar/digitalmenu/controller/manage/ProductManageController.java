@@ -104,12 +104,7 @@ public class ProductManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO<Integer> update(@RequestBody ProductReqVO reqVO) {
-        if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {
-            return ResultVO.validError("parameter can not be empty!");
-        }
-        Integer result = productManageService.deleteByProductId(reqVO.getProductId());
-
-        return ResultVO.success(result);
+    public ResultVO delete(@RequestBody ProductReqVO reqVO) {
+        return productManageService.delete(reqVO);
     }
 }

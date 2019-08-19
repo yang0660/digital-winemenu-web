@@ -7,13 +7,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.myicellar.digitalmenu.configuration.properties.FileUploadProperties;
-import com.myicellar.digitalmenu.dao.entity.FoodType;
-import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Supplier;
-import com.myicellar.digitalmenu.service.FoodTypeService;
-import com.myicellar.digitalmenu.service.ProductService;
 import com.myicellar.digitalmenu.service.SupplierService;
-import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
 import com.myicellar.digitalmenu.vo.request.*;
@@ -57,12 +52,6 @@ public class SupplierManageController {
 
     @Autowired
     private SupplierService supplierService;
-
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private FoodTypeService foodTypeService;
 
     @Value("${supplier.indexPageUrl}")
     private String supplierIndexPageUrl;
@@ -151,13 +140,8 @@ public class SupplierManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO<Integer> delete(@RequestBody SupplierDeleteReqVO reqVO) {
-        checkDeleteParam(reqVO);
-        Integer result = supplierService.deleteByPrimaryKey(reqVO.getSupplierId());
-        if (result == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-        return ResultVO.success(result);
+    public ResultVO delete(@RequestBody SupplierDeleteReqVO reqVO) {
+        return supplierService.delete(reqVO);
     }
 
     /**
@@ -168,31 +152,8 @@ public class SupplierManageController {
      */
     @PostMapping(value = "/updateStatus")
     @ApiOperation("状态切换")
-    public ResultVO<Integer> updateStatus(@RequestBody SupplierStatusReqVO reqVO) {
-        if (reqVO.getSupplierId()==null) {
-            return ResultVO.validError("SupplierId cannot be empty!");
-        }
-        Integer result = supplierService.updateStatus(reqVO);
-        if (result == 0) {
-            return ResultVO.validError("update is failed!");
-        }
-        return ResultVO.success(result);
-    }
-
-    /**
-     * 校验删除参数
-     *
-     * @param reqVO
-     */
-    private void checkDeleteParam(SupplierDeleteReqVO reqVO) {
-        if (reqVO.getSupplierId() == null || reqVO.getSupplierId() == 0L) {
-            throw new BizException("supplierId cannot be empty!");
-        }
-        List<Product> products = productService.queryListBySupplierId(reqVO.getSupplierId());
-        List<FoodType> foodTypes = foodTypeService.queryListBysupplierId(reqVO.getSupplierId());
-        if (!products.isEmpty() || !foodTypes.isEmpty()) {
-            throw new BizException("Supplier is in use, can not be deleted!");
-        }
+    public ResultVO updateStatus(@RequestBody SupplierStatusReqVO reqVO) {
+        return supplierService.updateStatus(reqVO);
     }
 
 

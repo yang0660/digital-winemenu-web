@@ -2,11 +2,12 @@ package com.myicellar.digitalmenu.service;
 
 import com.aliyuncs.utils.StringUtils;
 import com.myicellar.digitalmenu.dao.entity.Img;
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.Wine;
 import com.myicellar.digitalmenu.dao.mapper.WineMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
+import com.myicellar.digitalmenu.vo.request.WineDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.WinePageReqVO;
 import com.myicellar.digitalmenu.vo.request.WineReqVO;
 import com.myicellar.digitalmenu.vo.request.WineUpdateReqVO;
@@ -40,9 +41,6 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     @Autowired
     private AttrService attrService;
     @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
-
-    @Autowired
     private WineVintageService wineVintageService;
     @Autowired
     private WineVintageAttrService wineVintageAttrService;
@@ -51,7 +49,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     @Autowired
     private ProductService productService;
     @Autowired
-    private ProductManageService packageService;
+    private ProductManageService productManageService;
 
     /**
      * 校验新增参数
@@ -73,6 +71,33 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         }
         Wine wine = queryByName(reqVO.getWineNameEng());
         if (wine != null) {
+            throw new BizException("wineNameEng is already exists!");
+        }
+    }
+
+    /**
+     * 校验修改参数
+     *
+     * @param reqVO
+     */
+    private void checkUpdateParam(WineUpdateReqVO reqVO) {
+        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
+            throw new BizException("wineId cannot be empty!");
+        }
+        if (StringUtils.isEmpty(reqVO.getWineNameEng())) {
+            throw new BizException("wineNameEng can not be empty!");
+        }
+        if (reqVO.getWineTypeId() == null || reqVO.getWineTypeId() == 0L) {
+            throw new BizException("wineTypeId can not be empty!");
+        }
+        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
+            throw new BizException("wineryId can not be empty!");
+        }
+        if (reqVO.getWineOriginId() == null || reqVO.getWineOriginId() == 0L) {
+            throw new BizException("originId can not be empty!");
+        }
+        Wine wine = queryByName(reqVO.getWineNameEng());
+        if (wine != null && !wine.getWineId().equals(reqVO.getWineId())) {
             throw new BizException("wineNameEng is already exists!");
         }
     }
@@ -113,32 +138,27 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
     }
 
     /**
-     * 校验修改参数
+     * 删除
      *
      * @param reqVO
+     * @return
      */
-    private void checkUpdateParam(WineUpdateReqVO reqVO) {
+    public ResultVO delete(WineDeleteReqVO reqVO) {
         if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
-            throw new BizException("wineId cannot be empty!");
+            return ResultVO.validError("parameter is invalid！");
         }
-        if (StringUtils.isEmpty(reqVO.getWineNameEng())) {
-            throw new BizException("wineNameEng can not be empty!");
+        Product product = productManageService.queryByWineId(reqVO.getWineId());
+        if (product != null) {
+            return ResultVO.validError("Wine is in use, can not be deleted");
         }
-        if (reqVO.getWineTypeId() == null || reqVO.getWineTypeId() == 0L) {
-            throw new BizException("wineTypeId can not be empty!");
-        }
-        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
-            throw new BizException("wineryId can not be empty!");
-        }
-        if (reqVO.getWineOriginId() == null || reqVO.getWineOriginId() == 0L) {
-            throw new BizException("originId can not be empty!");
-        }
-        Wine wine = queryByName(reqVO.getWineNameEng());
-        if (wine != null && !wine.getWineId().equals(reqVO.getWineId())) {
-            throw new BizException("wineNameEng is already exists!");
-        }
-    }
 
+        int i = mapper.deleteByPrimaryKey(reqVO.getWineId());
+        if (i == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+
+        return ResultVO.success("delete is success!");
+    }
 
     /**
      * 列表查询-分页

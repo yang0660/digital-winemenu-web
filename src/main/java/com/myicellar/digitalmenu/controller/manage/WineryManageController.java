@@ -1,9 +1,7 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.dao.entity.Winery;
-import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.service.WineryService;
-import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.WineryDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.WineryDetailReqVO;
@@ -33,8 +31,6 @@ public class WineryManageController {
 
     @Autowired
     private WineryService wineryService;
-    @Autowired
-    private WineService wineService;
 
     /**
      * 酒庄下拉列表
@@ -114,29 +110,8 @@ public class WineryManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO<Integer> delete(@RequestBody WineryDeleteReqVO reqVO) {
-        checkDeleteParam(reqVO);
-        Integer result= wineryService.deleteByPrimaryKey(reqVO.getWineryId());
-        if (result == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-        return ResultVO.success(result);
+    public ResultVO delete(@RequestBody WineryDeleteReqVO reqVO) {
+        return wineryService.delete(reqVO);
     }
-
-    /**
-     * 校验删除参数
-     *
-     * @param reqVO
-     */
-    private void checkDeleteParam(WineryDeleteReqVO reqVO) {
-        if (reqVO.getWineryId() == null || reqVO.getWineryId() == 0L) {
-            throw new BizException("parameter is invalid！");
-        }
-        //如果酒庄里有关联酒品, 无法删除酒庄
-        if (wineService.queryByWineryId(reqVO.getWineryId()) != null) {
-            throw new BizException("Winery is in use, can not be deleted");
-        }
-    }
-
 
 }

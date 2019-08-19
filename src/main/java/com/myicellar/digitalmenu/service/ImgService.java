@@ -7,6 +7,7 @@ import com.myicellar.digitalmenu.dao.mapper.ImgMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.utils.file.FileUploadHandler;
+import com.myicellar.digitalmenu.vo.request.ImgBatchDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgReqVO;
 import com.myicellar.digitalmenu.vo.response.ImgRespVO;
@@ -79,6 +80,24 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
         ImgRespVO respVO = ConvertUtils.convert(img, ImgRespVO.class);
         ResultVO resultVO = ResultVO.success("save is success!");
         return resultVO.setData(respVO);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param reqVO
+     * @return
+     */
+    public ResultVO batchDelete(ImgBatchDeleteReqVO reqVO) {
+        if (CollectionUtils.isEmpty(reqVO.getImgIds())) {
+            return ResultVO.validError("parameter is invalid！");
+        }
+        int i = mapper.deleteByIds(reqVO.getImgIds());
+        if (i == 0) {
+            return ResultVO.validError("delete is failed!");
+        }
+
+        return ResultVO.success("delete is success!");
     }
 
     /**

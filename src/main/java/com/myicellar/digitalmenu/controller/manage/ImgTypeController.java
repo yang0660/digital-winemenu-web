@@ -1,11 +1,8 @@
 package com.myicellar.digitalmenu.controller.manage;
 
 import com.myicellar.digitalmenu.dao.entity.ImgType;
-import com.myicellar.digitalmenu.enums.ImgTypeEnum;
-import com.myicellar.digitalmenu.service.ImgService;
 import com.myicellar.digitalmenu.service.ImgTypeService;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.vo.request.ImgPageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeDeleteReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypePageReqVO;
 import com.myicellar.digitalmenu.vo.request.ImgTypeReqVO;
@@ -33,8 +30,6 @@ public class ImgTypeController {
 
     @Autowired
     private ImgTypeService imgTypeService;
-    @Autowired
-    private ImgService imgService;
 
     /**
      * 图库分类下拉列表
@@ -106,26 +101,7 @@ public class ImgTypeController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody ImgTypeDeleteReqVO reqVO) {
-        if (reqVO.getImgTypeId() == null || reqVO.getImgTypeId() == 0L) {
-            return ResultVO.validError("parameter is invalid！");
-        }
-        ImgTypeEnum imgTypeEnum = ImgTypeEnum.enumOf(reqVO.getImgTypeId());
-        if(imgTypeEnum!=null){
-            return ResultVO.validError("Built-in type, cannot be deleted！");
-        }
-        ImgPageReqVO imgPageReqVO = new ImgPageReqVO();
-        imgPageReqVO.setImgTypeId(reqVO.getImgTypeId());
-        Long imgCount = imgService.queryCount(imgPageReqVO);
-        if (imgCount > 0) {
-            return ResultVO.validError("It already contains images,Can not be deleted！");
-        }
-
-        int i = imgTypeService.deleteByPrimaryKey(reqVO.getImgTypeId());
-        if (i == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+    public ResultVO delete(@RequestBody ImgTypeDeleteReqVO reqVO) {
+        return imgTypeService.delete(reqVO);
     }
 }

@@ -1,5 +1,6 @@
 package com.myicellar.digitalmenu.service;
 
+import com.myicellar.digitalmenu.dao.entity.Product;
 import com.myicellar.digitalmenu.dao.entity.WineVintage;
 import com.myicellar.digitalmenu.dao.entity.WineVintageAttr;
 import com.myicellar.digitalmenu.dao.entity.WineVintageScore;
@@ -7,7 +8,6 @@ import com.myicellar.digitalmenu.dao.mapper.WineVintageMapperExt;
 import com.myicellar.digitalmenu.enums.ScoreAwardTypeEnum;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.utils.SnowflakeIdWorker;
 import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +30,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
     private WineVintageAttrService wineVintageAttrService;
     @Autowired
     private WineVintageScoreService wineVintageScoreService;
-
     @Autowired
-    private SnowflakeIdWorker snowflakeIdWorker;
+    private ProductManageService productManageService;
 
     /**
      * 酒品年份列表查询-分页
@@ -357,6 +356,11 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
 
     @Transactional
     public Integer delete(WineVintageInfoReqVO reqVO) {
+        Product product = productManageService.selectByWineIdAndVintage(reqVO.getWineId(),reqVO.getVintageTag());
+        if(product!=null){
+            throw new BizException("WineVintage is in use, can not be deleted");
+        }
+
         //删除酒品属性
         Integer deleteNum1 = wineVintageAttrService.deleteByWineIdAndVintage(reqVO.getWineId(),
                 reqVO.getVintageTag());

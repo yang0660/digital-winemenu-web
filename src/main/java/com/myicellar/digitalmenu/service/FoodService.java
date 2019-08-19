@@ -6,10 +6,7 @@ import com.myicellar.digitalmenu.dao.entity.Img;
 import com.myicellar.digitalmenu.dao.mapper.FoodMapperExt;
 import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
-import com.myicellar.digitalmenu.vo.request.FoodPageReqVO;
-import com.myicellar.digitalmenu.vo.request.FoodReqVO;
-import com.myicellar.digitalmenu.vo.request.FoodUpdateReqVO;
-import com.myicellar.digitalmenu.vo.request.SupplierIdReqVO;
+import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +117,14 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
         Integer result = mapper.updateByPrimaryKeySelective(food);
         if (result == 0) {
             return ResultVO.validError("update is failed!");
+        }
+        return ResultVO.success(result);
+    }
+
+    public ResultVO<Integer> delete(FoodDeleteReqVO reqVO) {
+        Integer result = mapper.deleteByPrimaryKey(reqVO.getFoodId());
+        if (result == 0) {
+            return ResultVO.validError("delete is failed!");
         }
         return ResultVO.success(result);
     }

@@ -67,15 +67,7 @@ public class ImgController {
      */
     @PostMapping(value = "/batchDelete")
     @ApiOperation("批量删除")
-    public ResultVO update(@RequestBody ImgBatchDeleteReqVO reqVO) {
-        if (CollectionUtils.isEmpty(reqVO.getImgIds())) {
-            return ResultVO.validError("parameter is invalid！");
-        }
-        int i = imgService.deleteByIds(reqVO.getImgIds());
-        if (i == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+    public ResultVO batchDelete(@RequestBody ImgBatchDeleteReqVO reqVO) {
+        return imgService.batchDelete(reqVO);
     }
 }

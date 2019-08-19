@@ -10,6 +10,7 @@ import com.myicellar.digitalmenu.utils.BizException;
 import com.myicellar.digitalmenu.utils.ConvertUtils;
 import com.myicellar.digitalmenu.vo.request.ProductManageReqVO;
 import com.myicellar.digitalmenu.vo.request.ProductPageReqVO;
+import com.myicellar.digitalmenu.vo.request.ProductReqVO;
 import com.myicellar.digitalmenu.vo.request.VolumPriceReqVO;
 import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -238,15 +239,23 @@ public class ProductManageService extends BaseService<Long, Product, ProductMapp
         return ResultVO.success(result);
     }
 
+    /**
+     * 删除
+     *
+     * @param reqVO
+     * @return
+     */
     @Transactional
-    public Integer deleteByProductId(Long productId) {
-        Product product = mapper.selectByPrimaryKey(productId);
-        if (product != null) {
-            iPackageMapperExt.deleteByProductId(product.getProductId());
+    public ResultVO delete(ProductReqVO reqVO) {
+        if (reqVO.getProductId() == null || reqVO.getProductId() == 0L) {
+            return ResultVO.validError("parameter can not be empty!");
+        }
+        Integer i = mapper.deleteByPrimaryKey(reqVO.getProductId());
+        if (i == 0) {
+            return ResultVO.validError("delete is failed!");
         }
 
-        Integer result = mapper.deleteByPrimaryKey(productId);
-        return result;
+        return ResultVO.success("delete is success!");
     }
 
     public ProductRespVO queryByProductId(Long productId) {

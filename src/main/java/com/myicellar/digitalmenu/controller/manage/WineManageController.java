@@ -1,7 +1,5 @@
 package com.myicellar.digitalmenu.controller.manage;
 
-import com.myicellar.digitalmenu.dao.entity.Product;
-import com.myicellar.digitalmenu.service.ProductManageService;
 import com.myicellar.digitalmenu.service.WineService;
 import com.myicellar.digitalmenu.vo.request.*;
 import com.myicellar.digitalmenu.vo.response.PageResponseVO;
@@ -24,8 +22,6 @@ public class WineManageController {
 
     @Autowired
     private WineService wineService;
-    @Autowired
-    private ProductManageService productManageService;
 
     /**
      * 列表查询
@@ -91,20 +87,7 @@ public class WineManageController {
      */
     @PostMapping(value = "/delete")
     @ApiOperation("删除")
-    public ResultVO update(@RequestBody WineDeleteReqVO reqVO) {
-        if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
-            return ResultVO.validError("parameter is invalid！");
-        }
-        Product product = productManageService.queryByWineId(reqVO.getWineId());
-        if (product != null) {
-            return ResultVO.validError("Wine is in use, can not be deleted");
-        }
-
-        int i = wineService.deleteByPrimaryKey(reqVO.getWineId());
-        if (i == 0) {
-            return ResultVO.validError("delete is failed!");
-        }
-
-        return ResultVO.success("delete is success!");
+    public ResultVO delete(@RequestBody WineDeleteReqVO reqVO) {
+        return wineService.delete(reqVO);
     }
 }
