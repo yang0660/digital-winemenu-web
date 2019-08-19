@@ -196,6 +196,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         //年份描述
         if (reqVO.getVintageTag() == 1001L) {
             wineVintage.setVintageName("N.V.");
+        }else{
+            wineVintage.setVintageName(reqVO.getVintageTag().toString());
         }
         Date now = new Date();
         wineVintage.setUpdatedAt(now);
@@ -278,6 +280,8 @@ public class WineVintageService extends BaseService<Long, WineVintage, WineVinta
         //年份描述
         if (reqVO.getVintageTag() == 1001L) {
             wineVintage.setVintageName("N.V.");
+        }else{
+            wineVintage.setVintageName(reqVO.getVintageTag().toString());
         }
         Date now = new Date();
         wineVintage.setUpdatedAt(now);
