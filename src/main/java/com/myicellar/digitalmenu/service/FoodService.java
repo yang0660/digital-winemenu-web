@@ -11,6 +11,7 @@ import com.myicellar.digitalmenu.vo.response.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
         }
     }
 
+    @Transactional
     public synchronized ResultVO<Integer> addNew(FoodReqVO reqVO){
         //参数校验
         checkNewParam(reqVO);
@@ -107,6 +109,7 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
         return ResultVO.success(result);
     }
 
+    @Transactional
     public ResultVO<Integer> update(FoodUpdateReqVO reqVO){
         //参数校验
         checkUpdateParam(reqVO);
@@ -121,6 +124,7 @@ public class FoodService extends BaseService<Long, Food, FoodMapperExt> {
         return ResultVO.success(result);
     }
 
+    @Transactional
     public ResultVO<Integer> delete(FoodDeleteReqVO reqVO) {
         Integer result = mapper.deleteByPrimaryKey(reqVO.getFoodId());
         if (result == 0) {

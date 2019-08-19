@@ -17,6 +17,7 @@ import com.myicellar.digitalmenu.vo.response.WineRespVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         }
     }
 
+    @Transactional
     public synchronized ResultVO<WineRespVO> addNew(WineReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
@@ -120,6 +122,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
         return resultVO.setData(respVO);
     }
 
+    @Transactional
     public ResultVO<WineRespVO> update(WineUpdateReqVO reqVO) {
         //参数校验
         checkUpdateParam(reqVO);
@@ -143,6 +146,7 @@ public class WineService extends BaseService<Long, Wine, WineMapperExt> {
      * @param reqVO
      * @return
      */
+    @Transactional
     public ResultVO delete(WineDeleteReqVO reqVO) {
         if (reqVO.getWineId() == null || reqVO.getWineId() == 0L) {
             return ResultVO.validError("parameter is invalid！");

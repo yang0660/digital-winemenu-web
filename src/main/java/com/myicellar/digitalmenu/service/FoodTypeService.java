@@ -120,6 +120,7 @@ public class FoodTypeService extends BaseService<Long, FoodType, FoodTypeMapperE
      * @param reqVO
      * @return
      */
+    @Transactional
     public ResultVO<Integer> delete(FoodTypeDeleteReqVO reqVO) {
         //参数校验
         checkDeleteParam(reqVO);

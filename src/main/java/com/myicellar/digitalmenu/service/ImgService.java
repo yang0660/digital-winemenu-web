@@ -16,6 +16,7 @@ import com.myicellar.digitalmenu.vo.response.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
@@ -54,6 +55,7 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
      * @param reqVO
      * @return
      */
+    @Transactional
     public synchronized ResultVO<ImgRespVO> addNew(ImgReqVO reqVO) {
         //参数校验
         checkNewParam(reqVO);
@@ -88,6 +90,7 @@ public class ImgService extends BaseService<Long, Img, ImgMapperExt> {
      * @param reqVO
      * @return
      */
+    @Transactional
     public ResultVO batchDelete(ImgBatchDeleteReqVO reqVO) {
         if (CollectionUtils.isEmpty(reqVO.getImgIds())) {
             return ResultVO.validError("parameter is invalid！");
