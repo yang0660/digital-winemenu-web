@@ -211,6 +211,9 @@ public class WebMvcConfiguration extends DelegatingWebMvcConfiguration {
             public Date deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
                 JsonToken t = p.getCurrentToken();
                 if (t == JsonToken.VALUE_NUMBER_INT) {
+                    if(p.getLongValue()==0){
+                        return null;
+                    }
                     return new Date(p.getLongValue());
                 }
                 if (t == JsonToken.VALUE_NULL) {
